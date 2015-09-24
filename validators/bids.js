@@ -5,6 +5,10 @@ var TSV    = require('./tsv');
 var JSON   = require('./json');
 var NIFTI  = require('./nii');
 
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
+
 var BIDS = {
 
     errors:   [],
@@ -51,13 +55,13 @@ var BIDS = {
                 path = path.reverse();
 
                 if (
-                    path[0].indexOf('.nii.gz') > -1 &&
-                    (path[1].indexOf('anatomy') > -1 ||
-                     path[1].indexOf('functional') > -1 ||
-                     path[1].indexOf('diffusion') > -1) &&
+                    path[0].endsWith('.nii.gz') &&
+                    (path[1] == 'anat' ||
+                     path[1] == 'func' ||
+                     path[1] == 'dwi') &&
                     (
-                        (path[2] && path[2].indexOf('ses') > -1) ||
-                        (path[2] && path[2].indexOf('sub') > -1)
+                        (path[2] && path[2].indexOf('ses-') == 0) ||
+                        (path[2] && path[2].indexOf('sub-') == 0)
                     )
                 ) {
                     couldBeBIDS = true;
@@ -84,8 +88,8 @@ var BIDS = {
         for (var key in fileList) {
             var file = fileList[key];
             var path = utils.relativePath(file);
-            if (file.name && file.name.indexOf('.nii.gz') > -1) {scans.push(path);}
-            if (file.name && file.name.indexOf('.json') > -1)   {JSONFiles.push(path);}
+            if (file.name && file.name.endsWith('.nii.gz')) {scans.push(path);}
+            if (file.name && file.name.endsWith('.json'))   {JSONFiles.push(path);}
         }
 
         // compare scans against json files
@@ -121,61 +125,50 @@ var BIDS = {
         var self = this;
 
         // validate individual files
-        async.forEachOf(fileList, function (file, key, cb) {
+        for (var key in fileList) {
+            var file = fileList[key]
             var path = utils.relativePath(file);
 
             // validate NifTi
-            if (file.name && file.name.indexOf('.nii') > -1) {
-                // check if NifTi is gzipped
-                if (file.name.indexOf('.gz') === -1) {
-                    var newError = {
-                        evidence: file.name,
-                        line: null,
-                        character: null,
-                        reason: 'NifTi files should be compressed using gzip.',
-                        severity: 'error'
+            if (file.name && file.name.endsWith('.nii')) {
+               var newError = {
+                      evidence: file.name,
+                      line: null,
+                      character: null,
+                      reason: 'NifTi files should be compressed using gzip.',
+                      severity: 'error'
                     }
-                    
-                    self.errors.push({file: file, errors: [newError]});
-                }
-                cb();
-                return;
-            }
+                self.errors.push({file: file, errors: [newError]});
+              }
 
             // validate tsv
-            if (file.name && file.name.indexOf('.tsv') > -1) {
+            if (file.name && file.name.endsWith('.tsv')) {
                 utils.readFile(file, function (contents) {
                     TSV(contents, function (errs, warns) {
                         if (errs && errs.length > 0) {
-                            self.errors.push({file: file, errors: errs})
+                            self.errors.push({path: path, errors: errs})
                         }
                         if (warns && warns.length > 0) {
-                            self.warnings.push({file: file, errors: warns});
+                            self.warnings.push({path: path, errors: warns});
                         }
-                        cb();
                     });
                 });
-                return;
             }
 
             // validate json
-            if (file.name && file.name.indexOf('.json') > -1) {
+            if (file.name && file.name.endsWith('.json')) {
                 var isSidecar = self.isSidecar(file);
                 utils.readFile(file, function (contents) {
                     JSON(contents, isSidecar, function (errs) {
                         if (errs) {
-                            self.errors.push({file: file, errors: errs})
+                            self.errors.push({path: path, errors: errs})
                         }
-                        cb();
                     });
                 });
-            } else {
-                cb();
             }
-        
-        }, function () {
-            callback(self.errors, self.warnings);
-        });
+
+        }
+        callback(self.errors, self.warnings);
     },
 
     /**
@@ -208,7 +201,7 @@ module.exports = BIDS;
  * Takes either a filelist array or
  * a path to a BIDS directory and
  * starts the validation process and
- * returns the errors and warnings as 
+ * returns the errors and warnings as
  * arguments to the callback.
  */
 // module.exports = function (dir, callback) {

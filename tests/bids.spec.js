@@ -66,7 +66,8 @@ var suite = describe('BIDS example datasets ', function() {
             assert(summary.sessions.length === 0);
             assert(summary.subjects.length === 16);
             assert.deepEqual(summary.tasks, ['balloon analog risk task']);
-            assert.deepEqual(summary.modalities, ['T1w', 'inplaneT2', 'bold']);
+            summary.modalities.sort();
+            assert.deepEqual(summary.modalities, ['bold', 'inplaneT2', 'T1w']);
             assert(summary.totalFiles === 133);
             assert(summary.size === 803546);
             assert.deepEqual(errors, []);
@@ -81,7 +82,8 @@ var suite = describe('BIDS example datasets ', function() {
             assert(summary.sessions.length === 0);
             assert(summary.subjects.length === 1);
             assert.deepEqual(summary.tasks, ['rhyme judgment']);
-            assert.deepEqual(summary.modalities, ['T1w', 'bold']);
+            summary.modalities.sort();
+            assert.deepEqual(summary.modalities, ['bold', 'T1w']);
             assert(summary.totalFiles === 8);
             assert(summary.size === 481765);
             assert.deepEqual(errors, []);

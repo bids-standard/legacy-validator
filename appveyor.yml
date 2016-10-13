@@ -1,4 +1,4 @@
-# Test against this version of Node.js
+# Test against this version of Node.js.
 environment:
   nodejs_version: "4.4.1"
 

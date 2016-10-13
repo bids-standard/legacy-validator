@@ -16,8 +16,9 @@ test_script:
   - npm --version
   # run tests
   - npm test
-  - npm run lint
+  #- npm run lint
   - npm run build
+  - DIR
   - ./bids-validator -h
   - ./bids-validator ./tests/data/BIDS-examples-1.0.0-rc3u5/ds001 --ignoreNiftiHeaders
 

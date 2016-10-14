@@ -22,5 +22,8 @@ test_script:
   - .\bids-validator.exe -h
   - bids-validator.exe ./tests/data/BIDS-examples-1.0.0-rc3u5/ds001 --ignoreNiftiHeaders
 
+artifacts:
+  - path: bids-validator.exe
+
 # Don't actually build.
 build: off

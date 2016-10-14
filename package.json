@@ -23,7 +23,7 @@
   },
   "nexe": {
     "input": "./bin/bids-validator",
-    "output": "bids-validator",
+    "output": "bids-validator.exe",
     "flags": true,
     "runtime": {
       "framework": "node",

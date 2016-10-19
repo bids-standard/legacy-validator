@@ -1,6 +1,6 @@
 {
   "name": "bids-validator",
-  "version": "0.18.23",
+  "version": "0.18.24",
   "description": "",
   "main": "index.js",
   "repository": {
@@ -10,6 +10,7 @@
   "scripts": {
     "lint": "./node_modules/eslint/bin/eslint.js ./**/*.js",
     "test": "./node_modules/.bin/mocha tests/",
+    "build": "./node_modules/.bin/nexe",
     "npmPublish": "publish"
   },
   "bin": {
@@ -20,11 +21,20 @@
   "bugs": {
     "url": "https://github.com/INCF/bids-validator/issues"
   },
+  "nexe": {
+    "input": "./bin/bids-validator",
+    "output": "bids-validator^$",
+    "flags": true,
+    "runtime": {
+      "framework": "node",
+      "version": "4.4.1"
+    }
+  },
   "homepage": "https://github.com/INCF/bids-validator",
   "dependencies": {
     "async": "^1.2.1",
     "bytes": "^2.3.0",
-    "cliff": "^0.1.10",
+    "cli-table2": "0.2.0",
     "colors": "^1.1.0",
     "jshint": "^2.8.0",
     "nifti-js": "^1.0.0",
@@ -37,6 +47,7 @@
     "chai": "",
     "eslint": "^2.7.0",
     "mocha": "^2.2.5",
+    "nexe": "1.1.2",
     "publish": "^0.5.0",
     "sync-request": "2.2.0"
   }

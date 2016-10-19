@@ -8,6 +8,11 @@ test:
     - npm run lint
     # Run unit tests
     - npm run test
+    # Test build
+    - npm run build
+    - ./bids-validator -h
+    - ./bids-validator ./tests/data/BIDS-examples-1.0.0-rc3u5/ds001 --ignoreNiftiHeaders
+    - cp ./bids-validator ${CIRCLE_ARTIFACTS}/bids-validator
     # Test gh-pages build
     - rm -rf node_modules/
     - git checkout gh-pages

@@ -1,0 +1,30 @@
+# Test against this version of Node.js.
+environment:
+  nodejs_version: "4.4.1"
+
+# Install scripts. (runs after repo cloning)
+install:
+  # Get the latest stable version of Node.js or io.js
+  - ps: Install-Product node $env:nodejs_version
+  # install modules
+  - npm install
+
+# Post-install test scripts.
+test_script:
+  # Output useful info for debugging.
+  - node --version
+  - npm --version
+  # run tests
+  - npm test
+  # run linter
+  - .\node_modules\eslint\bin\eslint.js .\**\*.js
+  # build executable and test
+  - npm run build
+  - .\bids-validator.exe -h
+  - bids-validator.exe ./tests/data/BIDS-examples-1.0.0-rc3u5/ds001 --ignoreNiftiHeaders
+
+artifacts:
+  - path: bids-validator.exe
+
+# Don't actually build.
+build: off

@@ -2,10 +2,10 @@
 
 var validate  = require('./index.js');
 var colors    = require('colors/safe');
-var cliff     = require('cliff');
 var pluralize = require('pluralize');
 var bytes     = require('bytes');
 var fs        = require('fs');
+var Table     = require('cli-table2')
 
 module.exports = function (dir, options) {
     if (fs.existsSync(dir)) {
@@ -58,9 +58,34 @@ function logIssues (issues, color, options) {
 
 function logSummary (summary) {
     if (summary) {
-        var numSessions = summary.sessions.length > 0 ? summary.sessions.length : 1;
 
-        // data
+        // padding size
+        var pad = '       ';
+
+        // configure table
+        var table = new Table({
+            chars: {
+                'top': '',
+                'top-mid': '',
+                'top-left': '',
+                'top-right': '',
+                'bottom': '',
+                'bottom-mid': '',
+                'bottom-left': '',
+                'bottom-right': '',
+                'left': '',
+                'left-mid': '',
+                'mid': '',
+                'mid-mid': '',
+                'right': '',
+                'right-mid': '',
+                'middle': ''
+            },
+            head: [pad, colors.blue.underline('Summary:') + pad, colors.blue.underline('Available Tasks:') + pad, colors.blue.underline('Available Modalities:')]
+        });
+
+        // format data
+        var numSessions = summary.sessions.length > 0 ? summary.sessions.length : 1;
         var column1 = [
                 summary.totalFiles + ' ' + pluralize('File', summary.totalFiles) + ', ' + bytes(summary.size),
                 summary.subjects.length + ' - ' + pluralize('Subject', summary.subjects.length),
@@ -70,22 +95,19 @@ function logSummary (summary) {
             column3 = summary.modalities;
 
         var longestColumn = Math.max(column1.length, column2.length, column3.length);
-        var pad = '       ';
 
-        // headers
-        var headers = [pad, colors.blue.underline('Summary:') + pad, colors.blue.underline('Available Tasks:') + pad, colors.blue.underline('Available Modalities:')]
 
-        // rows
-        var rows = [headers];
+        // populate table rows
         for (var i = 0; i < longestColumn; i++) {
             var val1, val2, val3;
             val1 = column1[i] ? column1[i] + pad : '';
             val2 = column2[i] ? column2[i] + pad : '';
             val3 = column3[i] ? column3[i] : '';
-            rows.push(['       ', val1, val2, val3]);
+            table.push(['       ', val1, val2, val3]);
         }
-        console.log(cliff.stringifyRows(rows));
 
+        // log table and new line
+        console.log(table.toString());
         console.log();
     }
 }

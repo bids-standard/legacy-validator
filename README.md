@@ -1,5 +1,7 @@
 ![](https://circleci.com/gh/INCF/bids-validator.svg?style=shield&circle-token=:circle-token)
 
+![appveyor status](https://ci.appveyor.com/api/projects/status/o85j0d74mn7qmk7a?svg=true)
+
 # BIDS-Validator
 
 ## Quickstart

@@ -278,6 +278,7 @@ var BIDS = {
                 if (participants && !utils.array.equals(summary.subjects, participants.list, true)) {
                     self.issues.push(new utils.Issue({
                         code: 49,
+                        evidence: summary.subjects.toString() +" is not \n" + participants.list.toString(),
                         file: participants.file
                     }));
                 }

@@ -79,7 +79,7 @@ module.exports = function NIFTI (header, file, jsonContentsDict, bContentsDict, 
     if (!mergedDictionary.invalid) {
 
         // task scan checks
-        if (path.includes('_task-') && !path.includes('_sbref.nii')) {
+        if (path.includes('_task-') && !path.includes('_defacemask.nii') && !path.includes('_sbref.nii')) {
             if (!mergedDictionary.hasOwnProperty('TaskName')) {
                 issues.push(new Issue({
                     file: file,

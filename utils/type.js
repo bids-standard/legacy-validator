@@ -204,6 +204,7 @@ module.exports = {
      */
     getPathValues: function (path) {
         var values = {}, match;
+        var file_name ={}, unmat;
 
         // capture subject
         match = (/^\/sub-([a-zA-Z0-9]+)/).exec(path);
@@ -213,7 +214,22 @@ module.exports = {
         match = (/^\/sub-[a-zA-Z0-9]+\/ses-([a-zA-Z0-9]+)/).exec(path);
         values.ses = match && match[1] ? match[1] : null;
 
-        return values;
+        //capture session and subject id from filename to find if files are in
+        // correct sub/ses directory
+        var filename = path.replace(/^.*[\\\/]/, '');
+
+        // capture sub from file name
+        unmat = (/^sub-([a-zA-Z0-9]+)/).exec(filename);
+        file_name.sub = unmat && unmat[1] ? unmat[1] : null;
+
+
+        // capture session from file name
+        unmat = (/^sub-[a-zA-Z0-9]+_ses-([a-zA-Z0-9]+)/).exec(filename);
+        file_name.ses = unmat && unmat[1] ? unmat[1] : null;
+
+
+
+        return [values,file_name];
     }
 
 };

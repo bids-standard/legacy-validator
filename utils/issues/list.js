@@ -281,5 +281,15 @@ module.exports = {
         key: 'Participants age 89 or higher',
         severity: 'warning',
         reason: 'As per section 164.514(C) of "The De-dentification Standard" under HIPPA guidelines, participants with age 89 or higher should be tagged as 89+. More information can be found at https://www.hhs.gov/hipaa/for-professionals/privacy/special-topics/de-identification/#standard'
+    },
+    57: {
+        key: 'sub-id in filename doesnt match directory',
+        severity: 'warning',
+        reason: 'sub-id in the filename doesn\'t match with the path of the file. File seems to be saved in incorrect subject directory.'
+    },
+    58: {
+        key: 'ses-id in filename doesnt match directory',
+        severity: 'error',
+        reason: 'ses-id in the filename doesn\'t match with the path of the file. File seems to be saved in incorrect session directory.'
     }
 };

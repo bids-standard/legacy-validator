@@ -119,6 +119,32 @@ var BIDS = {
         async.eachOfLimit(fileList, 200, function (file, key, cb) {
             var path = utils.files.relativePath(file);
             file.relativePath = path;
+            var values = utils.type.getPathValues(file.relativePath);
+
+            // checks if sub/ses-id in filename matches with ses/sub directory file is saved
+
+            var pathValues = values[0];
+            var fileValues = values[1];
+
+            if (fileValues.sub !== null || fileValues.ses !== null){
+              if (fileValues.sub !== pathValues.sub){
+                self.issues.push(new Issue({
+                    code: 57,
+                    evidence: "File: " + file.relativePath + " is saved in incorrect subject directory as per sub-id in filename.",
+                    file: file
+                }));
+              }
+
+              if (fileValues.ses !== pathValues.ses){
+                self.issues.push(new Issue({
+                    code: 58,
+                    evidence: "File: " + file.relativePath + " is saved in incorrect session directory as per ses-id in filename.",
+                    file: file
+                }));
+              }
+            }
+
+
 
             // check for subject directory presence
             if (path.startsWith('/sub-')) {hasSubjectDir = true;}
@@ -253,7 +279,6 @@ var BIDS = {
 
             // collect sessions & subjects
             if (!utils.type.isAssociatedData(file.relativePath) && utils.type.isBIDS(file.relativePath)) {
-                var pathValues = utils.type.getPathValues(file.relativePath);
 
                 if (pathValues.sub && summary.subjects.indexOf(pathValues.sub) === -1) {
                     summary.subjects.push(pathValues.sub);

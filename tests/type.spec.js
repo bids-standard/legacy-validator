@@ -237,9 +237,32 @@ describe('utils.type.isAssociatedData', function () {
 
 describe('utils.type.getPathValues', function () {
     it('should return the correct path values from a valid file path', function () {
-        assert.equal(utils.type.getPathValues('/sub-22/ses-1/func/sub-22_ses-1_task-rest_acq-prefrontal_physio.tsv.gz').sub, 22);
-        assert.equal(utils.type.getPathValues('/sub-22/ses-1/func/sub-22_ses-1_task-rest_acq-prefrontal_physio.tsv.gz').ses, 1);
-        assert.equal(utils.type.getPathValues('/sub-22/func/sub-22_task-rest_acq-prefrontal_physio.tsv.gz').sub, 22);
-        assert.equal(utils.type.getPathValues('/sub-22/func/sub-22_task-rest_acq-prefrontal_physio.tsv.gz').ses, null);
+        assert.equal(utils.type.getPathValues('/sub-22/ses-1/func/sub-22_ses-1_task-rest_acq-prefrontal_physio.tsv.gz')[0].sub, 22);
+        assert.equal(utils.type.getPathValues('/sub-22/ses-1/func/sub-22_ses-1_task-rest_acq-prefrontal_physio.tsv.gz')[0].ses, 1);
+        assert.equal(utils.type.getPathValues('/sub-22/func/sub-22_task-rest_acq-prefrontal_physio.tsv.gz')[0].sub, 22);
+        assert.equal(utils.type.getPathValues('/sub-22/func/sub-22_task-rest_acq-prefrontal_physio.tsv.gz')[0].ses, null);
+    });
+});
+
+describe('validators.bids.fullTest', function () {
+  var issues = [{code:57},{code:58}];
+  var code57_seen = false;
+  var code58_seen = false;
+    it('should return the correct path values from a valid file path', function () {
+      var files = ['/sub-22/ses-1/func/sub-22_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
+    '/sub-22/ses-1/func/sub-23_ses-1_task-rest_acq-prefrontal_physio.tsv.gz', '/sub-22/ses-1/func/sub-22_ses-2_task-rest_acq-prefrontal_physio.tsv.gz', '/sub-25/ses-2/func/sub-22_ses-1_task-rest_acq-prefrontal_physio.tsv.gz'];
+    var callback = function(issues, summary){
+      for ( var i in issues){
+        if (issues[i]['code']===57){
+          code57_seen = true;
+          }
+        else if (issues[i]['code']===58) {
+          code58_seen = false;
+        }
+      }
+      assert(code57_seen);
+      assert(code58_seen);
+    };
+    validators.bids.fullTest(files, callback);
     });
 });

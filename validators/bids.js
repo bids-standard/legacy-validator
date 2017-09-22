@@ -194,6 +194,12 @@ BIDS = {
         async.eachOfLimit(fileList, 200, function (file, key, cb) {
             var path = utils.files.relativePath(file);
             file.relativePath = path;
+            var values = utils.type.getPathValues(file.relativePath);
+
+            // checks if sub/ses-id in filename matches with ses/sub directory file is saved
+
+            var pathValues = values[0];
+            // var fileValues = values[1];
 
             // check for subject directory presence
             if (path.startsWith('/sub-')) {
@@ -337,7 +343,6 @@ BIDS = {
 
             // collect sessions & subjects
             if (!utils.type.isAssociatedData(file.relativePath) && utils.type.isBIDS(file.relativePath)) {
-                var pathValues = utils.type.getPathValues(file.relativePath);
 
                 if (pathValues.sub && summary.subjects.indexOf(pathValues.sub) === -1) {
                     summary.subjects.push(pathValues.sub);
@@ -418,6 +423,49 @@ BIDS = {
     },
 
     /**
+     * subid and sesid mismatch test. Generates error if ses-id and sub-id are different for any file, Takes a file list and return issues
+     */
+    subIDsesIDmismatchtest: function (fileList) {
+        var self = this;
+        var subses_mismatch = false;
+
+        // validates if sub/ses-id in filename matches with ses/sub directory file is saved
+        async.eachOfLimit(fileList, 200, function (file) {
+            var path = utils.files.relativePath(file);
+            file.relativePath = path;
+            var values = utils.type.getPathValues(file.relativePath);
+
+            var pathValues = values[0];
+            var fileValues = values[1];
+
+            if (fileValues.sub !== null || fileValues.ses !== null) {
+                if (fileValues.sub !== pathValues.sub) {
+                    subses_mismatch = true;
+                    self.issues.push(new Issue({
+                        code: 61,
+                        evidence: "File: " + file.relativePath + " is saved in incorrect subject directory as per sub-id in filename.",
+                        file: file
+                    }));
+                }
+
+                if (fileValues.ses !== pathValues.ses) {
+                    subses_mismatch = true;
+                    self.issues.push(new Issue({
+                        code: 62,
+                        evidence: "File: " + file.relativePath + " is saved in incorrect session directory as per ses-id in filename.",
+                        file: file
+                    }));
+                }
+            }
+        });
+        return subses_mismatch;
+    },
+
+
+
+
+
+            /**
      * Reset
      *
      * Resets the in object data back to original values.

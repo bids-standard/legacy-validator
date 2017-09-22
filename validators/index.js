@@ -4,6 +4,8 @@ var TSV    = require('./tsv');
 var JSON   = require('./json');
 var NIFTI  = require('./nii');
 var BIDS   = require('./bids').start;
+var BIDSS   = require('./bids').fullTest;
+
 var bval   = require('./bval');
 var bvec   = require('./bvec');
 var utils  = require('../utils');
@@ -12,6 +14,7 @@ var utils  = require('../utils');
 
 var validate = {
 	BIDS: BIDS,
+	BIDSS: BIDSS,
 	JSON: JSON,
 	TSV: TSV,
 	NIFTI: NIFTI,

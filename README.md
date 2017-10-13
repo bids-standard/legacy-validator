@@ -12,6 +12,9 @@ If the validator seems to be working longer than couple of minutes please open [
    1. Install [Node.js](https://nodejs.org) (at least version 4.4.4)
    1. From a terminal run `npm install -g bids-validator`
    1. Run `bids-validator` to start validating datasets.
+1. Docker
+   1. Install Docker
+   1. From a terminal run `docker run -ti --rm -v /path/to/data:/data:ro bids/validator /data`
 
 ## Support
 

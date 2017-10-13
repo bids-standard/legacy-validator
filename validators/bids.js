@@ -188,6 +188,9 @@ BIDS = {
                     var subjectSpecificFiles = false;
                 }
             }
+
+        async.eachOfLimit(fileList, 200, function (file) {
+            var completename = utils.files.relativePath(file);
             if(!(completename.startsWith('/derivatives') || completename.startsWith('/code') || completename.startsWith('/sourcedata'))) {
                 // check all invalid regex
                 for (var re_index = 0; re_index < illegalchar_regex_list.length; re_index++) {
@@ -197,14 +200,14 @@ BIDS = {
 
                     if (err_regex.exec(completename)) {
                         self.issues.push(new Issue({
-                            file: fileList[f],
+                            file: file,
                             code: err_code,
-                            evidence: err_evidence + fileList[f].relativePath
+                            evidence: err_evidence + completename
                         }));
                     }
                 }
             }
-        }
+        });
 
 
         // validate individual files

@@ -17,11 +17,13 @@ test:
 
 deployment:
   production:
-    branch: master
+    tag: /.*/
     commands:
       # Publish to NPM
       - echo -e "$NPM_USERNAME\n$NPM_PASSWORD\n$NPM_EMAIL" | npm login
       - git checkout -f master
+      # Set the version number
+      - sed -i -E "s/0.0.0/$CIRCLE_TAG/" package.json
       - npm install publish
       - npm run npmPublish
       # Update gh-pages demo site
@@ -29,7 +31,7 @@ deployment:
       - git config --global user.name CircleCI
       - rm -rf node_modules/
       - rm -rf tests/
-      - git checkout gh-pages
+      - git checkout gh-pages -f
       - git pull
       - npm install
       - gulp build

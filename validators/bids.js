@@ -186,8 +186,8 @@ BIDS = {
             if (completename.startsWith('/sub-')){
                 if (!(fileList[f].name.startsWith('sub'))){
                     var subjectSpecificFiles = false;
-                };
-            };
+                }
+            }
             if(!(completename.startsWith('/derivatives') || completename.startsWith('/code') || completename.startsWith('/sourcedata'))) {
                 // check all invalid regex
                 for (var re_index = 0; re_index < illegalchar_regex_list.length; re_index++) {

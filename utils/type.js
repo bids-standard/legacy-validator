@@ -229,6 +229,3 @@ function conditionalMatch (expression, path) {
         }
         return false;
 }
-
-
-

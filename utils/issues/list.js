@@ -326,5 +326,11 @@ module.exports = {
         key: 'SESSION_LABEL_IN_FILENAME_DOESNOT_MATCH_DIRECTORY',
         severity: 'error',
         reason: 'Session label in the filename doesn\'t match with the path of the file. File seems to be saved in incorrect session directory.'
-    }
+    },
+    66: {
+        key: 'NO_BIDS_SPECIFIC_FILES_IN_SUBJECT_DIRECTORY',
+        severity: 'error',
+        reason: 'These files are not as per bids and are stored under sub- directory. Please refer latest BIDS spec for correct filename and organization.'
+    },
+
 };

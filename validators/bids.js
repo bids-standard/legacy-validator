@@ -171,6 +171,8 @@ BIDS = {
         var sub_re = /sub-[a-zA-Z0-9]*[_-][a-zA-Z0-9]*_/g;   // illegal character in sub
         var ses_re = /ses-[a-zA-Z0-9]*[_-][a-zA-Z0-9]*?_(.*?)/g; //illegal character in ses
 
+
+
         var illegalchar_regex_list = [
             [task_re, 58, "task name contains illegal character:"],
             [acq_re, 59, "acq name contains illegal character:"],
@@ -181,7 +183,13 @@ BIDS = {
 
         for (var f in fileList) {
             var completename = fileList[f].relativePath;
+            if (completename.startsWith('/sub-')){
+                if (!(fileList[f].name.startsWith('sub'))){
+                    var subjectSpecificFiles = false;
+                };
+            };
             if(!(completename.startsWith('/derivatives') || completename.startsWith('/code') || completename.startsWith('/sourcedata'))) {
+                // check all invalid regex
                 for (var re_index = 0; re_index < illegalchar_regex_list.length; re_index++) {
                     var err_regex = illegalchar_regex_list[re_index][0];
                     var err_code = illegalchar_regex_list[re_index][1];
@@ -221,8 +229,25 @@ BIDS = {
                     evidence: file.name,
                     code: 1
                 }));
+                if (!subjectSpecificFiles){
+                    self.issues.push(new Issue({
+                        file: file,
+                        evidence: file.name,
+                        code: 66
+                    }));
+                }
                 process.nextTick(cb);
             }
+
+            // else if ((!utils.type.isBIDS(file.relativePath)) && (!subjectSpecificFiles)) {
+            //     console.log("erorr i am here");
+            //     self.issues.push(new Issue({
+            //         file: file,
+            //         evidence: file.name,
+            //         code: 66
+            //     }));
+            //     process.nextTick(cb);
+            // }
 
             // capture niftis for later validation
             else if (file.name.endsWith('.nii') || file.name.endsWith('.nii.gz')) {

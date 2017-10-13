@@ -133,7 +133,7 @@ var suite = describe('BIDS example datasets ', function() {
             var options = {ignoreNiftiHeaders: false};
             validate.BIDS("tests/data/valid_filenames", options, function (issues) {
                 var errors = issues.errors;
-                assert(errors[0].code === '58');
+                assert(errors[0].code === '58' && errors[3].code ==='66');
                 isdone();
             });
         });

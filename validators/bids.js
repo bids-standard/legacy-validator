@@ -149,6 +149,7 @@ BIDS = {
             participants = null,
             phenotypeParticipants = [],
             hasSubjectDir = false;
+        var hasDatasetDescription = false;
 
         var summary = {
             sessions: [],
@@ -211,6 +212,11 @@ BIDS = {
             // check for subject directory presence
             if (path.startsWith('/sub-')) {
                 hasSubjectDir = true;
+            }
+
+            // check for dataset_description.json presence
+            if (path === '/dataset_description.json') {
+                hasDatasetDescription = true;
             }
 
             // ignore associated data
@@ -403,6 +409,9 @@ BIDS = {
             }, function () {
                 if (!hasSubjectDir) {
                     self.issues.push(new Issue({code: 45}));
+                }
+                if (!hasDatasetDescription) {
+                    self.issues.push(new Issue({code: 57}));
                 }
                 // check if participants file match found subjects
 

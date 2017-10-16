@@ -160,6 +160,8 @@ BIDS = {
             size: 0
         };
 
+        var subjectSpecificFiles = true;  //it assumes that there are subject specific files under each subject directory
+
 
         // check for illegal character in task name and acq name
 
@@ -179,6 +181,11 @@ BIDS = {
 
         async.eachOfLimit(fileList, 200, function (file) {
             var completename = utils.files.relativePath(file);
+            if (completename.startsWith('/sub-')){
+                if (!(file.name.startsWith('sub'))){
+                    subjectSpecificFiles = false;
+                    }
+                }
             if(!(completename.startsWith('/derivatives') || completename.startsWith('/code') || completename.startsWith('/sourcedata'))) {
                 for (var re_index = 0; re_index < illegalchar_regex_list.length; re_index++) {
                     var err_regex = illegalchar_regex_list[re_index][0];
@@ -224,6 +231,14 @@ BIDS = {
                     evidence: file.name,
                     code: 1
                 }));
+                //this will check if files under sub-* directory are not as per BIDS std
+                if (!subjectSpecificFiles){
+                    self.issues.push(new Issue({
+                        file: file,
+                        evidence: file.name,
+                        code: 66
+                    }));
+                }
                 process.nextTick(cb);
             }
 

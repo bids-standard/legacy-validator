@@ -316,5 +316,10 @@ module.exports = {
         key: 'SESSION_VALUE_CONTAINS_ILLEGAL_CHARECTER',
         severity: 'error',
         reason: 'Ses label contain an Illegal Character hyphen or underscore. Please edit the filename as per BIDS spec.',
+    },
+    66: {
+        key: 'NO_BIDS_SPECIFIC_FILES_IN_SUBJECT_DIRECTORY',
+        severity: 'error',
+        reason: 'These files are not as per bids and are stored under sub- directory. Please refer latest BIDS spec for correct filename and organization.'
     }
 };

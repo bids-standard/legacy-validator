@@ -15,6 +15,7 @@ module.exports = function NIFTI (header, file, jsonContentsDict, bContentsDict, 
     var issues = [];
     var potentialSidecars = potentialLocations(path.replace(".gz", "").replace(".nii", ".json"));
     var potentialEvents   = potentialLocations(path.replace(".gz", "").replace("bold.nii", "events.tsv"));
+    // console.log('potential Events - ' + potentialEvents);
     var mergedDictionary  = generateMergedSidecarDict(potentialSidecars, jsonContentsDict);
     var sidecarMessage    = "It can be included one of the following locations: " + potentialSidecars.join(", ");
     var eventsMessage     = "It can be included one of the following locations: " + potentialEvents.join(", ");
@@ -84,7 +85,7 @@ module.exports = function NIFTI (header, file, jsonContentsDict, bContentsDict, 
     if (!mergedDictionary.invalid) {
 
         // task scan checks
-        if (path.includes('_task-') && !path.includes('_defacemask.nii') && !path.includes('_sbref.nii')) {
+        if (path.includes('_task-') && !path.includes('_defacemask.nii') && !path.includes('_sbref.nii') && !path.includes('_rec-')) {
             if (!mergedDictionary.hasOwnProperty('TaskName')) {
                 issues.push(new Issue({
                     file: file,
@@ -95,7 +96,7 @@ module.exports = function NIFTI (header, file, jsonContentsDict, bContentsDict, 
         }
 
         // field map checks
-        if (path.includes("_bold.nii") || path.includes("_sbref.nii") || path.includes("_dwi.nii")) {
+        if ((path.includes("_bold.nii") || path.includes("_sbref.nii") || path.includes("_dwi.nii")) && !path.includes('_rec-')) {
             if (!mergedDictionary.hasOwnProperty('EchoTime')) {
                 issues.push(new Issue({
                     file: file,
@@ -129,7 +130,7 @@ module.exports = function NIFTI (header, file, jsonContentsDict, bContentsDict, 
         }
 
         // we don't need slice timing or repetition time for SBref
-        if (path.includes("_bold.nii")) {
+        if (path.includes("_bold.nii") && !path.includes('_rec-')) {
             if (!mergedDictionary.hasOwnProperty('RepetitionTime')) {
                 issues.push(new Issue({
                     file: file,
@@ -277,12 +278,12 @@ function potentialLocations(path) {
     var potentialPaths = [path];
     var pathComponents = path.split('/');
     var filenameComponents = pathComponents[pathComponents.length - 1].split("_");
-
     var sessionLevelComponentList = [],
         subjectLevelComponentList = [],
         topLevelComponentList = [],
         ses = null,
         sub = null;
+    var rec = null;
 
     filenameComponents.forEach(function (filenameComponent) {
         if (filenameComponent.substring(0, 3) != "run") {
@@ -299,7 +300,18 @@ function potentialLocations(path) {
                 }
             }
         }
+        /*
+          // this filter will remove rec key value pair from potentialPaths. Thus,
+          for reconstructed(with rec- k:v) task runs validator wont ask for json
+          file and event.tsv file.
+        */
+        if (filenameComponent.substring(0, 3) === "rec"){
+          rec = filenameComponent;
+          var rec_path = path.replace((rec + '_'), '');
+          potentialPaths.push(rec_path);
+        }
     });
+
 
     if (ses) {
         var sessionLevelPath= "/" + sub + "/" + ses + "/" + sessionLevelComponentList.join("_");
@@ -308,10 +320,8 @@ function potentialLocations(path) {
 
     var subjectLevelPath = "/" + sub + "/" + subjectLevelComponentList.join("_");
     potentialPaths.push(subjectLevelPath);
-
     var topLevelPath = "/" + topLevelComponentList.join("_");
     potentialPaths.push(topLevelPath);
-
     potentialPaths.reverse();
 
     return potentialPaths;

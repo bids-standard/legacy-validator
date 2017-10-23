@@ -135,4 +135,18 @@ describe('NIFTI', function(){
       });
     });
 
+    it('should ignore missing task name definitions on reconstructed(rec-) task scans', function() {
+        var file = {
+            name: 'sub-15_task-mixedeventrelatedprobe_rec-LR_run-01_bold.nii.gz',
+            relativePath: '/sub-15/func/sub-15_task-mixedeventrelatedprobe_rec-LR_run-01_bold.nii.gz'
+        };
+        var events = [
+            '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_events.tsv',
+            '/sub-15/run-01_events.tsv'
+        ];
+        jsonContentsDict[file.relativePath.replace('.nii.gz', '.json')] = jsonContentsDict['/sub-15/func/sub-15_task-mixedeventrelatedproberest_run-01_bold.json'];
+        validate.NIFTI(null, file, jsonContentsDict, {}, [], events, function (issues) {
+            assert.deepEqual(issues, []);
+        });
+    });
 });

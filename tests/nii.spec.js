@@ -164,7 +164,7 @@ describe('NIFTI', function(){
             '/sub-15/run-01_events.tsv'
         ];
         validate.NIFTI(null, file_new, jsonContentsDict_new, {}, [], events, function (issues) {
-            assert(issues[2].code === 66 && issues.length === 3);
+            assert(issues[1].code === 66 && issues.length === 2);
         });
     });
 

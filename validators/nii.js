@@ -95,7 +95,7 @@ module.exports = function NIFTI (header, file, jsonContentsDict, bContentsDict, 
         }
 
         // field map checks
-        if (path.includes("_bold.nii") || path.includes("_sbref.nii") || path.includes("_dwi.nii")) {
+        if ((path.includes("_bold.nii") || path.includes("_sbref.nii") || path.includes("_dwi.nii")) && (path.includes("fmap"))) {
             if (!mergedDictionary.hasOwnProperty('EchoTime')) {
                 issues.push(new Issue({
                     file: file,

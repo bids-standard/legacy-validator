@@ -20,7 +20,7 @@ var session = function missingSessionFiles(fileList) {
         }
 
         var path = utils.files.relativePath(file);
-        if (!utils.type.isBIDS(path) || utils.type.isAssociatedData(path)) {
+        if (!utils.type.isBIDS(path)) {
             continue;
         }
         var subject;

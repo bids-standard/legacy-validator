@@ -28,6 +28,7 @@
     "cliff": "^0.1.10",
     "colors": "^1.1.0",
     "jshint": "^2.8.0",
+    "level-filesystem": "^1.2.0",
     "minimatch": "3.0.3",
     "nifti-js": "^1.0.0",
     "pako": "^1.0.4",

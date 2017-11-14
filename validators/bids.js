@@ -182,7 +182,6 @@ BIDS = {
 
         async.eachOfLimit(fileList, 200, function (file) {
             var completename = utils.files.relativePath(file);
-            if(!(completename.startsWith('/derivatives') || completename.startsWith('/code') || completename.startsWith('/sourcedata'))) {
                 for (var re_index = 0; re_index < illegalchar_regex_list.length; re_index++) {
                     var err_regex = illegalchar_regex_list[re_index][0];
                     var err_code = illegalchar_regex_list[re_index][1];
@@ -196,7 +195,7 @@ BIDS = {
                         }));
                     }
                 }
-            }
+
         });
 
 
@@ -214,14 +213,8 @@ BIDS = {
             if (path === '/dataset_description.json') {
                 hasDatasetDescription = true;
             }
-
-            // ignore associated data
-            if (utils.type.isAssociatedData(file.relativePath)) {
-                process.nextTick(cb);
-            }
-
             // validate path naming
-            else if (!utils.type.isBIDS(file.relativePath)) {
+            if (!utils.type.isBIDS(file.relativePath)) {
                 self.issues.push(new Issue({
                     file: file,
                     evidence: file.name,
@@ -360,7 +353,7 @@ BIDS = {
             }
 
             // collect sessions & subjects
-            if (!utils.type.isAssociatedData(file.relativePath) && utils.type.isBIDS(file.relativePath)) {
+            if (utils.type.isBIDS(file.relativePath)) {
                 var pathValues = utils.type.getPathValues(file.relativePath);
 
                 if (pathValues.sub && summary.subjects.indexOf(pathValues.sub) === -1) {

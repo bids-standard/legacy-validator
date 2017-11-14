@@ -3,15 +3,18 @@
 var nifti = require('nifti-js');
 var Issue = require('./issues').Issue;
 
+// var zlib = require('zlib');
 /**
  * If the current environment is server side
  * nodejs/iojs import fs.
  */
 if (typeof window === 'undefined') {
-    var fs = require('fs');
     var zlib = require('zlib');
+    var fs = require('fs');
 } else {
     var pako = require('pako');
+    // var filesystem = require('level-filesystem');
+    // var fs = filesystem(db);
 }
 
 // public API ---------------------------------------------------------------------
@@ -76,8 +79,10 @@ function readFile (file, callback) {
  * object to the callback.
  */
 function readDir (dir, callback) {
+    var doNotTraverseDirList = ['derivatives', 'sourcedata', 'code', 'stimuli', '.git', '.gitignore']; //list of directories to be excluded from
+    var files = getFiles(dir, [], doNotTraverseDirList);
     if (fs) {
-        var files = getFiles(dir);
+        // console.log(dir);
         var filesObj = {};
         var str = dir.substr(dir.lastIndexOf('/') + 1) + '$';
         var subpath = dir.replace(new RegExp(str), '');
@@ -89,22 +94,37 @@ function readDir (dir, callback) {
             };
         }
         callback(filesObj);
-    } else {
+        } else {
+        console.log("filesObj  ", filesObj, "dir :  ", dir);
         callback(dir);
     }
 }
 
-function getFiles (dir, files_){
+function getFiles (dir, files_, toNotTraverseDirList_){
     files_ = files_ || [];
+    toNotTraverseDirList_ = toNotTraverseDirList_ || [];
     var files = fs.readdirSync(dir);
-    for (var i = 0; i < files.length; i++) {
-        var name = dir + '/' + files[i];
+    var filesarr= [];
+    for(var f = 0; f< files.length; f++){
+        if(!(toNotTraverseDirList_.includes(files[f]))){
+            // console.log(file);
+            filesarr.push(files[f]);
+        }
+    }
+    // console.log("before filter: ", files)
+    // files = files.filter(function(x){
+    //     // console.log(x)
+    //     return toNotTraverseDirList_.indexOf(x)<0;}); // this will filter directories which are not to be traversed
+    // console.log("after filter: ", files)
+    for (var i = 0; i < filesarr.length; i++) {
+        var name = dir + '/' + filesarr[i];
         if (fs.lstatSync(name).isDirectory()) {
             getFiles(name, files_);
         } else {
             files_.push(name);
         }
     }
+    // console.log("files:  ", files, "NOt traverse list: ", toNotTraverseDirList_);
     return files_;
 }
 
@@ -278,7 +298,7 @@ function testFile (file, callback) {
 /**
  * Simulates some of the browser File API interface.
  * https://developer.mozilla.org/en-US/docs/Web/API/File
- * 
+ *
  * @param {string[]} parts - file contents as bytes
  * @param {string} filename - filename without path info
  * @param {Object} properties - unused Blob properties
@@ -306,7 +326,7 @@ function FileAPI() {
  * New File
  *
  * Creates an empty File object
- * 
+ *
  * @param {string} filename - the filename without path info
  */
 function newFile(filename) {

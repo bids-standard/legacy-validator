@@ -2,15 +2,18 @@
     "env": {
         "browser": true,
         "commonjs": true,
-        "node": true
+        "node": true,
+        "es6": true
     },
     "globals": {
         "Uint8Array": false,
         "describe": false,
         "before": false,
-        "it": false
+        "it": false,
+        "es6": true
     },
     "extends": "eslint:recommended",
+    "parserOptions": { "ecmaVersion": 6 },
     "rules": {
         "no-console": [
             "error",

@@ -38,7 +38,7 @@
   "devDependencies": {
     "adm-zip": "",
     "chai": "",
-    "eslint": "^3.16.1",
+    "eslint": "^4.0.8",
     "mocha": "^3.2.0",
     "publish": "^0.6.0",
     "sync-request": "4.0.1"

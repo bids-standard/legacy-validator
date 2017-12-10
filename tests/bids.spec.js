@@ -42,7 +42,7 @@ var suite = describe('BIDS example datasets ', function() {
                 validate.BIDS("tests/data/BIDS-examples-" + test_version + "/" + path + "/", options, function (issues) {
                     var errors = issues.errors;
                     var warnings = issues.warnings;
-                    assert.deepEqual(errors, []);
+                    assert(errors.length === 1);
                     var session_flag = false;
                     for (var warning in warnings) {
                         if (warnings[warning]['code'] === '38') {
@@ -74,7 +74,7 @@ var suite = describe('BIDS example datasets ', function() {
             assert.deepEqual(summary.modalities, ['T1w', 'inplaneT2', 'bold']);
             assert(summary.totalFiles === 133);
             assert(summary.size === 803546);
-            assert.deepEqual(errors, []);
+            assert(errors.length === 1);
             assert(warnings.length === 1 && warnings[0].code === '13');
             isdone();
         });

@@ -13,6 +13,30 @@ var session = require('./session');
 var headerFields = require('./headerFields');
 
 var BIDS;
+var sub_fileList = [];
+//function to groupby files into subject wise filelist
+var groupBy = function(array, cp){
+    return array.reduce((groups, next) => { const name = cp(next);
+    if (name !== undefined) {
+        const group = groups.get(name);
+        if (group) group.push(next);
+        else groups.set(name, [next]);
+    }
+    return groups;
+}, new Map());
+};
+
+// return differene between array
+
+var difference = function (a1, a2) {
+    var a2Set = new Set(a2);
+    return a1.filter(function(x) { return !a2Set.has(x); });
+};
+
+var symmetricDifference = function (a1, a2) {
+    return difference(a1, a2).concat(difference(a2, a1));
+};
+
 BIDS = {
 
     options: {},
@@ -199,6 +223,13 @@ BIDS = {
             }
         });
 
+        // geting a array of files in the dataset from files object
+        async.eachOfLimit(fileList, 200, function (file, key, cb) {
+            if (file.name) {
+                sub_fileList.push(file.relativePath);
+                process.nextTick(cb);
+            }
+        });
 
         // validate individual files
         async.eachOfLimit(fileList, 200, function (file, key, cb) {
@@ -232,7 +263,6 @@ BIDS = {
             // capture niftis for later validation
             else if (file.name.endsWith('.nii') || file.name.endsWith('.nii.gz')) {
                 niftis.push(file);
-
                 // collect modality summary
                 var pathParts = path.split('_');
                 var suffix = pathParts[pathParts.length - 1];
@@ -342,6 +372,7 @@ BIDS = {
                 process.nextTick(cb);
             }
 
+
             // collect file stats
             if (typeof window !== 'undefined') {
                 if (file.size) {
@@ -420,6 +451,7 @@ BIDS = {
                         code: 53
                     }));
                 }
+                self.checkBIDSNifti(sub_fileList, self.issues, summary.subjects);
 
                 if (phenotypeParticipants && phenotypeParticipants.length > 0) {
                     for (var j = 0; j < phenotypeParticipants.length; j++) {
@@ -444,6 +476,31 @@ BIDS = {
     },
 
     /**
+     * takes filelist and issues object
+     * Returns issues with sub-id which doesnt have even a single BIDS compatible file
+     */
+    checkBIDSNifti:function(fileList, issues, summary){
+
+        const groups = groupBy(sub_fileList, path => {const match = path.match(/^\/(sub-\w+)\//);
+            if (match) return match[1];
+        });
+        var actual_subjects = [];
+        for (const [name] of groups.entries()) {
+            actual_subjects.push(name);
+        }
+        summary[0] = 'sub-' + summary;
+        var diff = symmetricDifference(summary, actual_subjects);
+
+        if (diff.length !== 0) {
+            issues.push(new Issue({
+                code: 67,
+                file: {'relativePath': diff},     //adapted fileObject taken by issues to report sub path
+                evidence: "File/s from above subjects are non BIDS complaint."
+            }));
+        }
+    },
+
+    /**
      * subid and sesid mismatch test. Generates error if ses-id and sub-id are different for any file, Takes a file list and return issues
      */
     subIDsesIDmismatchtest: function(fileList){
@@ -456,7 +513,6 @@ BIDS = {
          * found following keys for both path and file keys.
          * sub-
          * ses-
-         *
          *
          */
         function getPathandFileValues(path){
@@ -473,7 +529,7 @@ BIDS = {
 
             //capture session and subject id from filename to find if files are in
             // correct sub/ses directory
-            var filename = path.replace(/^.*[\\\/]/, '');
+            var filename = path.replace(/^.*[\\/]/, '');
 
             // capture sub from file name
             unmat = (/^sub-([a-zA-Z0-9]+)/).exec(filename);

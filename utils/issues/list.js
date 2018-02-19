@@ -341,5 +341,10 @@ module.exports = {
         key: 'NO_VALID_DATA_FOUND_FOR_SUBJECT',
         severity: 'error',
         reason: 'No BIDS compatible data found for at least one subject.'
+    },
+    68: {
+      key: 'DIRECTORY_DOES_NOT_EXIST',
+      severity: 'error',
+      reason: 'Either wrong directory is choosen or there is an error in joining the path.'
     }
 };

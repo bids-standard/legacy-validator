@@ -1,3 +1,5 @@
+import sort from 'fast-sort';
+
 var array = {
 
     /**
@@ -20,8 +22,8 @@ var array = {
 
         // optionally sort arrays
         if (sort) {
-            array1.sort();
-            array2.sort();
+          sort(array1).asc();
+          sort(array2).asc();
         }
 
         for (var i = 0, l = array1.length; i < l; i++) {

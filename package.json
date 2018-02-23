@@ -27,6 +27,7 @@
     "bytes": "^2.3.0",
     "cliff": "^0.1.10",
     "colors": "^1.1.0",
+    "fast-sort": "^1.2.5",
     "jshint": "^2.8.0",
     "minimatch": "3.0.3",
     "nifti-js": "^1.0.0",

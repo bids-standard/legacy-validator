@@ -1,4 +1,4 @@
-var sort = require('fast-sort');
+var sorting = require('fast-sort');
 
 var array = {
 
@@ -22,8 +22,8 @@ var array = {
 
         // optionally sort arrays
         if (sort) {
-          sort(array1).asc();
-          sort(array2).asc();
+          sorting(array1).asc();
+          sorting(array2).asc();
         }
 
         for (var i = 0, l = array1.length; i < l; i++) {

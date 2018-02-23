@@ -1,4 +1,4 @@
-import sort from 'fast-sort';
+var sort = require('fast-sort');
 
 var array = {
 

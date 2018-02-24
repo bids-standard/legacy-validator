@@ -103,37 +103,47 @@ module.exports = function NIFTI (header, file, jsonContentsDict, bContentsDict, 
     }
 
     if (!mergedDictionary.invalid) {
+            
+          /*
+          check if the metadata required by BIDS2NDA are missing
+          */
+          //function for checking if the filepath include the suffix
+          function checkIfPathInclude(){
+            return (path.includes("_bold.nii") || path.includes("_fieldmap.nii") || path.includes("_epi.nii") || path.includes("_T2w.nii") || checkIfPathInclude2());
+          }
+          function checkIfPathInclude2(){
+            return (path.includes("_dwi.nii") || path.includes("_phase1.nii") || path.includes("_phase2.nii") || path.includes("_T1w.nii") || checkIfPathInclude3());
+          }
+          function checkIfPathInclude3(){
+            return (path.includes("_phasediff.nii") || path.includes("_magnitude1.nii") || path.includes("_magnitude2.nii") || path.includes("_PD.nii"));
+          }
 
-      //check if the metadata required by BIDS2NDA are missing
-      if (path.includes("_bold.nii") || path.includes("_fieldmap.nii") || path.includes("_epi.nii") ||
-      path.includes("_dwi.nii") || path.includes("_phase1.nii") || path.includes("_phase2.nii") ||
-      path.includes("_phasediff.nii") || path.includes("_magnitude1.nii") || path.includes("_magnitude2.nii") ||
-      path.includes("_PD.nii") || path.includes("_T1w.nii") || path.includes("_T2w.nii") ) {
-        //for files with bold in the suffix
-          if (path.includes("_bold.nii")) {
-              if(!mergedDictionary.hasOwnProperty('Manufacturer') && !mergedDictionary.hasOwnProperty('ManufacturersModelName') &&
-                  !mergedDictionary.hasOwnProperty('HardcopyDeviceSoftwareVersion') && !mergedDictionary.hasOwnProperty('MagneticFieldStrength') &&
-                  !mergedDictionary.hasOwnProperty('EchoTime') && !mergedDictionary.hasOwnProperty('FlipAngle') && !mergedDictionary.hasOwnProperty('ReceiveCoilName') &&
-                  !mergedDictionary.hasOwnProperty('TaskName') && !mergedDictionary.hasOwnProperty('ExperimentID')) {
-                    issues.push(new Issue({
-                        file: file,
-                        code: 68,
-                        reason: "The file cannot be converted to NDA , you need to add more properties. See the specification " + sidecarMessage
-                    }));
+          if (checkIfPathInclude()) {
+            //for files with bold in the suffix
+              function checkHasOwnProperty(){
+                return (!mergedDictionary.hasOwnProperty('Manufacturer') && checkHasOwnProperty2() && !mergedDictionary.hasOwnProperty('ManufacturersModelName') && !mergedDictionary.hasOwnProperty('HardcopyDeviceSoftwareVersion'));
               }
-          }else{
-              if(!mergedDictionary.hasOwnProperty('Manufacturer') && !mergedDictionary.hasOwnProperty('ManufacturersModelName') &&
-                  !mergedDictionary.hasOwnProperty('HardcopyDeviceSoftwareVersion') && !mergedDictionary.hasOwnProperty('MagneticFieldStrength') &&
-                  !mergedDictionary.hasOwnProperty('EchoTime') && !mergedDictionary.hasOwnProperty('FlipAngle') && !mergedDictionary.hasOwnProperty('ReceiveCoilName')) {
-                    issues.push(new Issue({
-                        file: file,
-                        code: 68,
-                        reason: "The file cannot be converted to NDA , you need to add more properties. See the specification " + sidecarMessage
-                    }));
+              function checkHasOwnProperty2(){
+                return (!mergedDictionary.hasOwnProperty('MagneticFieldStrength') && !mergedDictionary.hasOwnProperty('EchoTime') && !mergedDictionary.hasOwnProperty('FlipAngle') && !mergedDictionary.hasOwnProperty('ReceiveCoilName'));
+              }
+              if (path.includes("_bold.nii")) {
+                  if(checkHasOwnProperty() && !mergedDictionary.hasOwnProperty('TaskName') && !mergedDictionary.hasOwnProperty('ExperimentID')) {
+                        issues.push(new Issue({
+                            file: file,
+                            code: 68,
+                            reason: "The file cannot be converted to NDA , you need to add more properties. See the specification " + sidecarMessage
+                        }));
+                  }
+              }else{
+                  if(checkHasOwnProperty()) {
+                        issues.push(new Issue({
+                            file: file,
+                            code: 68,
+                            reason: "The file cannot be converted to NDA , you need to add more properties. See the specification " + sidecarMessage
+                        }));
+                  }
               }
           }
-      }
-
         // task scan checks
         if (path.includes('_task-') && !path.includes('_defacemask.nii') && !path.includes('_sbref.nii')) {
             if (!mergedDictionary.hasOwnProperty('TaskName')) {

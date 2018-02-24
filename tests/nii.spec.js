@@ -70,6 +70,27 @@ describe('NIFTI', function(){
         });
     });
 
+    it('should catch if metadata required by BIDS2NDA are missing', function() {
+        var jsonContentsDictForNDA = {
+            '/sub-14/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.json': {
+                Manufacturer: 'test',
+                ManufacturersModelName: 'test',
+                TaskName: 'test',
+                ExperimentID: 'testid',
+                SliceEncodingDirection: 4,
+                RepetitionTime: 1,
+                TotalReadoutTime: 3,
+                EchoTime: 1,
+                PhaseEncodingDirection: 3,
+                EffectiveEchoSpacing: 5,
+                SliceTiming: 3
+            }
+        };
+        validate.NIFTI(null, file, jsonContentsDictForNDA, {}, [], events, function (issues) {
+            assert(issues[issues.length-1].code == 68);
+        });
+    });
+
     it('should catch missing task name definitions on task scans', function() {
         delete jsonContentsDict['/sub-15/func/sub-15_task-mixedeventrelatedproberest_run-01_bold.json'].TaskName;
         validate.NIFTI(null, file, jsonContentsDict, {}, [], events, function (issues) {
@@ -131,7 +152,7 @@ describe('NIFTI', function(){
         path: 'sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
         relativePath: '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz'}];
       validate.NIFTI(null, file, jsonContentsDict, {}, fileList, [], function (issues) {
-          assert.deepEqual(issues, []);
+          assert(issues.length = 1 && issues[0].code == 68);
       });
     });
 

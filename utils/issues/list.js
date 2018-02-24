@@ -341,5 +341,10 @@ module.exports = {
         key: 'NO_VALID_DATA_FOUND_FOR_SUBJECT',
         severity: 'error',
         reason: 'No BIDS compatible data found for at least one subject.'
+    },
+    68: {
+        key: 'METADATA_INCOMPLETE_FOR_NDA',
+        severity: 'warning',
+        reason: 'Metadata required by BIDS2NDA are missing or incomplete. Please check the specifications'
     }
 };

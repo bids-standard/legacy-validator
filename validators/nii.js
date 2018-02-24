@@ -103,7 +103,8 @@ module.exports = function NIFTI (header, file, jsonContentsDict, bContentsDict, 
     }
 
     if (!mergedDictionary.invalid) {
-
+            
+          
         // task scan checks
         if (path.includes('_task-') && !path.includes('_defacemask.nii') && !path.includes('_sbref.nii')) {
             if (!mergedDictionary.hasOwnProperty('TaskName')) {
@@ -247,6 +248,46 @@ module.exports = function NIFTI (header, file, jsonContentsDict, bContentsDict, 
                 checkIfIntendedExists(intendedForFile, fileList, issues, file);
             }
         }
+        
+        /*
+      check if the metadata required by BIDS2NDA are missing
+      */
+      var suffix = ['_bold.nii','_fieldmap.nii','_epi.nii','_T2w.nii','_dwi.nii','_phase1.nii','_phase2.nii','_T1w.nii','_phasediff.nii','_magnitude1.nii','_magnitude2.nii','_PD.nii'];
+      var pathInclude = false;
+      for(var i=0;i<suffix.length;i++){
+        if(path.includes(suffix[i])){
+          pathInclude = true;
+        }
+      }
+
+
+      if (pathInclude) {
+        //for files with bold in the suffix
+          var prop = ['Manufacturer','ManufacturersModelName','HardcopyDeviceSoftwareVersion','MagneticFieldStrength','EchoTime','FlipAngle','ReceiveCoilName'];
+          var checkProp = false;
+          for(var i=0;i<prop.length;i++){
+            if(!mergedDictionary.hasOwnProperty(prop[i])){
+              checkProp = true;
+            }
+          }
+          if (path.includes("_bold.nii")) {
+              if(checkProp || !mergedDictionary.hasOwnProperty('TaskName') || !mergedDictionary.hasOwnProperty('ExperimentID')) {
+                    issues.push(new Issue({
+                        file: file,
+                        code: 68,
+                        reason: "The file cannot be converted to NDA , you need to add more properties. See the specification " + sidecarMessage
+                    }));
+              }
+          }else{
+              if(checkProp {
+                    issues.push(new Issue({
+                        file: file,
+                        code: 68,
+                        reason: "The file cannot be converted to NDA , you need to add more properties. See the specification " + sidecarMessage
+                    }));
+              }
+          }
+      }
     }
 
     callback(issues);

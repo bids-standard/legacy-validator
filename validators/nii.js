@@ -252,27 +252,26 @@ module.exports = function NIFTI (header, file, jsonContentsDict, bContentsDict, 
         /*
       check if the metadata required by BIDS2NDA are missing
       */
-      //function for checking if the filepath include the suffix
-      function checkIfPathInclude(){
-        return (path.includes("_bold.nii") || path.includes("_fieldmap.nii") || path.includes("_epi.nii") || path.includes("_T2w.nii") || checkIfPathInclude2());
-      }
-      function checkIfPathInclude2(){
-        return (path.includes("_dwi.nii") || path.includes("_phase1.nii") || path.includes("_phase2.nii") || path.includes("_T1w.nii") || checkIfPathInclude3());
-      }
-      function checkIfPathInclude3(){
-        return (path.includes("_phasediff.nii") || path.includes("_magnitude1.nii") || path.includes("_magnitude2.nii") || path.includes("_PD.nii"));
+      var suffix = ['_bold.nii','_fieldmap.nii','_epi.nii','_T2w.nii','_dwi.nii','_phase1.nii','_phase2.nii','_T1w.nii','_phasediff.nii','_magnitude1.nii','_magnitude2.nii','_PD.nii'];
+      var pathInclude = false;
+      for(var i=0;i<suffix.length;i++){
+        if(path.includes(suffix[i])){
+          pathInclude = true;
+        }
       }
 
-      if (checkIfPathInclude()) {
+
+      if (pathInclude) {
         //for files with bold in the suffix
-          function checkHasOwnProperty(){
-            return (!mergedDictionary.hasOwnProperty('Manufacturer') && checkHasOwnProperty2() && !mergedDictionary.hasOwnProperty('ManufacturersModelName') && !mergedDictionary.hasOwnProperty('HardcopyDeviceSoftwareVersion'));
-          }
-          function checkHasOwnProperty2(){
-            return (!mergedDictionary.hasOwnProperty('MagneticFieldStrength') && !mergedDictionary.hasOwnProperty('EchoTime') && !mergedDictionary.hasOwnProperty('FlipAngle') && !mergedDictionary.hasOwnProperty('ReceiveCoilName'));
+          var prop = ['Manufacturer','ManufacturersModelName','HardcopyDeviceSoftwareVersion','MagneticFieldStrength','EchoTime','FlipAngle','ReceiveCoilName'];
+          var checkProp = false;
+          for(var i=0;i<prop.length;i++){
+            if(!mergedDictionary.hasOwnProperty(prop[i])){
+              checkProp = true;
+            }
           }
           if (path.includes("_bold.nii")) {
-              if(checkHasOwnProperty() && !mergedDictionary.hasOwnProperty('TaskName') && !mergedDictionary.hasOwnProperty('ExperimentID')) {
+              if(checkProp || !mergedDictionary.hasOwnProperty('TaskName') || !mergedDictionary.hasOwnProperty('ExperimentID')) {
                     issues.push(new Issue({
                         file: file,
                         code: 68,
@@ -280,7 +279,7 @@ module.exports = function NIFTI (header, file, jsonContentsDict, bContentsDict, 
                     }));
               }
           }else{
-              if(checkHasOwnProperty()) {
+              if(checkProp {
                     issues.push(new Issue({
                         file: file,
                         code: 68,
@@ -288,7 +287,7 @@ module.exports = function NIFTI (header, file, jsonContentsDict, bContentsDict, 
                     }));
               }
           }
-       }
+      }
     }
 
     callback(issues);

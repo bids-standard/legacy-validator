@@ -80,14 +80,10 @@ describe('NIFTI', function(){
                 SliceEncodingDirection: 4,
                 RepetitionTime: 1,
                 TotalReadoutTime: 3,
-                TaskName: 'Mixed Event Related Probe',
                 EchoTime: 1,
                 PhaseEncodingDirection: 3,
                 EffectiveEchoSpacing: 5,
-                SliceTiming: 3,
-                SliceEncodingDirection: 4,
-                RepetitionTime: 1,
-                TotalReadoutTime: 3
+                SliceTiming: 3
             }
         };
         validate.NIFTI(null, file, jsonContentsDictForNDA, {}, [], events, function (issues) {

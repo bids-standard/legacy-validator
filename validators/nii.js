@@ -104,34 +104,35 @@ module.exports = function NIFTI (header, file, jsonContentsDict, bContentsDict, 
 
     if (!mergedDictionary.invalid) {
 
-        //check if the metadata required by BIDS2NDA are missing
-        if (path.includes("_bold.nii") || path.includes("_fieldmap.nii") || path.includes("_epi.nii") ||
-        path.includes("_dwi.nii") || path.includes("_phase1.nii") || path.includes("_phase2.nii") ||
-        path.includes("_phasediff.nii") || path.includes("_magnitude1.nii") || path.includes("_magnitude2.nii") ||
-        path.includes("_PD.nii") || path.includes("_T1w.nii") || path.includes("_T2w.nii") ) {
-          //for files with bold in the suffix
-            if (path.includes("_bold.nii") {
-                if(!mergedDictionary.hasOwnProperty('Manufacturer') && !mergedDictionary.hasOwnProperty('ManufacturersModelName') &&
-                    !mergedDictionary.hasOwnProperty('HardcopyDeviceSoftwareVersion') && !mergedDictionary.hasOwnProperty('MagneticFieldStrength') &&
-                    !mergedDictionary.hasOwnProperty('EchoTime') && !mergedDictionary.hasOwnProperty('FlipAngle') && !mergedDictionary.hasOwnProperty('ReceiveCoilName') &&
-                    !mergedDictionary.hasOwnProperty('TaskName') && !mergedDictionary.hasOwnProperty('ExperimentID')) {
-                      issues.push(new Issue({
-                          file: file,
-                          code: 69,
-                          reason: "The file cannot be converted to NDA , you need to add more properties. See the specification " + sidecarMessage
-                      }));
-                }
-            }else{
-                if(!mergedDictionary.hasOwnProperty('Manufacturer') && !mergedDictionary.hasOwnProperty('ManufacturersModelName') &&
-                    !mergedDictionary.hasOwnProperty('HardcopyDeviceSoftwareVersion') && !mergedDictionary.hasOwnProperty('MagneticFieldStrength') &&
-                    !mergedDictionary.hasOwnProperty('EchoTime') && !mergedDictionary.hasOwnProperty('FlipAngle') && !mergedDictionary.hasOwnProperty('ReceiveCoilName')) {
-                      issues.push(new Issue({
-                          file: file,
-                          code: 69,
-                          reason: "The file cannot be converted to NDA , you need to add more properties. See the specification " + sidecarMessage
-                      }));
-                }
-        }
+      //check if the metadata required by BIDS2NDA are missing
+      if (path.includes("_bold.nii") || path.includes("_fieldmap.nii") || path.includes("_epi.nii") ||
+      path.includes("_dwi.nii") || path.includes("_phase1.nii") || path.includes("_phase2.nii") ||
+      path.includes("_phasediff.nii") || path.includes("_magnitude1.nii") || path.includes("_magnitude2.nii") ||
+      path.includes("_PD.nii") || path.includes("_T1w.nii") || path.includes("_T2w.nii") ) {
+        //for files with bold in the suffix
+          if (path.includes("_bold.nii")) {
+              if(!mergedDictionary.hasOwnProperty('Manufacturer') && !mergedDictionary.hasOwnProperty('ManufacturersModelName') &&
+                  !mergedDictionary.hasOwnProperty('HardcopyDeviceSoftwareVersion') && !mergedDictionary.hasOwnProperty('MagneticFieldStrength') &&
+                  !mergedDictionary.hasOwnProperty('EchoTime') && !mergedDictionary.hasOwnProperty('FlipAngle') && !mergedDictionary.hasOwnProperty('ReceiveCoilName') &&
+                  !mergedDictionary.hasOwnProperty('TaskName') && !mergedDictionary.hasOwnProperty('ExperimentID')) {
+                    issues.push(new Issue({
+                        file: file,
+                        code: 68,
+                        reason: "The file cannot be converted to NDA , you need to add more properties. See the specification " + sidecarMessage
+                    }));
+              }
+          }else{
+              if(!mergedDictionary.hasOwnProperty('Manufacturer') && !mergedDictionary.hasOwnProperty('ManufacturersModelName') &&
+                  !mergedDictionary.hasOwnProperty('HardcopyDeviceSoftwareVersion') && !mergedDictionary.hasOwnProperty('MagneticFieldStrength') &&
+                  !mergedDictionary.hasOwnProperty('EchoTime') && !mergedDictionary.hasOwnProperty('FlipAngle') && !mergedDictionary.hasOwnProperty('ReceiveCoilName')) {
+                    issues.push(new Issue({
+                        file: file,
+                        code: 68,
+                        reason: "The file cannot be converted to NDA , you need to add more properties. See the specification " + sidecarMessage
+                    }));
+              }
+          }
+      }
 
         // task scan checks
         if (path.includes('_task-') && !path.includes('_defacemask.nii') && !path.includes('_sbref.nii')) {

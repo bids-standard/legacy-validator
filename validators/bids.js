@@ -223,8 +223,13 @@ BIDS = {
 
             // validate path naming
             else if (!utils.type.isBIDS(file.relativePath)) {
-                self.issues.push(new Issue({
-                    file: file,
+              var filename = path.basename(dir);
+              self.issues.push(new Issue({
+                    file: {
+                        name: filename,
+                        path: path.join('.', filename),
+                        relativePath: path.join('', filename)
+                    }
                     evidence: file.name,
                     code: 1
                 }));

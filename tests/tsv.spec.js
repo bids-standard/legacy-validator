@@ -42,7 +42,7 @@ describe('TSV', function(){
     };
 
     it('should require events files to have "onset" as first header', function () {
-        var tsv = 'header-one\tduration\t4eader-three\n' +
+        var tsv = 'header-one\tduration\theader-three\n' +
                   'value-one\tvalue-two\tvalue-three';
         validate.TSV.TSV(eventsFile, tsv, [], function (issues) {
             assert(issues.length === 1 && issues[0].code === 20);
@@ -50,7 +50,7 @@ describe('TSV', function(){
     });
 
     it('should require events files to have "duration" as second header', function () {
-        var tsv = 'onset\theader-two\t4eader-three\n' +
+        var tsv = 'onset\theader-two\theader-three\n' +
                   'value-one\tvalue-two\tvalue-three';
         validate.TSV.TSV(eventsFile, tsv, [], function (issues) {
             assert(issues.length === 1 && issues[0].code === 21);
@@ -58,8 +58,16 @@ describe('TSV', function(){
     });
 
     it('should not throw issues for a valid events file', function () {
-        var tsv = 'onset\tduration\t4eader-three\n' +
+        var tsv = 'onset\tduration\theader-three\n' +
                   'value-one\tvalue-two\tvalue-three';
+        validate.TSV.TSV(eventsFile, tsv, [], function (issues) {
+            assert.deepEqual(issues, []);
+        });
+    });
+
+    it('should not throw issues for a valid events file with only two columns', function () {
+        var tsv = 'onset\tduration\n' +
+                  'value-one\tvalue-two';
         validate.TSV.TSV(eventsFile, tsv, [], function (issues) {
             assert.deepEqual(issues, []);
         });
@@ -87,7 +95,7 @@ describe('TSV', function(){
     };
 
     it("should not allow participants.tsv files without participant_id columns", function () {
-        var tsv = 'subject_id\theader-two\t4eader-three\n' +
+        var tsv = 'subject_id\theader-two\theader-three\n' +
                   'value-one\tvalue-two\tvalue-three';
         validate.TSV.TSV(participantsFile, tsv, [], function (issues) {
             assert(issues.length === 1 && issues[0].code === 48);
@@ -95,7 +103,7 @@ describe('TSV', function(){
     });
 
     it("should allow a valid participants.tsv file", function () {
-        var tsv = 'participant_id\theader-two\t4eader-three\n' +
+        var tsv = 'participant_id\theader-two\theader-three\n' +
                   'value-one\tvalue-two\tvalue-three';
         validate.TSV.TSV(participantsFile, tsv, [], function (issues) {
             assert.deepEqual(issues, []);

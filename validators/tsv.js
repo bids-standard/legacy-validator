@@ -85,7 +85,7 @@ var TSV = function TSV (file, contents, fileList, callback) {
                 code: 20
             }));
         }
-        if (headers[1] !== "duration"){
+        if (!(headers[1] == "duration" || headers[1] == "duration\\n")){
             issues.push(new Issue({
                 file: file,
                 evidence: headers,

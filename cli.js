@@ -42,7 +42,7 @@ function logIssues (issues, color, options) {
     for (var i = 0; i < issues.length; i++) {
         var issue = issues[i];
         var type = (color == 'red'?'ERR':'WARN');
-        console.log('\t' + colors[color]((i + 1) + ': (' + type + ') ' issue.reason + ' (code: ' + issue.code + ' - ' + issue.key + ')'));
+        console.log('\t' + colors[color]((i + 1) + ': (' + type + ') ' + issue.reason + ' (code: ' + issue.code + ' - ' + issue.key + ')'));
         for (var j = 0; j < issue.files.length; j++) {
             var file = issues[i].files[j];
             if (!file || !file.file) {continue;}

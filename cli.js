@@ -13,9 +13,9 @@ module.exports = function (dir, options) {
             var errors = issues.errors;
             var warnings = issues.warnings;
             if (issues.errors.length === 1 && issues.errors[0].code === '61') {
-                console.log(colors.red("The directory " + dir + " failed an initial Quick Test. This means the basic names and structure of the files and directories do not comply with BIDS specification. For more info go to http://bids.neuroimaging.io/"));
+                console.log(colors.red("(ERR)  The directory " + dir + " failed an initial Quick Test. This means the basic names and structure of the files and directories do not comply with BIDS specification. For more info go to http://bids.neuroimaging.io/"));
             } else if (issues.config && issues.config.length >= 1) {
-                console.log(colors.red('Invalid Config File'));
+                console.log(colors.red('(ERR)  Invalid Config File'));
                 for (var i = 0; i < issues.config.length; i++) {
                     var issue = issues.config[i];
                     issue.file.file = {relativePath: issue.file.path};
@@ -41,7 +41,8 @@ module.exports = function (dir, options) {
 function logIssues (issues, color, options) {
     for (var i = 0; i < issues.length; i++) {
         var issue = issues[i];
-        console.log('\t' + colors[color]((i + 1) + ': ' + issue.reason + ' (code: ' + issue.code + ' - ' + issue.key + ')'));
+        var type = (color == 'red'?'ERR':'WARN');
+        console.log('\t' + colors[color]((i + 1) + ': (' + type + ') ' issue.reason + ' (code: ' + issue.code + ' - ' + issue.key + ')'));
         for (var j = 0; j < issue.files.length; j++) {
             var file = issues[i].files[j];
             if (!file || !file.file) {continue;}

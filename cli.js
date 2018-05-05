@@ -7,6 +7,8 @@ var pluralize = require('pluralize');
 var bytes     = require('bytes');
 var fs        = require('fs');
 
+var npmtest   = (process.argv[1].endsWith('npm') || process.argv[1].endsWith('mocha')) ;
+
 module.exports = function (dir, options) {
     if (fs.existsSync(dir)) {
         validate.BIDS(dir, options, function (issues, summary) {
@@ -33,12 +35,15 @@ module.exports = function (dir, options) {
             if (issues === 'Invalid' || errors && errors.length >= 1 || issues.config && issues.config.length >= 1) {process.exit(1);}
         });
     } else {
+        if(npmtest){ return 'noDir';}
         console.log(colors.red(dir + " does not exist"));
         process.exit(2);
     }
+    if(npmtest){ return 'success';}
 };
 
 function logIssues (issues, color, options) {
+    if(npmtest) return true;
     for (var i = 0; i < issues.length; i++) {
         var issue = issues[i];
         console.log('\t' + colors[color]((i + 1) + ': ' + issue.reason + ' (code: ' + issue.code + ' - ' + issue.key + ')'));
@@ -94,6 +99,7 @@ function logSummary (summary) {
             val3 = column3[i] ? column3[i] : '';
             rows.push(['       ', val1, val2, val3]);
         }
+        if(npmtest) return true;
         console.log(cliff.stringifyRows(rows));
 
         console.log();

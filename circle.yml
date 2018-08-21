@@ -14,10 +14,10 @@ jobs:
       - save_cache:
           key: npm-deps-{{ checksum "package.json" }}
           paths: node_modules
-      - run: 
+      - run:
           name: Eslint
           command: npm run lint
-      - run: 
+      - run:
           name: Mocha tests
           command: npm run test
       - run:
@@ -67,7 +67,10 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - test
+      - test:
+        filters:
+          tags:
+            only: /.*/
       - githubPagesTest:
           requires:
             - test

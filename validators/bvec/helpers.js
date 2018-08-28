@@ -1,33 +1,5 @@
-var Issue = require('../utils').issues.Issue
-var type = require('../utils').type
-
-/**
- * bvec
- *
- * Takes a bvec file, its contents as a string
- * and a callback as arguments. Callsback
- * with any issues it finds while validating
- * against the BIDS specification.
- */
-module.exports = function bvec(file, contents, callback) {
-  let issues = []
-
-  issues = issues.concat(checkType(contents, file))
-  if (issues.length) {
-    return callback(issues)
-  }
-
-  // check that there are exactly three rows
-  issues = issues.concat(checkNumberOfRows(contents, file))
-
-  // check that each row is the same length
-  issues = issues.concat(checkRowConsistency(contents, file))
-
-  // check that each value is a number
-  issues = issues.concat(checkValueValidity(contents, file))
-
-  callback(issues)
-}
+var Issue = require('../../utils').issues.Issue
+var type = require('../../utils').type
 
 function checkType(contents, file) {
   let issues = []
@@ -95,4 +67,11 @@ function checkValueValidity(contents, file) {
     }
   }
   return []
+}
+
+module.exports = {
+  checkValueValidity: checkValueValidity,
+  checkNumberOfRows: checkNumberOfRows,
+  checkRowConsistency: checkRowConsistency,
+  checkType: checkType,
 }

@@ -1,7 +1,7 @@
 var assert = require('chai').assert
 var utils = require('../utils')
 var Test = require('mocha/lib/test')
-var BIDS = require('../validators/bids')
+var BIDS = require('../validators/bids/')
 
 var suiteAnat = describe('utils.type.file.isAnat', function() {
   before(function(done) {
@@ -487,6 +487,9 @@ describe('BIDS.subIDsesIDmismatchtest', function() {
         assert(code64_seen)
         assert(code65_seen)
       }
-    assert.equal(BIDS.subIDsesIDmismatchtest(files, callback), true)
+    assert.equal(
+      BIDS.subIDsesIDmismatchtest({ issues: [], summary: {} }, files, callback),
+      true,
+    )
   })
 })

@@ -1,0 +1,18 @@
+module.exports = [
+  'T1w',
+  'T2w',
+  'T1map',
+  'T2map',
+  'T1rho',
+  'FLAIR',
+  'PD',
+  'PDT2',
+  'inplaneT1',
+  'inplaneT2',
+  'angio',
+  'SWImagandphase',
+  'T2star',
+  'FLASH',
+  'PDmap',
+  'photo',
+]

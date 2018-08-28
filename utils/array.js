@@ -7,35 +7,52 @@ var array = {
    * to sort arrays before checking equality.
    */
   equals: function(array1, array2, sort) {
+    let equals = true
     // if the other array is a falsy value, return
-    if (!array1 || !array2) {
-      return false
-    }
-
-    // compare lengths
-    if (array1.length != array2.length) {
-      return false
-    }
+    const rightFormat =
+      array.bothValid(array1, array2) && array.sameLength(array1, array2)
 
     // optionally sort arrays
-    if (sort) {
+    if (rightFormat && sort) {
       array1.sort()
       array2.sort()
     }
 
-    for (var i = 0, l = array1.length; i < l; i++) {
-      // Check if we have nested arrays
-      if (array1[i] instanceof Array && array2[i] instanceof Array) {
-        // recurse into the nested arrays
-        if (!array.equals(array1[i], array2[i], sort)) {
-          return false
+    if (rightFormat) {
+      array1.map((item, idx) => {
+        if (array.isArray(item) && array.isArray(array2[idx])) {
+          if (!array.equals(item, array2[idx], sort)) {
+            equals = false
+          } else if (item != array2[idx]) {
+            equals = false
+          }
         }
-      } else if (array1[i] != array2[i]) {
-        // Warning - two different object instances will never be equal: {x:20} != {x:20}
-        return false
-      }
+      })
     }
-    return true
+    return equals
+  },
+
+  bothValid: function(array1, array2) {
+    let isValid = true
+    if (!array1 || !array2) {
+      isValid = false
+    }
+    return isValid
+  },
+
+  sameLength: function(array1, array2) {
+    let sameLength = true
+
+    // compare lengths
+    if (array1.length != array2.length) {
+      sameLength = false
+    }
+
+    return sameLength
+  },
+
+  isArray: function(array) {
+    return array instanceof Array
   },
 
   /**

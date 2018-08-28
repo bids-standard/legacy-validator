@@ -101,6 +101,7 @@ var suite = describe('BIDS example datasets ', function() {
       'tests/data/BIDS-examples-' + test_version + '/ds001',
       options,
       function(issues, summary) {
+        // console.log('issues:', issues)
         var errors = issues.errors
         var warnings = issues.warnings
         assert(summary.sessions.length === 0)

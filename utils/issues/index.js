@@ -57,16 +57,13 @@ var issues = {
     // organize by issue code
     var categorized = {}
     var codes = []
-    for (var i = 0; i < issueList.length; i++) {
-      var issue = issueList[i]
-
-      if (
+    const relevantIssues = issueList.filter(issue => {
+      const isIgnored =
         issue.file &&
         config.ignoredFile(options.config, issue.file.relativePath)
-      ) {
-        continue
-      }
-
+      return !isIgnored
+    })
+    relevantIssues.map(issue => {
       if (!categorized[issue.code]) {
         codes.push(issue.key)
         codes.push(issue.code)
@@ -79,23 +76,20 @@ var issues = {
       } else {
         categorized[issue.code].additionalFileCount++
       }
-    }
+    })
 
     var severityMap = config.interpret(codes, options.config)
 
     // organize by severity
-    for (var code in categorized) {
-      issue = categorized[code]
+    Object.keys(categorized).map(code => {
+      let issue = categorized[code]
       issue.code = code
-
       if (severityMap.hasOwnProperty(issue.code)) {
         issue.severity = severityMap[issue.code]
       }
-
       if (severityMap.hasOwnProperty(issue.key)) {
         issue.severity = severityMap[issue.key]
       }
-
       if (issue.severity === 'error') {
         // Schema validation issues will yield the JSON file invalid, we should display them first to attract
         // user attention.
@@ -109,7 +103,7 @@ var issues = {
       } else if (issue.severity === 'ignore') {
         ignored.push(issue)
       }
-    }
+    })
 
     return { errors: errors, warnings: warnings, ignored: ignored }
   },
@@ -128,13 +122,7 @@ var issues = {
 
     issueList = errors.concat(warnings).concat(ignored)
     var unformatted = []
-    for (var i = 0; i < issueList.length; i++) {
-      var issue = issueList[i]
-      for (var j = 0; j < issue.files.length; j++) {
-        var file = issue.files[j]
-        unformatted.push(file)
-      }
-    }
+    issueList.map(issue => issue.files.map(file => unformatted.push(file)))
     return issues.format(unformatted, summary, { config: config })
   },
 }

@@ -15,28 +15,56 @@ module.exports = {
       [['magnitude', 'fieldmap'], 'fieldmap'],
       [['epi'], 'fieldmap'],
     ]
-
-    for (
-      var groupTouple_i = 0;
-      groupTouple_i < modalityGroups.length;
-      groupTouple_i++
-    ) {
-      var groupSet = modalityGroups[groupTouple_i][0]
-      var groupName = modalityGroups[groupTouple_i][1]
-      var match = true
-      for (var i = 0; i < groupSet.length; i++) {
-        if (modalities.indexOf(groupSet[i]) === -1) {
+    modalityGroups.map(group => {
+      const groupSet = group[0]
+      const groupName = group[1]
+      let match = true
+      groupSet.map(group => {
+        const groupNotInModalityList = modalities.indexOf(group) === -1
+        if (groupNotInModalityList) {
           match = false
         }
-      }
+      })
       if (match) {
         modalities.push(groupName)
-        for (var j = 0; j < groupSet.length; j++) {
-          modalities.splice(modalities.indexOf(groupSet[j]), 1)
-        }
+        groupSet.map(group => {
+          modalities.splice(modalities.indexOf(group, 1))
+        })
+      }
+    })
+    return modalities
+  },
+
+  /**
+   *
+   */
+  isCorrectModality: function(path, options) {
+    var isCorrectModality = false
+    // MRI
+    if (
+      path[0].includes('.nii') &&
+      ['anat', 'func', 'dwi'].indexOf(path[1]) != -1
+    ) {
+      isCorrectModality = true
+    } else if (path[0].includes('.json')) {
+      const testPath = path[1]
+      switch (testPath) {
+        case 'meg':
+          // MEG
+          isCorrectModality = true
+          break
+        case 'eeg':
+          // EEG
+          isCorrectModality = !!options.bep006
+          break
+        case 'ieeg':
+          // iEEG
+          isCorrectModality = !!options.bep010
+          break
+        default:
+          break
       }
     }
-
-    return modalities
+    return isCorrectModality
   },
 }

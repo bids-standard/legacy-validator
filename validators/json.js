@@ -16,22 +16,43 @@ module.exports = function(file, contents, callback) {
   // primary flow --------------------------------------------------------------------
 
   var issues = []
-
   utils.json.parse(file, contents, function(pissues, jsObj) {
     issues = pissues
     if (jsObj) {
       issues = issues.concat(checkUnits(file, jsObj))
     }
-    callback(issues, jsObj)
+    return callback(issues, jsObj)
   })
 }
 
 // individual checks ---------------------------------------------------------------
 
 function checkUnits(file, sidecar) {
-  var issues = []
-  var schema = null
+  let issues = []
+  let schema = selectSchema(file)
+  issues = issues.concat(validateSchema(file, sidecar, schema))
 
+  issues = issues.concat(
+    checkSidecarUnits(file, sidecar, { field: 'RepetitionTime', min: 100 }, 2),
+  )
+
+  issues = issues.concat(
+    checkSidecarUnits(file, sidecar, { field: 'EchoTime', min: 1 }, 3),
+  )
+  issues = issues.concat(
+    checkSidecarUnits(file, sidecar, { field: 'EchoTime1', min: 1 }, 4),
+  )
+  issues = issues.concat(
+    checkSidecarUnits(file, sidecar, { field: 'EchoTime2', min: 1 }, 4),
+  )
+  issues = issues.concat(
+    checkSidecarUnits(file, sidecar, { field: 'TotalReadoutTime', min: 10 }, 5),
+  )
+  return issues
+}
+
+function selectSchema(file) {
+  let schema = null
   if (file.name) {
     if (file.name.endsWith('participants.json')) {
       schema = require('./schemas/data_dictionary.json')
@@ -59,67 +80,39 @@ function checkUnits(file, sidecar) {
     } else if (file.name.endsWith('eeg.json')) {
       schema = require('./schemas/eeg.json')
     }
-    if (schema) {
-      var validate = ajv.compile(schema)
-      var valid = validate(sidecar)
-      if (!valid) {
-        for (var i = 0; i < validate.errors.length; i++) {
-          issues.push(
-            new Issue({
-              file: file,
-              code: 55,
-              evidence:
-                validate.errors[i].dataPath + ' ' + validate.errors[i].message,
-            }),
-          )
-        }
-      }
+  }
+  return schema
+}
+
+function validateSchema(file, sidecar, schema) {
+  const issues = []
+  if (schema) {
+    var validate = ajv.compile(schema)
+    var valid = validate(sidecar)
+    if (!valid) {
+      validate.errors.map(error =>
+        issues.push(
+          new Issue({
+            file: file,
+            code: 55,
+            evidence: error.dataPath + ' ' + error.message,
+          }),
+        ),
+      )
     }
   }
+  return issues
+}
 
-  if (
-    sidecar.hasOwnProperty('RepetitionTime') &&
-    sidecar['RepetitionTime'] > 100
-  ) {
+function checkSidecarUnits(file, sidecar, fieldObj, errCode) {
+  let issues = []
+  const field = fieldObj.field
+  const min = fieldObj.min
+  if (sidecar.hasOwnProperty(field) && sidecar[field] > min) {
     issues.push(
       new Issue({
+        code: errCode,
         file: file,
-        code: 2,
-      }),
-    )
-  }
-  if (sidecar.hasOwnProperty('EchoTime') && sidecar['EchoTime'] > 1) {
-    issues.push(
-      new Issue({
-        file: file,
-        code: 3,
-      }),
-    )
-  }
-  if (sidecar.hasOwnProperty('EchoTime1') && sidecar['EchoTime1'] > 1) {
-    issues.push(
-      new Issue({
-        file: file,
-        code: 4,
-      }),
-    )
-  }
-  if (sidecar.hasOwnProperty('EchoTime2') && sidecar['EchoTime2'] > 1) {
-    issues.push(
-      new Issue({
-        file: file,
-        code: 4,
-      }),
-    )
-  }
-  if (
-    sidecar.hasOwnProperty('TotalReadoutTime') &&
-    sidecar['TotalReadoutTime'] > 10
-  ) {
-    issues.push(
-      new Issue({
-        file: file,
-        code: 5,
       }),
     )
   }

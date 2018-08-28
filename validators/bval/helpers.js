@@ -1,31 +1,5 @@
-var Issue = require('../utils').issues.Issue
-var type = require('../utils').type
-
-/**
- * bval
- *
- * Takes a bval file, its contents as a string
- * and a callback as arguments. Callsback
- * with any issues it finds while validating
- * against the BIDS specification.
- */
-module.exports = function bval(file, contents, callback) {
-  let issues = []
-
-  // break val if type of contents is not string
-  issues = issues.concat(checkType(contents, file))
-  if (issues.length) {
-    return callback(issues)
-  }
-
-  // check number of rows in contents
-  issues = issues.concat(checkNumberOfRows(contents, file))
-
-  // check for proper separator and value type
-  issues = issues.concat(checkSeparatorAndValueType(contents, file))
-
-  callback(issues)
-}
+var Issue = require('../../utils').issues.Issue
+var type = require('../../utils').type
 
 function checkType(contents, file) {
   let issues = []
@@ -79,4 +53,10 @@ function checkNumberOfRows(contents, file) {
     )
   }
   return issues
+}
+
+module.exports = {
+  checkType: checkType,
+  checkSeparatorAndValueType: checkSeparatorAndValueType,
+  checkNumberOfRows: checkNumberOfRows,
 }

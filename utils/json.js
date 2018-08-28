@@ -19,6 +19,7 @@ module.exports = {
       err = exception
     } finally {
       if (err) {
+        // console.log('file:', file, 'contents:', contents)
         this.jshint(file, contents, function(issues) {
           callback(issues, null)
         })
@@ -39,21 +40,22 @@ module.exports = {
     var issues = []
     if (!JSHINT(contents)) {
       var out = JSHINT.data()
-      for (var i = 0; out.errors.length > i; ++i) {
-        var error = out.errors[i]
-        if (error) {
-          issues.push(
-            new Issue({
-              code: 27,
-              file: file,
-              line: error.line ? error.line : null,
-              character: error.character ? error.character : null,
-              reason: error.reason ? error.reason : null,
-              evidence: error.evidence ? error.evidence : null,
-            }),
-          )
-        }
-      }
+      out.errors.map(error => {
+        const line = error.line ? error.line : null
+        const reason = error.reason ? error.reason : null
+        const evidence = error.evidence ? error.evidence : null
+        const character = error.character ? error.character : null
+        issues.push(
+          new Issue({
+            code: 27,
+            file,
+            line,
+            character,
+            reason,
+            evidence,
+          }),
+        )
+      })
     }
     callback(issues)
   },

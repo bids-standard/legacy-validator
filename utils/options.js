@@ -8,11 +8,11 @@ module.exports = {
   parse: function(options, callback) {
     options = options ? options : {}
     options = {
-      ignoreWarnings: options.ignoreWarnings ? true : false,
-      ignoreNiftiHeaders: options.ignoreNiftiHeaders ? true : false,
-      verbose: options.verbose ? true : false,
-      bep006: options.bep006 ? true : false,
-      bep010: options.bep010 ? true : false,
+      ignoreWarnings: !!options.ignoreWarnings,
+      ignoreNiftiHeaders: !!options.ignoreNiftiHeaders,
+      verbose: !!options.verbose,
+      bep006: !!options.bep006,
+      bep010: !!options.bep010,
       config: options.config ? options.config : {},
     }
     if (options.config && typeof options.config !== 'boolean') {
@@ -47,6 +47,7 @@ module.exports = {
    * Parse Config
    */
   parseConfig: function(config, callback) {
+    let parsed = { ignore: [], warn: [], error: [], ignoredFiles: [] }
     this.loadConfig(config, function(issues, file, contents) {
       if (issues) {
         callback(issues, null)
@@ -55,12 +56,10 @@ module.exports = {
           if (issues && issues.length > 0) {
             callback(issues, null)
           } else {
-            var parsed = {
-              ignore: jsObj.ignore ? jsObj.ignore : [],
-              warn: jsObj.warn ? jsObj.warn : [],
-              error: jsObj.error ? jsObj.error : [],
-              ignoredFiles: jsObj.ignoredFiles ? jsObj.ignoredFiles : [],
-            }
+            parsed.ignore = jsObj.ignore ? jsObj.ignore : []
+            parsed.warn = jsObj.warn ? jsObj.warn : []
+            parsed.error = jsObj.error ? jsObj.error : []
+            parsed.ignoredFiles = jsObj.ignoredFiles ? jsObj.ignoredFiles : []
             callback(null, parsed)
           }
         })

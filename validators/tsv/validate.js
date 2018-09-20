@@ -9,13 +9,15 @@ const validate = (
   participants,
   phenotypeParticipants,
   stimuli,
+  annexed,
+  dir,
 ) => {
   let issues = []
   // validate tsv
   const tsvPromises = files.map(function(file) {
     return new Promise(resolve => {
       utils.files
-        .readFile(file)
+        .readFile(file, annexed, dir)
         .then(contents => {
           // Push TSV to list for custom column verification after all data dictionaries have been read
           tsvs.push({

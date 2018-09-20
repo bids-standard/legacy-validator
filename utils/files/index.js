@@ -10,6 +10,7 @@ const generateMergedSidecarDict = require('./generateMergedSidecarDict')
 const getBFileContent = require('./getBFileContent')
 const collectDirectorySize = require('./collectDirectorySize')
 const illegalCharacterTest = require('./illegalCharacterTest')
+const remoteFiles = require('./remoteFiles')
 
 // public API ---------------------------------------------------------------------
 
@@ -24,6 +25,7 @@ var fileUtils = {
   getBFileContent: getBFileContent,
   collectDirectorySize: collectDirectorySize,
   illegalCharacterTest: illegalCharacterTest,
+  remoteFiles: remoteFiles,
 }
 
 module.exports = fileUtils

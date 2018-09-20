@@ -18,11 +18,10 @@ const checkDatasetDescription = require('./checkDatasetDescription')
 /**
  * Full Test
  *
- * Takes on an array of files and starts
- * the validation process for a BIDS
- * package.
+ * Takes on an array of files, callback, and boolean inidicating if git-annex is used.
+ * Starts the validation process for a BIDS package.
  */
-const fullTest = (fileList, options, callback) => {
+const fullTest = (fileList, options, callback, annexed, dir) => {
   let self = BIDS
   self.options = options
 
@@ -92,105 +91,113 @@ const fullTest = (fileList, options, callback) => {
       self.issues = self.issues.concat(tsvIssues)
 
       // Bvec validation
-      bvec.validate(files.bvec, bContentsDict).then(bvecIssues => {
-        self.issues = self.issues.concat(bvecIssues)
+      bvec
+        .validate(files.bvec, bContentsDict, annexed, dir)
+        .then(bvecIssues => {
+          self.issues = self.issues.concat(bvecIssues)
 
-        // Bval validation
-        bval.validate(files.bval, bContentsDict).then(bvalIssues => {
-          self.issues = self.issues.concat(bvalIssues)
+          // Bval validation
+          bval
+            .validate(files.bval, bContentsDict, annexed, dir)
+            .then(bvalIssues => {
+              self.issues = self.issues.concat(bvalIssues)
 
-          // Load json files and construct a contents object with field, value pairs
-          json
-            .load(files.json, jsonFiles, jsonContentsDict)
-            .then(jsonLoadIssues => {
-              self.issues = self.issues.concat(jsonLoadIssues)
-
-              // Check for at least one subject
-              const noSubjectIssues = subjects.atLeastOneSubject(fileList)
-              self.issues = self.issues.concat(noSubjectIssues)
-
-              // Check for datasetDescription file in the proper place
-              const datasetDescriptionIssues = checkDatasetDescription(fileList)
-              self.issues = self.issues.concat(datasetDescriptionIssues)
-
-              // Validate json files and contents
+              // Load json files and construct a contents object with field, value pairs
               json
-                .validate(jsonFiles, fileList, jsonContentsDict, summary)
-                .then(jsonIssues => {
-                  self.issues = self.issues.concat(jsonIssues)
+                .load(files.json, jsonFiles, jsonContentsDict)
+                .then(jsonLoadIssues => {
+                  self.issues = self.issues.concat(jsonLoadIssues)
 
-                  // Nifti validation
-                  NIFTI.validate(
-                    files.nifti,
+                  // Check for at least one subject
+                  const noSubjectIssues = subjects.atLeastOneSubject(fileList)
+                  self.issues = self.issues.concat(noSubjectIssues)
+
+                  // Check for datasetDescription file in the proper place
+                  const datasetDescriptionIssues = checkDatasetDescription(
                     fileList,
-                    self.options,
-                    jsonContentsDict,
-                    bContentsDict,
-                    events,
-                    headers,
-                  ).then(niftiIssues => {
-                    self.issues = self.issues.concat(niftiIssues)
+                  )
+                  self.issues = self.issues.concat(datasetDescriptionIssues)
 
-                    // Issues related to participants not listed in the subjects list
-                    const participantsInSubjectsIssues = subjects.participantsInSubjects(
-                      participants,
-                      summary.subjects,
-                    )
-                    self.issues = self.issues.concat(
-                      participantsInSubjectsIssues,
-                    )
+                  // Validate json files and contents
+                  json
+                    .validate(jsonFiles, fileList, jsonContentsDict, summary)
+                    .then(jsonIssues => {
+                      self.issues = self.issues.concat(jsonIssues)
 
-                    // Check for equal number of participants from ./phenotype/*.tsv and participants in dataset
-                    const phenotypeIssues = tsv.checkPhenotype(
-                      phenotypeParticipants,
-                      summary,
-                    )
-                    self.issues = self.issues.concat(phenotypeIssues)
+                      // Nifti validation
+                      NIFTI.validate(
+                        files.nifti,
+                        fileList,
+                        self.options,
+                        jsonContentsDict,
+                        bContentsDict,
+                        events,
+                        headers,
+                        annexed,
+                        dir,
+                      ).then(niftiIssues => {
+                        self.issues = self.issues.concat(niftiIssues)
 
-                    // Validate nii header fields
-                    self.issues = self.issues.concat(headerFields(headers))
+                        // Issues related to participants not listed in the subjects list
+                        const participantsInSubjectsIssues = subjects.participantsInSubjects(
+                          participants,
+                          summary.subjects,
+                        )
+                        self.issues = self.issues.concat(
+                          participantsInSubjectsIssues,
+                        )
 
-                    // Events validation
-                    stimuli.directory = files.stimuli
-                    const eventsIssues = Events.validateEvents(
-                      events,
-                      stimuli,
-                      headers,
-                      jsonContentsDict,
-                      self.issues,
-                    )
-                    self.issues = self.issues.concat(eventsIssues)
+                        // Check for equal number of participants from ./phenotype/*.tsv and participants in dataset
+                        const phenotypeIssues = tsv.checkPhenotype(
+                          phenotypeParticipants,
+                          summary,
+                        )
+                        self.issues = self.issues.concat(phenotypeIssues)
 
-                    // Validate custom fields in all TSVs and add any issues to the list
-                    self.issues = self.issues.concat(
-                      tsv.validateTsvColumns(tsvs, jsonContentsDict),
-                    )
+                        // Validate nii header fields
+                        self.issues = self.issues.concat(headerFields(headers))
 
-                    // Validate session files
-                    self.issues = self.issues.concat(session(fileList))
+                        // Events validation
+                        stimuli.directory = files.stimuli
+                        const eventsIssues = Events.validateEvents(
+                          events,
+                          stimuli,
+                          headers,
+                          jsonContentsDict,
+                          self.issues,
+                        )
+                        self.issues = self.issues.concat(eventsIssues)
 
-                    // Determine if each subject has data present
-                    self.issues = self.issues.concat(
-                      checkAnyDataPresent(fileList, summary.subjects),
-                    )
+                        // Validate custom fields in all TSVs and add any issues to the list
+                        self.issues = self.issues.concat(
+                          tsv.validateTsvColumns(tsvs, jsonContentsDict),
+                        )
 
-                    // Group summary modalities
-                    summary.modalities = utils.modalities.group(
-                      summary.modalities,
-                    )
+                        // Validate session files
+                        self.issues = self.issues.concat(session(fileList))
 
-                    // Format issues
-                    const issues = utils.issues.format(
-                      self.issues,
-                      summary,
-                      self.options,
-                    )
-                    callback(issues, summary)
-                  })
+                        // Determine if each subject has data present
+                        self.issues = self.issues.concat(
+                          checkAnyDataPresent(fileList, summary.subjects),
+                        )
+
+                        // Group summary modalities
+                        summary.modalities = utils.modalities.group(
+                          summary.modalities,
+                        )
+
+                        // Format issues
+                        const issues = utils.issues.format(
+                          self.issues,
+                          summary,
+                          self.options,
+                        )
+                        callback(issues, summary)
+                      })
+                    })
                 })
             })
         })
-      })
     })
 }
 

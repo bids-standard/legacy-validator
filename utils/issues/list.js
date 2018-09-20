@@ -533,4 +533,15 @@ module.exports = {
     reason:
       "The column names of the electrodes file must begin with ['name', 'x', 'y', 'z']",
   },
+  97: {
+    key: 'FILE_ACCESS_GIT_ANNEXED_REMOTE_FILE',
+    severity: 'error',
+    reason: 'A remote git-annexed file could not be accessed',
+  },
+  97: {
+    key: 'INACCESSIBLE_REMOTE_FILE',
+    severity: 'error',
+    reason:
+      'This file appears to be a symlink to a remote annexed file but could not be accessed from any of the configured remotes.',
+  },
 }

@@ -6,6 +6,7 @@ var cliff = require('cliff')
 var pluralize = require('pluralize')
 var bytes = require('bytes')
 var fs = require('fs')
+const remoteFiles = require('./utils/files/remoteFiles')
 
 module.exports = function(dir, options) {
   if (fs.existsSync(dir)) {

@@ -239,7 +239,7 @@ var suiteMEG = describe('utils.type.file.isMEG', function() {
       '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_part-01_meg.fif',
       '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_channels.tsv',
       '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_headshape.pos',
-      '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_headshape.anyExtensionPossible',
+      '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_headshape.xY1',
     ]
 
     goodFilenames.forEach(function(path) {
@@ -257,6 +257,8 @@ var suiteMEG = describe('utils.type.file.isMEG', function() {
       '/sub-01/meg/sub-01_ses-001_task-rest_run-01_meg.json',
       '/sub-01/ses-001/meg/sub-12_ses-001_task-rest_run-01_part-01_meg.fif',
       '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg.tsv',
+      '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_headshape.anyExtButMustHave3Chars',
+      '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_headshape.po',
     ]
 
     badFilenames.forEach(function(path) {

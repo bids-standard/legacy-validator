@@ -238,6 +238,8 @@ var suiteMEG = describe('utils.type.file.isMEG', function() {
       '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg.json',
       '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_part-01_meg.fif',
       '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_channels.tsv',
+      '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_headshape.pos',
+      '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_headshape.anyExtensionPossible',
     ]
 
     goodFilenames.forEach(function(path) {

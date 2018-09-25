@@ -57,7 +57,7 @@
         "_meg.json",
         "_coordsystem.json",
         "_photo.jpg",
-        "_headshape.pos"
+        "_headshape.[a-zA-Z0-9]+"
       ]
     }
   },

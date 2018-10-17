@@ -85,7 +85,7 @@ const checkDesignLength = function(events, headers, jsonContents) {
         .filter(row => !(!row || /^\s*$/.test(row)))
 
       // get the 'onset' field of the last event (lastEventOnset)
-      const lastEventOnset = rows[rows.length - 1].split('\t')[0]
+      const lastEventOnset = rows[rows.length - 1].trim().split('\t')[0]
 
       // check if lastEventOnset > longDurationThreshold - append issue if so
       if (lastEventOnset > longDurationThreshold) {

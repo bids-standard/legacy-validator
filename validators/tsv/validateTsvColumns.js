@@ -52,7 +52,10 @@ const validateTsvColumns = function(tsvs, jsonContentsDict) {
   const tsvIssues = []
   tsvs.map(tsv => {
     const customColumns = getCustomColumns(
-      tsv.contents.split('\n')[0].split('\t'),
+      tsv.contents
+        .split('\n')[0]
+        .trim()
+        .split('\t'),
       getTsvType(tsv.file),
     )
     if (customColumns.length > 0) {

@@ -27,7 +27,7 @@ const TSV = (file, contents, fileList, callback) => {
   }
 
   const rows = contents.split('\n')
-  const headers = rows[0].split('\t')
+  const headers = rows[0].trim().split('\t')
 
   // generic checks -----------------------------------------------------------
 
@@ -46,7 +46,7 @@ const TSV = (file, contents, fileList, callback) => {
       continue
     }
 
-    const values = row.split('\t')
+    const values = row.trim().split('\t')
 
     // check for different length rows
     if (values.length !== headers.length && !columnMismatch) {
@@ -150,7 +150,9 @@ const TSV = (file, contents, fileList, callback) => {
     const stimFiles = []
     if (headers.indexOf('stim_file') > -1) {
       for (let k = 0; k < rows.length; k++) {
-        const stimFile = rows[k].split('\t')[headers.indexOf('stim_file')]
+        const stimFile = rows[k].trim().split('\t')[
+          headers.indexOf('stim_file')
+        ]
         const stimPath = '/stimuli/' + stimFile
         if (
           stimFile &&
@@ -199,7 +201,7 @@ const TSV = (file, contents, fileList, callback) => {
     } else {
       participants = []
       for (let l = 1; l < rows.length; l++) {
-        const row = rows[l].split('\t')
+        const row = rows[l].trim().split('\t')
         // skip empty rows
         if (!row || /^\s*$/.test(row)) {
           continue

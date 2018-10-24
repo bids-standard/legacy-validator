@@ -24,6 +24,15 @@ function testFile(file, callback) {
       fs.access(file.path, function(accessErr) {
         if (!accessErr) {
           process.nextTick(function() {
+            if (stats.size === 0) {
+              callback(
+                new Issue({
+                  code: 97,
+                  file: file,
+                  reason: `Empty files (${file.path}) not allowed; may corrupt archives.`,
+                }),
+              )
+            }
             callback(null, stats)
           })
         } else {

@@ -190,7 +190,7 @@ var issues = {
 
   /**
    * Error/Issue redirector
-   * 
+   *
    * takes an error, resolve callback, and reject callback
    */
   redirect: function(err, reject, resolveCB) {
@@ -199,7 +199,7 @@ var issues = {
     } else {
       reject(err)
     }
-  }
+  },
 }
 
 module.exports = issues

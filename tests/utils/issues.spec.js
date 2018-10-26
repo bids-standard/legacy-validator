@@ -53,7 +53,7 @@ describe('issues', () => {
   })
 
   describe('exception/issue redirect', () => {
-    let test, promise, innerPromise, validIssue, invalidIssue
+    let promise, innerPromise, validIssue, invalidIssue
     beforeAll(() => {
       promise = null
       validIssue = new utils.issues.Issue({

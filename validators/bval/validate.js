@@ -15,14 +15,12 @@ const validate = (files, bContentsDict) => {
             resolve()
           })
         })
-        .catch(err => {
-          if (utils.issues.isAnIssue(err)) {
+        .catch(err =>
+          utils.issues.redirect(err, reject, () => {
             issues.push(err)
             resolve()
-          } else {
-            reject(err)
-          }
-        })
+          }),
+        )
     })
   })
 

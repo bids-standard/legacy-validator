@@ -187,6 +187,19 @@ var issues = {
     const issues = this.format(issueList, summary, options)
     return issues
   },
+
+  /**
+   * Error/Issue redirector
+   * 
+   * takes an error, resolve callback, and reject callback
+   */
+  redirect: function(err, reject, resolveCB) {
+    if (this.isAnIssue(err)) {
+      resolveCB()
+    } else {
+      reject(err)
+    }
+  }
 }
 
 module.exports = issues

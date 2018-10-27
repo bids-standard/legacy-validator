@@ -12,6 +12,7 @@ const session = function missingSessionFiles(fileList) {
   const subjects = {}
   const sessions = []
   const issues = []
+  const sessionMatcher = new RegExp('(ses-.*?)/')
 
   console.log('FILELIST: ', fileList)
   for (let key in fileList) {
@@ -57,7 +58,7 @@ const session = function missingSessionFiles(fileList) {
       filename = filename.replace(subject, '<sub>')
       subjects[subject].files.push(filename)
       
-      const sessionMatch = filename.match(new RegExp('(ses-.*?)/'))
+      const sessionMatch = filename.match(sessionMatcher)
       if(sessionMatch) {
         // extract session name
         const sessionName = sessionMatch[1]
@@ -76,18 +77,33 @@ const session = function missingSessionFiles(fileList) {
   const subject_files = []
   for (let subjKey in subjects) {
     if (subjects.hasOwnProperty(subjKey)) {
-      const subjectFiles = subjects[subjKey].files
+      const subject = subjects[subjKey]
 
       // push warning to issues if missing session
       if (sessions.length > 0) {
-        sessions.forEach(sessionName => {
-          const match = new RegExp(``)
+        sessions.forEach(commonSession => {
+          if(!subject.sessions.includes(commonSession)) {
+            const path = `/${subjKey}/${commonSession}`
+            issues.push(
+              new Issue({
+                file: {
+                  relativePath: path,
+                  webkitRelativePath: path,
+                  name: commonSession,
+                  path,
+                },
+                reason: 'A session is missing from one subject that is present in at least one other subject',
+                evidence: `Subject: ${subjKey}; Missing session: ${commonSession}`,
+                code: 97,
+              }),
+            )
+          }
         })
       }
 
       // add files to subject_files if not already listed
-      for (var i = 0; i < subjectFiles.length; i++) {
-        const file = subjectFiles[i]
+      for (var i = 0; i < subject.files.length; i++) {
+        const file = subject.files[i]
         if (subject_files.indexOf(file) < 0) {
           subject_files.push(file)
         }

@@ -10,7 +10,10 @@ var Issue = utils.issues.Issue
  */
 const session = function missingSessionFiles(fileList) {
   const subjects = {}
+  const sessions = []
   const issues = []
+
+  console.log('FILELIST: ', fileList)
   for (let key in fileList) {
     if (fileList.hasOwnProperty(key)) {
       const file = fileList[key]
@@ -39,38 +42,65 @@ const session = function missingSessionFiles(fileList) {
         continue
       }
 
-      // initialize an empty array if we haven't seen this subject before
+      // initialize a subject object if we haven't seen this subject before
       if (typeof subjects[subject] === 'undefined') {
-        subjects[subject] = []
+        subjects[subject] = {
+          files: [],
+          sessions: [],
+          missingSessions: []
+        }
       }
       // files are prepended with subject name, the following two commands
       // remove the subject from the file name to allow filenames to be more
       // easily compared
       filename = path.substring(path.match(subject).index + subject.length)
       filename = filename.replace(subject, '<sub>')
-      subjects[subject].push(filename)
+      subjects[subject].files.push(filename)
+      
+      const sessionMatch = filename.match(new RegExp('(ses-.*?)/'))
+      if(sessionMatch) {
+        // extract session name
+        const sessionName = sessionMatch[1]
+        // add session to sessions if not already there
+        if(!sessions.includes(sessionName)) {
+          sessions.push(sessionName)
+        }
+        if(!subjects[subject].sessions.includes(sessionName))
+        subjects[subject].sessions.push(sessionName)
+      }
     }
   }
+  console.log('SUBJECTS: ', subjects)
+  console.log('SESSIONS: ', sessions)
 
   const subject_files = []
-
   for (let subjKey in subjects) {
     if (subjects.hasOwnProperty(subjKey)) {
-      const subject = subjects[subjKey]
-      for (var i = 0; i < subject.length; i++) {
-        const file = subject[i]
+      const subjectFiles = subjects[subjKey].files
+
+      // push warning to issues if missing session
+      if (sessions.length > 0) {
+        sessions.forEach(sessionName => {
+          const match = new RegExp(``)
+        })
+      }
+
+      // add files to subject_files if not already listed
+      for (var i = 0; i < subjectFiles.length; i++) {
+        const file = subjectFiles[i]
         if (subject_files.indexOf(file) < 0) {
           subject_files.push(file)
         }
       }
     }
   }
+  console.log('SUBJECT_FILES: ', subject_files)
 
   var subjectKeys = Object.keys(subjects).sort()
   for (var j = 0; j < subjectKeys.length; j++) {
     const subject = subjectKeys[j]
     for (var set_file = 0; set_file < subject_files.length; set_file++) {
-      if (subjects[subject].indexOf(subject_files[set_file]) === -1) {
+      if (subjects[subject].files.indexOf(subject_files[set_file]) === -1) {
         var fileThatsMissing =
           '/' + subject + subject_files[set_file].replace('<sub>', subject)
         issues.push(

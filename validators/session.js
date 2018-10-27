@@ -14,7 +14,6 @@ const session = function missingSessionFiles(fileList) {
   const issues = []
   const sessionMatcher = new RegExp('(ses-.*?)/')
 
-  console.log('FILELIST: ', fileList)
   for (let key in fileList) {
     if (fileList.hasOwnProperty(key)) {
       const file = fileList[key]
@@ -71,8 +70,6 @@ const session = function missingSessionFiles(fileList) {
       }
     }
   }
-  console.log('SUBJECTS: ', subjects)
-  console.log('SESSIONS: ', sessions)
 
   const subject_files = []
   for (let subjKey in subjects) {
@@ -83,6 +80,7 @@ const session = function missingSessionFiles(fileList) {
       if (sessions.length > 0) {
         sessions.forEach(commonSession => {
           if(!subject.sessions.includes(commonSession)) {
+            subject.missingSessions.push(commonSession)
             const path = `/${subjKey}/${commonSession}`
             issues.push(
               new Issue({
@@ -101,6 +99,7 @@ const session = function missingSessionFiles(fileList) {
         })
       }
 
+
       // add files to subject_files if not already listed
       for (var i = 0; i < subject.files.length; i++) {
         const file = subject.files[i]
@@ -110,32 +109,53 @@ const session = function missingSessionFiles(fileList) {
       }
     }
   }
-  console.log('SUBJECT_FILES: ', subject_files)
-
+  
   var subjectKeys = Object.keys(subjects).sort()
+  // for each subject
   for (var j = 0; j < subjectKeys.length; j++) {
     const subject = subjectKeys[j]
-    for (var set_file = 0; set_file < subject_files.length; set_file++) {
-      if (subjects[subject].files.indexOf(subject_files[set_file]) === -1) {
-        var fileThatsMissing =
-          '/' + subject + subject_files[set_file].replace('<sub>', subject)
-        issues.push(
-          new Issue({
-            file: {
-              relativePath: fileThatsMissing,
-              webkitRelativePath: fileThatsMissing,
-              name: fileThatsMissing.substr(
-                fileThatsMissing.lastIndexOf('/') + 1,
-              ),
-              path: fileThatsMissing,
-            },
-            reason:
-              'This file is missing for subject ' +
-              subject +
-              ', but is present for at least one other subject.',
-            code: 38,
-          }),
-        )
+
+    // for each file per subject
+    for (var i = 0; i < subject_files.length; i++) {
+      const filePath = subject_files[i]
+      let fileSession, fileInMissingSession
+      const sessionMatch = filePath.match(sessionMatcher)
+
+      // if sessions are in use, extract session name from file
+      // and test if 
+      if (sessionMatch) {
+        fileSession = sessionMatch[1]
+        fileInMissingSession = subjects[subject].missingSessions.includes(fileSession)
+      } else {
+        fileInMissingSession = false
+      }
+
+      if(!fileInMissingSession) {
+        const subjectMissingFile = subjects[subject].files.indexOf(filePath) === -1
+  
+        if (subjectMissingFile) {
+          var fileThatsMissing =
+            '/' + subject + filePath.replace('<sub>', subject)
+          const fileName = fileThatsMissing.substr(
+            fileThatsMissing.lastIndexOf('/') + 1,
+          )
+          issues.push(
+            new Issue({
+              file: {
+                relativePath: fileThatsMissing,
+                webkitRelativePath: fileThatsMissing,
+                name: fileName,
+                path: fileThatsMissing,
+              },
+              evidence: `Subject: ${subject}; Missing file: ${fileName}`,
+              reason:
+                'This file is missing for subject ' +
+                subject +
+                ', but is present for at least one other subject.',
+              code: 38,
+            }),
+          )
+        }
       }
     }
   }

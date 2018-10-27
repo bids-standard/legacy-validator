@@ -16,14 +16,13 @@ describe('session', () => {
 
   it('should produce a single MISSING_SESSION warning', () => {
     const warnings = missingSessionFiles(filelist)
-    console.log('WARNINGS: ', warnings)
-    targetWarning = warnings[0]
-    assert.equal(targetWarning.key, 'MISSING_SESSION')
-    assert.equal(warnings.length, 1)
+    const targetWarning = warnings.find(warning => warning.key === 'MISSING_SESSION')
+    assert.ok(targetWarning)
   })
-
+  
   it('should not produce INCONSISTENT_SUBJECTS warnings', () => {
     const warnings = missingSessionFiles(filelist)
+    console.log('WARNINGS: ', warnings)
     warnings.forEach(warning => 
       assert.notEqual(warning.key, 'INCONSISTENT_SUBJECTS')
     )

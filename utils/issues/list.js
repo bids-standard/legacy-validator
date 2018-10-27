@@ -538,4 +538,9 @@ module.exports = {
     reason:
       "The column names of the electrodes file must begin with ['name', 'x', 'y', 'z']",
   },
+  97: {
+    key: 'MISSING_SESSION',
+    severity: 'warning',
+    reason: 'Not all subjects contain the same sessions.'
+  }
 }

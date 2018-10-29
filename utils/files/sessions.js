@@ -5,5 +5,5 @@ module.exports = {
     this.files = []
     this.sessions = []
     this.missingSessions = []
-  }
+  },
 }

@@ -24,7 +24,7 @@ const session = function missingSessionFiles(fileList) {
 /**
  * getDataOrganization
  *
- * takes a list of files and returns a list of subjects and a list of sessions
+ * takes a list of files and returns a dictionary of subjects and a list of sessions
  */
 function getDataOrganization(fileList) {
   const subjects = {}
@@ -52,11 +52,7 @@ function getDataOrganization(fileList) {
       if (subjKey == 'sub-emptyroom') continue
 
       // initialize a subject object if we haven't seen this subject before
-      subjects[subjKey] = subjects[subjKey] || {
-        files: [],
-        sessions: [],
-        missingSessions: [],
-      }
+      subjects[subjKey] = subjects[subjKey] || new sesUtils.Subject()
 
       let filename = getFilename(path, subjKey)
       subjects[subjKey].files.push(filename)
@@ -168,14 +164,18 @@ function missingFileWarnings(subjects, subject_files) {
   const issues = []
   var subjectKeys = Object.keys(subjects).sort()
   subjectKeys.forEach(subjKey => {
-    subject_files.forEach(filePath => {
+    subject_files.forEach(filename => {
       const fileInMissingSession = checkFileInMissingSession(
-        filePath,
+        filename,
         subjects[subjKey],
       )
 
       if (!fileInMissingSession) {
-        const missingFileWarning = checkMissingFile(subjects, subjKey, filePath)
+        const missingFileWarning = checkMissingFile(
+          subjects[subjKey],
+          subjKey,
+          filename,
+        )
         if (missingFileWarning) issues.push(missingFileWarning)
       }
     })
@@ -209,11 +209,11 @@ function checkFileInMissingSession(filePath, subject) {
  * takes a list of subjects, the subject key, and the expected file and
  * returns an issue if the file is missing
  */
-function checkMissingFile(subjects, subject, filePath) {
-  const subjectMissingFile = subjects[subject].files.indexOf(filePath) === -1
+function checkMissingFile(subject, subjKey, filename) {
+  const subjectMissingFile = subject.files.indexOf(filename) === -1
 
   if (subjectMissingFile) {
-    var fileThatsMissing = '/' + subject + filePath.replace('<sub>', subject)
+    var fileThatsMissing = '/' + subjKey + filename.replace('<sub>', subjKey)
     const fileName = fileThatsMissing.substr(
       fileThatsMissing.lastIndexOf('/') + 1,
     )
@@ -224,14 +224,23 @@ function checkMissingFile(subjects, subject, filePath) {
         name: fileName,
         path: fileThatsMissing,
       },
-      evidence: `Subject: ${subject}; Missing file: ${fileName}`,
+      evidence: `Subject: ${subjKey}; Missing file: ${fileName}`,
       reason:
         'This file is missing for subject ' +
-        subject +
+        subjKey +
         ', but is present for at least one other subject.',
       code: 38,
     })
   }
 }
 
-module.exports = session
+module.exports = {
+  session,
+  getDataOrganization,
+  getFilename,
+  missingSessionWarnings,
+  getSubjectFiles,
+  missingFileWarnings,
+  checkFileInMissingSession,
+  checkMissingFile,
+}

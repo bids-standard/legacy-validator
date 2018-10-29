@@ -10,20 +10,22 @@ const generateMergedSidecarDict = require('./generateMergedSidecarDict')
 const getBFileContent = require('./getBFileContent')
 const collectDirectorySize = require('./collectDirectorySize')
 const illegalCharacterTest = require('./illegalCharacterTest')
+const sessions = require('./sessions')
 
 // public API ---------------------------------------------------------------------
 
 var fileUtils = {
-  FileAPI: FileAPI,
-  newFile: newFile,
-  readFile: readFile,
-  readDir: readDir,
-  readNiftiHeader: readNiftiHeader,
-  generateMergedSidecarDict: generateMergedSidecarDict,
-  potentialLocations: potentialLocations,
-  getBFileContent: getBFileContent,
-  collectDirectorySize: collectDirectorySize,
-  illegalCharacterTest: illegalCharacterTest,
+  FileAPI,
+  newFile,
+  readFile,
+  readDir,
+  readNiftiHeader,
+  generateMergedSidecarDict,
+  potentialLocations,
+  getBFileContent,
+  collectDirectorySize,
+  illegalCharacterTest,
+  sessions,
 }
 
 module.exports = fileUtils

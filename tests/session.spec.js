@@ -22,7 +22,6 @@ describe('session', () => {
   
   it('should not produce INCONSISTENT_SUBJECTS warnings', () => {
     const warnings = missingSessionFiles(filelist)
-    console.log('WARNINGS: ', warnings)
     warnings.forEach(warning => 
       assert.notEqual(warning.key, 'INCONSISTENT_SUBJECTS')
     )

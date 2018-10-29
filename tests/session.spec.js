@@ -14,7 +14,6 @@ const {
 const dir = process.cwd()
 const data_dir = dir + '/tests/data/'
 const missing_session_data = data_dir + 'ds006_missing-session'
-const missing_file_data = `${data_dir}bids-examples-1.1.1u1/ds006`
 
 describe('session', () => {
   let filelist
@@ -120,12 +119,16 @@ describe('session', () => {
 
   describe('missingFileWarnings', () => {
     it('generates an issue for each file missing from each subject and returns them as a list', () => {
-      let filelist
-      utils.files.readDir(missing_file_data, files => {
-        filelist = files
-      })
-      const { subjects } = getDataOrganization(filelist)
-      const subjFiles = getSubjectFiles(subjects)
+      const subjects = {}
+      const subjKey = 'sub-01'
+      const subject01 = new Subject()
+      const subjFiles = [
+        '/ses-post/anat/<sub>_ses-post_inplaneT2.nii.gz',
+        '/ses-post/anat/<sub>_ses-post_T1w.nii.gz',
+        '/ses-post/func/<sub>_ses-post_task-livingnonlivingdecisionwithplainormirrorreversedtext_run-01_bold.nii.gz',
+      ]
+      subject01.files.push(subjFiles[0])
+      subjects[subjKey] = subject01
 
       const warnings = missingFileWarnings(subjects, subjFiles)
       assert.ok(Array.isArray(warnings))

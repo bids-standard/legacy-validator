@@ -35,7 +35,7 @@ describe('CLI', () => {
       commandOutput = commandOutput.concat(dataLines)
     })
     command.stderr.on('end', () => {
-      assert(commandOutput.length == 0)
+      assert.equal(commandOutput.length, 0)
       done()
     })
   })
@@ -48,7 +48,7 @@ describe('CLI', () => {
       commandOutput = commandOutput.concat(dataLines)
     })
     command.stderr.on('end', () => {
-      assert(commandOutput.length == 0)
+      assert.equal(commandOutput.length, 0)
       done()
     })
   })

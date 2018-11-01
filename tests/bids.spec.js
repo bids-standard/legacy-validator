@@ -48,7 +48,10 @@ describe('BIDS example datasets ', function() {
           function(issues) {
             var errors = issues.errors
             var warnings = issues.warnings
-            assert.deepEqual(errors, [])
+            assert.deepEqual(
+              errors.filter(issue => issue.key !== 'EMPTY_FILE'),
+              [],
+            )
             var session_flag = false
             for (var warning in warnings) {
               if (warnings[warning]['code'] === '38') {
@@ -172,7 +175,7 @@ describe('BIDS example datasets ', function() {
   it('checks for data dictionaries without corresponding data files', function(isdone) {
     var options = { ignoreNiftiHeaders: true }
     validate.BIDS('tests/data/unused_data_dict', options, function(issues) {
-      assert(issues.errors.length === 1 && issues.errors[0].code === '90')
+      assert.notEqual(issues.errors.findIndex(issue => issue.code === '90'), -1)
       isdone()
     })
   })
@@ -182,7 +185,7 @@ describe('BIDS example datasets ', function() {
     validate.BIDS('tests/data/fieldmap_without_magnitude', options, function(
       issues,
     ) {
-      assert(issues.errors.length === 2 && issues.errors[1].code === '91')
+      assert.notEqual(issues.errors.findIndex(issue => issue.code === '91'), -1)
       isdone()
     })
   })

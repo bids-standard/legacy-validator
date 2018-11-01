@@ -539,7 +539,7 @@ module.exports = {
       "The column names of the electrodes file must begin with ['name', 'x', 'y', 'z']",
   },
   97: {
-    key: 'EMPTY FILE',
+    key: 'EMPTY_FILE',
     severity: 'error',
     reason: 'Empty files not allowed.',
   },

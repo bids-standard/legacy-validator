@@ -31,7 +31,6 @@ describe('session', () => {
         const targetWarning = warnings.find(
           warning => warning.key === 'MISSING_SESSION',
         )
-        console.log(warnings)
         assert.ok(targetWarning)
       })
 

@@ -14,7 +14,7 @@ const subSesMismatchTest = require('./subSesMismatchTest')
 const groupFileTypes = require('./groupFileTypes')
 const subjects = require('./subjects')
 const checkDatasetDescription = require('./checkDatasetDescription')
-const testFile = require('../../utils/files/testFile')
+const validateMisc = require('../../utils/files/validateMisc')
 
 /**
  * Full Test
@@ -56,14 +56,6 @@ const fullTest = (fileList, options, callback) => {
   self.issues = self.issues.concat(utils.files.illegalCharacterTest(fileList))
 
   const files = groupFileTypes(fileList, self.options)
-
-  // run testFile() on all files not types bval, bvec, JSON, and tsv (already tested)
-  const miscFileIssues = files.misc.reduce((issues, file) => {
-    testFile(file).then(({ issue }) => issue && issues.push(issue))
-    return issues
-  }, [])
-  // console.log('ISSUES: ', miscFileIssues)
-  if (miscFileIssues) self.issues = self.issues.concat(miscFileIssues)
 
   // generate issues for all files that do not comply with
   // bids spec

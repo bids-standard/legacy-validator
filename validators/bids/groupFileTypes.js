@@ -10,6 +10,8 @@ const groupFileTypes = (fileList, options) => {
     bval: [],
     bvec: [],
     invalid: [],
+    // used to check all files not already passed through testFile()
+    misc: [],
   }
   sortFiles(fileList, options, files)
   return files
@@ -23,11 +25,13 @@ const sortFiles = (fileList, options, files) => {
     if (utils.type.file.isStimuliData(file.relativePath)) {
       // collect stimuli
       files.stimuli.push(file)
+      files.misc.push(file)
     } else if (
       !utils.type.isBIDS(file.relativePath, options.bep006, options.bep010)
     ) {
       // invalid file type
       files.invalid.push(file)
+      files.misc.push(file)
     } else if (ofType(filename, 'nii') || ofType(filename, 'nii.gz')) {
       // collect niftis
       files.nifti.push(file)
@@ -46,6 +50,9 @@ const sortFiles = (fileList, options, files) => {
     } else if (ieegTest(filename)) {
       // collect ephys
       files.ephys.push(file)
+      files.misc.push(file)
+    } else {
+      files.misc.push(file)
     }
   })
 }

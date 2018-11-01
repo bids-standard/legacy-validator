@@ -13,7 +13,7 @@ const validate = (
   let issues = []
   // validate tsv
   const tsvPromises = files.map(function(file) {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       utils.files
         .readFile(file)
         .then(contents => {
@@ -55,15 +55,14 @@ const validate = (
             return resolve()
           })
         })
-        .catch(issue => {
-          issues = issues.concat(issue)
-          return resolve()
-        })
+        .catch(reject)
     })
   })
 
-  return new Promise(resolve =>
-    Promise.all(tsvPromises).then(() => resolve(issues)),
+  return new Promise((resolve, reject) =>
+    Promise.all(tsvPromises)
+      .then(() => resolve(issues))
+      .catch(reject),
   )
 }
 

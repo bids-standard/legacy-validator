@@ -85,33 +85,68 @@ var issues = {
 
     // organize by severity
     for (var code in categorized) {
-      issue = categorized[code]
-      issue.code = code
+      if (code !== undefined) {
+        issue = categorized[code]
+        issue.code = code
 
-      if (severityMap.hasOwnProperty(issue.code)) {
-        issue.severity = severityMap[issue.code]
-      }
-
-      if (severityMap.hasOwnProperty(issue.key)) {
-        issue.severity = severityMap[issue.key]
-      }
-
-      if (issue.severity === 'error') {
-        // Schema validation issues will yield the JSON file invalid, we should display them first to attract
-        // user attention.
-        if (code == 55) {
-          errors.unshift(issue)
-        } else {
-          errors.push(issue)
+        if (severityMap.hasOwnProperty(issue.code)) {
+          issue.severity = severityMap[issue.code]
         }
-      } else if (issue.severity === 'warning' && !options.ignoreWarnings) {
-        warnings.push(issue)
-      } else if (issue.severity === 'ignore') {
-        ignored.push(issue)
+
+        if (severityMap.hasOwnProperty(issue.key)) {
+          issue.severity = severityMap[issue.key]
+        }
+
+        if (issue.severity === 'error') {
+          // Schema validation issues will yield the JSON file invalid, we should display them first to attract
+          // user attention.
+          if (code == 55) {
+            errors.unshift(issue)
+          } else {
+            errors.push(issue)
+          }
+        } else if (issue.severity === 'warning' && !options.ignoreWarnings) {
+          warnings.push(issue)
+        } else if (issue.severity === 'ignore') {
+          ignored.push(issue)
+        }
       }
     }
-
     return { errors: errors, warnings: warnings, ignored: ignored }
+  },
+
+  /**
+   * Error To Issue
+   *
+   * Takes and expection and returns an Issue
+   */
+  errorToIssue: function(err) {
+    const callStack = err.stack
+      ? err.stack
+          .split('\n')
+          .slice(1)
+          .join('\n')
+          .trim()
+      : ''
+
+    return new Issue({
+      file: callStack,
+      evidence: err.stack || '',
+      reason: `${
+        err.message
+      }; please help the BIDS team and community by opening an issue at (https://github.com/bids-standard/bids-validator/issues) with the evidence here.`,
+      code: 0,
+    })
+  },
+
+  /**
+   * isAnIssue
+   *
+   * takes an object and checks if it's an Issue
+   */
+  isAnIssue: function(obj) {
+    const objKeys = Object.keys(obj)
+    return objKeys.includes('code') && objKeys.includes('reason')
   },
 
   /**
@@ -136,6 +171,34 @@ var issues = {
       }
     }
     return issues.format(unformatted, summary, { config: config })
+  },
+  /**
+   * Exception Handler
+   *
+   * takes an error in fullTest.js catch
+   * converts it to an Issue and pushes it to the total list of issues
+   * formats issue list and returns it
+   */
+  exceptionHandler: function(err, issueList, summary, options) {
+    const genericIssue = this.errorToIssue(err)
+    issueList.push(genericIssue)
+
+    // Format issues
+    const issues = this.format(issueList, summary, options)
+    return issues
+  },
+
+  /**
+   * Error/Issue redirector
+   *
+   * takes an error, resolve callback, and reject callback
+   */
+  redirect: function(err, reject, resolveCB) {
+    if (this.isAnIssue(err)) {
+      resolveCB()
+    } else {
+      reject(err)
+    }
   },
 }
 

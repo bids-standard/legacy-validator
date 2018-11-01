@@ -5,7 +5,7 @@ const validate = (files, bContentsDict) => {
   // validate bvec
   let issues = []
   const bvecPromises = files.map(function(file) {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       utils.files
         .readFile(file)
         .then(contents => {
@@ -15,16 +15,20 @@ const validate = (files, bContentsDict) => {
             resolve()
           })
         })
-        .catch(issue => {
-          issues.push(issue)
-          resolve()
-        })
+        .catch(err =>
+          utils.issues.redirect(err, reject, () => {
+            issues.push(err)
+            resolve()
+          }),
+        )
     })
   })
 
-  return new Promise(resolve => {
-    Promise.all(bvecPromises).then(() => resolve(issues))
-  })
+  return new Promise((resolve, reject) =>
+    Promise.all(bvecPromises)
+      .then(() => resolve(issues))
+      .catch(reject),
+  )
 }
 
 module.exports = validate

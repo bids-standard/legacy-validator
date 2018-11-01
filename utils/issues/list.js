@@ -6,6 +6,11 @@
  * agnostic to file specifics.
  */
 module.exports = {
+  0: {
+    key: 'INTERNAL ERROR',
+    severity: 'error',
+    reason: 'Internal error. SOME VALIDATION STEPS MAY NOT HAVE OCCURRED',
+  },
   1: {
     key: 'NOT_INCLUDED',
     severity: 'error',
@@ -536,7 +541,11 @@ module.exports = {
   97: {
     key: 'EMPTY FILE',
     severity: 'error',
-    reason:
-      "Empty files not allowed.",
+    reason: 'Empty files not allowed.',
+  },
+  98: {
+    key: 'MISSING_SESSION',
+    severity: 'warning',
+    reason: 'Not all subjects contain the same sessions.',
   },
 }

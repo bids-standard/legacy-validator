@@ -22,7 +22,7 @@ function readNiftiHeader(file, callback) {
 }
 
 function nodeNiftiTest(file, callback) {
-  testFile(file, function(issue, stats) {
+  testFile(file).then(function({ issue, stats }) {
     file.stats = stats
     if (issue) {
       callback({ error: issue })

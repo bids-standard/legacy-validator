@@ -207,7 +207,7 @@ describe('BIDS example datasets ', function() {
     validate.BIDS('tests/data/phasediff_without_magnitude1', options, function(
       issues,
     ) {
-      assert(issues.warnings.length == 2 && issues.warnings[1].code === '92')
+      assert.notEqual(issues.warnings.findIndex(issue => issue.code === '92'))
       isdone()
     })
   })

@@ -23,12 +23,7 @@ const validate = (files, bContentsDict) => {
         )
     })
   })
-
-  return new Promise((resolve, reject) =>
-    Promise.all(bvalPromises)
-      .then(() => resolve(issues))
-      .catch(reject),
-  )
+  return Promise.all(bvalPromises).then(() => issues)
 }
 
 module.exports = validate

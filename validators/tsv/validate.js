@@ -58,12 +58,7 @@ const validate = (
         .catch(reject)
     })
   })
-
-  return new Promise((resolve, reject) =>
-    Promise.all(tsvPromises)
-      .then(() => resolve(issues))
-      .catch(reject),
-  )
+  return Promise.all(tsvPromises).then(() => issues)
 }
 
 module.exports = validate

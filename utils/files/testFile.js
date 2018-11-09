@@ -30,9 +30,7 @@ function testFile(file) {
                   issue: new Issue({
                     code: 97,
                     file: file,
-                    reason: `Empty files (${
-                      file.path
-                    }) not allowed; may corrupt archives.`,
+                    reason: `Empty files (${file.path}) not allowed.`,
                   }),
                 })
               }

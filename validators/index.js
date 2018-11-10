@@ -1,5 +1,5 @@
 // dependencies ------------------------------------------------------
-
+require('cross-fetch/polyfill')
 const tsv = require('./tsv')
 const JSON = require('./json').json
 const NIFTI = require('./nifti').nifti

@@ -14,20 +14,27 @@ const isNode = typeof window === 'undefined'
  * In node the file should be a path to a file.
  *
  */
-function readFile(file) {
+function readFile(file, annexed, dir) {
   return new Promise((resolve, reject) => {
     if (isNode) {
-      testFile(file).then(function({ issue }) {
+      testFile(file, annexed, dir, function(issue, stats, remoteBuffer) {
         if (issue) {
           process.nextTick(function() {
             return reject(issue)
           })
         }
-        fs.readFile(file.path, 'utf8', function(err, data) {
-          process.nextTick(function() {
-            return resolve(data)
+        if (!remoteBuffer) {
+          fs.readFile(file.path, 'utf8', function(err, data) {
+            process.nextTick(function() {
+              return resolve(data)
+            })
           })
-        })
+        }
+        if (remoteBuffer) {
+          process.nextTick(function() {
+            return resolve(remoteBuffer.toString('utf8'))
+          })
+        }
       })
     } else {
       var reader = new FileReader()

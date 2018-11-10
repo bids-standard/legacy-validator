@@ -1,11 +1,11 @@
 const utils = require('../../utils')
 
-const load = (files, jsonFiles, jsonContentsDict) => {
+const load = (files, jsonFiles, jsonContentsDict, annexed, dir) => {
   let issues = []
   const jsonPromises = files.map(function(file) {
     return new Promise((resolve, reject) => {
       utils.files
-        .readFile(file)
+        .readFile(file, annexed, dir)
         .then(contents => {
           utils.json.parse(file, contents, function(parseIssues, jsObj) {
             issues = issues.concat(parseIssues)

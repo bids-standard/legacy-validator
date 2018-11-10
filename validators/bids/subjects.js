@@ -9,20 +9,38 @@ const participantsInSubjects = (participants, subjects) => {
     if (
       !utils.array.equals(participantsFromFolders, participantsFromFile, true)
     ) {
+      const evidence = constructMismatchEvidence(
+        participantsFromFile,
+        participantsFromFolders,
+      )
       issues.push(
         new Issue({
           code: 49,
-          evidence:
-            'participants.tsv: ' +
-            participantsFromFile.join(', ') +
-            ' folder structure: ' +
-            participantsFromFolders.join(', '),
+          evidence: evidence,
           file: participants.file,
         }),
       )
     }
   }
   return issues
+}
+
+const constructMismatchEvidence = (participants, subjects) => {
+  const diffs = utils.array.diff(participants, subjects)
+  const subjectsNotInSubjectsArray = diffs[0]
+  const subjectsNotInParticipantsArray = diffs[1]
+  const evidenceOfMissingParticipants = subjectsNotInParticipantsArray.length
+    ? 'Subjects ' +
+      subjectsNotInParticipantsArray.join(', ') +
+      ' were found in the folder structure but are missing in participants.tsv. '
+    : ''
+  const evidenceOfMissingSubjects = subjectsNotInSubjectsArray.length
+    ? 'Subjects ' +
+      subjectsNotInSubjectsArray.join(', ') +
+      ' were found in participants.tsv but are not present in the folder structure. '
+    : ''
+  const evidence = evidenceOfMissingParticipants + evidenceOfMissingSubjects
+  return evidence
 }
 
 const atLeastOneSubject = fileList => {

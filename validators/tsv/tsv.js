@@ -241,11 +241,8 @@ const TSV = (file, contents, fileList, callback) => {
     checkheader('name', 0, file, 72)
     checkheader('type', 1, file, 72)
     checkheader('units', 2, file, 72)
-    checkheader('sampling_frequency', 3, file, 72)
-    checkheader('low_cutoff', 4, file, 72)
-    checkheader('high_cutoff', 5, file, 72)
-    checkheader('notch', 6, file, 72)
-    checkheader('reference', 7, file, 72)
+    checkheader('low_cutoff', 3, file, 72)
+    checkheader('high_cutoff', 4, file, 72)
   }
 
   // electrodes.tsv

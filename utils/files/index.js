@@ -11,6 +11,7 @@ const getBFileContent = require('./getBFileContent')
 const collectDirectorySize = require('./collectDirectorySize')
 const illegalCharacterTest = require('./illegalCharacterTest')
 const sessions = require('./sessions')
+const remoteFiles = require('./remoteFiles')
 
 // public API ---------------------------------------------------------------------
 
@@ -26,6 +27,7 @@ var fileUtils = {
   collectDirectorySize,
   illegalCharacterTest,
   sessions,
+  remoteFiles,
 }
 
 module.exports = fileUtils

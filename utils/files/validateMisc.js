@@ -19,3 +19,17 @@ module.exports = function validateMisc(miscFiles) {
       .filter(o => o instanceof Issue),
   )
 }
+module.exports = function validateMisc(miscFiles) {
+  const issuePromises = miscFiles.reduce(
+    (issues, file) => [
+      ...issues,
+      new Promise(resolve => testFile(file, false, null, resolve)),
+    ],
+    [],
+  )
+  return (
+    Promise.all(issuePromises)
+      // remove non-issues
+      .then(res => res.filter(o => o instanceof Issue))
+  )
+}

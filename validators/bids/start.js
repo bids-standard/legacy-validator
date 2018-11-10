@@ -26,7 +26,9 @@ const start = (dir, options, callback) => {
       utils.files.readDir(dir, function(files) {
         const couldBeBIDS = quickTest(files, BIDS.options)
         if (couldBeBIDS) {
-          fullTest(files, BIDS.options, callback)
+          // Is the dir using git-annex?
+          const annexed = utils.files.remoteFiles.isGitAnnex(dir)
+          fullTest(files, BIDS.options, annexed, dir, callback)
         } else {
           // Return an error immediately if quickTest fails
           const issue = quickTestError(dir)

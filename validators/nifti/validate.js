@@ -12,6 +12,8 @@ const validate = (
   bContentsDict,
   events,
   headers,
+  annexed,
+  dir,
 ) => {
   let issues = []
   const niftiPromises = files.map(function(file) {
@@ -32,7 +34,7 @@ const validate = (
           },
         )
       } else {
-        utils.files.readNiftiHeader(file, function(header) {
+        utils.files.readNiftiHeader(file, annexed, dir, function(header) {
           // check if header could be read
           if (header && header.hasOwnProperty('error')) {
             issues.push(header.error)

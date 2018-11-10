@@ -176,7 +176,18 @@
   "ieeg": {
     "regexp": "^\\/(sub-[a-zA-Z0-9]+)\\/(?:(ses-[a-zA-Z0-9]+)\\/)?ieeg\\/\\1(_\\2)?(?:_task-[a-zA-Z0-9]+)?(?:_acq-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_proc-[a-zA-Z0-9]+)?(?:_part-[0-9]+)?(?:_space-[a-zA-Z0-9]+)?(_ieeg.(@@@_ieeg_type_@@@)|(@@@_ieeg_ext_@@@))$",
     "tokens": {
-      "@@@_ieeg_type_@@@": ["edf", "vhdr", "vmrk", "dat"],
+      "@@@_ieeg_type_@@@": [
+        "edf",
+        "vhdr",
+        "vmrk",
+        "eeg",
+        "cnt",
+        "bdf",
+        "set",
+        "fdt",
+        "nwb",
+        "mef"
+      ],
       "@@@_ieeg_ext_@@@": [
         "_events.tsv",
         "_electrodes.tsv",
@@ -225,7 +236,6 @@
         "bdf",
         "set",
         "fdt",
-        "dat",
         "nwb",
         "tdat",
         "tidx",

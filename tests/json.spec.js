@@ -108,10 +108,12 @@ describe('JSON', function() {
   it('*_ieeg.json sidecars should have required key/value pairs', function() {
     var jsonObj = {
       TaskName: 'Audiovis',
-      Manufacturer: 'TDT',
-      PowerLineFrequency: 50,
       SamplingFrequency: 10,
-      iEEGReference: 'reference',
+      PowerLineFrequency: 50,
+      SoftwareFilters: {
+        HighPass: { HalfAmplitudeCutOffHz: 1, RollOff: '6dB/Octave' },
+      },
+      iEEGReference: 'chan1',
     }
     jsonDict[ieeg_file.relativePath] = jsonObj
     validate.JSON(ieeg_file, jsonDict, function(issues) {

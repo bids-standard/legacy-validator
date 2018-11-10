@@ -2,6 +2,21 @@
   "type": "object",
   "properties": {
     "TaskName": { "type": "string", "minLength": 1 },
+    "SamplingFrequency": { "type": "integer" },
+    "PowerLineFrequency": { "type": "number" },
+    "DCOffsetCorrection": { "type": "string", "minLength": 1 },
+    "SoftwareFilters": {
+      "anyOf": [
+        { "type": "object", "additionalProperties": { "type": "object" } },
+        { "type": "string", "pattern": "^n/a$" }
+      ]
+    },
+    "HardwareFilters": {
+      "anyOf": [
+        { "type": "object", "additionalProperties": { "type": "object" } },
+        { "type": "string", "pattern": "^n/a$" }
+      ]
+    },
     "Manufacturer": { "type": "string", "minLength": 1 },
     "ManufacturersModelName": { "type": "string" },
     "TaskDescription": { "type": "string" },
@@ -11,10 +26,6 @@
     "InstitutionName": { "type": "string" },
     "InstitutionAddress": { "type": "string" },
     "DeviceSerialNumber": { "type": "string" },
-    "ElectrodeManufacturer": { "type": "string" },
-    "ElectrodeManufacturersModelName": { "type": "string" },
-    "SamplingFrequency": { "type": "integer" },
-    "PowerLineFrequency": { "type": "number" },
     "ECOGChannelCount": { "type": "integer" },
     "SEEGChannelCount": { "type": "integer" },
     "EEGChannelCount": { "type": "integer" },
@@ -26,19 +37,22 @@
     "RecordingDuration": { "type": "number" },
     "RecordingType": { "type": "string" },
     "EpochLength": { "type": "number" },
-    "DeviceSoftwareVersion": { "type": "string" },
     "SubjectArtefactDescription": { "type": "string" },
-    "iEEGPlacementScheme": { "type": "string" },
+    "SoftwareVersions": { "type": "string" },
     "iEEGReference": { "type": "string" },
+    "ElectrodeManufacturer": { "type": "string" },
+    "ElectrodeManufacturersModelName": { "type": "string" },
     "iEEGGround": { "type": "string" },
-    "Stimulation": { "type": "boolean" },
-    "Medication": { "type": "string" }
+    "iEEGPlacementScheme": { "type": "string" },
+    "iEEGElectrodeGroups": { "type": "string" },
+    "ElectricalStimulation": { "type": "boolean" },
+    "ElectricalStimulationParameters": { "type": "string" }
   },
   "required": [
     "TaskName",
-    "Manufacturer",
-    "PowerLineFrequency",
     "SamplingFrequency",
+    "PowerLineFrequency",
+    "SoftwareFilters",
     "iEEGReference"
   ],
   "additionalProperties": true

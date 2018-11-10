@@ -19,11 +19,10 @@ const validateMisc = require('../../utils/files/validateMisc')
 /**
  * Full Test
  *
- * Takes on an array of files and starts
- * the validation process for a BIDS
- * package.
+ * Takes on an array of files, callback, and boolean inidicating if git-annex is used.
+ * Starts the validation process for a BIDS package.
  */
-const fullTest = (fileList, options, callback) => {
+const fullTest = (fileList, options, annexed, dir, callback) => {
   let self = BIDS
   self.options = options
 
@@ -137,6 +136,8 @@ const fullTest = (fileList, options, callback) => {
         bContentsDict,
         events,
         headers,
+        annexed,
+        dir,
       )
     })
     .then(niftiIssues => {

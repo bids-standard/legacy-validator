@@ -1,13 +1,13 @@
 const utils = require('../../utils')
 const bvec = require('./bvec')
 
-const validate = (files, bContentsDict) => {
+const validate = (files, bContentsDict, annexed, dir) => {
   // validate bvec
   let issues = []
   const bvecPromises = files.map(function(file) {
     return new Promise((resolve, reject) => {
       utils.files
-        .readFile(file)
+        .readFile(file, annexed, dir)
         .then(contents => {
           bContentsDict[file.relativePath] = contents
           bvec(file, contents, function(bvecIssues) {

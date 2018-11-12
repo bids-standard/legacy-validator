@@ -62,7 +62,7 @@ describe('validateMisc', () => {
     validateMisc(files.misc).then(issues => {
       assert.ok(issues.length > 0)
       assert.ok(issues.every(issue => issue instanceof utils.issues.Issue))
-      assert.notStrictEqual(issues.findIndex(issue => issue.code === 97), -1)
+      assert.notStrictEqual(issues.findIndex(issue => issue.code === 99), -1)
       done()
     })
   })

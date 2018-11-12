@@ -43,7 +43,7 @@ function handleFsAccess(accessErr, file, stats, callback) {
       if (stats.size === 0) {
         callback(
           new Issue({
-            code: 97,
+            code: 99,
             file: file,
             reason: `Empty files (${file.path}) not allowed.`,
           }),

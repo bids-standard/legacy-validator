@@ -1,15 +1,13 @@
 {
-        "type": "object",
-        "properties": {
-                "iEEGCoordinateSystem": {"type": "string","minLength": 1},
-                "iEEGCoordinateUnits": {"type": "string","minLength": 1},
-                "iEEGCoordinateSystemDescription": {"type": "string","minLength": 1},
-                "iEEGCoordinateProcessingDescripton": {"type": "string","minLength": 1},
-                "iEEGCoordinateProcessingReference": {"type": "string","minLength": 1},
-                "IntendedFor": {"type": "string","minLength": 1}
-                },
-        "required": ["iEEGCoordinateSystem",
-                     "iEEGCoordinateUnits"
-                  ],
-        "additionalProperties": false
+  "type": "object",
+  "properties": {
+    "iEEGCoordinateSystem": { "type": "string", "minLength": 1 },
+    "iEEGCoordinateUnits": { "type": "string", "minLength": 1 },
+    "iEEGCoordinateSystemDescription": { "type": "string", "minLength": 1 },
+    "iEEGCoordinateProcessingDescription": { "type": "string", "minLength": 1 },
+    "iEEGCoordinateProcessingReference": { "type": "string", "minLength": 1 },
+    "IntendedFor": { "type": "string", "minLength": 1 }
+  },
+  "required": ["iEEGCoordinateSystem", "iEEGCoordinateUnits"],
+  "additionalProperties": false
 }

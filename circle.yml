@@ -52,12 +52,12 @@ jobs:
       - checkout
       - run: apk --no-cache add ca-certificates
       - run: apk --no-cache add git python build-base openssh
-      # Publish to NPM
-      - run: npm install
-      - run: ./node_modules/.bin/npm-cli-login -u $NPM_USERNAME -p $NPM_PASSWORD -e $NPM_EMAIL
       - run: git checkout -f $CIRCLE_TAG
       # Set the version number
       - run: sed -i -E "s/0.0.0/$CIRCLE_TAG/" package.json
+      # Publish to NPM
+      - run: npm install
+      - run: ./node_modules/.bin/npm-cli-login -u $NPM_USERNAME -p $NPM_PASSWORD -e $NPM_EMAIL
       - run: ./node_modules/.bin/publish
       # Update gh-pages demo site
       - run: git config --global user.email circleci@circleci

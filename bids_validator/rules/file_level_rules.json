@@ -206,36 +206,6 @@
     }
   },
 
-  "modalities": {
-    "regexp": "^.*\\.(?:@@_modalities_ext_@@)$",
-    "tokens": {
-      "@@_modalities_ext_@@": [
-        "nii",
-        "nii.gz",
-        "fif",
-        "sqd",
-        "con",
-        "kdf",
-        "chn",
-        "trg",
-        "raw",
-        "raw.mhf",
-        "eeg",
-        "vhdr",
-        "vmrk",
-        "edf",
-        "bdf",
-        "set",
-        "fdt",
-        "nwb",
-        "mef",
-        "tdat",
-        "tidx",
-        "tmet"
-      ]
-    }
-  },
-
   "stimuli": {
     "regexp": "^\\/(?:stimuli)\\/(?:.*)$"
   }

@@ -32,7 +32,6 @@ const funcData = buildRegExp(file_level_rules.func)
 const funcBoldData = buildRegExp(file_level_rules.func_bold)
 const ieegData = buildRegExp(file_level_rules.ieeg)
 const megData = buildRegExp(file_level_rules.meg)
-const modalityData = buildRegExp(file_level_rules.modalities)
 const stimuliData = buildRegExp(file_level_rules.stimuli)
 // Phenotypic data
 const phenotypicData = buildRegExp(phenotypic_rules.phenotypic_data)
@@ -147,12 +146,6 @@ module.exports = {
      */
     isPhenotypic: function(path) {
       return phenotypicData.test(path)
-    },
-    /**
-     * Check if file is a modality
-     */
-    isModality: function(path) {
-      return modalityData.test(path)
     },
     /**
      * Check if the file has appropriate name for a session level

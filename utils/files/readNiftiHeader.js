@@ -57,13 +57,14 @@ function extractNiftiFile(file, callback) {
     })
 
   fs.open(file.path, 'r', function(err, fd) {
+    const closeFile = () => fs.close(fd)
     if (err) {
       callback({ error: new Issue({ code: 44, file: file }) })
       return
     } else {
       fs.read(fd, buffer, 0, bytesRead, 0, function() {
         if (file.name.endsWith('.nii')) {
-          callback(parseNIfTIHeader(buffer, file))
+          callback(parseNIfTIHeader(buffer, file, closeFile))
         } else {
           decompressStream.write(buffer)
         }
@@ -119,13 +120,15 @@ function constructBrowserFileReader(file, callback) {
  * Attempts to parse a header buffer with
  * nifti-js and handles errors.
  */
-function parseNIfTIHeader(buffer, file) {
+function parseNIfTIHeader(buffer, file, cb) {
   var header
   try {
     header = nifti.parseNIfTIHeader(buffer)
   } catch (err) {
     // file is unreadable
     return { error: new Issue({ code: 26, file: file }) }
+  } finally {
+    if (cb) cb()
   }
   // file was not originally gzipped
   return header

@@ -46,18 +46,18 @@ function extractNiftiFile(file, callback) {
   const bytesRead = 500
   const buffer = Buffer.alloc(bytesRead)
 
-  var decompressStream = zlib
-    .createGunzip()
-    .on('data', function(chunk) {
-      callback(parseNIfTIHeader(chunk, file))
-      decompressStream.pause()
-    })
-    .on('error', function() {
-      callback(handleGunzipError(buffer, file))
-    })
-
   fs.open(file.path, 'r', function(err, fd) {
-    const closeFile = () => fs.close(fd)
+    const closeFile = () => fs.close(fd, () => {})
+    const decompressStream = zlib
+      .createGunzip()
+      .on('data', chunk => {
+        callback(parseNIfTIHeader(chunk, file, closeFile))
+        decompressStream.pause()
+      })
+      .on('error', () => {
+        callback(handleGunzipError(buffer, file, closeFile))
+      })
+
     if (err) {
       callback({ error: new Issue({ code: 44, file: file }) })
       return
@@ -141,12 +141,14 @@ function parseNIfTIHeader(buffer, file, cb) {
  * actually gzipped to begin with by trying to parse
  * the original header.
  */
-function handleGunzipError(buffer, file) {
+function handleGunzipError(buffer, file, cb) {
   try {
     nifti.parseNIfTIHeader(buffer)
   } catch (err) {
     // file is unreadable
     return { error: new Issue({ code: 26, file: file }) }
+  } finally {
+    if (cb) cb()
   }
   // file was not originally gzipped
   return { error: new Issue({ code: 28, file: file }) }

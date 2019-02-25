@@ -1,3 +1,7 @@
+/**
+ * for use in test suites using File & FileList browser APIs in jsdom environment
+ */
+
 const fs = require('fs')
 const path = require('path')
 const mime = require('mime-types')

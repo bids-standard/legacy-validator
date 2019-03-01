@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "TaskName": { "type": "string", "minLength": 1 },
-    "SamplingFrequency": { "type": "integer" },
+    "SamplingFrequency": { "type": "number" },
     "PowerLineFrequency": { "type": "number" },
     "DCOffsetCorrection": { "type": "string", "minLength": 1 },
     "SoftwareFilters": {

@@ -47,7 +47,7 @@ address these issues on a case by case basis.
 
 ## Maintainers and Contributors
 
-This package is maintained by @rwblair.
+This package is maintained by [@rwblair](https://github.com/rwblair/).
 
 Some of our awesome contributors include:
 
@@ -248,9 +248,9 @@ see available options.
 
 There are is a limited library of helper functions written in Python. The main function
 determines if a file extension is compliant with the BIDS specification. You can find
-the available functions in the library, as well as their descriptions, 
+the available functions in the library, as well as their descriptions,
 [here](https://github.com/bids-standard/bids-validator/blob/master/bids-validator/bids_validator/bids_validator.py).
-To install, run `pip install bids_validator` (requires python and pip). 
+To install, run `pip install bids_validator` (requires python and pip).
 
 #### Example
 
@@ -276,11 +276,11 @@ following command to install it globally: `cd bids-validator && npm install -g`
 A note about OS X, the dependencies for the browser require a npm package called
 node-gyp which needs xcode to be installed in order to be compiled.
 
-1. The browser version of `bids-validator` lives in the repo subdirectory 
-	`/bids-validator-web`. It is a [React.js](https://reactjs.org/) application 
+1. The browser version of `bids-validator` lives in the repo subdirectory
+	`/bids-validator-web`. It is a [React.js](https://reactjs.org/) application
 	that uses the [next.js](https://nextjs.org/) framework.
 2. To develop `bids-validator` and see how it will act in the browser, simply run
-	`yarn web-develop` in the project root and navigate to `localhost:3000`. 
+	`yarn web-develop` in the project root and navigate to `localhost:3000`.
 3. In development mode, changes to the codebase will trigger rebuilds of the application
 	automatically.
 4. Changes to the `/bids-validator` in the codebase will also be reflected in the

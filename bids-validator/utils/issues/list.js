@@ -220,19 +220,19 @@ module.exports = {
     key: 'NIFTI_DIMENSION',
     severity: 'warning',
     reason:
-      "Nifti file's header field for dimension information blank or too short.",
+      "NIfTI file's header field for dimension information blank or too short.",
   },
   41: {
     key: 'NIFTI_UNIT',
     severity: 'warning',
     reason:
-      "Nifti file's header field for unit information for x, y, z, and t dimensions empty or too short",
+      "NIfTI file's header field for unit information for x, y, z, and t dimensions empty or too short",
   },
   42: {
     key: 'NIFTI_PIXDIM',
     severity: 'warning',
     reason:
-      "Nifti file's header field for pixel dimension information empty or too short.",
+      "NIfTI file's header field for pixel dimension information empty or too short.",
   },
   43: {
     key: 'ORPHANED_SYMLINK',
@@ -244,7 +244,7 @@ module.exports = {
     key: 'FILE_READ',
     severity: 'error',
     reason:
-      'We were unable to read this file. Make sure it contains data (fileSize > 0 kB) and is not corrupted, incorrectly named, or incorrectly symlinked.',
+      'We were unable to read this file. Make sure it contains data (file size > 0 kB) and is not corrupted, incorrectly named, or incorrectly symlinked.',
   },
   45: {
     key: 'SUBJECT_FOLDERS',
@@ -411,12 +411,12 @@ module.exports = {
   74: {
     key: 'DUPLICATE_NIFTI_FILES',
     severity: 'error',
-    reason: "Nifti file exist with both '.nii' and '.nii.gz' extensions.",
+    reason: "NIfTI file exist with both '.nii' and '.nii.gz' extensions.",
   },
   75: {
     key: 'NIFTI_PIXDIM4',
     severity: 'error',
-    reason: "Nifti file's header is missing time dimension information.",
+    reason: "NIfTI file's header is missing time dimension information.",
   },
   76: {
     key: 'EFFECTIVEECHOSPACING_TOO_LARGE',
@@ -484,7 +484,7 @@ module.exports = {
     key: 'SLICETIMING_ELEMENTS',
     severity: 'warning',
     reason:
-      "The number of elements in the SliceTiming array should match the 'k' dimension of the corresponding nifti volume.",
+      "The number of elements in the SliceTiming array should match the 'k' dimension of the corresponding NIfTI volume.",
   },
   88: {
     key: 'MALFORMED_BVEC',

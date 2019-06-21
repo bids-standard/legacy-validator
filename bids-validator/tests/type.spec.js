@@ -176,6 +176,10 @@ describe('utils.type.file.isMEG', function() {
     '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_task-rest_run-01_meg.raw.mhd',
     '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/xyz', // for e.g., BTi files
     '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_markers.sqd',
+    '/sub-01/ses-001/meg/sub-01_ses-001_markers.sqd', // KIT with removed father level directory
+    '/sub-01/ses-001/meg/sub-01_ses-001_markers.mrk', // KIT with removed father level directory
+    '/sub-01/ses-001/meg/sub-01_ses-001_meg.sqd', // KIT with removed father level directory
+    '/sub-01/ses-001/meg/sub-01_ses-001_meg.con', // KIT with removed father level directory
     '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg.json',
     '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_part-01_meg.fif',
     '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_channels.tsv',

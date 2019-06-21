@@ -200,7 +200,7 @@
   "meg": {
     "regexp": "^\\/(sub-[a-zA-Z0-9]+)\\/(?:(ses-[a-zA-Z0-9]+)\\/)?meg\\/\\1(_\\2)?(?:_task-[a-zA-Z0-9]+)?(?:_acq-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_proc-[a-zA-Z0-9]+)?(?:_part-[0-9]+)?(_meg(@@@_meg_type_@@@\\/.*|\\/.*)|(@@@_meg_ext_@@@))$",
     "tokens": {
-      "@@@_meg_type_@@@": ["\\.fif", "\\.(?:sqd|con)", "\\.ds"],
+      "@@@_meg_type_@@@": ["\\.fif", "\\.(?:con|sqd)", "\\.ds"],
       "@@@_meg_ext_@@@": [
         "_events\\.json",
         "_events\\.tsv",
@@ -210,7 +210,7 @@
         "_coordsystem\\.json",
         "_photo\\.jpg",
         "_headshape\\.pos",
-        "_markers\\.(?:con|sqd)"
+        "_markers\\.(?:mrk|sqd)"
       ]
     }
   },

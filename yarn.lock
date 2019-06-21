@@ -3697,6 +3697,11 @@ hasha@^3.0.0:
   dependencies:
     is-stream "^1.0.1"
 
+hed-validator@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/hed-validator/-/hed-validator-0.3.0.tgz#53e80420c3e24209e5fbcd45156b29be429b6a99"
+  integrity sha512-yQLR+S2HPtb9dMQQISBamdcYa+0ShJl2vf/0D5xDqjFM6QrAmtXZYBsBwnPRy1HR0RCiBubRoBUG92veqRl54w==
+
 hmac-drbg@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/hmac-drbg/-/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"

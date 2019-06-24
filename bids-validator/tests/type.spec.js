@@ -172,17 +172,32 @@ describe('utils.type.file.isDWI', function() {
 
 describe('utils.type.file.isMEG', function() {
   const goodFilenames = [
-    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_task-rest_run-01_meg.sqd',
-    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_task-rest_run-01_meg.raw.mhd',
-    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/xyz', // for e.g., BTi files
-    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_markers.sqd',
-    '/sub-01/ses-001/meg/sub-01_ses-001_markers.sqd', // KIT with removed father level directory
-    '/sub-01/ses-001/meg/sub-01_ses-001_markers.mrk', // KIT with removed father level directory
-    '/sub-01/ses-001/meg/sub-01_ses-001_meg.sqd', // KIT with removed father level directory
-    '/sub-01/ses-001/meg/sub-01_ses-001_meg.con', // KIT with removed father level directory
+    // Metadata MEG files
     '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg.json',
-    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_part-01_meg.fif',
     '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_channels.tsv',
+    // Father directory files are fine for some file formats:
+    // Father dir: CTF data with a .ds ... the contents within .ds are not checked
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg.ds/catch-alp-good-f.meg4',
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg.ds/xyz',
+    // Father dir: BTi/4D ... again: within contents not checked
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/config',
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/hs_file',
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/e,rfhp1.0Hz.COH',
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/c,rfDC',
+    // NO father dir: KRISS data
+    '/sub-control01/ses-001/meg/sub-control01_ses-001_task-rest_run-01_meg.chn',
+    '/sub-control01/ses-001/meg/sub-control01_ses-001_task-rest_run-01_meg.kdf',
+    '/sub-control01/ses-001/meg/sub-control01_ses-001_task-rest_run-01_meg.trg',
+    // NO father dir: KIT data
+    '/sub-01/ses-001/meg/sub-01_ses-001_markers.sqd',
+    '/sub-01/ses-001/meg/sub-01_ses-001_markers.mrk',
+    '/sub-01/ses-001/meg/sub-01_ses-001_meg.sqd',
+    '/sub-01/ses-001/meg/sub-01_ses-001_meg.con',
+    // NO father dir: ITAB data
+    '/sub-control01/ses-001/meg/sub-control01_ses-001_task-rest_run-01_meg.raw',
+    '/sub-control01/ses-001/meg/sub-control01_ses-001_task-rest_run-01_meg.raw.mhd',
+    // NO father dir: fif data
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_part-01_meg.fif',
   ]
 
   goodFilenames.forEach(function(path) {
@@ -193,11 +208,29 @@ describe('utils.type.file.isMEG', function() {
   })
 
   const badFilenames = [
-    // only parent directory name matters for KIT/BTi systems
-    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_megggg/sub-01_ses-001_task-rest_run-01_meg.sqd',
+    // missing session directory
     '/sub-01/meg/sub-01_ses-001_task-rest_run-01_meg.json',
+    // subject not matching
     '/sub-01/ses-001/meg/sub-12_ses-001_task-rest_run-01_part-01_meg.fif',
+    // invalid file endings
     '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg.tsv',
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg.bogus',
+    // only parent directory name matters for BTi and CTF systems
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meggg/config',
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg.dd/xyz',
+    // KIT with a father dir ... should not have a father dir
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_markers.sqd',
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_markers.con',
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_task-rest_run-01_meg.sqd',
+    // fif with a father dir ... should not have a father dir
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_task-rest_meg.fif',
+    // ITAB with a father dir ... should not have a father dir
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_task-rest_run-01_meg.raw',
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_task-rest_run-01_meg.raw.mhd',
+    // KRISS with a father dir ... should not have a father dir
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_task-rest_run-01_meg.kdf',
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_task-rest_run-01_meg.trg',
+    '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_task-rest_run-01_meg.chn',
   ]
 
   badFilenames.forEach(function(path) {

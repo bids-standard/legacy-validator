@@ -222,7 +222,7 @@ describe('utils.type.file.isMEG', function() {
     '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_markers.sqd',
     '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_markers.con',
     '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_task-rest_run-01_meg.sqd',
-    // fif with a father dir ... should not have a father dir
+    // FIF with a father dir ... should not have a father dir
     '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_task-rest_meg.fif',
     // ITAB with a father dir ... should not have a father dir
     '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg/sub-01_ses-001_task-rest_run-01_meg.raw',

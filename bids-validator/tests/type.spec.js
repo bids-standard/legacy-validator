@@ -188,6 +188,7 @@ describe('utils.type.file.isMEG', function() {
     '/sub-control01/ses-001/meg/sub-control01_ses-001_task-rest_run-01_meg.chn',
     '/sub-control01/ses-001/meg/sub-control01_ses-001_task-rest_run-01_meg.kdf',
     '/sub-control01/ses-001/meg/sub-control01_ses-001_task-rest_run-01_meg.trg',
+    '/sub-control01/ses-001/meg/sub-control01_ses-001_task-rest_digitizer.txt',
     // NO father dir: KIT data
     '/sub-01/ses-001/meg/sub-01_ses-001_markers.sqd',
     '/sub-01/ses-001/meg/sub-01_ses-001_markers.mrk',

@@ -34,7 +34,7 @@ const roots = [
   'farad',
   'F',
   'ohm',
-  'Ω',
+  '\u03A9',  // Ω
   'siemens',
   'S',
   'weber',
@@ -45,7 +45,7 @@ const roots = [
   'H',
   'degree',
   'Celsius',
-  '°C',
+  '\xB0C',  // °C
   'lumen',
   'lm',
   'lux',
@@ -89,7 +89,7 @@ const prefixes = [
   'milli',
   'm',
   'micro',
-  'µ',
+  '\u03BC',  // µ
   'nano',
   'n',
   'pico',

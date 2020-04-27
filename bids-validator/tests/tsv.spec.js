@@ -37,7 +37,7 @@ describe('TSV', function() {
   it('should not allow non-SI units', function() {
     var tsv =
       'header-one\tunits\theader-three\n' +
-      'value-one\t\u03BCV\tvalue-three\n' +
+      'value-one\t\xB5V\tvalue-three\n' +
       'value-one\tuV\tvalue-three'
 
     validate.TSV.TSV(file, tsv, [], function(issues) {

@@ -164,19 +164,6 @@ class BIDSValidator():
 
         return regexps
 
-    def get_path_values(self, path):
-        """Return values for path keys "sub" and "ses"."""
-        values = {}
-
-        regexps = self.get_regular_expressions(self.dir_rules + 'path.json')
-
-        # capture subject
-        for paths in ['sub', 'ses']:
-            match = re.compile(regexps[paths]).findall(path)
-            values[paths] = match[1] if match & match[1] else None
-
-        return values
-
     def conditional_match(self, expression, path):
         """Find conditional match."""
         match = re.compile(expression).findall(path)

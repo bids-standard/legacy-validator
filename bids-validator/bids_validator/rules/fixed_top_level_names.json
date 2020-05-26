@@ -2,6 +2,7 @@
   "fixed_top_level_names": [
     "/README",
     "/CHANGES",
+    "/LICENSE",
     "/dataset_description.json",
     "/genetic_info.json",
     "/participants.tsv",

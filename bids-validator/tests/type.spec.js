@@ -79,6 +79,7 @@ describe('utils.type.file.isTopLevel', function() {
   const goodFilenames = [
     '/README',
     '/CHANGES',
+    '/LICENSE',
     '/dataset_description.json',
     '/ses-pre_task-rest_bold.json',
     '/dwi.bval',
@@ -101,6 +102,7 @@ describe('utils.type.file.isTopLevel', function() {
   const badFilenames = [
     '/readme.txt',
     '/changelog',
+    '/license.txt',
     '/dataset_description.yml',
     '/ses.json',
     '/_T1w.json',

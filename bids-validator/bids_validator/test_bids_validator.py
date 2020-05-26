@@ -17,7 +17,7 @@ TEST_DATA_DICT = {
     'eeg_matchingpennies': 'https://github.com/sappelhoff/eeg_matchingpennies'
     }
 
-EXCLUDE_KEYWORDS = ['git', 'datalad', 'sourcedata', 'bidsignore', 'LICENSE']
+EXCLUDE_KEYWORDS = ['git', 'datalad', 'sourcedata', 'bidsignore']
 
 
 def _download_test_data(test_data_dict, dsname):

@@ -121,7 +121,9 @@ describe('utils.type.file.isTopLevel', function() {
 describe('utils.type.file.isSessionLevel', function() {
   const goodFilenames = [
     '/sub-12/sub-12_scans.tsv',
+    '/sub-12/sub-12_scans.json',
     '/sub-12/ses-pre/sub-12_ses-pre_scans.tsv',
+    '/sub-12/ses-pre/sub-12_ses-pre_scans.json',
   ]
 
   goodFilenames.forEach(function(path) {

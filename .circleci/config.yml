@@ -123,7 +123,7 @@ jobs:
       - run: apk --no-cache add ca-certificates git openssh-client
       - add_ssh_keys:
           fingerprints:
-            - '44:93:5a:f4:2b:2d:c1:8a:f2:8e:8b:e9:27:5f:93:25'
+            - '86:74:77:4c:90:02:f4:5d:b4:f8:3c:b4:37:c3:c0:25'
       - checkout
       - run: apk --no-cache add python build-base openssh libffi-dev libressl-dev
       - run:
@@ -136,8 +136,8 @@ jobs:
       # Publish to PyPI
       - run: cd bids-validator && twine upload dist/*
       # Update gh-pages demo site
-      - run: git config --global user.email circleci@circleci
-      - run: git config --global user.name CircleCI
+      - run: git config --global user.email "bids.maintenance@gmail.com"
+      - run: git config --global user.name "bids-maintenance"
       - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run:
           name: Create new gh-pages branch without history

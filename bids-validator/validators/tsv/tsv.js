@@ -3,6 +3,7 @@ import Issue from '../../utils/issues/issue'
 import checkAcqTimeFormat from './checkAcqTimeFormat'
 import checkAge89 from './checkAge89'
 import checkStatusCol from './checkStatusCol'
+import checkTypecol from './checkTypeCol'
 import parseTSV from './tsvParser'
 var path = require('path')
 
@@ -226,6 +227,7 @@ const TSV = (file, contents, fileList, callback) => {
     checkheader('type', 1, file, 71)
     checkheader('units', 2, file, 71)
     checkStatusCol(rows, file, issues)
+    checkTypecol(rows, file, issues)
   }
 
   if (
@@ -236,6 +238,7 @@ const TSV = (file, contents, fileList, callback) => {
     checkheader('type', 1, file, 71)
     checkheader('units', 2, file, 71)
     checkStatusCol(rows, file, issues)
+    checkTypecol(rows, file, issues)
   }
 
   if (
@@ -248,6 +251,7 @@ const TSV = (file, contents, fileList, callback) => {
     checkheader('low_cutoff', 3, file, 72)
     checkheader('high_cutoff', 4, file, 72)
     checkStatusCol(rows, file, issues)
+    checkTypecol(rows, file, issues)
   }
 
   // electrodes.tsv

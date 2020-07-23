@@ -713,5 +713,15 @@ export default {
     key: 'SCANS_FILENAME_NOT_MATCH_DATASET',
     severity: 'error',
     reason: 'The filename in scans.tsv file does not match what is present in the BIDS dataset.'
+  },
+  130: {
+    key: 'CHANNELS_COLUMN_TYPE_UPPER_CASE',
+    severity: 'warning',
+    reason: 'Type column in channels.tsv files should consist of upper-case characters.'
+  },
+  131: {
+    key: 'CHANNELS_COLUMN_TYPE',
+    severity: 'error',
+    reason: 'Type column in channels.tsv files should only consist of values allowed in the specification for (M)(i)EEG data.'
   }
 }

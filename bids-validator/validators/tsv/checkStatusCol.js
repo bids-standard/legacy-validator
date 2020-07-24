@@ -34,5 +34,4 @@ const checkStatusCol = function(rows, file, issues) {
   return
 }
 
-
 export default checkStatusCol 

@@ -722,6 +722,6 @@ export default {
   131: {
     key: 'CHANNELS_COLUMN_TYPE',
     severity: 'error',
-    reason: 'Type column in channels.tsv files should only consist of values allowed in the specification for (M)(i)EEG data.'
+    reason: 'Type column in channels.tsv files should only consist of values allowed in the specification for MEG/EEG/iEEG data.'
   }
 }

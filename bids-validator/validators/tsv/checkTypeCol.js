@@ -4,7 +4,7 @@ const Issue = require('../../utils').issues.Issue
 const allowedMEEGTypes = ['EEG', 'ECOG', 'SEEG', 'DBS', 'PD', 'OTHER',  // (i)EEG
     'EOG', 'ECG', 'EMG', 'EYEGAZE', 'GSR', 'HEOG', 'MISC', 'PUPIL', 'RESP', 'TEMP', 'VEOG', // physio
     'AUDIO', 'REF', 'SYSCLOCK', 'TRIG', 'ADC', 'DAC', // system
-    'MEGMAG', 'MEGGRADAXIAL', 'MEGGRADPLANAR', 'MEGREFMAG', 'MEGREFGRADAXIAL', 'MEGOTHER', 'HLU', 'FITERR' // MEG
+    'MEGMAG', 'MEGGRADAXIAL', 'MEGGRADPLANAR', 'MEGREFMAG', 'MEGREFGRADAXIAL', 'MEGREFGRADPLANAR', 'MEGOTHER', 'HLU', 'FITERR' // MEG
 ]
 
 

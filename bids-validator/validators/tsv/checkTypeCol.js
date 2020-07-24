@@ -9,7 +9,7 @@ const allowedMEEGTypes = ['EEG', 'ECOG', 'SEEG', 'DBS', 'PD', 'OTHER',  // (i)EE
 
 
 /**
- * Checks type column in a (m/i) electroencephalography _channels.tsv file to
+ * Checks type column in an ephys _channels.tsv file to
  * ensure its values are only in an acceptable set of values and fires off a 
  * warning to the user if the characters are not all upper-case.
  * @param {string[]} rows - Each row of a tsv file to be checked.

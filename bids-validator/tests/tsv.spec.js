@@ -523,7 +523,7 @@ describe('TSV', function() {
       'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
       'value-name\teeg\tmV\tvalue-lowcut\tvalue-highcut\tgood'
     validate.TSV.TSV(channelsFileEEG, tsv, [], function(issues) {
-      assert(issues.length === 1 && issues[0].code === 131)
+      assert(issues.length === 1 && issues[0].code === 130)
     })
   })
 

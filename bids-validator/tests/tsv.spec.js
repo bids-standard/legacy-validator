@@ -494,7 +494,7 @@ describe('TSV', function() {
   it('should not allow iEEG channels.tsv files with value other than accepted values in type column', function() {
     var tsv =
       'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
-      'value-name\tmeeg\tmV\tvalue-lowcut\tvalue-highcut\tgood'
+      'value-name\tMEEG\tmV\tvalue-lowcut\tvalue-highcut\tgood'
     validate.TSV.TSV(channelsFileIEEG, tsv, [], function(issues) {
       assert(issues.length === 1 && issues[0].code === 131)
     })
@@ -503,7 +503,7 @@ describe('TSV', function() {
   it('should not allow EEG channels.tsv files with value other than accepted values in type column', function() {
     var tsv =
       'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
-      'value-name\tmeeg\tmV\tvalue-lowcut\tvalue-highcut\tgood'
+      'value-name\tMEEG\tmV\tvalue-lowcut\tvalue-highcut\tgood'
     validate.TSV.TSV(channelsFileEEG, tsv, [], function(issues) {
       assert(issues.length === 1 && issues[0].code === 131)
     })
@@ -512,7 +512,16 @@ describe('TSV', function() {
   it('should not allow MEG channels.tsv files with value other than accepted values in type column', function() {
     var tsv =
       'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
-      'value-name\tmeeg\tmV\tvalue-lowcut\tvalue-highcut\tgood'
+      'value-name\tMEEG\tmV\tvalue-lowcut\tvalue-highcut\tgood'
+    validate.TSV.TSV(channelsFileEEG, tsv, [], function(issues) {
+      assert(issues.length === 1 && issues[0].code === 131)
+    })
+  })
+
+  it('should not allow channels.tsv files with lower-casing in type column', function() {
+    var tsv =
+      'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
+      'value-name\teeg\tmV\tvalue-lowcut\tvalue-highcut\tgood'
     validate.TSV.TSV(channelsFileEEG, tsv, [], function(issues) {
       assert(issues.length === 1 && issues[0].code === 131)
     })

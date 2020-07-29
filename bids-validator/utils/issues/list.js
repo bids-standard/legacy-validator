@@ -716,7 +716,7 @@ export default {
   },
   130: {
     key: 'CHANNELS_COLUMN_TYPE_UPPER_CASE',
-    severity: 'warning',
+    severity: 'error',
     reason: 'Type column in channels.tsv files should consist of upper-case characters.'
   },
   131: {

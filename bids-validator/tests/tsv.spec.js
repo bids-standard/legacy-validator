@@ -527,7 +527,7 @@ describe('TSV', function() {
     })
   })
 
-  it('should allow iEEG channels.tsv files with value other than accepted values in type column', function() {
+  it('should allow iEEG channels.tsv files with accepted values in type column', function() {
     var tsv =
       'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
       'value-name\tECOG\tmV\tvalue-lowcut\tvalue-highcut\tgood'

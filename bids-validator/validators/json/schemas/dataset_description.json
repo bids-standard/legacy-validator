@@ -35,6 +35,12 @@
       },
       "type": "array"
     },
+    "EthicsApprovals": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
     "ReferencesAndLinks": {
       "items": {
         "type": "string"

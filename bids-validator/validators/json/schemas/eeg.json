@@ -13,7 +13,12 @@
     "ManufacturersModelName": { "type": "string", "minLength": 1 },
     "DeviceSerialNumber": { "type": "string" },
     "SoftwareVersions": { "type": "string" },
-    "PowerLineFrequency": { "type": "number" },
+    "PowerLineFrequency": {
+      "anyOf": [
+        { "type": "integer" },
+        { "type": "string", "pattern": "^n/a$" }
+      ]
+    },
     "SamplingFrequency": { "type": "number" },
     "EEGChannelCount": { "type": "integer" },
     "EOGChannelCount": { "type": "integer" },

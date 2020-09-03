@@ -3,7 +3,12 @@
   "properties": {
     "TaskName": { "type": "string", "minLength": 1 },
     "SamplingFrequency": { "type": "number" },
-    "PowerLineFrequency": { "type": "number" },
+    "PowerLineFrequency": {
+      "anyOf": [
+        { "type": "integer" },
+        { "type": "string", "pattern": "^n/a$" }
+      ]
+    },
     "DCOffsetCorrection": { "type": "string", "minLength": 1 },
     "SoftwareFilters": {
       "anyOf": [

@@ -371,7 +371,8 @@ Using lerna publish will create a git commit with updated version information an
 ## Acknowledgments
 
 Many contributions to the `bids-validator` were done by members of the
-BIDS community. See the [list of contributors](https://github.com/bids-standard/bids-validator/graphs/contributors).
+BIDS community. See the
+[list of contributors](https://bids-specification.readthedocs.io/en/stable/99-appendices/01-contributors.html).
 
 A large part of the development of `bids-validator` is currently done by
 [Squishymedia](https://squishymedia.com/), who are in turn financed through

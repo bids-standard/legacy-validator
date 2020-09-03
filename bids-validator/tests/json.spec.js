@@ -84,7 +84,7 @@ describe('JSON', function() {
       SoftwareFilters: {
         HighPass: { HalfAmplitudeCutOffHz: 1, RollOff: '6dB/Octave' },
       },
-      PowerLineFrequency: 50,
+      PowerLineFrequency: "n/a",
     }
     jsonDict[eeg_file.relativePath] = jsonObj
     validate.JSON(eeg_file, jsonDict, function(issues) {

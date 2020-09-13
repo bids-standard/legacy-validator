@@ -1,0 +1,14 @@
+{
+  "age":{
+    "Description":"Description",
+    "Units":"Units"
+  },
+  "sex":{
+    "LongName":"Long name",
+    "Description":"Description",
+    "Levels":{
+      "M":"M",
+      "F":"F"
+    }
+  }
+}

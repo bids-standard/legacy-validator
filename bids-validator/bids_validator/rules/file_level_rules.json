@@ -249,11 +249,11 @@
   },
 
   "meg_calbibration": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?meg[\\/]\\1(_\\2)?_acq-calibration_meg\\.fif$"
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?meg[\\/]\\1(_\\2)?_acq-calibration_meg\\.dat$"
   },
 
   "meg_crosstalk": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?meg[\\/]\\1(_\\2)?_acq-crosstalk_meg\\.dat$"
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?meg[\\/]\\1(_\\2)?_acq-crosstalk_meg\\.fif$"
   },
 
   "stimuli": {

@@ -137,8 +137,6 @@ describe('utils.type.file.isSubjectLevel', () => {
     // must be placed on file level.
     '/sub-12/sub-12_acq-calibration_meg.dat',
     '/sub-12/sub-12_acq-crosstalk_meg.fif',
-    '/sub-12/sub-12_acq-calibration_meg.dat',
-    '/sub-12/sub-12_acq-crosstalk_meg.fif',
     '/sub-12/acq-calibration_meg.dat',
     '/sub-12/acq-crosstalk_meg.fif',
     '/sub-12/acq-calibration.dat',

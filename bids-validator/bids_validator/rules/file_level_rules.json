@@ -5,41 +5,22 @@
       "@@@_anat_suffixes_@@@": [
         "T1w",
         "T2w",
+        "T1map",
+        "T2map",
+        "T1rho",
         "FLAIR",
         "PD",
         "PDT2",
         "inplaneT1",
         "inplaneT2",
         "angio",
+        "SWImagandphase",
+        "T2star",
         "FLASH",
+        "PDmap",
         "photo"
       ],
       "@@@_anat_ext_@@@": ["nii\\.gz", "nii", "json"],
-      "@@@_cont_ext_@@@": [
-        "_physio\\.tsv\\.gz",
-        "_stim\\.tsv\\.gz",
-        "_physio\\.json",
-        "_stim\\.json"
-      ]
-    }
-  },
-
-  "anat_qmri": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)|(?:_recording-[a-zA-Z0-9]+)?(?:@@@_cont_ext_@@@))$",
-    "tokens": {
-      "@@@_anat_suffixes_@@@": [
-        "T1map",
-        "T2map",
-        "T1rho",
-        "SWImagandphase",
-        "T2star",
-        "PDmap"
-      ],
-      "@@@_anat_ext_@@@": [
-        "nii\\.gz",
-        "nii",
-        "json"
-      ],
       "@@@_cont_ext_@@@": [
         "_physio\\.tsv\\.gz",
         "_stim\\.tsv\\.gz",

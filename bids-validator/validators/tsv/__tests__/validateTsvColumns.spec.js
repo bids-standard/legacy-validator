@@ -55,4 +55,19 @@ describe('validateTsvColumns', () => {
     const issues = validateTsvColumns(tsvs, {})
     assert.lengthOf(issues, 0)
   })
+  it('should generate error with empty columns', () => {
+    const tsvs = [
+      {
+        contents: '\t',
+        file: file,
+      },
+      {
+        contents: '\t\t',
+        file: file,
+      },
+    ]
+    const issues = validateTsvColumns(tsvs, {})
+    assert.lengthOf(issues, 2)
+  })
+
 })

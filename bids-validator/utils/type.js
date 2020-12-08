@@ -28,7 +28,6 @@ const eegData = buildRegExp(file_level_rules.eeg)
 const fieldmapData = buildRegExp(file_level_rules.field_map)
 const fieldmapMainNiiData = buildRegExp(file_level_rules.field_map_main_nii)
 const funcData = buildRegExp(file_level_rules.func)
-const funcBoldData = buildRegExp(file_level_rules.func_bold)
 const ieegData = buildRegExp(file_level_rules.ieeg)
 const megData = buildRegExp(file_level_rules.meg)
 const megCalibrationData = buildRegExp(file_level_rules.meg_calbibration)
@@ -217,10 +216,6 @@ export default {
       return conditionalMatch(behavioralData, path)
     },
 
-    isFuncBold: function(path) {
-      return conditionalMatch(funcBoldData, path)
-    },
-
     hasModality: function(path) {
       return (
         this.isAnat(path) ||
@@ -231,8 +226,7 @@ export default {
         this.isMeg(path) ||
         this.isEEG(path) ||
         this.isIEEG(path) ||
-        this.isBehavioral(path) ||
-        this.isFuncBold(path)
+        this.isBehavioral(path)
       )
     },
   },

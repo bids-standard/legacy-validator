@@ -21,7 +21,7 @@ const checkStatusCol = function(rows, file, issues) {
         issues.push(
           new Issue({
             file: file,
-            evidence: line,
+            evidence: line.toString(),
             line: i + 1,
             reason:
               'the status column values should either be good, bad, or n/a',

@@ -71,7 +71,9 @@
       "@@@_eeg_top_ext_@@@": [
         "_eeg\\.json",
         "_channels\\.tsv",
+        "_channels\\.json",
         "_electrodes\\.tsv",
+        "_electrodes\\.json",
         "_photo\\.jpg",
         "_coordsystem\\.json"
       ]
@@ -83,7 +85,9 @@
       "@@@_ieeg_top_ext_@@@": [
         "_ieeg\\.json",
         "_channels\\.tsv",
+        "_channels\\.json",
         "_electrodes\\.tsv",
+        "_electrodes\\.json",
         "_photo\\.jpg",
         "_coordsystem\\.json"
       ]
@@ -95,6 +99,7 @@
       "@@@_meg_top_ext_@@@": [
         "_meg\\.json",
         "_channels\\.tsv",
+        "_channels\\.json",
         "_photo\\.jpg",
         "_coordsystem\\.json"
       ]

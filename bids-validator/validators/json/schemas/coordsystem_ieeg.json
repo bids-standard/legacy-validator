@@ -3,7 +3,7 @@
   "properties": {
     "IntendedFor": { "type": "string", "minLength": 1 },
     "iEEGCoordinateSystem": { "type": "string", "enum": ["Pixels", "ACPC", "Other"] },
-    "iEEGCoordinateUnits":  { "$ref": "common_definitions.json#/definitions/CoordUnits" },
+    "iEEGCoordinateUnits":  { "type": "string", "enum": ["m", "mm", "cm", "pixels", "n/a"] },
     "iEEGCoordinateSystemDescription": { "type": "string", "minLength": 1 },
     "iEEGCoordinateProcessingDescription": { "type": "string", "minLength": 1 },
     "iEEGCoordinateProcessingReference": { "type": "string", "minLength": 1 }

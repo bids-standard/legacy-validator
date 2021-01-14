@@ -291,7 +291,7 @@ describe('JSON', function() {
   it('iEEG *_coordsystem.json schema should require *Description if *Coordsystem is "Other"', function() {
     var jsonObj = {
       iEEGCoordinateSystem: 'Other',
-      iEEGCoordinateUnits: 'mm',
+      iEEGCoordinateUnits: 'pixels',
     }
     jsonDict[ieeg_coordsystem_file.relativePath] = jsonObj
     validate.JSON(ieeg_coordsystem_file, jsonDict, function(issues) {

@@ -156,7 +156,7 @@ describe('JSON', function() {
       MEGCoordinateSystem: 'CTF',
       MEGCoordinateUnits: 'mm',
       MEGCoordinateSystemDescription: 'this is the usual ...',
-      EEGCoordinateSystem: 'Other',
+      EEGCoordinateSystem: 'CapTrak',
       EEGCoordinateSystemDescription: 'RAS orientation ...',
       HeadCoilCoordinateSystem: 'Other',
       HeadCoilCoordinates: {
@@ -223,10 +223,14 @@ describe('JSON', function() {
     }
     jsonDict[eeg_coordsystem_file.relativePath] = jsonObj
     validate.JSON(eeg_coordsystem_file, jsonDict, function(issues) {
-      assert(issues.length === 1)
+      assert(issues.length === 5)
       assert(
         issues[0].evidence ==
           '.EEGCoordinateSystem should be equal to one of the allowed values',
+      )
+      assert(
+        issues[4].evidence ==
+        '.EEGCoordinateSystem should match some schema in anyOf',
       )
     })
   })

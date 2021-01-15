@@ -2,7 +2,11 @@
   "type": "object",
   "properties": {
     "IntendedFor": { "type": "string", "minLength": 1 },
-    "iEEGCoordinateSystem": { "type": "string", "enum": ["Pixels", "ACPC", "Other"] },
+    "iEEGCoordinateSystem": { "anyOf": [
+      { "$ref": "common_definitions.json#/definitions/iEEGCoordSys" },
+      { "$ref": "common_definitions.json#/definitions/StandardTemplateCoordSys" },
+      { "$ref": "common_definitions.json#/definitions/StandardTemplateDeprecatedCoordSys" }
+    ]},
     "iEEGCoordinateUnits":  { "type": "string", "enum": ["m", "mm", "cm", "pixels", "n/a"] },
     "iEEGCoordinateSystemDescription": { "type": "string", "minLength": 1 },
     "iEEGCoordinateProcessingDescription": { "type": "string", "minLength": 1 },

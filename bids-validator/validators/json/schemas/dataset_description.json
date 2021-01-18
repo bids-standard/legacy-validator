@@ -50,8 +50,7 @@
       "type": "array"
     },
     "DatasetDOI": {
-      "type": "string",
-      "format": "uri"
+      "type": "string"
     },
     "Preregistration": {
       "type": "string",
@@ -84,7 +83,7 @@
         "type": "object",
         "properties": {
           "URL": {"type": "string", "format": "uri"},
-          "DOI": {"type": "string", "format": "uri"},
+          "DOI": {"type": "string"},
           "Version": {"type": "string"}
         }
       }

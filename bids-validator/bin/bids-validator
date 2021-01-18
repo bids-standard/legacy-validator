@@ -2,7 +2,7 @@
 
 process.title = 'bids-validator'
 
-var argv = require('yargs')
+const argv = require('yargs')
   .usage('Usage: $0 <dataset_directory> [options]')
   .help('help')
   .alias('help', 'h')
@@ -50,6 +50,13 @@ var argv = require('yargs')
       'Optional configuration file. See https://github.com/bids-standard/bids-validator for more info',
     default: '.bids-validator-config.json',
   })
+  .boolean('filenames')
+  .default('filenames', false)
+  .describe(
+    'filenames',
+    'A less accurate check that reads filenames one per line from stdin.',
+  )
+  .hide('filenames')
   .epilogue(
     'This tool checks if a dataset in a given directory is \
 compatible with the Brain Imaging Data Structure specification. To learn \

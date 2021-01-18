@@ -54,6 +54,7 @@
       "@@@_meg_ses_type_@@@": [
         "_events.tsv",
         "_channels.tsv",
+        "_channels.json",
         "_meg.json",
         "_coordsystem.json",
         "_photo.jpg",
@@ -68,7 +69,9 @@
       "@@@_eeg_ses_type_@@@": [
         "_events.tsv",
         "_channels.tsv",
+        "_channels.json",
         "_electrodes.tsv",
+        "_electrodes.json",
         "_eeg.json",
         "_coordsystem.json",
         "_photo.jpg"
@@ -82,7 +85,9 @@
       "@@@_ieeg_ses_type_@@@": [
         "_events.tsv",
         "_channels.tsv",
+        "_channels.json",
         "_electrodes.tsv",
+        "_electrodes.json",
         "_ieeg.json",
         "_coordsystem.json",
         "_photo.jpg"

@@ -28,6 +28,8 @@ export default function checkHedStrings(events, headers, jsonContents, dir) {
     .buildSchema(schemaDefinition)
     .then(hedSchema => {
       let hedStringsFound = false
+      const sidecarIssues = {}
+      let sidecarIssuesFound = false
       // loop through event data files
       events.forEach(eventFile => {
         const hedStrings = []
@@ -35,6 +37,59 @@ export default function checkHedStrings(events, headers, jsonContents, dir) {
         const potentialSidecars = utils.files.potentialLocations(
           eventFile.path.replace('.tsv', '.json'),
         )
+        // validate the HED strings in the json sidecars
+        for (const sidecarName of potentialSidecars) {
+          if (!(sidecarName in sidecarIssues)) {
+            const sidecarDictionary = jsonContents[sidecarName]
+            let sidecarHedStrings = []
+            for (const sidecarKey in sidecarDictionary) {
+              const sidecarValue = sidecarDictionary[sidecarKey]
+              if (
+                sidecarValue !== null &&
+                typeof sidecarValue === 'object' &&
+                sidecarValue.HED !== undefined
+              ) {
+                if (typeof sidecarValue.HED === 'string') {
+                  sidecarHedStrings.push(sidecarValue.HED)
+                } else {
+                  sidecarHedStrings = sidecarHedStrings.concat(
+                    Object.values(sidecarValue.HED),
+                  )
+                }
+              }
+            }
+            let fileIssues = []
+            for (const hedString of sidecarHedStrings) {
+              const [
+                isHedStringValid,
+                hedIssues,
+              ] = hedValidator.validator.validateHedString(
+                hedString,
+                hedSchema,
+                true,
+                true,
+              )
+              if (!isHedStringValid) {
+                const convertedIssues = convertHedIssuesToBidsIssues(
+                  hedIssues,
+                  sidecarName,
+                )
+                fileIssues = fileIssues.concat(convertedIssues)
+                sidecarIssuesFound = true
+              }
+            }
+            sidecarIssues[sidecarName] = fileIssues
+            if (fileIssues.length > 0) {
+              issues.push(new Issue({ code: 139, file: sidecarName }))
+              issues = issues.concat(fileIssues)
+            }
+          } else if (sidecarIssues[sidecarName].length > 0) {
+            sidecarIssuesFound = true
+          }
+        }
+        if (sidecarIssuesFound) {
+          return
+        }
         const mergedDictionary = utils.files.generateMergedSidecarDict(
           potentialSidecars,
           jsonContents,
@@ -130,22 +185,20 @@ export default function checkHedStrings(events, headers, jsonContents, dir) {
           hedStringsFound = true
         }
 
-        for (const hedString of hedStrings) {
-          const [
-            isHedStringValid,
+        const [
+          isHedDatasetValid,
+          hedIssues,
+        ] = hedValidator.validator.validateHedDataset(
+          hedStrings,
+          hedSchema,
+          true,
+        )
+        if (!isHedDatasetValid) {
+          const convertedIssues = convertHedIssuesToBidsIssues(
             hedIssues,
-          ] = hedValidator.validator.validateHedString(
-            hedString,
-            hedSchema,
-            true,
+            eventFile.file,
           )
-          if (!isHedStringValid) {
-            const convertedIssues = convertHedIssuesToBidsIssues(
-              hedIssues,
-              eventFile.file,
-            )
-            issues = issues.concat(convertedIssues)
-          }
+          issues = issues.concat(convertedIssues)
         }
       })
       if (hedStringsFound && Object.entries(schemaDefinition).length === 0) {
@@ -175,6 +228,7 @@ function convertHedIssuesToBidsIssues(hedIssues, file) {
     noValidTagFound: 136,
     emptyTagFound: 137,
     duplicateTagsInSchema: 138,
+    extension: 140,
   }
 
   const convertedIssues = []

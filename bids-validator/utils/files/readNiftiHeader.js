@@ -42,7 +42,7 @@ function nodeNiftiTest(file, annexed, dir, callback) {
 }
 
 function extractNiftiFile(file, callback) {
-  const bytesRead = 500
+  const bytesRead = 1024
   const buffer = Buffer.alloc(bytesRead)
 
   var decompressStream = zlib
@@ -72,7 +72,7 @@ function extractNiftiFile(file, callback) {
 }
 
 function browserNiftiTest(file, callback) {
-  const bytesRead = 500
+  const bytesRead = 1024
   if (file.size == 0) {
     callback({ error: new Issue({ code: 44, file: file }) })
     return

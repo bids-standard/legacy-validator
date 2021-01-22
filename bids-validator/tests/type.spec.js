@@ -211,6 +211,10 @@ describe('utils.type.file.isDWI', function() {
     '/sub-12/ses-pre/sub-12_ses-pre_scan.tsv',
     '/sub-12/ses-pre/dwi/sub-12_ses-pre_dwi.bvecs',
     '/sub-12/ses-pre/dwi/sub-12_ses-pre_dwi.bvals',
+    '/sub-12/dwi/sub-12_sbref.bval',
+    '/sub-12/dwi/sub-12_sbref.bvec',
+    '/sub-12/ses-pre/dwi/sub-12_ses-pre_sbref.bval',
+    '/sub-12/ses-pre/dwi/sub-12_ses-pre_sbref.bvec',
   ]
 
   badFilenames.forEach(function(path) {

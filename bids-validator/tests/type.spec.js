@@ -188,9 +188,15 @@ describe('utils.type.file.isSessionLevel', function() {
 describe('utils.type.file.isDWI', function() {
   const goodFilenames = [
     '/sub-12/dwi/sub-12_dwi.nii.gz',
+    '/sub-12/dwi/sub-12_dwi.json',
     '/sub-12/ses-pre/dwi/sub-12_ses-pre_dwi.nii.gz',
     '/sub-12/ses-pre/dwi/sub-12_ses-pre_dwi.bvec',
     '/sub-12/ses-pre/dwi/sub-12_ses-pre_dwi.bval',
+    '/sub-12/ses-pre/dwi/sub-12_ses-pre_dwi.json',
+    '/sub-12/dwi/sub-12_sbref.nii.gz',
+    '/sub-12/dwi/sub-12_sbref.json',
+    '/sub-12/ses-pre/dwi/sub-12_ses-pre_sbref.nii.gz',
+    '/sub-12/ses-pre/dwi/sub-12_ses-pre_sbref.json',
   ]
 
   goodFilenames.forEach(function(path) {

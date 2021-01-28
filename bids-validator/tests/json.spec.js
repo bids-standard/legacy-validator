@@ -230,7 +230,7 @@ describe('JSON', function() {
       )
       assert(
         issues[4].evidence ==
-        '.EEGCoordinateSystem should match some schema in anyOf',
+          '.EEGCoordinateSystem should match some schema in anyOf',
       )
     })
   })

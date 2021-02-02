@@ -1,6 +1,6 @@
 {
   "anat_group1": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_part-(imag|mag|phase|real))?(_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_part-(imag|mag|phase|real))?_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
     "tokens": {
       "@@@_anat_suffixes_@@@": [
         "T1w",
@@ -18,7 +18,7 @@
   },
 
   "anat_group2": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
     "tokens": {
       "@@@_anat_suffixes_@@@": [
         "T1map",
@@ -91,7 +91,7 @@
   },
 
   "anat_group4": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_echo-[0-9]+?(_part-(imag|mag|phase|real))?(_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_echo-[0-9]+?(_part-(imag|mag|phase|real))?_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
     "tokens": {
       "@@@_anat_suffixes_@@@": [
         "MESE",
@@ -102,7 +102,7 @@
   },
 
   "anat_group5": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_flip-[0-9]+?(?:_part-(imag|mag|phase|real))?(_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_flip-[0-9]+?(?:_part-(imag|mag|phase|real))?_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
     "tokens": {
       "@@@_anat_suffixes_@@@": [
         "VFA"
@@ -112,7 +112,7 @@
   },
 
   "anat_group6": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_inv-[0-9]+?(?:_part-(imag|mag|phase|real))?(_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_inv-[0-9]+?(?:_part-(imag|mag|phase|real))?_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
     "tokens": {
       "@@@_anat_suffixes_@@@": [
         "IRT1"
@@ -122,7 +122,7 @@
   },
 
   "anat_group7": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?_flip-[0-9]+?_inv-[0-9]+?(?:_part-(imag|mag|phase|real))?(_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?_flip-[0-9]+?_inv-[0-9]+?(?:_part-(imag|mag|phase|real))?_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
     "tokens": {
       "@@@_anat_suffixes_@@@": [
         "MP2RAGE"
@@ -132,7 +132,7 @@
   },
 
   "anat_group8": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_flip-[0-9]+?_mt-(on|off)?(?:_part-(imag|mag|phase|real))?(_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_flip-[0-9]+?_mt-(on|off)?(?:_part-(imag|mag|phase|real))?_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
     "tokens": {
       "@@@_anat_suffixes_@@@": [
         "MPM",
@@ -143,7 +143,7 @@
   },
 
   "anat_group9": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_mt-(on|off)?(?:_part-(imag|mag|phase|real))?(_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_mt-(on|off)?(?:_part-(imag|mag|phase|real))?_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
     "tokens": {
       "@@@_anat_suffixes_@@@": [
         "MTR"

@@ -1,4 +1,3 @@
-import utils from '../../utils'
 /**
  * Quick Test
  *
@@ -17,12 +16,11 @@ const quickTest = fileList => {
       path = path.split('/')
       path = path.reverse()
 
-      const isCorrectModality = utils.modalities.isCorrectModality(path)
       let pathIsSesOrSub =
-      path[2] &&
+        path[2] &&
         (path[2].indexOf('ses-') == 0 || path[2].indexOf('sub-') == 0)
 
-      return pathIsSesOrSub && isCorrectModality
+      return pathIsSesOrSub
     }
   })
   return couldBeBIDS

@@ -74,10 +74,18 @@
   },
 
   "dwi": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?dwi[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_part-(imag|mag|phase|real))?((?:_@@@_dwi_type_@@@)\\.(@@@_dwi_ext_@@@)|(?:_recording-[a-zA-Z0-9]+)?(?:@@@_cont_ext_@@@))$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?dwi[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_part-(imag|mag|phase|real))?((?:@@@_dwi_ext_@@@)|(?:_recording-[a-zA-Z0-9]+)?(?:@@@_cont_ext_@@@))$",
     "tokens": {
-      "@@@_dwi_ext_@@@": ["nii\\.gz", "nii", "json", "bvec", "bval"],
-      "@@@_dwi_type_@@@": ["dwi", "sbref"],
+      "@@@_dwi_ext_@@@": [
+        "_dwi\\.nii\\.gz",
+        "_dwi\\.nii",
+        "_dwi\\.json",
+        "_dwi\\.bvec",
+        "_dwi\\.bval",
+        "_sbref\\.nii\\.gz",
+        "_sbref\\.nii",
+        "_sbref\\.json"
+      ],
       "@@@_cont_ext_@@@": [
         "_physio\\.tsv\\.gz",
         "_stim\\.tsv\\.gz",
@@ -98,7 +106,8 @@
         "magnitude2",
         "magnitude",
         "fieldmap",
-        "epi"
+        "epi",
+        "m0scan"
       ],
       "@@@_field_map_ext_@@@": ["nii\\.gz", "nii", "json"]
     }
@@ -119,7 +128,7 @@
   },
 
   "func": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?func[\\/\\\\]\\1(_\\2)?_task-[a-zA-Z0-9]+(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?(?:_part-(imag|mag|phase|real))?((?:@@@_func_ext_@@@)|(?:_recording-[a-zA-Z0-9]+)?(?:@@@_cont_ext_@@@))$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?func[\\/\\\\]\\1(_\\2)?_task-[a-zA-Z0-9]+(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?((?:@@@_func_ext_@@@)|(?:_recording-[a-zA-Z0-9]+)?(?:@@@_cont_ext_@@@))$",
     "tokens": {
       "@@@_func_ext_@@@": [
         "_bold\\.nii\\.gz",
@@ -144,6 +153,34 @@
         "_stim\\.tsv\\.gz",
         "_physio\\.json",
         "_stim\\.json"
+      ]
+    }
+  },
+
+  "func_bold": {
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?func[\\/\\\\]\\1(_\\2)?_task-[a-zA-Z0-9]+(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?(?:_part-(imag|mag|phase|real))?(?:@@@_func_bold_ext_@@@)$",
+    "tokens": {
+      "@@@_func_bold_ext_@@@": [
+        "_bold\\.nii\\.gz",
+        "_bold\\.nii",
+        "_sbref\\.nii\\.gz",
+        "_sbref\\.nii"
+      ]
+    }
+  },
+
+  "asl": {
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?perf[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_(?:@@@_asl_type_@@@)$",
+    "tokens": {
+      "@@@_asl_type_@@@": [
+        "asl\\.nii\\.gz",
+        "asl\\.nii",
+        "asl\\.json",
+        "m0scan\\.nii\\.gz",
+        "m0scan\\.nii",
+        "m0scan\\.json",
+        "aslcontext\\.tsv",
+        "asllabeling\\.jpg"
       ]
     }
   },

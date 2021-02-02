@@ -314,13 +314,17 @@ async function getFilesFromFs(dir, rootPath, ig, options) {
   return filesAccumulator
 }
 
-async function getBIDSIgnore(dir) {
-  const ig = ignore()
+export function defaultIgnore() {
+  return ignore()
     .add('.*')
     .add('!*.icloud')
     .add('/derivatives')
     .add('/sourcedata')
     .add('/code')
+}
+
+async function getBIDSIgnore(dir) {
+  const ig = defaultIgnore()
 
   const bidsIgnoreFileObj = getBIDSIgnoreFileObj(dir)
   if (bidsIgnoreFileObj) {

@@ -1,6 +1,6 @@
 {
   "name": "bids-validator",
-  "version": "1.5.8-dev.0",
+  "version": "1.6.1-dev.0",
   "description": "",
   "main": "index.js",
   "repository": {
@@ -27,7 +27,7 @@
     "cross-fetch": "^2.2.2",
     "date-fns": "^2.7.0",
     "esm": "^3.2.25",
-    "hed-validator": "^2.0.1",
+    "hed-validator": "^3.0.0",
     "ignore": "^4.0.2",
     "is-utf8": "^0.2.1",
     "jshint": "^2.9.6",

@@ -1,0 +1,215 @@
+{
+  "type": "object",
+  "properties": {
+    "EchoTime": {
+      "anyOf": [
+        { "type": "number",
+          "exclusiveMinimum": 0 },
+        {
+          "type": "array",
+          "items": { "type": "number" ,
+            "exclusiveMinimum": 0}
+        }
+      ]
+    },
+    "EffectiveEchoSpacing": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "PhaseEncodingDirection": {
+      "type": "string",
+      "enum": ["i", "j", "k", "i-", "j-", "k-"]
+    },
+    "RepetitionTimePreparation": {
+      "anyOf": [
+        { "type": "number",
+          "Minimum": 0 
+        },
+        {
+          "type": "array",
+          "items": { "type": "number" },
+          "Minimum": 0
+        }
+      ]  
+    }, 
+    "SliceEncodingDirection": {
+      "type": "string",
+      "enum": ["i", "j", "k", "i-", "j-", "k-"]
+    },
+    "SliceTiming": {
+      "type": "array",
+      "items": {
+        "type": "number",
+        "minimum": 0
+      }
+    },
+    "FlipAngle": {
+      "anyOf": [
+        { "type": "number" },
+        {
+          "type": "array",
+          "items": { "type": "number" }
+        }
+      ]
+    }, 
+    "ArterialSpinLabelingType": {
+      "type": "string",
+      "enum": ["PASL", "CASL", "PCASL"]
+    },
+    "LabelingDuration": {
+      "anyOf": [
+        { "type": "number",
+          "Minimum": 0 
+        },
+        {
+          "type": "array",
+          "items": { "type": "number" },
+          "Minimum": 0
+        }
+      ]
+    },
+    "PostLabelingDelay": {
+      "anyOf": [
+        { "type": "number",
+          "Minimum": 0 
+        },
+        {
+          "type": "array",
+          "items": { "type": "number" },
+          "Minimum": 0
+        }
+      ]
+    },
+    "BackgroundSuppression" : {
+        "type": "boolean" 
+    },
+    "VascularCrushing" : {
+        "type": "boolean" 
+    },
+    "LabelingLocationDescription" :{
+      "type": "string"
+    },
+    "LabelingOrientation" :{
+      "type": "array",
+      "items": { "type": "number" }
+    },
+    "LabelingDistance" :{
+      "type": "number"
+    },
+    "LabelingPulseMaximumGradient" :{
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "LabelingPulseFlipAngle" :{
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "inclusiveMaximum": 360,
+      "_inclusiveMaximum_comment":"to be checked"
+    },
+    "LabelingSlabThickness" :{
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "AcquisitionVoxelSize" :{
+      "type": "array",
+      "items": {
+          "type": "number",
+          "exclusiveMinimum": 0
+      }
+    },
+    "BackgroundSuppressionNumberPulses" :{
+      "type": "number",
+      "minimum": 0
+    },
+    "BackgroundSuppressionPulseTime" :{
+      "type": "array",
+      "items": {
+        "type": "number",
+        "minimum": 0
+      }
+    },
+    "VascularCrushingVENC" :{
+      "anyOf": [
+        { "type": "number" },
+        {
+          "type": "array",
+          "items": { "type": "number" }
+        }
+      ]
+    },
+    "PCASLType" :{
+      "type": "string",
+      "enum": ["balanced", "unbalanced"]
+    },
+    "CASLType" :{
+      "type": "string",
+      "enum": ["single-coil", "double-coil"]
+    },
+    "PASLType" :{
+      "type": "string"
+    },
+    "LookLocker" :{
+      "type": "boolean" 
+    },
+    "LabelingPulseDuration" :{
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "LabelingPulseInterval" :{
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "LabelingPulseAverageB1" :{
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "LabelingPulseAverageGradient" :{
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "LabelingEfficiency" :{
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "BolusCutOffFlag" :{
+      "type": "boolean"
+    },
+    "BolusCutOffDelayTime" :{
+      "anyOf": [
+        { "type": "number",
+          "Minimum": 0 
+        },
+        {
+          "type": "array",
+          "items": { "type": "number" },
+          "Minimum": 0
+        }
+      ]
+    },
+    "BolusCutOffTechnique" :{
+      "type": "string"
+    },
+    "M0Type": { 
+      "type": "string",
+      "enum": ["Separate", "Included", "Estimate","Absent"]
+    },
+    "M0Estimate" :{
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "TotalAcquiredVolumes" :{
+          "type": "array",
+          "items": { "type": "number" }
+    },
+    "PulseSequenceDetails" : {
+      "type" : "string"
+    },
+    "Manufacturer" : {
+      "type" : "string"
+    },
+    "MRAcquisitionType" : {
+      "type": "string",
+      "enum": ["2D","3D"]
+    }
+  }
+}

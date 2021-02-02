@@ -35,6 +35,18 @@
     }
   },
 
+  "asl_top": {
+    "regexp": "^\\/(?:ses-[a-zA-Z0-9]+_)?(?:_acq-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(@@@_asl_top_ext_@@@)$",
+    "tokens": {
+      "@@@_asl_top_ext_@@@": [
+        "_asl\\.json",
+        "_m0scan\\.json",
+        "_aslcontext\\.tsv",
+        "_labeling.jpg"
+      ]
+    }
+  },
+
   "anat_top": {
     "regexp": "^[\\/\\\\](?:ses-[a-zA-Z0-9]+_)?(?:acq-[a-zA-Z0-9]+_)?(?:rec-[a-zA-Z0-9]+_)?(?:run-[0-9]+_)?(@@@_anat_suffixes_@@@)\\.json$",
     "tokens": {
@@ -71,7 +83,9 @@
       "@@@_eeg_top_ext_@@@": [
         "_eeg\\.json",
         "_channels\\.tsv",
+        "_channels\\.json",
         "_electrodes\\.tsv",
+        "_electrodes\\.json",
         "_photo\\.jpg",
         "_coordsystem\\.json"
       ]
@@ -83,7 +97,9 @@
       "@@@_ieeg_top_ext_@@@": [
         "_ieeg\\.json",
         "_channels\\.tsv",
+        "_channels\\.json",
         "_electrodes\\.tsv",
+        "_electrodes\\.json",
         "_photo\\.jpg",
         "_coordsystem\\.json"
       ]
@@ -95,6 +111,7 @@
       "@@@_meg_top_ext_@@@": [
         "_meg\\.json",
         "_channels\\.tsv",
+        "_channels\\.json",
         "_photo\\.jpg",
         "_coordsystem\\.json"
       ]

@@ -28,6 +28,8 @@ const eegData = buildRegExp(file_level_rules.eeg)
 const fieldmapData = buildRegExp(file_level_rules.field_map)
 const fieldmapMainNiiData = buildRegExp(file_level_rules.field_map_main_nii)
 const funcData = buildRegExp(file_level_rules.func)
+const funcBoldData = buildRegExp(file_level_rules.func_bold)
+const aslData = buildRegExp(file_level_rules.asl)
 const ieegData = buildRegExp(file_level_rules.ieeg)
 const megData = buildRegExp(file_level_rules.meg)
 const megCalibrationData = buildRegExp(file_level_rules.meg_calbibration)
@@ -40,6 +42,7 @@ const anatSes = buildRegExp(session_level_rules.anat_ses)
 const dwiSes = buildRegExp(session_level_rules.dwi_ses)
 const eegSes = buildRegExp(session_level_rules.eeg_ses)
 const funcSes = buildRegExp(session_level_rules.func_ses)
+const aslSes = buildRegExp(session_level_rules.asl_ses)
 const ieegSes = buildRegExp(session_level_rules.ieeg_ses)
 const megSes = buildRegExp(session_level_rules.meg_ses)
 const scansSes = buildRegExp(session_level_rules.scans)
@@ -48,6 +51,7 @@ const subjectLevel = buildRegExp(subject_level_rules.subject_level)
 // Top level
 const rootTop = buildRegExp(top_level_rules.root_top)
 const funcTop = buildRegExp(top_level_rules.func_top)
+const aslTop = buildRegExp(top_level_rules.asl_top)
 const anatTop = buildRegExp(top_level_rules.anat_top)
 const dwiTop = buildRegExp(top_level_rules.dwi_top)
 const eegTop = buildRegExp(top_level_rules.eeg_top)
@@ -72,6 +76,7 @@ export default {
       this.file.isAnat(path) ||
       this.file.isDWI(path) ||
       this.file.isFunc(path) ||
+      this.file.isAsl(path) ||
       this.file.isMeg(path) ||
       this.file.isIEEG(path) ||
       this.file.isEEG(path) ||
@@ -92,6 +97,7 @@ export default {
       return (
         rootTop.test(path) ||
         funcTop.test(path) ||
+        aslTop.test(path) ||
         dwiTop.test(path) ||
         anatTop.test(path) ||
         multiDirFieldmap.test(path) ||
@@ -146,6 +152,7 @@ export default {
       return (
         conditionalMatch(scansSes, path) ||
         conditionalMatch(funcSes, path) ||
+        conditionalMatch(aslSes, path) ||
         conditionalMatch(anatSes, path) ||
         conditionalMatch(dwiSes, path) ||
         conditionalMatch(megSes, path) ||
@@ -195,6 +202,9 @@ export default {
     isFunc: function(path) {
       return conditionalMatch(funcData, path)
     },
+    isAsl: function(path) {
+      return conditionalMatch(aslData, path)
+    },
 
     isMeg: function(path) {
       return (
@@ -223,6 +233,7 @@ export default {
         this.isFieldMap(path) ||
         this.isFieldMapMainNii(path) ||
         this.isFunc(path) ||
+        this.isAsl(path) ||
         this.isMeg(path) ||
         this.isEEG(path) ||
         this.isIEEG(path) ||

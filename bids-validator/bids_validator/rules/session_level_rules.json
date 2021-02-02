@@ -20,6 +20,18 @@
     }
   },
 
+  "asl_ses": {
+    "regexp": "^\\/(sub-[a-zA-Z0-9]+)\\/(?:(ses-[a-zA-Z0-9]+)\\/)?\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(@@@_asl_ses_ext_@@@)$",
+    "tokens": {
+      "@@@_asl_ses_ext_@@@": [
+        "_asl.json",
+        "_aslcontext.tsv",
+        "_m0scan.json",
+        "_asllabeling.jpg"
+      ]
+    }
+  },
+
   "anat_ses": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+_)?(@@@_anat_ses_type_@@@).json$",
     "tokens": {
@@ -54,6 +66,7 @@
       "@@@_meg_ses_type_@@@": [
         "_events.tsv",
         "_channels.tsv",
+        "_channels.json",
         "_meg.json",
         "_coordsystem.json",
         "_photo.jpg",
@@ -68,7 +81,9 @@
       "@@@_eeg_ses_type_@@@": [
         "_events.tsv",
         "_channels.tsv",
+        "_channels.json",
         "_electrodes.tsv",
+        "_electrodes.json",
         "_eeg.json",
         "_coordsystem.json",
         "_photo.jpg"
@@ -82,7 +97,9 @@
       "@@@_ieeg_ses_type_@@@": [
         "_events.tsv",
         "_channels.tsv",
+        "_channels.json",
         "_electrodes.tsv",
+        "_electrodes.json",
         "_ieeg.json",
         "_coordsystem.json",
         "_photo.jpg"

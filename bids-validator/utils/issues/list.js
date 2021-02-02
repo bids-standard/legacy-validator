@@ -92,7 +92,7 @@ export default {
     key: 'SLICE_TIMING_NOT_DEFINED',
     severity: 'warning',
     reason:
-      "You should define 'SliceTiming' for this file. If you don't provide this information slice time correction will not be possible.",
+      "You should define 'SliceTiming' for this file. If you don't provide this information slice time correction will not be possible. 'Slice Timing' is the time at which each slice was acquired within each volume (frame) of the acquisition. Slice timing is not slice order -- rather, it is a list of times containing the time (in seconds) of each slice acquisition in relation to the beginning of volume acquisition.",
   },
   15: {
     key: 'ECHO_TIME1-2_NOT_DEFINED',
@@ -734,35 +734,323 @@ export default {
       "You should define 'HEDVersion' for this file. If you don't provide this information, the HED validation will use the latest version available.",
   },
   133: {
+    key: 'LABELING_TYPE_MUST_DEFINE',
+    severity: 'error',
+    reason: "You should define 'ArterialSpinLabelingType' for this file. 'ArterialSpinLabelingType' can be CASL, PCASL, PASL.",
+  },
+  134: {
+    key: 'LABELING_DURATION_MUST_DEFINE',
+    severity: 'error',
+    reason: "You should define 'LabelingDuration' for this file. 'LabelingDuration' is the total duration of the labeling pulse train, in seconds, corresponding to the temporal width of the labeling bolus for `(P)CASL`. In case all control-label volumes (or deltam or CBF) have the same `LabelingDuration`, a scalar must be specified. In case the control-label volumes (or deltam or cbf) have a different `LabelingDuration`, an array of numbers must be specified, for which any `m0scan` in the timeseries has a `LabelingDuration` of zero. In case an array of numbers is provided, its length should be equal to the number of volumes specified in `*_aslcontext.tsv`. Corresponds to DICOM Tag 0018,9258 `ASL Pulse Train Duration`.",
+  },
+  135: {
+    key: 'POST_LABELING_DELAY_MUST_DEFINE',
+    severity: 'error',
+    reason: "You should define 'PostLabelingDelay' for this file. 'PostLabelingDelay' is the time, in seconds, after the the end of the labeling (for (P)CASL) or middle of the labeling pulse (for PASL) until the middle of the excitation pulse applied to the imaging slab (for 3D acquisition) or first slice (for 2D acquisition). Can be a number (for a single-PLD time series) or an array of numbers (for multi-PLD and Look-Locker). In the latter case, the array of numbers contains the PLD of each volume (i.e. each 'control' and 'label') in the acquisition order. Any image within the time-series without a PLD (e.g. an 'm0scan') is indicated by a zero. Based on DICOM Tags 0018,9079 Inversion Times and 0018,0082 InversionTime.",
+  },
+  136: {
+    key: 'BACKGROUND_SUPPRESSION_MUST_DEFINE',
+    severity: 'error',
+    reason: "You should define 'BackgroundSuppression' for this file. 'BackGroundSuppression' is a boolean indicating if background suppression is used.",
+  },
+  137: {
+    key: 'VASCULAR_CRUSHING_MUST_DEFINE',
+    severity: 'warning',
+    reason: "It is recommended to define 'VascularCrushing' for this file. 'VascularCrushing' is a boolean value indicating if an ASL crusher method is used.",
+  },
+  138: {
+    key: 'PULSE_SEQUENCE_DETAILS_MISSING',
+    severity: 'warning',
+    reason: "It is recommended to define 'PulseSequenceDetails' for this file. 'PulseSequenceDetails' is the information beyond pulse sequence type that identifies the specific pulse sequence used (for example, 'Standard Siemens Sequence distributed with the VB17 software', 'Siemens WIP ### version #.##', or 'Sequence written by X using a version compiled on MM/DD/YYYY').",
+  },
+  142: {
+    key: 'LABELING_SLAB_THICKNESS_MISSING',
+    severity: 'warning',
+    reason: "It is recommended to define 'LabelingSlabThickness' for this file. 'LabelingSlabThickness' is the thickness of the labeling slab in millimeters. For non-selective FAIR a zero is entered. Corresponds to DICOM Tag 0018,9254 ASL Slab Thickness.",
+  },
+  143: {
+    key: 'ACQUISITION_VOXELSIZE_MISSING',
+    severity: 'warning',
+    reason: "It is recommended to define 'AcquisitionVoxelSize' for this file. 'AcquisitionVoxelSize' is an array of numbers with a length of 3, in millimeters. This parameter denotes the original acquisition voxel size, excluding any inter-slice gaps and before any interpolation or resampling within reconstruction or image processing. Any point spread function effects (e.g. due to T2-blurring) that would decrease the effective resolution are not considered here.",
+  },
+  144: {
+    key: 'BACKGROUND_SUPPRESSION_PULSE_TIME_MISSING',
+    severity: 'warning',
+    reason: "It is recommended to define 'BackgroundSuppressionPulseTime' for this file, when the 'BackgroundSuppression' is set to true. 'BackGroundSuppressionPulseTime' is an array of numbers containing timing, in seconds, of the background suppression pulses with respect to the start of the labeling. In case of multi-PLD with different background suppression pulse times, only the pulse time of the first PLD should be defined.",
+  },
+  145: {
+    key: 'VASCULAR_CRUCHING_VENC_MISSING',
+    severity: 'warning',
+    reason: "It is recommended to define 'VascularCrushingVENC' for this file, when the 'VascularCrushing' is set to true. 'VascularCrushingVENC' is the crusher gradient strength, in centimeters per second. Specify either one number for the total time-series, or provide an array of numbers, for example when using QUASAR, using the value zero to identify volumes for which 'VascularCrushing' was turned off. Corresponds to DICOM Tag 0018,925A ASL Crusher Flow Limit.",
+  },
+  147: {
+    key: 'PASL_BOLUS_CUT_OFF_FLAG',
+    severity: 'error',
+    reason: "You should define the 'BolusCutOffFlag' for this file. 'BolusCutOffFlag' is a boolean indicating if a bolus cut-off technique is used. Corresponds to DICOM Tag 0018,925C ASL Bolus Cut-off Flag.",
+  },
+  149: {
+    key: 'PASL_BOLUS_CUT_OFF_DELAY_TIME',
+    severity: 'error',
+    reason: "It is required to define 'BolusCutOffDelayTime' for this file, when 'BolusCutOffFlag' is set to true. 'BolusCutOffDelayTime' is the duration between the end of the labeling and the start of the bolus cut-off saturation pulse(s), in seconds. This can be a number or array of numbers, of which the values must be non-negative and monotonically increasing, depending on the number of bolus cut-off saturation pulses. For Q2TIPS, only the values for the first and last bolus cut-off saturation pulses are provided. Based on DICOM Tag 0018,925F ASL Bolus Cut-off Delay Time.",
+  },
+  150: {
+    key: 'PASL_BOLUS_CUT_OFF_TECHNIQUE',
+    severity: 'error',
+    reason: "It is required to define 'BolusCutOffTechnique' for this file, when 'BolusCutOffFlag' is set to true. 'BolusCutOffTechnique' is the name of the technique used (e.g. Q2TIPS, QUIPSS, QUIPSSII). Corresponds to DICOM Tag 0018,925E ASL Bolus Cut-off Technique.",
+  },
+  153: {
+    key: 'M0Type_NOT_SET',
+    severity: 'error',
+    reason: "You should define the 'M0Type' for this file. 'M0Type' describes the presence of M0 information, as either: “Separate” when a separate `*_m0scan.nii[.gz]` is present, “Included” when an m0scan volume is contained within the current ‘*_asl.nii[.gz]’, “Estimate” when a single whole-brain M0 value is provided, or “Absent” when no specific M0 information is present.",
+  },
+  154: {
+    key: 'M0Type_SET_INCORRECTLY',
+    severity: 'error',
+    reason: "M0Type was not defined correctly. If 'M0Type' is equal to included, the corresponding '*_aslcontext.tsv' should contain the 'm0scan' volume.",
+  },
+  155: {
+    key: 'MRACQUISITIONTYPE_MUST_DEFINE',
+    severity: 'error',
+    reason: "You should define 'MRAcquisitionType' for this file. 'MRAcquistionType' is the type of sequence readout with possible values: `2D` or `3D`. Corresponds to DICOM Tag 0018,0023 `MR Acquisition Type`.",
+  },
+  156: {
+    key: 'ACQUISITION_VOXELSIZE_WRONG',
+    severity: 'warning',
+    reason: "The 'AcquisitionVoxelSize' field length is not 3. 'AcquisitionVoxelSize' should be defined as an array of numbers with a length of 3, in millimeters. This parameter denotes the original acquisition voxel size, excluding any inter-slice gaps and before any interpolation or resampling within reconstruction or image processing. Any point spread function effects (e.g. due to T2-blurring) that would decrease the effective resolution are not considered here.",
+  },
+  157: {
+    key: 'LABELLING_DURATION_LENGTH_NOT_MATCHING_NIFTI',
+    severity: 'error',
+    reason: "The number of values for 'LabelingDuration' for this file does not match the 4th dimension of the NIfTI header. 'LabelingDuration' is the total duration of the labeling pulse train, in seconds, corresponding to the temporal width of the labeling bolus for `(P)CASL`. In case all control-label volumes (or deltam or CBF) have the same `LabelingDuration`, a scalar must be specified. In case the control-label volumes (or deltam or cbf) have a different `LabelingDuration`, an array of numbers must be specified, for which any `m0scan` in the timeseries has a `LabelingDuration` of zero. In case an array of numbers is provided, its length should be equal to the number of volumes specified in `*_aslcontext.tsv`. Corresponds to DICOM Tag 0018,9258 `ASL Pulse Train Duration`.",
+  },
+  164: {
+    key: 'ASL_MANUFACTURER_MISSING',
+    severity: 'warning',
+    reason: "It is recommended to define 'Manufacturer' for this file. 'Manufacturer' is the manufacturer of the equipment that produced the composite instances. Corresponds to DICOM Tag 0008, 0070 Manufacturer",
+  },
+  165: {
+    key: 'ASLCONTEXT_TSV_NOT_CONSISTENT',
+    severity: 'error',
+    reason: "The number of volumes in the '*_aslcontext.tsv' for this file does not match the number of values in the NIfTI header.",
+  },
+  166: {
+    key: 'LOOK_LOCKER_FLIP_ANGLE_MISSING',
+    severity: 'error',
+    reason: "You should define 'FlipAngle' for this file, in case of a LookLocker acquisition. 'FlipAngle' is the flip angle (FA) for the acquisition, specified in degrees. Corresponds to: DICOM Tag 0018, 1314 `Flip Angle`. The data type number may apply to files from any MRI modality concerned with a single value for this field, or to the files in a file collection where the value of this field is iterated using the flip entity. The data type array provides a value for each volume in a 4D dataset and should only be used when the volume timing is critical for interpretation of the data, such as in ASL or variable flip angle fMRI sequences.",
+  },
+  167: {
+    key: 'FLIP_ANGLE_MISSING',
+    severity: 'warning',
+    reason: "It is recommended to define 'FlipAngle' for this file. 'FlipAngle' is the flip angle (FA) for the acquisition, specified in degrees. Corresponds to: DICOM Tag 0018, 1314 `Flip Angle`. The data type number may apply to files from any MRI modality concerned with a single value for this field, or to the files in a file collection where the value of this field is iterated using the flip entity. The data type array provides a value for each volume in a 4D dataset and should only be used when the volume timing is critical for interpretation of the data, such as in ASL or variable flip angle fMRI sequences.",
+  },
+  168: {
+    key: 'FLIP_ANGLE_NOT_MATCHING_NIFTI',
+    severity: 'error',
+    reason: "The number of values for 'FlipAngle' for this file does not match the 4th dimension of the NIfTI header. 'FlipAngle' is the flip angle (FA) for the acquisition, specified in degrees. Corresponds to: DICOM Tag 0018, 1314 `Flip Angle`. The data type number may apply to files from any MRI modality concerned with a single value for this field, or to the files in a file collection where the value of this field is iterated using the flip entity. The data type array provides a value for each volume in a 4D dataset and should only be used when the volume timing is critical for interpretation of the data, such as in ASL or variable flip angle fMRI sequences.",
+  },
+  169: {
+    key: 'LABELING_DURATION_PASL_INCONSISTENT',
+    severity: 'error',
+    reason: "The 'LabelingDuration' for PASL 'ArterialSpinLabelingType' can be only a numerical value put to zero or unset. 'LabelingDuration' is the total duration of the labeling pulse train, in seconds, corresponding to the temporal width of the labeling bolus for `(P)CASL`. In case all control-label volumes (or deltam or CBF) have the same `LabelingDuration`, a scalar must be specified. In case the control-label volumes (or deltam or cbf) have a different `LabelingDuration`, an array of numbers must be specified, for which any `m0scan` in the timeseries has a `LabelingDuration` of zero. In case an array of numbers is provided, its length should be equal to the number of volumes specified in `*_aslcontext.tsv`. Corresponds to DICOM Tag 0018,9258 `ASL Pulse Train Duration`.",
+  },
+  170: {
     key: 'CONTINOUS_RECORDING_MISSING_JSON',
     severity: 'error',
     reason:
       'Continous recording data files are required to have an associated JSON metadata file.',
   },
-  134: {
+  171: {
+    key: 'VOLUME_TIMING_MISSING_ACQUISITION_DURATION',
+    severity: 'error',
+    reason: "The field 'VolumeTiming' requires 'AcquisitionDuration' or 'SliceTiming' to be defined.",
+  },
+  172: {
+    key: 'FLIP_ANGLE_NOT_MATCHING_ASLCONTEXT_TSV',
+    severity: 'error',
+    reason: "The number of values for 'FlipAngle' for this file does not match the number of volumes in the 'sub-<label>[_ses-<label>][_acq-<label>][_rec-<label>][_run-<index>]_aslcontext.tsv'. 'FlipAngle' is the flip angle (FA) for the acquisition, specified in degrees. Corresponds to: DICOM Tag 0018, 1314 `Flip Angle`. The data type number may apply to files from any MRI modality concerned with a single value for this field, or to the files in a file collection where the value of this field is iterated using the flip entity. The data type array provides a value for each volume in a 4D dataset and should only be used when the volume timing is critical for interpretation of the data, such as in ASL or variable flip angle fMRI sequences.",
+  },
+  173: {
+    key: 'POST_LABELING_DELAY_NOT_MATCHING_NIFTI',
+    severity: 'error',
+    reason: "The number of values for 'PostLabelingDelay' for this file does not match the 4th dimension of the NIfTI header. 'PostLabelingDelay' is the time, in seconds, after the the end of the labeling (for (P)CASL) or middle of the labeling pulse (for PASL) until the middle of the excitation pulse applied to the imaging slab (for 3D acquisition) or first slice (for 2D acquisition). Can be a number (for a single-PLD time series) or an array of numbers (for multi-PLD and Look-Locker). In the latter case, the array of numbers contains the PLD of each volume (i.e. each 'control' and 'label') in the acquisition order. Any image within the time-series without a PLD (e.g. an 'm0scan') is indicated by a zero. Based on DICOM Tags 0018,9079 Inversion Times and 0018,0082 InversionTime.",
+  },
+  174: {
+    key: 'POST_LABELING_DELAY_NOT_MATCHING_ASLCONTEXT_TSV',
+    severity: 'error',
+    reason: "'The number of values for PostLabelingDelay' for this file does not match the number of volumes in the 'sub-<label>[_ses-<label>][_acq-<label>][_rec-<label>][_run-<index>]_aslcontext.tsv'.'PostLabelingDelay' is the time, in seconds, after the the end of the labeling (for (P)CASL) or middle of the labeling pulse (for PASL) until the middle of the excitation pulse applied to the imaging slab (for 3D acquisition) or first slice (for 2D acquisition). Can be a number (for a single-PLD time series) or an array of numbers (for multi-PLD and Look-Locker). In the latter case, the array of numbers contains the PLD of each volume (i.e. each 'control' and 'label') in the acquisition order. Any image within the time-series without a PLD (e.g. an 'm0scan') is indicated by a zero. Based on DICOM Tags 0018,9079 Inversion Times and 0018,0082 InversionTime.",
+  },
+  175: {
+    key: 'LABELLING_DURATION_NOT_MATCHING_ASLCONTEXT_TSV',
+    severity: 'error',
+    reason: "The number of values for 'LabelingDuration' for this file does not match the number of volumes in the 'sub-<label>[_ses-<label>][_acq-<label>][_rec-<label>][_run-<index>]_aslcontext.tsv'. 'LabelingDuration' is the total duration of the labeling pulse train, in seconds, corresponding to the temporal width of the labeling bolus for `(P)CASL`. In case all control-label volumes (or deltam or CBF) have the same `LabelingDuration`, a scalar must be specified. In case the control-label volumes (or deltam or cbf) have a different `LabelingDuration`, an array of numbers must be specified, for which any `m0scan` in the timeseries has a `LabelingDuration` of zero. In case an array of numbers is provided, its length should be equal to the number of volumes specified in `*_aslcontext.tsv`. Corresponds to DICOM Tag 0018,9258 `ASL Pulse Train Duration`.",
+  },
+  176: {
+    key: 'ASLCONTEXT_TSV_INCONSISTENT',
+    severity: 'error',
+    reason: "In the 'sub-<label>[_ses-<label>][_acq-<label>][_rec-<label>][_run-<index>]_aslcontext.tsv', the 'volume_type' can only be filled with volumes ['cbf' ,'m0scan', 'label', 'control', 'deltam'].",
+  },
+  177: {
+    key: 'REPETITIONTIMEPREPARATION_NOT_MATCHING_ASLCONTEXT_TSV',
+    severity: 'error',
+    reason: "The number of values of 'RepetitionTimePreparation' for this file does not match the number of volumes in the 'sub-<label>[_ses-<label>][_acq-<label>][_rec-<label>][_run-<index>]_aslcontext.tsv'. 'RepetitionTimePreparation' is the interval, in seconds, that it takes a preparation pulse block to re-appear at the beginning of the succeeding (essentially identical) pulse sequence block. The data type number may apply to files from any MRI modality concerned with a single value for this field. The data type array provides a value for each volume in a 4D dataset and should only be used when the volume timing is critical for interpretation of the data, such as in ASL.",
+  },
+  178: {
+    key: 'VOLUME_TIMING_AND_REPETITION_TIME_MUTUALLY_EXCLUSIVE',
+    severity: 'error',
+    reason: "The fields 'VolumeTiming' and 'RepetitionTime' for this file are mutually exclusive. Choose 'RepetitionTime' when the same repetition time is used for all volumes, or 'VolumeTiming' when variable times are used.",
+  },
+  179: {
+    key: 'BACKGROUND_SUPPRESSION_PULSE_NUMBER_MISSING',
+    severity: 'warning',
+    reason: "It is recommended to define 'BackgroundSuppressionNumberPulses' for this file, in case 'BackgroundSuppression' is set to true. 'BackgroundSuppressionNumberPulses' is the number of background suppression pulses used. Note that this excludes any effect of background suppression pulses applied before the labeling."
+  },
+  180: {
+    key: 'BACKGROUND_SUPPRESSION_PULSE_NUMBER_NOT_CONSISTENT',
+    severity: 'warning',
+    reason: "The 'BackgroundSuppressionNumberPulses' field is not consistent with the length of 'BackgroundSuppressionPulseTime'. 'BackgroundSuppressionNumberPulses' is the number of background suppression pulses used. Note that this excludes any effect of background suppression pulses applied before the labeling.",
+  },
+  181: {
+    key: 'TOTAL_ACQUIRED_VOLUMES_NOT_CONSISTENT',
+    severity: 'warning',
+    reason: "The number of values for 'TotalAcquiredVolumes' for this file does not match number of volumes in the 'sub-<label>[_ses-<label>][_acq-<label>][_rec-<label>][_run-<index>]_aslcontext.tsv'. 'TotalAcquiredVolumes' is the original number of 3D volumes acquired for each volume defined in the 'sub-<label>[_ses-<label>][_acq-<label>][_rec-<label>][_run-<index>]_aslcontext.tsv'.",
+  },
+  182: {
+    key: 'MAGNETIC_FIELD_STRENGTH_MISSING',
+    severity: 'error',
+    reason: "You should define 'MagneticFieldStrength' for ths file. 'MagneticFieldStrength' is the nominal field strength of MR magnet in Tesla. Corresponds to DICOM Tag 0018,0087 'Magnetic Field Strength'.",
+  },
+  183: {
+    key: 'SLICE_TIMING_NOT_DEFINED_2D_ASL',
+    severity: 'error',
+    reason: "'You should define SliceTiming', in case 'SequenceType' is set to a 2D sequence. 'SliceTiming' is the time at which each slice was acquired within each volume (frame) of the acquisition. Slice timing is not slice order -- rather, it is a list of times containing the time (in seconds) of each slice acquisition in relation to the beginning of volume acquisition. The list goes through the slices along the slice axis in the slice encoding dimension (see below). Note that to ensure the proper interpretation of the `SliceTiming` field, it is important to check if the OPTIONAL `SliceEncodingDirection` exists. In particular, if `SliceEncodingDirection` is negative, the entries in `SliceTiming` are defined in reverse order with respect to the slice axis, such that the final entry in the `SliceTiming` list is the time of acquisition of slice 0. Without this parameter slice time correction will not be possible. ",
+  },
+  184: {
+    key: 'POST_LABELING_DELAY_GREATER',
+    severity: 'warning',
+    reason: "'PostLabelingDelay' is greater than 10, are you sure it's expressed in seconds? 'PostLabelingDelay' is the time, in seconds, after the the end of the labeling (for (P)CASL) or middle of the labeling pulse (for PASL) until the middle of the excitation pulse applied to the imaging slab (for 3D acquisition) or first slice (for 2D acquisition). Can be a number (for a single-PLD time series) or an array of numbers (for multi-PLD and Look-Locker). In the latter case, the array of numbers contains the PLD of each volume (i.e. each 'control' and 'label') in the acquisition order. Any image within the time-series without a PLD (e.g. an 'm0scan') is indicated by a zero. Based on DICOM Tags 0018,9079 Inversion Times and 0018,0082 InversionTime.",
+  },
+  186: {
+    key: 'BOLUS_CUT_OFF_DELAY_TIME_GREATER',
+    severity: 'warning',
+    reason: "'BolusCutOffDelayTime' is greater than 10, are you sure it's expressed in seconds? 'BolusCutOffDelayTime' is duration between the end of the labeling and the start of the bolus cut-off saturation pulse(s), in seconds. This can be a number or array of numbers, of which the values must be non-negative and monotonically increasing, depending on the number of bolus cut-off saturation pulses. For Q2TIPS, only the values for the first and last bolus cut-off saturation pulses are provided. Based on DICOM Tag 0018,925F ASL Bolus Cut-off Delay Time.",
+  },
+  187: {
+    key: 'LABELING_DURATION_GREATER',
+    severity: 'warning',
+    reason: "'LabelingDuration' is greater than 10, are you sure it's expressed in seconds? 'LabelingDuration' is the total duration of the labeling pulse train, in seconds, corresponding to the temporal width of the labeling bolus for `(P)CASL`. In case all control-label volumes (or deltam or CBF) have the same `LabelingDuration`, a scalar must be specified. In case the control-label volumes (or deltam or cbf) have a different `LabelingDuration`, an array of numbers must be specified, for which any `m0scan` in the timeseries has a `LabelingDuration` of zero. In case an array of numbers is provided, its length should be equal to the number of volumes specified in `*_aslcontext.tsv`. Corresponds to DICOM Tag 0018,9258 `ASL Pulse Train Duration`.",
+  },
+  188: {
+    key: 'VOLUME_TIMING_NOT_MONOTONICALLY_INCREASING',
+    severity: 'error',
+    reason: "'VolumeTiming' is not monotonically increasing. 'VolumeTiming' is the time at which each volume was acquired during the acquisition, referring to the start of each readout in the ASL timeseries. Use this field instead of the 'RepetitionTime' field in the case that the ASL timeseries have a non-uniform time distance between acquired volumes. The list must have the same length as the 'sub-<label>[_ses-<label>][_acq-<label>][_rec-<label>][_run-<index>]_aslcontext.tsv', and the numbers must be non-negative and monotonically increasing. If 'VolumeTiming' is defined, this requires acquisition time (TA) to be defined via 'AcquisitionDuration'.",
+  },
+  189: {
+    key: 'CASL_PCASL_NOT_ALLOWED_FIELDS',
+    severity: 'error',
+    reason: "You defined one of the not allowed fields in case of CASL or PCASL 'ArterialSpinLabelingType'. Please verify which field among 'PASLType', 'LabelingSlabThickness' 'BolusCutOffFlag', 'BolusCutOffTimingSequence', 'BolusCutOffDelayTime' and 'BolusCutOffTechnique' you have filled.",
+  },
+  190: {
+    key: 'PASL_NOT_ALLOWED_FIELDS',
+    severity: 'error',
+    reason: "You defined one of the not allowed fields in case of PASL 'ArterialSpinLabelingType'." + 
+            "Please verify which field among 'CASLType', 'PCASLType' 'LabelingPulseAverageGradient', 'LabelingPulseMaximumGradient', 'LabelingPulseAverageB1', 'LabelingPulseDuration', 'LabelingPulseFlipAngle', 'LabelingPulseInterval', 'LabelingDuration' you have filled.",
+  },
+  191: {
+    key: 'PCASL_CASL_LABELING_TYPE_NOT_ALLOWED',
+    severity: 'error',
+    reason: "You defined either the 'CASLType' with a PCASL 'LabellingType' or the 'PCASLType' with a CASL 'LabellingType'. This is not allowed, please check that these fields are filled correctly.",
+  },
+  192: {
+    key: 'BOLUS_CUT_OFF_DELAY_TIME_NOT_MONOTONICALLY_INCREASING',
+    severity: 'error',
+    reason: "'BolusCutOffDelayTime' is not monotonically increasing. 'BolusCutOffDelayTime' is the duration between the end of the labeling and the start of the bolus cut-off saturation pulse(s), in seconds. This can be a number or array of numbers, of which the values must be non-negative and monotonically increasing, depending on the number of bolus cut-off saturation pulses. For Q2TIPS, only the values for the first and last bolus cut-off saturation pulses are provided. Based on DICOM Tag 0018,925F ASL Bolus Cut-off Delay Time.",
+  },
+  193: {
+    key: 'ECHO_TIME_NOT_DEFINED',
+    severity: 'error',
+    reason: "You must define 'EchoTime' for this file. 'EchoTime' is the echo time (TE) for the acquisition, specified in seconds. Corresponds to DICOM Tag 0018, 0081 Echo Time (please note that the DICOM term is in milliseconds not seconds). The data type number may apply to files from any MRI modality concerned with a single value for this field, or to the files in a file collection where the value of this field is iterated using the echo entity. The data type array provides a value for each volume in a 4D dataset and should only be used when the volume timing is critical for interpretation of the data, such as in ASL or variable echo time fMRI sequences.",
+  },
+   194: {
+    key: 'MRACQUISITIONTYPE_MISSING',
+    severity: 'warning',
+    reason: "It is recommended to define 'MRAcquisitionType' for this file. 'MRAcquistionType' is the type of sequence readout with possible values: `2D` or `3D`. Corresponds to DICOM Tag 0018,0023 `MR Acquisition Type`.",
+  },
+    195: {
+    key: 'M0ESTIMATE_NOT_DEFINED',
+    severity: 'error',
+    reason: "You must define 'M0Estimate' for this file, in case 'M0Type' is defined as 'Estimate'. 'M0Estimate' is a single numerical whole-brain M0 value (referring to the M0 of blood), only if obtained externally (for example retrieved from CSF in a separate measurement).",
+  },
+    196: {
+    key: 'ECHO_TIME_NOT_CONSISTENT',
+    severity: 'warning',
+    reason: "The number of values for 'EchoTime' for this file does not match number of volumes in the 'sub-<label>[_ses-<label>][_acq-<label>][_rec-<label>][_run-<index>]_aslcontext.tsv'.  'EchoTime' is the echo time (TE) for the acquisition, specified in seconds. ",
+  },
+    197: {
+    key: 'ECHO_TIME_ELEMENTS',
+    severity: 'warning',
+    reason: "The number of elements in the 'EchoTime' array should match the 'k' dimension of the corresponding NIfTI volume.",
+  },
+    198: {
+    key: 'M0Type_SET_INCORRECTLY_TO_ABSENT',
+    severity: 'error',
+    reason:
+      "You defined M0Type as 'absent' while including a separate '*_m0scan.nii[.gz]' and '*_m0scan.json', or defining the 'M0Estimate' field. This is not allowed, please check that this field are filled correctly.",
+  },
+    199: {
+    key: 'M0Type_SET_INCORRECTLY_TO_ABSENT_IN_ASLCONTEXT',
+    severity: 'error',
+    reason:
+      "You defined M0Type as 'absent' while including an m0scan volume within the '*_aslcontext.tsv'. This is not allowed, please check that this field are filled correctly.",
+  },
+    200: {
+    key: 'REPETITION_TIME_PREPARATION_MISSING',
+    severity: 'error',
+    reason: "You must define 'RepetitionTimePreparation' for this file. 'RepetitionTimePreparation' is the interval, in seconds, that it takes a preparation pulse block to re-appear at the beginning of the succeeding (essentially identical) pulse sequence block. The data type number may apply to files from any MRI modality concerned with a single value for this field. The data type array provides a value for each volume in a 4D dataset and should only be used when the volume timing is critical for interpretation of the data, such as in ASL.",
+  },
+    201: {
+      key: 'REPETITIONTIME_PREPARATION_NOT_CONSISTENT',
+      severity: 'error',
+    reason: "The number of values for 'RepetitionTimePreparation' for this file does not match the 4th dimension of the NIfTI header. 'RepetitionTimePreparation' is the interval, in seconds, that it takes a preparation pulse block to re-appear at the beginning of the succeeding (essentially identical) pulse sequence block. The data type number may apply to files from any MRI modality concerned with a single value for this field. The data type array provides a value for each volume in a 4D dataset and should only be used when the volume timing is critical for interpretation of the data, such as in ASL.",
+  },
+  202: {
+      key: 'M0Type_SET_INCORRECTLY',
+      severity: 'error',
+      reason: "M0Type was not defined correctly. If 'M0Type' is equal to separate, the dataset should include a *_m0scan.nii[.gz] and *_m0scan.json file.",
+  },
+  203: {
     key: 'HED_WRONG_NUMBER_OF_NUMBER_SIGNS',
     severity: 'error',
     reason:
       'You must have exactly one number sign in a HED value-taking string template.',
   },
-  135: {
+  204: {
     key: 'HED_INVALID_PARENT_NODE',
     severity: 'error',
     reason: 'You cannot use a valid HED node as a value or extension.',
   },
-  136: {
+  205: {
     key: 'HED_NO_VALID_TAG_FOUND',
     severity: 'error',
     reason: 'No valid base node was found for this HED tag.',
   },
-  137: {
+  206: {
     key: 'HED_EMPTY_TAG_FOUND',
     severity: 'error',
     reason: 'An empty HED tag cannot be validated.',
   },
-  138: {
+  207: {
     key: 'HED_DUPLICATE_TAGS_IN_SCHEMA',
     severity: 'error',
     reason: 'The source HED schema is invalid as it contains duplicate tags.',
   },
+  208: {
+    key: 'HED_TAG_EXTENSION',
+    severity: 'warning',
+    reason: 'A HED tag extension was found.',
+  },
+  209: {
+    key: 'HED_INVALID_SIDECAR',
+    severity: 'error',
+    reason: 'A HED error was found in the JSON sidecar.',
+  }
 }

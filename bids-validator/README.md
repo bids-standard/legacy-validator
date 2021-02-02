@@ -3,28 +3,27 @@
 [![Codecov](https://codecov.io/gh/bids-standard/bids-validator/branch/master/graph/badge.svg)](https://codecov.io/gh/bids-standard/bids-validator)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3688707.svg)](https://doi.org/10.5281/zenodo.3688707)
 
-
 # BIDS-Validator
 
-* [BIDS-Validator](#bids-validator)
-   * [Quickstart](#quickstart)
-   * [Support](#support)
-   * [Maintainers and Contributors](#maintainers-and-contributors)
-   * [Use](#use)
-      * [API](#api)
-      * [.bidsignore](#bidsignore)
-      * [Configuration](#configuration)
-      * [In the Browser](#in-the-browser)
-      * [On the Server](#on-the-server)
-      * [Through Command Line](#through-command-line)
-   * [Docker image](#docker-image)
-   * [Python Library](#python-library)
-      * [Example](#example)
-   * [Development](#development)
-      * [Running Locally in a Browser](#running-locally-in-a-browser)
-      * [Testing](#testing)
-      * [Publishing](#publishing)
-   * [Acknowledgments](#acknowledgments)
+- [BIDS-Validator](#bids-validator)
+  - [Quickstart](#quickstart)
+  - [Support](#support)
+  - [Maintainers and Contributors](#maintainers-and-contributors)
+  - [Use](#use)
+    - [API](#api)
+    - [.bidsignore](#bidsignore)
+    - [Configuration](#configuration)
+    - [In the Browser](#in-the-browser)
+    - [On the Server](#on-the-server)
+    - [Through Command Line](#through-command-line)
+  - [Docker image](#docker-image)
+  - [Python Library](#python-library)
+    - [Example](#example)
+  - [Development](#development)
+    - [Running Locally in a Browser](#running-locally-in-a-browser)
+    - [Testing](#testing)
+    - [Publishing](#publishing)
+  - [Acknowledgments](#acknowledgments)
 
 ## Quickstart
 
@@ -47,7 +46,7 @@
 1. Python Library:
    1. Install [Python](https://www.python.org/) (works with python2 and python3)
    1. Install [Pip](https://pip.pypa.io/en/stable/installing/) package manager for python, if
-   not already installed.
+      not already installed.
    1. From a terminal run `pip install bids_validator` to acquire the
       [BIDS Validator PyPi package](https://pypi.org/project/bids-validator/)
    1. Open a Python terminal `python`
@@ -281,11 +280,12 @@ To use bids validator with [docker](https://www.docker.com/), you simply need to
 [install docker](https://docs.docker.com/install/) on your system.
 
 And then from a terminal run:
-- `docker run -ti --rm  bids/validator --version` to print the version of the
+
+- `docker run -ti --rm bids/validator --version` to print the version of the
   docker image
-- `docker run -ti --rm  bids/validator --help` to print the help
+- `docker run -ti --rm bids/validator --help` to print the help
 - `docker run -ti --rm -v /path/to/data:/data:ro bids/validator /data`
-   to validate the dataset `/path/to/data` on your host machine
+  to validate the dataset `/path/to/data` on your host machine
 
 See here for a brief explanation of the commands:
 
@@ -298,12 +298,12 @@ See here for a brief explanation of the commands:
 - the `-v` flag is adding your local data to the docker container
   ([bind-mounts](https://docs.docker.com/storage/bind-mounts/)). Importantly,
   the input after the `-v` flag consists of three fields separated colons: `:`
-    - the first field is the path to the directory on the host machine:
-      `/path/to/data`
-    - the second field is the path where the directory is mounted in the
-      container
-    - the third field is optional. In our case, we use `ro` to specify that the
-      mounted data is *read only*
+  - the first field is the path to the directory on the host machine:
+    `/path/to/data`
+  - the second field is the path where the directory is mounted in the
+    container
+  - the third field is optional. In our case, we use `ro` to specify that the
+    mounted data is _read only_
 
 ## Python Library
 
@@ -341,17 +341,17 @@ A note about OS X, the dependencies for the browser require a npm package called
 node-gyp which needs xcode to be installed in order to be compiled.
 
 1. The browser version of `bids-validator` lives in the repo subdirectory
-	`/bids-validator-web`. It is a [React.js](https://reactjs.org/) application
-	that uses the [next.js](https://nextjs.org/) framework.
+   `/bids-validator-web`. It is a [React.js](https://reactjs.org/) application
+   that uses the [next.js](https://nextjs.org/) framework.
 2. To develop `bids-validator` and see how it will act in the browser, simply run
-	`yarn web-dev` in the project root and navigate to `localhost:3000`.
+   `yarn web-dev` in the project root and navigate to `localhost:3000`.
 3. In development mode, changes to the codebase will trigger rebuilds of the application
-	automatically.
+   automatically.
 4. Changes to the `/bids-validator` in the codebase will also be reflected in the
-	web application.
+   web application.
 5. Tests use the [Jest](https://jestjs.io/index.html) testing library and should be developed in `/bids-validator-web/tests`.
-	We can always use more tests, so please feel free to contribute a test that reduces the chance
-	of any bugs you fix!
+   We can always use more tests, so please feel free to contribute a test that reduces the chance
+   of any bugs you fix!
 6. To ensure that the web application compiles successfully in production, run `yarn web-export`
 
 ### Testing
@@ -383,7 +383,8 @@ below.
 
 Development and contributions were supported through the following federally
 funded projects/grants:
+
 - [BIDS Derivatives (NIMH: R24MH114705, PI: Poldrack)](http://grantome.com/grant/NIH/R24-MH114705-01)
 - [OpenNeuro (NIMH: R24MH117179, PI: Poldrack)](http://grantome.com/grant/NIH/R24-MH117179-01)
 - [Spokes: MEDIUM: WEST (NSF: 1760950, PI: Poldrack & Gorgolewski)](http://grantome.com/grant/NSF/IIS-1760950)
-- [ReproNim](http://repronim.org) [(NIH-NIBIB P41 EB019936, PI: Kennedy)](https://projectreporter.nih.gov/project_info_description.cfm?aid=8999833)
+- [ReproNim](http://repronim.org) [(NIH-NIBIB P41 EB019936, PI: Kennedy)](https://projectreporter.nih.gov/project_info_description.cfm?aid=8999833) 

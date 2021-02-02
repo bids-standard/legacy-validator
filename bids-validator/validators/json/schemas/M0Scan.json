@@ -1,16 +1,9 @@
 {
-  "$schema": "http://json-schema.org/draft-06/schema#",
   "type": "object",
   "properties": {
-    "CogAtlasID": { "$ref": "common_definitions.json#/definitions/CogAtlasID" },
-    "CogPOID": { "$ref": "common_definitions.json#/definitions/CogPOID" },
-    "AcquisitionDuration": {
-      "type": "number",
-      "exclusiveMinimum": 0
-    },
     "EchoTime": {
       "type": "number",
-      "exclusiveMinimum": 0
+      "exclusiveMinimum": 0 
     },
     "EffectiveEchoSpacing": {
       "type": "number",
@@ -20,10 +13,18 @@
       "type": "string",
       "enum": ["i", "j", "k", "i-", "j-", "k-"]
     },
-    "RepetitionTime": {
-      "type": "number",
-      "exclusiveMinimum": 0
-    },
+    "RepetitionTimePreparation": {
+      "anyOf": [
+        { "type": "number",
+          "Minimum": 0 
+        },
+        {
+          "type": "array",
+          "items": { "type": "number" },
+          "Minimum": 0
+        }
+      ]  
+    }, 
     "SliceEncodingDirection": {
       "type": "string",
       "enum": ["i", "j", "k", "i-", "j-", "k-"]
@@ -35,12 +36,12 @@
         "minimum": 0
       }
     },
-    "TaskName": {
-      "type": "string"
-    },
-    "VolumeTiming": {
-      "type": "number",
-      "exclusiveMinimum": 0
+    "AcquisitionVoxelSize" :{
+      "type": "array",
+      "items": {
+          "type": "number",
+          "exclusiveMinimum": 0
+      }
     }
   }
 }

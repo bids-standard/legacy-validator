@@ -34,7 +34,8 @@
         "TermURL": {
           "title": "TermURL",
           "description": "URL pointing to a formal definition in an ontology available on the web.",
-          "type": "string"
+          "type": "string",
+          "format": "uri"
         }
       }
     }

@@ -1,6 +1,6 @@
 {
   "anat": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_part-(imag|mag|phase|real))?(_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)|(?:_recording-[a-zA-Z0-9]+)?(?:@@@_cont_ext_@@@))$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)|(?:_recording-[a-zA-Z0-9]+)?(?:@@@_cont_ext_@@@))$",
     "tokens": {
       "@@@_anat_suffixes_@@@": [
         "T1w",

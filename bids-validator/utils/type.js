@@ -226,6 +226,10 @@ export default {
       return conditionalMatch(behavioralData, path)
     },
 
+    isFuncBold: function(path) {
+      return conditionalMatch(funcBoldData, path)
+    },
+    
     hasModality: function(path) {
       return (
         this.isAnat(path) ||
@@ -237,7 +241,8 @@ export default {
         this.isMeg(path) ||
         this.isEEG(path) ||
         this.isIEEG(path) ||
-        this.isBehavioral(path)
+        this.isBehavioral(path) ||
+        this.isFuncBold(path)
       )
     },
   },

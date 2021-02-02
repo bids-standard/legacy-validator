@@ -20,7 +20,15 @@ import top_level_rules from '../bids_validator/rules/top_level_rules.json'
 // Associated data
 const associatedData = buildRegExp(associated_data_rules.associated_data)
 // File level
-const anatData = buildRegExp(file_level_rules.anat)
+const anatData1 = buildRegExp(file_level_rules.anat_group1)
+const anatData2 = buildRegExp(file_level_rules.anat_group2)
+const anatData3 = buildRegExp(file_level_rules.anat_group3)
+const anatData4 = buildRegExp(file_level_rules.anat_group4)
+const anatData5 = buildRegExp(file_level_rules.anat_group5)
+const anatData6 = buildRegExp(file_level_rules.anat_group6)
+const anatData7 = buildRegExp(file_level_rules.anat_group7)
+const anatData8 = buildRegExp(file_level_rules.anat_group8)
+const anatData9 = buildRegExp(file_level_rules.anat_group9)
 const anatDefacemaskData = buildRegExp(file_level_rules.anat_defacemask)
 const behavioralData = buildRegExp(file_level_rules.behavioral)
 const dwiData = buildRegExp(file_level_rules.dwi)
@@ -173,8 +181,15 @@ export default {
      */
     isAnat: function(path) {
       return (
-        conditionalMatch(anatData, path) ||
-        conditionalMatch(anatDefacemaskData, path)
+        conditionalMatch(anatData1, path) ||
+        conditionalMatch(anatData2, path) ||
+        conditionalMatch(anatData3, path) ||
+        conditionalMatch(anatData4, path) ||
+        conditionalMatch(anatData5, path) ||
+        conditionalMatch(anatData6, path) ||
+        conditionalMatch(anatData7, path) ||
+        conditionalMatch(anatData8, path) ||
+        conditionalMatch(anatData9, path)
       )
     },
 

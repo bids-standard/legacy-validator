@@ -229,7 +229,7 @@ export default {
     isFuncBold: function(path) {
       return conditionalMatch(funcBoldData, path)
     },
-    
+
     hasModality: function(path) {
       return (
         this.isAnat(path) ||

@@ -48,6 +48,7 @@ describe('utils.type.file.isFunc', function() {
     '/sub-16/func/sub-16_task-0back_rec-mc_bold.nii.gz',
     '/sub-16/func/sub-16_task-0back_run-01_phase.nii.gz',
     '/sub-16/func/sub-16_task-0back_echo-1_phase.nii.gz',
+    '/sub-15/func/sub-15_task-0back_part-phase_bold.nii.gz',
   ]
 
   goodFilenames.forEach(function(path) {
@@ -65,6 +66,7 @@ describe('utils.type.file.isFunc', function() {
     '/sub-16/func/sub-16_run-second_T1w.nii.gz',
     '/sub-16/func/sub-16_task-0-back_rec-mc_bold.nii.gz',
     '/sub-16/func/sub-16_run-01_rec-mc_T1w.nii.gz',
+    '/sub-16/func/sub-16_task-0back_part-magnitude_bold.nii.gz',
   ]
 
   badFilenames.forEach(function(path) {
@@ -197,6 +199,7 @@ describe('utils.type.file.isDWI', function() {
     '/sub-12/dwi/sub-12_sbref.json',
     '/sub-12/ses-pre/dwi/sub-12_ses-pre_sbref.nii.gz',
     '/sub-12/ses-pre/dwi/sub-12_ses-pre_sbref.json',
+    '/sub-12/dwi/sub-12_part-mag_sbref.json',
   ]
 
   goodFilenames.forEach(function(path) {
@@ -215,6 +218,7 @@ describe('utils.type.file.isDWI', function() {
     '/sub-12/dwi/sub-12_sbref.bvec',
     '/sub-12/ses-pre/dwi/sub-12_ses-pre_sbref.bval',
     '/sub-12/ses-pre/dwi/sub-12_ses-pre_sbref.bvec',
+    '/sub-12/dwi/sub-12_part-magnitude_sbref.json',
   ]
 
   badFilenames.forEach(function(path) {

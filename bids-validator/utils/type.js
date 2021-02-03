@@ -206,6 +206,7 @@ export default {
         conditionalMatch(funcPhaseData, path)
       )
     },
+
     isAsl: function(path) {
       return conditionalMatch(aslData, path)
     },

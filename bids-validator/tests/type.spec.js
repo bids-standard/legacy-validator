@@ -12,6 +12,15 @@ describe('utils.type.file.isAnat', function() {
     '/sub-16/anat/sub-16_acq-highres_T1w.nii.gz',
     '/sub-16/anat/sub-16_rec-mc_T1w.nii.gz',
     '/sub-16/anat/sub-16_ce-contrastagent_T1w.nii.gz',
+    '/sub-16/anat/sub-16_part-mag_T1w.nii.gz',
+    '/sub-16/anat/sub-16_T1map.nii.gz',
+    '/sub-16/anat/sub-16_mod-T1w_defacemask.nii.gz',
+    '/sub-16/anat/sub-16_echo-1_MESE.nii.gz',
+    '/sub-16/anat/sub-16_flip-1_VFA.nii.gz',
+    '/sub-16/anat/sub-16_inv-1_IRT1.nii.gz',
+    '/sub-16/anat/sub-16_flip-1_inv-1_MP2RAGE.nii.gz',
+    '/sub-16/anat/sub-16_flip-1_mt-on_MPM.nii.gz',
+    '/sub-16/anat/sub-16_mt-on_part-real_MTR.nii.gz',
   ]
 
   goodFilenames.forEach(function(path) {
@@ -28,6 +37,15 @@ describe('utils.type.file.isAnat', function() {
     'blaaa.nii.gz',
     '/sub-16/anat/sub-16_run-second_T1w.nii.gz',
     '/sub-16/anat/sub-16_run-01_rec-mc_T1w.nii.gz',
+    '/sub-16/anat/sub-16_part-magnitude_T1w.nii.gz',
+    '/sub-16/anat/sub-16_part-mag_T1map.nii.gz',
+    '/sub-16/anat/sub-16_mod-T1weighted_defacemask.nii.gz',
+    '/sub-16/anat/sub-16_MESE.nii.gz',
+    '/sub-16/anat/sub-16_VFA.nii.gz',
+    '/sub-16/anat/sub-16_IRT1.nii.gz',
+    '/sub-16/anat/sub-16_inv-1_MP2RAGE.nii.gz',
+    '/sub-16/anat/sub-16_flip-1_mt-fail_MPM.nii.gz',
+    '/sub-16/anat/sub-16_flip-1_mt-fail_part-real_MTR.nii.gz',
   ]
 
   badFilenames.forEach(function(path) {

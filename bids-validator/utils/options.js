@@ -91,7 +91,9 @@ export default {
               ignore: jsObj.ignore ? [].concat(...[jsObj.ignore]) : [],
               warn: jsObj.warn ? [].concat(...[jsObj.warn]) : [],
               error: jsObj.error ? [].concat(...[jsObj.error]) : [],
-              ignoredFiles: jsObj.ignoredFiles ? [].concat(...[jsObj.ignoredFiles]) : [],
+              ignoredFiles: jsObj.ignoredFiles
+                ? [].concat(...[jsObj.ignoredFiles])
+                : [],
             }
             callback(null, parsedConfig)
           }

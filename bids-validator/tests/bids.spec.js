@@ -220,10 +220,7 @@ describe('BIDS example datasets ', function() {
     validate.BIDS(createDatasetFileList('unused_data_dict'), options, function(
       issues,
     ) {
-      assert.notEqual(
-        issues.errors.findIndex(issue => issue.code === 90),
-        -1,
-      )
+      assert.notEqual(issues.errors.findIndex(issue => issue.code === 90), -1)
       isdone()
     })
   })
@@ -233,10 +230,7 @@ describe('BIDS example datasets ', function() {
       createDatasetFileList('fieldmap_without_magnitude'),
       options,
       function(issues) {
-        assert.notEqual(
-          issues.errors.findIndex(issue => issue.code === 91),
-          -1,
-        )
+        assert.notEqual(issues.errors.findIndex(issue => issue.code === 91), -1)
         isdone()
       },
     )
@@ -266,10 +260,7 @@ describe('BIDS example datasets ', function() {
     validate.BIDS(createDatasetFileList('valid_dataset'), options, function(
       issues,
     ) {
-      assert.equal(
-        issues.errors.findIndex(issue => issue.code === 123),
-        -1,
-      )
+      assert.equal(issues.errors.findIndex(issue => issue.code === 123), -1)
       isdone()
     })
   })

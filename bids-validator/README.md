@@ -154,7 +154,7 @@ sub-dir to be ignored.
 `ignore`, `warn`, and `error` take lists of issue codes or issue keys and change
 the severity of those issues so they are either ignored or reported as warnings
 or errors. You can find a list of all available issues at
-[utils/issues/list](https://github.com/bids-standard/bids-validator/tree/master/utils/issues/list.js).
+[utils/issues/list](https://github.com/bids-standard/bids-validator/blob/master/bids-validator/utils/issues/list.js).
 
 Some issues may be ignored by default, but can be elevated to warnings or errors.
 These provide a way to check for common things that are more specific than BIDS
@@ -387,4 +387,4 @@ funded projects/grants:
 - [BIDS Derivatives (NIMH: R24MH114705, PI: Poldrack)](http://grantome.com/grant/NIH/R24-MH114705-01)
 - [OpenNeuro (NIMH: R24MH117179, PI: Poldrack)](http://grantome.com/grant/NIH/R24-MH117179-01)
 - [Spokes: MEDIUM: WEST (NSF: 1760950, PI: Poldrack & Gorgolewski)](http://grantome.com/grant/NSF/IIS-1760950)
-- [ReproNim](http://repronim.org) [(NIH-NIBIB P41 EB019936, PI: Kennedy)](https://projectreporter.nih.gov/project_info_description.cfm?aid=8999833) 
+- [ReproNim](http://repronim.org) [(NIH-NIBIB P41 EB019936, PI: Kennedy)](https://projectreporter.nih.gov/project_info_description.cfm?aid=8999833)

@@ -36,6 +36,19 @@
         "talk",
         "userTesting"
       ]
+    },
+    {
+      "login": "nellh",
+      "name": "Nell Hardcastle",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11369795?v=4",
+      "profile": "https://github.com/nellh",
+      "contributions": [
+        "code",
+        "ideas",
+        "infra",
+        "question",
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 10,

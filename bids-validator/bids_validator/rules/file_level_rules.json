@@ -127,8 +127,8 @@
     }
   },
 
-  "func": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?func[\\/\\\\]\\1(_\\2)?_task-[a-zA-Z0-9]+(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?(?:_part-(imag|mag|phase|real))?((?:@@@_func_ext_@@@)|(?:_recording-[a-zA-Z0-9]+)?(?:@@@_cont_ext_@@@))$",
+  "func_group1": {
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?func[\\/\\\\]\\1(_\\2)?_task-[a-zA-Z0-9]+(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?(?:_part-(imag|mag|phase|real))?(?:@@@_func_ext_@@@)$",
     "tokens": {
       "@@@_func_ext_@@@": [
         "_bold\\.nii\\.gz",
@@ -139,28 +139,40 @@
         "_cbv\\.json",
         "_sbref\\.nii\\.gz",
         "_sbref\\.nii",
-        "_sbref\\.json",
-        "_events\\.tsv",
-        "_events\\.json",
-        "_defacemask\\.nii\\.gz",
-        "_defacemask\\.nii"
-      ],
-      "@@@_cont_ext_@@@": [
-        "_physio\\.tsv\\.gz",
-        "_stim\\.tsv\\.gz",
-        "_physio\\.json",
-        "_stim\\.json"
+        "_sbref\\.json"
       ]
     }
   },
 
-  "func_phase": {
+  "func_group2": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?func[\\/\\\\]\\1(_\\2)?_task-[a-zA-Z0-9]+(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?(?:@@@_func_ext_@@@)$",
     "tokens": {
       "@@@_func_ext_@@@": [
         "_phase\\.nii\\.gz",
         "_phase\\.nii",
         "_phase\\.json"
+      ]
+    }
+  },
+
+  "func_group3": {
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?func[\\/\\\\]\\1(_\\2)?_task-[a-zA-Z0-9]+(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:@@@_func_ext_@@@)$",
+    "tokens": {
+      "@@@_func_ext_@@@": [
+        "_events\\.tsv",
+        "_events\\.json"
+      ]
+    }
+  },
+
+  "func_group4": {
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?func[\\/\\\\]\\1(_\\2)?_task-[a-zA-Z0-9]+(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_recording-[a-zA-Z0-9]+)?(?:@@@_cont_ext_@@@)$",
+    "tokens": {
+      "@@@_cont_ext_@@@": [
+        "_physio\\.tsv\\.gz",
+        "_stim\\.tsv\\.gz",
+        "_physio\\.json",
+        "_stim\\.json"
       ]
     }
   },

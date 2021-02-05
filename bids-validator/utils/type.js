@@ -27,8 +27,10 @@ const dwiData = buildRegExp(file_level_rules.dwi)
 const eegData = buildRegExp(file_level_rules.eeg)
 const fieldmapData = buildRegExp(file_level_rules.field_map)
 const fieldmapMainNiiData = buildRegExp(file_level_rules.field_map_main_nii)
-const funcData = buildRegExp(file_level_rules.func)
-const funcPhaseData = buildRegExp(file_level_rules.func_phase)
+const funcData1 = buildRegExp(file_level_rules.func_group1)
+const funcData2 = buildRegExp(file_level_rules.func_group2)
+const funcData3 = buildRegExp(file_level_rules.func_group3)
+const funcData4 = buildRegExp(file_level_rules.func_group4)
 const funcBoldData = buildRegExp(file_level_rules.func_bold)
 const aslData = buildRegExp(file_level_rules.asl)
 const ieegData = buildRegExp(file_level_rules.ieeg)
@@ -202,8 +204,10 @@ export default {
      */
     isFunc: function(path) {
       return (
-        conditionalMatch(funcData, path) ||
-        conditionalMatch(funcPhaseData, path)
+        conditionalMatch(funcData1, path) ||
+        conditionalMatch(funcData2, path) ||
+        conditionalMatch(funcData3, path) ||
+        conditionalMatch(funcData4, path)
       )
     },
 

@@ -84,12 +84,14 @@ Please also see [Acknowledgments](#acknowledgments).
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/rwblair"><img src="https://avatars2.githubusercontent.com/u/14927911?v=4" width="100px;" alt=""/><br /><sub><b>Ross Blair</b></sub></a><br /><a href="#maintenance-rwblair" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/rwblair"><img src="https://avatars2.githubusercontent.com/u/14927911?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ross Blair</b></sub></a><br /><a href="#maintenance-rwblair" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://www.stefanappelhoff.com"><img src="https://avatars.githubusercontent.com/u/9084751?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Stefan Appelhoff</b></sub></a><br /><a href="https://github.com/bids-standard/bids-validator/issues?q=author%3Asappelhoff" title="Bug reports">🐛</a> <a href="https://github.com/bids-standard/bids-validator/commits?author=sappelhoff" title="Code">💻</a> <a href="#data-sappelhoff" title="Data">🔣</a> <a href="https://github.com/bids-standard/bids-validator/commits?author=sappelhoff" title="Documentation">📖</a> <a href="#example-sappelhoff" title="Examples">💡</a> <a href="#ideas-sappelhoff" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-sappelhoff" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-sappelhoff" title="Maintenance">🚧</a> <a href="#mentoring-sappelhoff" title="Mentoring">🧑‍🏫</a> <a href="#question-sappelhoff" title="Answering Questions">💬</a> <a href="https://github.com/bids-standard/bids-validator/pulls?q=is%3Apr+reviewed-by%3Asappelhoff" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/bids-standard/bids-validator/commits?author=sappelhoff" title="Tests">⚠️</a> <a href="#tutorial-sappelhoff" title="Tutorials">✅</a> <a href="#talk-sappelhoff" title="Talks">📢</a> <a href="#userTesting-sappelhoff" title="User Testing">📓</a></td>
   </tr>
 </table>
 
-<!-- markdownlint-enable -->
+<!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Use

@@ -77,6 +77,8 @@ Contributions of any kind are welcome!
 The project is maintained by [@rwblair](https://github.com/rwblair/) with the help of many contributors listed below.
 (The [emoji key](https://allcontributors.org/docs/en/emoji-key) is indicating the kind of contribution)
 
+Please also see [Acknowledgments](#acknowledgments).
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -89,9 +91,6 @@ The project is maintained by [@rwblair](https://github.com/rwblair/) with the he
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-
-
-Please also see [Acknowledgments](#acknowledgments).
 
 ## Use
 

@@ -72,6 +72,15 @@
         "talk",
         "userTesting"
       ]
+    },
+    {
+      "login": "david-nishi",
+      "name": "David Nishikawa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/28666458?v=4",
+      "profile": "https://github.com/david-nishi",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 10,

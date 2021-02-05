@@ -71,11 +71,25 @@ address these issues on a case by case basis.
 
 ## Maintainers and Contributors
 
-This package is maintained by [@rwblair](https://github.com/rwblair/).
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification.
+Contributions of any kind are welcome!
 
-Some of our awesome contributors include:
+The project is maintained by [@rwblair](https://github.com/rwblair/) with the help of many contributors listed below.
+(The [emoji key](https://allcontributors.org/docs/en/emoji-key) is indicating the kind of contribution)
 
-[![](https://sourcerer.io/fame/chrisfilo/bids-standard/bids-validator/images/0)](https://sourcerer.io/fame/chrisfilo/bids-standard/bids-validator/links/0)[![](https://sourcerer.io/fame/chrisfilo/bids-standard/bids-validator/images/1)](https://sourcerer.io/fame/chrisfilo/bids-standard/bids-validator/links/1)[![](https://sourcerer.io/fame/chrisfilo/bids-standard/bids-validator/images/2)](https://sourcerer.io/fame/chrisfilo/bids-standard/bids-validator/links/2)[![](https://sourcerer.io/fame/chrisfilo/bids-standard/bids-validator/images/3)](https://sourcerer.io/fame/chrisfilo/bids-standard/bids-validator/links/3)[![](https://sourcerer.io/fame/chrisfilo/bids-standard/bids-validator/images/4)](https://sourcerer.io/fame/chrisfilo/bids-standard/bids-validator/links/4)[![](https://sourcerer.io/fame/chrisfilo/bids-standard/bids-validator/images/5)](https://sourcerer.io/fame/chrisfilo/bids-standard/bids-validator/links/5)[![](https://sourcerer.io/fame/chrisfilo/bids-standard/bids-validator/images/6)](https://sourcerer.io/fame/chrisfilo/bids-standard/bids-validator/links/6)[![](https://sourcerer.io/fame/chrisfilo/bids-standard/bids-validator/images/7)](https://sourcerer.io/fame/chrisfilo/bids-standard/bids-validator/links/7)
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/rwblair"><img src="https://avatars2.githubusercontent.com/u/14927911?v=4" width="100px;" alt=""/><br /><sub><b>Ross Blair</b></sub></a><br /><a href="#maintenance-rwblair" title="Maintenance">🚧</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 
 Please also see [Acknowledgments](#acknowledgments).
 

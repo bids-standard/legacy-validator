@@ -1,0 +1,24 @@
+{
+  "files": [
+    "bids-validator/README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "rwblair",
+      "name": "Ross Blair",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/14927911?v=4",
+      "profile": "https://github.com/rwblair",
+      "contributions": [
+        "maintenance"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "bids-validator",
+  "projectOwner": "bids-standard",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}

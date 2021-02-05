@@ -49,6 +49,29 @@
         "question",
         "review"
       ]
+    },
+    {
+      "login": "chrisgorgo",
+      "name": "Chris Gorgolewski",
+      "avatar_url": "https://avatars.githubusercontent.com/u/238759?v=4",
+      "profile": "http://chrisgorgolewski.org",
+      "contributions": [
+        "bug",
+        "code",
+        "data",
+        "doc",
+        "example",
+        "ideas",
+        "infra",
+        "maintenance",
+        "mentoring",
+        "question",
+        "review",
+        "test",
+        "tutorial",
+        "talk",
+        "userTesting"
+      ]
     }
   ],
   "contributorsPerLine": 10,

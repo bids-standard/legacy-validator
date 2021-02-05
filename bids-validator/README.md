@@ -254,8 +254,7 @@ because it would be functionally the same as this:
 ```
 
 For passing a configuration while using the bids-validator on the command line,
-note that you **have to specify at least two configurations of a given type**,
-because an array is expected. For example, the following code will ignore empty
+you can use the following style to for example ignore empty
 file errors (99) and files that cannot be read (44):
 
 ```

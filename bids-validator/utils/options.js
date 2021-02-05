@@ -88,10 +88,10 @@ export default {
             callback(issues, null)
           } else {
             const parsedConfig = {
-              ignore: jsObj.ignore ? jsObj.ignore : [],
-              warn: jsObj.warn ? jsObj.warn : [],
-              error: jsObj.error ? jsObj.error : [],
-              ignoredFiles: jsObj.ignoredFiles ? jsObj.ignoredFiles : [],
+              ignore: jsObj.ignore ? [].concat(...[jsObj.ignore]) : [],
+              warn: jsObj.warn ? [].concat(...[jsObj.warn]) : [],
+              error: jsObj.error ? [].concat(...[jsObj.error]) : [],
+              ignoredFiles: jsObj.ignoredFiles ? [].concat(...[jsObj.ignoredFiles]) : [],
             }
             callback(null, parsedConfig)
           }

@@ -13,6 +13,29 @@
       "contributions": [
         "maintenance"
       ]
+    },
+    {
+      "login": "sappelhoff",
+      "name": "Stefan Appelhoff",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9084751?v=4",
+      "profile": "https://www.stefanappelhoff.com",
+      "contributions": [
+        "bug",
+        "code",
+        "data",
+        "doc",
+        "example",
+        "ideas",
+        "infra",
+        "maintenance",
+        "mentoring",
+        "question",
+        "review",
+        "test",
+        "tutorial",
+        "talk",
+        "userTesting"
+      ]
     }
   ],
   "contributorsPerLine": 7,

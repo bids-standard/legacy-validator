@@ -43,7 +43,7 @@ describe('utils.type.file.isAnat', function() {
     '/sub-16/anat/sub-16_MESE.nii.gz',
     '/sub-16/anat/sub-16_VFA.nii.gz',
     '/sub-16/anat/sub-16_IRT1.nii.gz',
-    '/sub-16/anat/sub-16_inv-1_MP2RAGE.nii.gz',
+    '/sub-16/anat/sub-16_flip-1_MP2RAGE.nii.gz',
     '/sub-16/anat/sub-16_flip-1_mt-fail_MPM.nii.gz',
     '/sub-16/anat/sub-16_flip-1_mt-fail_part-real_MTR.nii.gz',
   ]

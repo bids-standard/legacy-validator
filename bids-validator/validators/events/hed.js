@@ -28,8 +28,8 @@ export default function checkHedStrings(events, headers, jsonContents, dir) {
     .buildSchema(schemaDefinition)
     .then(hedSchema => {
       let hedStringsFound = false
-      const sidecarIssues = {}
-      let sidecarIssuesFound = false
+      const sidecarIssueTypes = {}
+      let sidecarErrorsFound = false
       // loop through event data files
       events.forEach(eventFile => {
         const hedStrings = []
@@ -39,7 +39,7 @@ export default function checkHedStrings(events, headers, jsonContents, dir) {
         )
         // validate the HED strings in the json sidecars
         for (const sidecarName of potentialSidecars) {
-          if (!(sidecarName in sidecarIssues)) {
+          if (!(sidecarName in sidecarIssueTypes)) {
             const sidecarDictionary = jsonContents[sidecarName]
             let sidecarHedStrings = []
             for (const sidecarKey in sidecarDictionary) {
@@ -75,19 +75,31 @@ export default function checkHedStrings(events, headers, jsonContents, dir) {
                   sidecarName,
                 )
                 fileIssues = fileIssues.concat(convertedIssues)
-                sidecarIssuesFound = true
               }
             }
-            sidecarIssues[sidecarName] = fileIssues
             if (fileIssues.length > 0) {
-              issues.push(new Issue({ code: 207, file: sidecarName }))
+              let fileErrorsFound = false
+              for (const fileIssue of fileIssues) {
+                if (fileIssue.severity === 'error') {
+                  fileErrorsFound = true
+                  sidecarErrorsFound = true
+                  break
+                }
+              }
+              if (fileErrorsFound) {
+                issues.push(new Issue({ code: 209, file: sidecarName }))
+                sidecarIssueTypes[sidecarName] = 'error'
+              } else {
+                issues.push(new Issue({ code: 210, file: sidecarName }))
+                sidecarIssueTypes[sidecarName] = 'warning'
+              }
               issues = issues.concat(fileIssues)
             }
-          } else if (sidecarIssues[sidecarName].length > 0) {
-            sidecarIssuesFound = true
+          } else if (sidecarIssueTypes[sidecarName] === 'error') {
+            sidecarErrorsFound = true
           }
         }
-        if (sidecarIssuesFound) {
+        if (sidecarErrorsFound) {
           return
         }
         const mergedDictionary = utils.files.generateMergedSidecarDict(

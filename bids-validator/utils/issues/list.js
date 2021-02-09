@@ -763,6 +763,21 @@ export default {
     severity: 'warning',
     reason: "It is recommended to define 'PulseSequenceDetails' for this file. 'PulseSequenceDetails' is the information beyond pulse sequence type that identifies the specific pulse sequence used (for example, 'Standard Siemens Sequence distributed with the VB17 software', 'Siemens WIP ### version #.##', or 'Sequence written by X using a version compiled on MM/DD/YYYY').",
   },
+  139: {
+    key: '139_EMPTY',
+    severity: 'warning',
+    reason: ''
+  },
+  140: {
+    key: '140_EMPTY',
+    severity: 'warning',
+    reason: ''
+  },
+  139: {
+    key: '140_EMPTY',
+    severity: 'warning',
+    reason: ''
+  },
   142: {
     key: 'LABELING_SLAB_THICKNESS_MISSING',
     severity: 'warning',
@@ -1049,8 +1064,13 @@ export default {
     reason: 'A HED tag extension was found.',
   },
   209: {
-    key: 'HED_INVALID_SIDECAR',
+    key: 'HED_INVALID_SIDECAR_ERROR',
     severity: 'error',
     reason: 'A HED error was found in the JSON sidecar.',
+  },
+  210: {
+    key: 'HED_INVALID_SIDECAR_WARNING',
+    severity: 'warning',
+    reason: 'A HED warning was found in the JSON sidecar.',
   }
 }

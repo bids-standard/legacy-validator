@@ -245,6 +245,53 @@
     }
   },
 
+  "fmap_gre_nii": {
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?fmap[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_(?:@@@_field_map_type_@@@)\\.(@@@_field_map_ext_@@@)$",
+    "tokens": {
+      "@@@_field_map_type_@@@": [
+        "phasediff",
+        "phase1",
+        "phase2",
+        "magnitude1",
+        "magnitude2",
+        "magnitude",
+        "fieldmap"
+      ],
+      "@@@_field_map_ext_@@@": ["nii\\.gz", "nii", "json"]
+    }
+  },
+
+  "fmap_pepolar_asl_nii": {
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?fmap[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?_dir-[a-zA-Z0-9]+(?:_run-[0-9]+)?_(?:@@@_field_map_type_@@@)\\.(@@@_field_map_ext_@@@)$",
+    "tokens": {
+      "@@@_field_map_type_@@@": [
+        "m0scan",
+        "epi"
+      ],
+      "@@@_field_map_ext_@@@": ["nii\\.gz", "nii", "json"]
+    }
+  },
+
+  "fmap_TB1DAM_nii": {
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?fmap[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)(?:_run-[0-9]+)?_flip-[0-9]+?(?:_part-(imag|mag|phase|real))?_(?:@@@_field_map_type_@@@)\\.(@@@_field_map_ext_@@@)$",
+    "tokens": {
+      "@@@_field_map_type_@@@": [
+        "TB1DAM"
+      ],
+      "@@@_field_map_ext_@@@": ["nii\\.gz", "nii", "json"]
+    }
+  },
+
+  "fmap_TB1EPI_nii": {
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?fmap[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)(?:_run-[0-9]+)?_echo-[0-9]+?_flip-[0-9]+?(?:_part-(imag|mag|phase|real))?_(?:@@@_field_map_type_@@@)\\.(@@@_field_map_ext_@@@)$",
+    "tokens": {
+      "@@@_field_map_type_@@@": [
+        "TB1EPI"
+      ],
+      "@@@_field_map_ext_@@@": ["nii\\.gz", "nii", "json"]
+    }
+  },
+
   "func": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?func[\\/\\\\]\\1(_\\2)?_task-[a-zA-Z0-9]+(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?(?:_part-(imag|mag|phase|real))?(?:@@@_func_ext_@@@)$",
     "tokens": {

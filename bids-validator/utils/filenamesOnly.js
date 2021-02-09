@@ -3,10 +3,9 @@
  */
 import readline from 'readline'
 import path from 'path'
-import consoleFormat from './consoleFormat'
 import { defaultIgnore } from './files/readDir'
 import quickTest from '../validators/bids/quickTest'
-import fullTest from '../validators/bids/fullTest'
+import groupFileTypes from '../validators/bids/groupFileTypes'
 
 // Disable most tests that might access files
 const defaultOptions = {
@@ -46,7 +45,7 @@ async function generateFileObjects(stream) {
           relativePath: rootPath,
           size: 1,
         }
-        if (ig.ignores(rootPath)) {
+        if (ig.ignores(line)) {
           file.ignore = true
         }
         inputFiles[index] = file
@@ -60,7 +59,7 @@ async function generateFileObjects(stream) {
 /**
  * Validate input from stdin as bidsignore + filenames
  *
- * Protocol uses `0000` line to separate the two streams
+ * Protocol uses `0001` line to separate the two streams
  * .bidsignore lines are read first
  * One filename per line is read in and bidsignore rules applied
  *
@@ -70,18 +69,26 @@ export async function validateFilenames(stream) {
   const inputFiles = await generateFileObjects(stream)
   const couldBeBIDS = quickTest(inputFiles)
   if (couldBeBIDS) {
-    await new Promise(resolve => {
-      fullTest(inputFiles, defaultOptions, false, '/dev/null', function(
-        issues,
-        summary,
-      ) {
+    const files = groupFileTypes(inputFiles, defaultOptions)
+    if (files.invalid.length > 0) {
+      const invalidFiles = []
+      for (const f of files.invalid) {
+        if (!f.ignore) {
+          invalidFiles.push(f)
+        }
+      }
+      if (invalidFiles.length > 0) {
         // eslint-disable-next-line no-console
-        console.log(consoleFormat.issues(issues, defaultOptions) + '\n')
-        // eslint-disable-next-line no-console
-        console.log(consoleFormat.summary(summary, defaultOptions))
-        resolve()
-      })
-    })
+        console.log(
+          'Validation failed, some files are not valid BIDS filenames:',
+        )
+        for (const ef of invalidFiles) {
+          // eslint-disable-next-line no-console
+          console.log(`  ${ef.path}`)
+        }
+        return false
+      }
+    }
     return true
   } else {
     // eslint-disable-next-line no-console
@@ -96,5 +103,9 @@ export async function filenamesOnly() {
   const rl = readline.createInterface({
     input: process.stdin,
   })
-  validateFilenames(rl)
+  if (await validateFilenames(rl)) {
+    process.exit(0)
+  } else {
+    process.exit(1)
+  }
 }

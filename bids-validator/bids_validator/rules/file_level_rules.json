@@ -11,7 +11,10 @@
         "inplaneT1",
         "inplaneT2",
         "PDT2",
-        "angio"
+        "angio",
+        "T2star",
+        "FLASH",
+        "PD"
       ],
       "@@@_anat_ext_@@@": ["nii\\.gz", "nii", "json"]
     }
@@ -84,7 +87,10 @@
         "MP2RAGE",
         "MPM",
         "MTS",
-        "MTR"
+        "MTR",
+        "T2star",
+        "FLASH",
+        "PD"
       ],
       "@@@_anat_ext_@@@": ["nii.gz", "nii"]
     }

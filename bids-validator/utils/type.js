@@ -222,10 +222,13 @@ export default {
 
     isFieldMapMainNii: function(path) {
       return (
-        conditionalMatch(fmapGreNii, path) ||
-        conditionalMatch(fmapPepolarAslNii, path) ||
-        conditionalMatch(fmapTB1DAMNii, path) ||
-        conditionalMatch(fmapTB1EPINii, path)
+        !(path.endsWith('.json')) && (
+          /* isFieldMap */
+          conditionalMatch(fmapGre, path) ||
+          conditionalMatch(fmapPepolarAsl, path) ||
+          conditionalMatch(fmapTB1DAM, path) ||
+          conditionalMatch(fmapTB1EPI, path)
+          )
       )
     },
 

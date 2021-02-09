@@ -36,10 +36,6 @@ const fmapGre = buildRegExp(file_level_rules.fmap_gre)
 const fmapPepolarAsl = buildRegExp(file_level_rules.fmap_pepolar_asl)
 const fmapTB1DAM = buildRegExp(file_level_rules.fmap_TB1DAM)
 const fmapTB1EPI = buildRegExp(file_level_rules.fmap_TB1EPI)
-const fmapGreNii = buildRegExp(file_level_rules.fmap_gre_nii)
-const fmapPepolarAslNii = buildRegExp(file_level_rules.fmap_pepolar_asl_nii)
-const fmapTB1DAMNii = buildRegExp(file_level_rules.fmap_TB1DAM_nii)
-const fmapTB1EPINii = buildRegExp(file_level_rules.fmap_TB1EPI_nii)
 const func = buildRegExp(file_level_rules.func)
 const funcPhaseDeprecated = buildRegExp(file_level_rules.func_phase_deprecated)
 const funcEvents = buildRegExp(file_level_rules.func_events)
@@ -222,13 +218,13 @@ export default {
 
     isFieldMapMainNii: function(path) {
       return (
-        !(path.endsWith('.json')) && (
+        !path.endsWith('.json') &&
+        (
           /* isFieldMap */
           conditionalMatch(fmapGre, path) ||
           conditionalMatch(fmapPepolarAsl, path) ||
           conditionalMatch(fmapTB1DAM, path) ||
-          conditionalMatch(fmapTB1EPI, path)
-          )
+          conditionalMatch(fmapTB1EPI, path))
       )
     },
 

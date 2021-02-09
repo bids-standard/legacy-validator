@@ -127,7 +127,7 @@
     }
   },
 
-  "func_group1": {
+  "func": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?func[\\/\\\\]\\1(_\\2)?_task-[a-zA-Z0-9]+(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?(?:_part-(imag|mag|phase|real))?(?:@@@_func_ext_@@@)$",
     "tokens": {
       "@@@_func_ext_@@@": [
@@ -144,7 +144,7 @@
     }
   },
 
-  "func_group2": {
+  "func_phase_deprecated": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?func[\\/\\\\]\\1(_\\2)?_task-[a-zA-Z0-9]+(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?(?:@@@_func_ext_@@@)$",
     "tokens": {
       "@@@_func_ext_@@@": [
@@ -155,7 +155,7 @@
     }
   },
 
-  "func_group3": {
+  "func_events": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?func[\\/\\\\]\\1(_\\2)?_task-[a-zA-Z0-9]+(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:@@@_func_ext_@@@)$",
     "tokens": {
       "@@@_func_ext_@@@": [
@@ -165,7 +165,7 @@
     }
   },
 
-  "func_group4": {
+  "func_timeseries": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?func[\\/\\\\]\\1(_\\2)?_task-[a-zA-Z0-9]+(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_recording-[a-zA-Z0-9]+)?(?:@@@_cont_ext_@@@)$",
     "tokens": {
       "@@@_cont_ext_@@@": [

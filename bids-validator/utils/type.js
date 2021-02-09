@@ -32,7 +32,10 @@ const anatMTR = buildRegExp(file_level_rules.anat_mtr)
 const behavioralData = buildRegExp(file_level_rules.behavioral)
 const dwiData = buildRegExp(file_level_rules.dwi)
 const eegData = buildRegExp(file_level_rules.eeg)
-const fieldmapData = buildRegExp(file_level_rules.field_map)
+const fmapGre = buildRegExp(file_level_rules.fmap_gre)
+const fmapPepolarAsl = buildRegExp(file_level_rules.fmap_pepolar_asl)
+const fmapTB1DAM = buildRegExp(file_level_rules.fmap_TB1DAM)
+const fmapTB1EPI = buildRegExp(file_level_rules.fmap_TB1EPI)
 const fieldmapMainNiiData = buildRegExp(file_level_rules.field_map_main_nii)
 const func = buildRegExp(file_level_rules.func)
 const funcPhaseDeprecated = buildRegExp(file_level_rules.func_phase_deprecated)
@@ -206,11 +209,21 @@ export default {
      * Check if the file has a name appropriate for a fieldmap scan
      */
     isFieldMap: function(path) {
-      return conditionalMatch(fieldmapData, path)
+      return (
+        conditionalMatch(fmapGre, path) ||
+        conditionalMatch(fmapPepolarAsl, path) ||
+        conditionalMatch(fmapTB1DAM, path) ||
+        conditionalMatch(fmapTB1EPI, path)
+      )
     },
 
     isFieldMapMainNii: function(path) {
-      return conditionalMatch(fieldmapMainNiiData, path)
+      return (
+        conditionalMatch(fmapGreNii, path) ||
+        conditionalMatch(fmapPepolarAslNii, path) ||
+        conditionalMatch(fmapTB1DAMNii, path) ||
+        conditionalMatch(fmapTB1EPINii, path)
+      )
     },
 
     /**

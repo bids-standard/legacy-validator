@@ -219,9 +219,8 @@ export default {
     isFieldMapMainNii: function(path) {
       return (
         !path.endsWith('.json') &&
-        (
-          /* isFieldMap */
-          conditionalMatch(fmapGre, path) ||
+        /* isFieldMap */
+        (conditionalMatch(fmapGre, path) ||
           conditionalMatch(fmapPepolarAsl, path) ||
           conditionalMatch(fmapTB1DAM, path) ||
           conditionalMatch(fmapTB1EPI, path))

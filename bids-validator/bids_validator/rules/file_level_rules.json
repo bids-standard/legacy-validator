@@ -39,8 +39,6 @@
         "MTVmap",
         "PDT2map",
         "Chimap",
-        "TB1map",
-        "RB1map",
         "S0map",
         "M0map"
       ],
@@ -236,10 +234,44 @@
   },
 
   "fmap_TB1EPI": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?fmap[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)(?:_run-[0-9]+)?_echo-[0-9]+?_flip-[0-9]+?(?:_part-(imag|mag|phase|real))?_(?:@@@_field_map_type_@@@)\\.(@@@_field_map_ext_@@@)$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?fmap[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)(?:_run-[0-9]+)?_echo-[0-9]+?_flip-[0-9]+?(?:_inv-[0-9]+)(?:_part-(imag|mag|phase|real))?_(?:@@@_field_map_type_@@@)\\.(@@@_field_map_ext_@@@)$",
     "tokens": {
       "@@@_field_map_type_@@@": [
         "TB1EPI"
+      ],
+      "@@@_field_map_ext_@@@": ["nii\\.gz", "nii", "json"]
+    }
+  },
+
+  "fmap_rf": {
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?fmap[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)(?:_run-[0-9]+)?(?:_echo-[0-9]+)?(?:_flip-[0-9]+)?(?:_inv-[0-9]+)?(?:_part-(imag|mag|phase|real))?_(?:@@@_field_map_type_@@@)\\.(@@@_field_map_ext_@@@)$",
+    "tokens": {
+      "@@@_field_map_type_@@@": [
+        "TB1AFI",
+        "TB1TFL",
+        "TB1RMF",
+        "RB1COR"
+      ],
+      "@@@_field_map_ext_@@@": ["nii\\.gz", "nii", "json"]
+    }
+  },
+
+  "fmap_TB1SRGE": {
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?fmap[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)(?:_run-[0-9]+)?(?:_echo-[0-9]+)?_flip-[0-9]+?_inv-[0-9]+?(?:_part-(imag|mag|phase|real))?_(?:@@@_field_map_type_@@@)\\.(@@@_field_map_ext_@@@)$",
+    "tokens": {
+      "@@@_field_map_type_@@@": [
+        "TB1SRGE"
+      ],
+      "@@@_field_map_ext_@@@": ["nii\\.gz", "nii", "json"]
+    }
+  },
+
+  "fmap_parametric": {
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?fmap[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)(?:_run-[0-9]+)?_(?:@@@_field_map_type_@@@)\\.(@@@_field_map_ext_@@@)$",
+    "tokens": {
+      "@@@_field_map_type_@@@": [
+        "TB1map",
+        "RB1map"
       ],
       "@@@_field_map_ext_@@@": ["nii\\.gz", "nii", "json"]
     }

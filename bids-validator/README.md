@@ -50,7 +50,8 @@
    1. From a terminal run `pip install bids_validator` to acquire the
       [BIDS Validator PyPi package](https://pypi.org/project/bids-validator/)
    1. Open a Python terminal `python`
-   1. Import the BIDS Validator package `from bids_validator import BIDSValidator`
+   1. Run `bids-validator path/to/a/bids/file`; it will return 0 in `$?` if valid, and print an error and return 1 if not.
+   1. **or** Import the BIDS Validator package `from bids_validator import BIDSValidator`
    1. Check if a file is BIDS compatible `BIDSValidator().is_bids('path/to/a/bids/file')`
 
 ## Support

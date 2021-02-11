@@ -1,4 +1,5 @@
 """BIDS validator common Python package."""
+import sys
 import argparse
 from ._version import get_versions
 from .bids_validator import BIDSValidator

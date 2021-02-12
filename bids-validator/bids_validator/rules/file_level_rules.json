@@ -249,7 +249,7 @@
       "@@@_field_map_type_@@@": [
         "TB1AFI",
         "TB1TFL",
-        "TB1RMF",
+        "TB1RFM",
         "RB1COR"
       ],
       "@@@_field_map_ext_@@@": ["nii\\.gz", "nii", "json"]

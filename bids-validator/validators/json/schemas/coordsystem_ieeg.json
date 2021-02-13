@@ -15,7 +15,9 @@
   "required": ["iEEGCoordinateSystem", "iEEGCoordinateUnits"],
   "additionalProperties": false,
   "allOf": [
-    { "$ref": "#/dependency-definitions/if-iEEGCoordinateSystem-is-Other-then-Description-is-required" }
+    { "$ref": "#/dependency-definitions/if-iEEGCoordinateSystem-is-Other-then-Description-is-required" },
+    { "$ref": "#/dependency-definitions/if-iEEGCoordinateSystem-is-Pixels-then-iEEGCoordinateUnits-must-be-pixels" }
+
   ],
   "dependency-definitions": {
     "if-iEEGCoordinateSystem-is-Other-then-Description-is-required": {
@@ -27,6 +29,22 @@
         "required": ["iEEGCoordinateSystem"]
       },
       "then": { "required": ["iEEGCoordinateSystemDescription"] }
+    },
+    "if-iEEGCoordinateSystem-is-Pixels-then-iEEGCoordinateUnits-must-be-pixels": {
+      "if": {
+        "type": "object",
+        "properties": {
+          "iEEGCoordinateSystem": { "const": "Pixels" }
+        },
+        "required": ["iEEGCoordinateSystem"]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "iEEGCoordinateUnits": { "type": "string", "enum": ["pixels"] }
+        },
+        "required": ["iEEGCoordinateUnits"]
+      }
     }
   }
 }

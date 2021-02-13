@@ -97,10 +97,7 @@
   "anat_multiecho": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_echo-[0-9]+?(_part-(imag|mag|phase|real))?_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
     "tokens": {
-      "@@@_anat_suffixes_@@@": [
-        "MESE",
-        "MEGRE"
-      ],
+      "@@@_anat_suffixes_@@@": ["MESE", "MEGRE"],
       "@@@_anat_ext_@@@": ["nii\\.gz", "nii", "json"]
     }
   },
@@ -108,9 +105,7 @@
   "anat_multiflip": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_flip-[0-9]+?(?:_part-(imag|mag|phase|real))?_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
     "tokens": {
-      "@@@_anat_suffixes_@@@": [
-        "VFA"
-      ],
+      "@@@_anat_suffixes_@@@": ["VFA"],
       "@@@_anat_ext_@@@": ["nii\\.gz", "nii", "json"]
     }
   },
@@ -118,9 +113,7 @@
   "anat_multiinv": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_inv-[0-9]+?(?:_part-(imag|mag|phase|real))?_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
     "tokens": {
-      "@@@_anat_suffixes_@@@": [
-        "IRT1"
-      ],
+      "@@@_anat_suffixes_@@@": ["IRT1"],
       "@@@_anat_ext_@@@": ["nii\\.gz", "nii", "json"]
     }
   },
@@ -128,9 +121,7 @@
   "anat_mp2rage": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?(?:_flip-[0-9]+)?_inv-[0-9]+?(?:_part-(imag|mag|phase|real))?_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
     "tokens": {
-      "@@@_anat_suffixes_@@@": [
-        "MP2RAGE"
-      ],
+      "@@@_anat_suffixes_@@@": ["MP2RAGE"],
       "@@@_anat_ext_@@@": ["nii\\.gz", "nii", "json"]
     }
   },
@@ -138,10 +129,7 @@
   "anat_vfa_mt": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?_flip-[0-9]+?_mt-(on|off)?(?:_part-(imag|mag|phase|real))?_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
     "tokens": {
-      "@@@_anat_suffixes_@@@": [
-        "MPM",
-        "MTS"
-      ],
+      "@@@_anat_suffixes_@@@": ["MPM", "MTS"],
       "@@@_anat_ext_@@@": ["nii\\.gz", "nii", "json"]
     }
   },
@@ -149,9 +137,7 @@
   "anat_mtr": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?anat[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_mt-(on|off)?(?:_part-(imag|mag|phase|real))?_(?:@@@_anat_suffixes_@@@)\\.(@@@_anat_ext_@@@)$",
     "tokens": {
-      "@@@_anat_suffixes_@@@": [
-        "MTR"
-      ],
+      "@@@_anat_suffixes_@@@": ["MTR"],
       "@@@_anat_ext_@@@": ["nii\\.gz", "nii", "json"]
     }
   },
@@ -215,10 +201,7 @@
   "fmap_pepolar_asl": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?fmap[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?_dir-[a-zA-Z0-9]+(?:_run-[0-9]+)?_(?:@@@_field_map_type_@@@)\\.(@@@_field_map_ext_@@@)$",
     "tokens": {
-      "@@@_field_map_type_@@@": [
-        "m0scan",
-        "epi"
-      ],
+      "@@@_field_map_type_@@@": ["m0scan", "epi"],
       "@@@_field_map_ext_@@@": ["nii\\.gz", "nii", "json"]
     }
   },
@@ -226,9 +209,7 @@
   "fmap_TB1DAM": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?fmap[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)(?:_run-[0-9]+)?_flip-[0-9]+?(?:_part-(imag|mag|phase|real))?_(?:@@@_field_map_type_@@@)\\.(@@@_field_map_ext_@@@)$",
     "tokens": {
-      "@@@_field_map_type_@@@": [
-        "TB1DAM"
-      ],
+      "@@@_field_map_type_@@@": ["TB1DAM"],
       "@@@_field_map_ext_@@@": ["nii\\.gz", "nii", "json"]
     }
   },
@@ -236,9 +217,7 @@
   "fmap_TB1EPI": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?fmap[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_echo-[0-9]+?_flip-[0-9]+?(?:_inv-[0-9]+)?(?:_part-(imag|mag|phase|real))?_(?:@@@_field_map_type_@@@)\\.(@@@_field_map_ext_@@@)$",
     "tokens": {
-      "@@@_field_map_type_@@@": [
-        "TB1EPI"
-      ],
+      "@@@_field_map_type_@@@": ["TB1EPI"],
       "@@@_field_map_ext_@@@": ["nii\\.gz", "nii", "json"]
     }
   },
@@ -246,22 +225,15 @@
   "fmap_rf": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?fmap[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?(?:_flip-[0-9]+)?(?:_inv-[0-9]+)?(?:_part-(imag|mag|phase|real))?_(?:@@@_field_map_type_@@@)\\.(@@@_field_map_ext_@@@)$",
     "tokens": {
-      "@@@_field_map_type_@@@": [
-        "TB1AFI",
-        "TB1TFL",
-        "TB1RFM",
-        "RB1COR"
-      ],
+      "@@@_field_map_type_@@@": ["TB1AFI", "TB1TFL", "TB1RFM", "RB1COR"],
       "@@@_field_map_ext_@@@": ["nii\\.gz", "nii", "json"]
     }
   },
 
   "fmap_TB1SRGE": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?fmap[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?_flip-[0-9]+?_inv-[0-9]+?(?:_part-(imag|mag|phase|real))?_(?:@@@_field_map_type_@@@)\\.(@@@_field_map_ext_@@@)$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?fmap[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?(?:_flip-[0-9]+)?(?:_inv-[0-9]+)?(?:_part-(imag|mag|phase|real))?_(?:@@@_field_map_type_@@@)\\.(@@@_field_map_ext_@@@)$",
     "tokens": {
-      "@@@_field_map_type_@@@": [
-        "TB1SRGE"
-      ],
+      "@@@_field_map_type_@@@": ["TB1SRGE"],
       "@@@_field_map_ext_@@@": ["nii\\.gz", "nii", "json"]
     }
   },
@@ -269,10 +241,7 @@
   "fmap_parametric": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?fmap[\\/\\\\]\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?_(?:@@@_field_map_type_@@@)\\.(@@@_field_map_ext_@@@)$",
     "tokens": {
-      "@@@_field_map_type_@@@": [
-        "TB1map",
-        "RB1map"
-      ],
+      "@@@_field_map_type_@@@": ["TB1map", "RB1map"],
       "@@@_field_map_ext_@@@": ["nii\\.gz", "nii", "json"]
     }
   },
@@ -297,21 +266,14 @@
   "func_phase_deprecated": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?func[\\/\\\\]\\1(_\\2)?_task-[a-zA-Z0-9]+(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_echo-[0-9]+)?(?:@@@_func_ext_@@@)$",
     "tokens": {
-      "@@@_func_ext_@@@": [
-        "_phase\\.nii\\.gz",
-        "_phase\\.nii",
-        "_phase\\.json"
-      ]
+      "@@@_func_ext_@@@": ["_phase\\.nii\\.gz", "_phase\\.nii", "_phase\\.json"]
     }
   },
 
   "func_events": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?func[\\/\\\\]\\1(_\\2)?_task-[a-zA-Z0-9]+(?:_acq-[a-zA-Z0-9]+)?(?:_ce-[a-zA-Z0-9]+)?(?:_dir-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:@@@_func_ext_@@@)$",
     "tokens": {
-      "@@@_func_ext_@@@": [
-        "_events\\.tsv",
-        "_events\\.json"
-      ]
+      "@@@_func_ext_@@@": ["_events\\.tsv", "_events\\.json"]
     }
   },
 

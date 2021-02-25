@@ -110,6 +110,8 @@ describe('utils.type.file.isTopLevel', function() {
     '/task-testing_eeg.json',
     '/task-testing_ieeg.json',
     '/task-testing_meg.json',
+    'events.json',
+    'scans.json',
   ]
 
   goodFilenames.forEach(function(path) {

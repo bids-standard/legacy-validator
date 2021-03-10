@@ -36,10 +36,6 @@ jobs:
             - npm-deps-{{ checksum "package.json" }}-{{ checksum "./bids-validator/package.json" }}-{{ checksum "./bids-validator-web/package.json" }}-v1
       - run: npm install -g npm@^7
       - run: npm install
-      - save_cache:
-          key: npm-deps-{{ checksum "package.json" }}-{{ checksum "./bids-validator/package.json" }}-{{ checksum "./bids-validator-web/package.json" }}-v1
-          paths:
-            - ./node_modules
       - run:
           name: Eslint
           command: npm run lint
@@ -74,11 +70,7 @@ jobs:
     docker:
       - image: mhart/alpine-node:12
     steps:
-      - run:
-          name: check npm version
-          command: |
-            echo `npm --version`
-            npm install --global npm@7
+      - run: npm install --global npm@7
       - run: apk --no-cache add ca-certificates git openssh-client
       - checkout
       - restore_cache:

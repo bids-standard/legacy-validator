@@ -37,6 +37,7 @@
       and report the error at [https://github.com/bids-standard/bids-validator/issues](https://github.com/bids-standard/bids-validator/issues).
 1. Command line version:
    1. Install [Node.js](https://nodejs.org) (at least version 10.11.0)
+   1. Update `npm` to be at least version 7 (`npm install --global npm@^7`)
    1. From a terminal run `npm install -g bids-validator`
    1. Run `bids-validator` to start validating datasets.
 1. Docker
@@ -44,12 +45,12 @@
    1. From a terminal run `docker run -ti --rm -v /path/to/data:/data:ro bids/validator /data`
       but replace the `/path/to/data` part of the command with your own path on your machine.
 1. Python Library:
-   1. Install [Python](https://www.python.org/) (works with python2 and python3)
-   1. Install [Pip](https://pip.pypa.io/en/stable/installing/) package manager for python, if
+   1. Install [Python](https://www.python.org/)
+   1. Install [Pip](https://pip.pypa.io/en/stable/installing/) package manager for Python, if
       not already installed.
    1. From a terminal run `pip install bids_validator` to acquire the
       [BIDS Validator PyPi package](https://pypi.org/project/bids-validator/)
-   1. Open a Python terminal `python`
+   1. Open a Python terminal and type: `python`
    1. Import the BIDS Validator package `from bids_validator import BIDSValidator`
    1. Check if a file is BIDS compatible `BIDSValidator().is_bids('path/to/a/bids/file')`
 

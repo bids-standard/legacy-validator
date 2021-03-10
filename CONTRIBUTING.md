@@ -60,7 +60,7 @@ To participate, be sure you know how to
 1. [Make a GitHub account][link_signupinstructions]
 1. Install the required software:
    - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-   - [NodeJS](https://nodejs.org/en/download/)
+   - [NodeJS](https://nodejs.org/en/download/), including `npm` of version 7 or higher
 1. In the GitHub interface, [make a fork][link_fork] of
    https://github.com/bids-standard/bids-validator to your own user (called `USER` for the
    sake of the example)

@@ -414,7 +414,7 @@ node-gyp which needs xcode to be installed in order to be compiled.
    `/bids-validator-web`. It is a [React.js](https://reactjs.org/) application
    that uses the [next.js](https://nextjs.org/) framework.
 2. To develop `bids-validator` and see how it will act in the browser, simply run
-   `npm web-dev` in the project root and navigate to `localhost:3000`.
+   `npm run web-dev` in the project root and navigate to `localhost:3000`.
 3. In development mode, changes to the codebase will trigger rebuilds of the application
    automatically.
 4. Changes to the `/bids-validator` in the codebase will also be reflected in the
@@ -422,13 +422,13 @@ node-gyp which needs xcode to be installed in order to be compiled.
 5. Tests use the [Jest](https://jestjs.io/index.html) testing library and should be developed in `/bids-validator-web/tests`.
    We can always use more tests, so please feel free to contribute a test that reduces the chance
    of any bugs you fix!
-6. To ensure that the web application compiles successfully in production, run `npm web-export`
+6. To ensure that the web application compiles successfully in production, run `npm run web-export`
 
 ### Testing
 
 If it's your first time running tests, first use the command `git submodule update --init --depth 1` to pull the test example data. This repo contains the [bids-examples github repository](https://github.com/bids-standard/bids-examples) as a [submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
 
-To start the test suite run `npm test` from the project root. `npm test -- --watch`
+To start the test suite run `npm run test` from the project root. `npm run test -- --watch`
 is useful to run tests while making changes. A coverage report is available with
 `npm run coverage`.
 
@@ -436,7 +436,7 @@ To run the linter which checks code conventions run `npm run lint`.
 
 ### Publishing
 
-Publishing is done with [Lerna](https://github.com/lerna/lerna). Use the command `npm lerna publish` and follow instructions to set a new version.
+Publishing is done with [Lerna](https://github.com/lerna/lerna). Use the command `npm run lernaPublish` and follow instructions to set a new version.
 
 Using lerna publish will create a git commit with updated version information and create a version number tag for it, push the tag to GitHub, then publish to NPM and PyPI. The GitHub release is manual following that.
 

@@ -42,6 +42,5 @@
   "participants": ["participant_id"],
   "phenotype": ["participant_id"],
   "scans": ["acq_time", "filename"],
-  "sessions": ["acq_time", "session_id"],
-  "aslcontext": ["volume_type"]
+  "sessions": ["acq_time", "session_id"]
 }

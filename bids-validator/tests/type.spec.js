@@ -12,15 +12,6 @@ describe('utils.type.file.isAnat', function() {
     '/sub-16/anat/sub-16_acq-highres_T1w.nii.gz',
     '/sub-16/anat/sub-16_rec-mc_T1w.nii.gz',
     '/sub-16/anat/sub-16_ce-contrastagent_T1w.nii.gz',
-    '/sub-16/anat/sub-16_part-mag_T1w.nii.gz',
-    '/sub-16/anat/sub-16_T1map.nii.gz',
-    '/sub-16/anat/sub-16_mod-T1w_defacemask.nii.gz',
-    '/sub-16/anat/sub-16_echo-1_MESE.nii.gz',
-    '/sub-16/anat/sub-16_flip-1_VFA.nii.gz',
-    '/sub-16/anat/sub-16_inv-1_IRT1.nii.gz',
-    '/sub-16/anat/sub-16_flip-1_inv-1_MP2RAGE.nii.gz',
-    '/sub-16/anat/sub-16_flip-1_mt-on_MPM.nii.gz',
-    '/sub-16/anat/sub-16_mt-on_part-real_MTR.nii.gz',
   ]
 
   goodFilenames.forEach(function(path) {
@@ -37,15 +28,6 @@ describe('utils.type.file.isAnat', function() {
     'blaaa.nii.gz',
     '/sub-16/anat/sub-16_run-second_T1w.nii.gz',
     '/sub-16/anat/sub-16_run-01_rec-mc_T1w.nii.gz',
-    '/sub-16/anat/sub-16_part-magnitude_T1w.nii.gz',
-    '/sub-16/anat/sub-16_part-mag_T1map.nii.gz',
-    '/sub-16/anat/sub-16_mod-T1weighted_defacemask.nii.gz',
-    '/sub-16/anat/sub-16_MESE.nii.gz',
-    '/sub-16/anat/sub-16_VFA.nii.gz',
-    '/sub-16/anat/sub-16_IRT1.nii.gz',
-    '/sub-16/anat/sub-16_flip-1_MP2RAGE.nii.gz',
-    '/sub-16/anat/sub-16_flip-1_mt-fail_MPM.nii.gz',
-    '/sub-16/anat/sub-16_flip-1_mt-fail_part-real_MTR.nii.gz',
   ]
 
   badFilenames.forEach(function(path) {
@@ -66,7 +48,6 @@ describe('utils.type.file.isFunc', function() {
     '/sub-16/func/sub-16_task-0back_rec-mc_bold.nii.gz',
     '/sub-16/func/sub-16_task-0back_run-01_phase.nii.gz',
     '/sub-16/func/sub-16_task-0back_echo-1_phase.nii.gz',
-    '/sub-15/func/sub-15_task-0back_part-phase_bold.nii.gz',
   ]
 
   goodFilenames.forEach(function(path) {
@@ -84,7 +65,6 @@ describe('utils.type.file.isFunc', function() {
     '/sub-16/func/sub-16_run-second_T1w.nii.gz',
     '/sub-16/func/sub-16_task-0-back_rec-mc_bold.nii.gz',
     '/sub-16/func/sub-16_run-01_rec-mc_T1w.nii.gz',
-    '/sub-16/func/sub-16_task-0back_part-magnitude_bold.nii.gz',
   ]
 
   badFilenames.forEach(function(path) {
@@ -110,8 +90,6 @@ describe('utils.type.file.isTopLevel', function() {
     '/task-testing_eeg.json',
     '/task-testing_ieeg.json',
     '/task-testing_meg.json',
-    '/events.json',
-    '/scans.json',
   ]
 
   goodFilenames.forEach(function(path) {
@@ -210,16 +188,9 @@ describe('utils.type.file.isSessionLevel', function() {
 describe('utils.type.file.isDWI', function() {
   const goodFilenames = [
     '/sub-12/dwi/sub-12_dwi.nii.gz',
-    '/sub-12/dwi/sub-12_dwi.json',
     '/sub-12/ses-pre/dwi/sub-12_ses-pre_dwi.nii.gz',
     '/sub-12/ses-pre/dwi/sub-12_ses-pre_dwi.bvec',
     '/sub-12/ses-pre/dwi/sub-12_ses-pre_dwi.bval',
-    '/sub-12/ses-pre/dwi/sub-12_ses-pre_dwi.json',
-    '/sub-12/dwi/sub-12_sbref.nii.gz',
-    '/sub-12/dwi/sub-12_sbref.json',
-    '/sub-12/ses-pre/dwi/sub-12_ses-pre_sbref.nii.gz',
-    '/sub-12/ses-pre/dwi/sub-12_ses-pre_sbref.json',
-    '/sub-12/dwi/sub-12_part-mag_sbref.json',
   ]
 
   goodFilenames.forEach(function(path) {
@@ -234,11 +205,6 @@ describe('utils.type.file.isDWI', function() {
     '/sub-12/ses-pre/sub-12_ses-pre_scan.tsv',
     '/sub-12/ses-pre/dwi/sub-12_ses-pre_dwi.bvecs',
     '/sub-12/ses-pre/dwi/sub-12_ses-pre_dwi.bvals',
-    '/sub-12/dwi/sub-12_sbref.bval',
-    '/sub-12/dwi/sub-12_sbref.bvec',
-    '/sub-12/ses-pre/dwi/sub-12_ses-pre_sbref.bval',
-    '/sub-12/ses-pre/dwi/sub-12_ses-pre_sbref.bvec',
-    '/sub-12/dwi/sub-12_part-magnitude_sbref.json',
   ]
 
   badFilenames.forEach(function(path) {
@@ -347,9 +313,7 @@ describe('utils.type.file.isEEG', function() {
     '/sub-01/ses-001/eeg/sub-01_ses-001_task-rest_run-01_eeg.fdt',
     '/sub-01/ses-001/eeg/sub-01_ses-001_task-rest_run-01_channels.tsv',
     '/sub-01/ses-001/eeg/sub-01_ses-001_electrodes.tsv',
-    '/sub-01/ses-001/eeg/sub-01_ses-001_space-CapTrak_electrodes.tsv',
     '/sub-01/ses-001/eeg/sub-01_ses-001_coordsystem.json',
-    '/sub-01/ses-001/eeg/sub-01_ses-001_space-CapTrak_coordsystem.json',
     '/sub-01/ses-001/eeg/sub-01_ses-001_photo.jpg',
   ]
 
@@ -364,8 +328,6 @@ describe('utils.type.file.isEEG', function() {
     '/sub-01/eeg/sub-01_ses-001_task-rest_run-01_eeg.json',
     '/sub-01/ses-001/eeg/sub-12_ses-001_task-rest_run-01_split-01_eeg.edf',
     '/sub-01/ses-001/eeg/sub-01_ses-001_task-rest_run-01_eeg.tsv',
-    '/sub-01/ses-001/eeg/sub-01_ses-001_space-BOGUS_electrodes.tsv',
-    '/sub-01/ses-001/eeg/sub-01_ses-001_space-BOGUS_coordsystem.json',
   ]
 
   badFilenames.forEach(function(path) {
@@ -392,8 +354,7 @@ describe('utils.type.file.isIEEG', function() {
     '/sub-01/ses-001/ieeg/sub-01_ses-001_task-rest_run-01_split-01_ieeg.mefd/CH1.timd/CH1-000000.segd/sub-01_ses-001_task-rest_run-01_ieeg.idx',
     '/sub-01/ses-001/ieeg/sub-01_ses-001_task-rest_run-01_split-01_ieeg.mefd/CH1.timd/CH1-000000.segd/sub-01_ses-001_task-rest_run-01_ieeg.tmet',
     '/sub-01/ses-001/ieeg/sub-01_ses-001_task-rest_run-01_channels.tsv',
-    '/sub-01/ses-001/ieeg/sub-01_ses-001_space-fsaverage_electrodes.tsv',
-    '/sub-01/ses-001/ieeg/sub-01_ses-001_space-fsaverage_coordsystem.json',
+    '/sub-01/ses-001/ieeg/sub-01_ses-001_task-rest_run-01_electrodes.tsv',
   ]
 
   goodFilenames.forEach(function(path) {
@@ -407,8 +368,6 @@ describe('utils.type.file.isIEEG', function() {
     '/sub-01/ieeg/sub-01_ses-001_task-rest_run-01_ieeg.json',
     '/sub-01/ses-001/ieeg/sub-12_ses-001_task-rest_run-01_split-01_ieeg.fif',
     '/sub-01/ses-001/ieeg/sub-01_ses-001_task-rest_run-01_ieeg.tsv',
-    '/sub-01/ses-001/ieeg/sub-01_ses-001_space-fsavg_electrodes.tsv',
-    '/sub-01/ses-001/ieeg/sub-01_ses-001_space-fsavg_coordsystem.json',
   ]
 
   badFilenames.forEach(function(path) {

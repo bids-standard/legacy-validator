@@ -1,8 +1,9 @@
 import ignore from 'ignore'
 import readFile from './readFile'
 import path from 'path'
+import crypto from 'crypto'
 import fs from 'fs'
-import * as child_proccess from 'child_process'
+import { spawn } from 'child_process'
 import isNode from '../isNode'
 
 /**
@@ -116,14 +117,10 @@ async function preprocessNode(dir, ig, options) {
 const getGitLsTree = (cwd, gitRef) =>
   new Promise((resolve, reject) => {
     let output = ''
-    const gitProcess = child_proccess.spawn(
-      'git',
-      ['ls-tree', '-l', '-r', gitRef],
-      {
-        cwd,
-        encoding: 'utf-8',
-      },
-    )
+    const gitProcess = spawn('git', ['ls-tree', '-l', '-r', gitRef], {
+      cwd,
+      encoding: 'utf-8',
+    })
     gitProcess.stdout.on('data', data => {
       output += data.toString()
     })
@@ -134,6 +131,12 @@ const getGitLsTree = (cwd, gitRef) =>
       resolve(output.trim().split('\n'))
     })
   })
+
+const computeFileHash = (gitHash, path) => {
+  const hash = crypto.createHash('sha1')
+  hash.update(`${gitHash}:${path}`)
+  return hash.digest('hex')
+}
 
 const readLsTreeLines = gitTreeLines =>
   gitTreeLines
@@ -311,17 +314,13 @@ async function getFilesFromFs(dir, rootPath, ig, options) {
   return filesAccumulator
 }
 
-export function defaultIgnore() {
-  return ignore()
+async function getBIDSIgnore(dir) {
+  const ig = ignore()
     .add('.*')
     .add('!*.icloud')
     .add('/derivatives')
     .add('/sourcedata')
     .add('/code')
-}
-
-async function getBIDSIgnore(dir) {
-  const ig = defaultIgnore()
 
   const bidsIgnoreFileObj = getBIDSIgnoreFileObj(dir)
   if (bidsIgnoreFileObj) {

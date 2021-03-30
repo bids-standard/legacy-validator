@@ -5,7 +5,7 @@ import validate from './index.js'
 const format = validate.consoleFormat
 import colors from 'colors/safe'
 import fs from 'fs'
-import { filenamesOnly } from './utils/filenamesOnly.js'
+import remoteFiles from './utils/files/remoteFiles'
 
 const exitProcess = issues => {
   if (
@@ -50,10 +50,6 @@ export default function(dir, options) {
     )
     process.exit(3)
   })
-
-  if (options.filenames) {
-    return filenamesOnly()
-  }
 
   if (fs.existsSync(dir)) {
     if (options.json) {

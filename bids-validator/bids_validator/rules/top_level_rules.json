@@ -13,9 +13,7 @@
         "phasediff.json",
         "phase1.json",
         "phase2.json",
-        "fieldmap.json",
-        "events.json",
-        "scans.json"
+        "fieldmap.json"
       ]
     }
   },
@@ -30,18 +28,9 @@
         "_events\\.tsv",
         "_beh\\.json"
       ],
-      "@@@_cont_ext_@@@": ["_physio\\.json", "_stim\\.json"]
-    }
-  },
-
-  "asl_top": {
-    "regexp": "^\\/(?:ses-[a-zA-Z0-9]+_)?(?:_acq-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(@@@_asl_top_ext_@@@)$",
-    "tokens": {
-      "@@@_asl_top_ext_@@@": [
-        "_asl\\.json",
-        "_m0scan\\.json",
-        "_aslcontext\\.tsv",
-        "_labeling.jpg"
+      "@@@_cont_ext_@@@": [
+        "_physio\\.json",
+        "_stim\\.json"
       ]
     }
   },
@@ -82,9 +71,7 @@
       "@@@_eeg_top_ext_@@@": [
         "_eeg\\.json",
         "_channels\\.tsv",
-        "_channels\\.json",
         "_electrodes\\.tsv",
-        "_electrodes\\.json",
         "_photo\\.jpg",
         "_coordsystem\\.json"
       ]
@@ -96,9 +83,7 @@
       "@@@_ieeg_top_ext_@@@": [
         "_ieeg\\.json",
         "_channels\\.tsv",
-        "_channels\\.json",
         "_electrodes\\.tsv",
-        "_electrodes\\.json",
         "_photo\\.jpg",
         "_coordsystem\\.json"
       ]
@@ -110,7 +95,6 @@
       "@@@_meg_top_ext_@@@": [
         "_meg\\.json",
         "_channels\\.tsv",
-        "_channels\\.json",
         "_photo\\.jpg",
         "_coordsystem\\.json"
       ]

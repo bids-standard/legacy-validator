@@ -18,7 +18,6 @@
   "rules": {
     "prettier/prettier": "error",
     "no-console": ["error", { "allow": ["warn"] }],
-    "no-prototype-builtins": 0,
     "linebreak-style": ["error", "unix"],
     "guard-for-in": "error"
   }

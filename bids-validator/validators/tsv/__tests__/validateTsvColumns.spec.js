@@ -17,7 +17,7 @@ describe('validateTsvColumns', () => {
         file: file,
       },
     ]
-    const issues = validateTsvColumns(tsvs, {}, [])
+    const issues = validateTsvColumns(tsvs, {})
     assert.lengthOf(issues, 0)
   })
   it('checks for tabular files with custom columns not described in a data dictionary', () => {
@@ -27,7 +27,7 @@ describe('validateTsvColumns', () => {
         file: file,
       },
     ]
-    const issues = validateTsvColumns(tsvs, {}, [])
+    const issues = validateTsvColumns(tsvs, {})
     assert.lengthOf(issues, 1)
     assert.equal(issues[0].code, 82)
   })
@@ -38,7 +38,7 @@ describe('validateTsvColumns', () => {
         file: file,
       },
     ]
-    const issues = validateTsvColumns(tsvs, jsonContentsDict, [])
+    const issues = validateTsvColumns(tsvs, jsonContentsDict)
     assert.lengthOf(issues, 0)
   })
   it('should trim the new line carriages created by windows tabular files,', () => {
@@ -52,7 +52,7 @@ describe('validateTsvColumns', () => {
         file: file,
       },
     ]
-    const issues = validateTsvColumns(tsvs, {}, [])
+    const issues = validateTsvColumns(tsvs, {})
     assert.lengthOf(issues, 0)
   })
   it('should generate error with empty columns', () => {
@@ -69,4 +69,5 @@ describe('validateTsvColumns', () => {
     const issues = validateTsvColumns(tsvs, {})
     assert.lengthOf(issues, 2)
   })
+
 })

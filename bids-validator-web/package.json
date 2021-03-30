@@ -1,19 +1,20 @@
 {
   "name": "bids-validator-web",
-  "version": "1.6.1",
+  "version": "1.5.7",
   "description": "web client for bids-validator",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@zeit/next-css": "^1.0.1",
+    "@zeit/next-sass": "^1.0.1",
     "bootstrap": "^4.3.0",
     "bowser": "^1.0.0",
-    "next": "^10",
+    "next": "^9.3.2",
     "next-transpile-modules": "^2.3.1",
-    "pluralize": "^8.0.0",
+    "node-sass": "4.13.1",
     "react": "^16.8.1",
     "react-bootstrap": "^1.0.0-beta.5",
-    "react-dom": "^16.8.1",
-    "sass": "^1.32.8"
+    "react-dom": "^16.8.1"
   },
   "scripts": {
     "dev": "next",

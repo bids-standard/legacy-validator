@@ -33,27 +33,26 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - npm-deps-{{ checksum "package.json" }}-{{ checksum "./bids-validator/package.json" }}-{{ checksum "./bids-validator-web/package.json" }}-v1
-      - run: npm install -g npm@^7
-      - run: npm install
+            - npm-deps-{{ checksum "package.json" }}
+      - run: yarn
+      - save_cache:
+          key: npm-deps-{{ checksum "package.json" }}
+          paths: node_modules
       - run:
           name: Eslint
-          command: npm run lint
+          command: yarn lint
       - run:
-          name: Get bids-examples data
+          name: Test Data
           command: git submodule update --init
       - run:
-          # must include separating --, see https://stackoverflow.com/a/14404223/5201771
           name: Jest tests
-          command: npm run coverage -- --maxWorkers=2 --testTimeout=10000
+          command: yarn coverage --maxWorkers=2
       - run:
           name: Upload to codecov
-          command: npm run codecov
+          command: yarn codecov
       - run:
           name: Smoke tests
-          command: |
-            bids-validator/bin/bids-validator bids-validator/tests/data/valid_headers/ --ignoreNiftiHeaders
-            bids-validator/bin/bids-validator bids-validator/tests/data/valid_headers/ --ignoreNiftiHeaders --json
+          command: bids-validator/bin/bids-validator bids-validator/tests/data/valid_headers/ --ignoreNiftiHeaders && bids-validator/bin/bids-validator bids-validator/tests/data/valid_headers/ --ignoreNiftiHeaders --json
   test_docker:
     machine:
       # Ubuntu 16.04, docker 18.09.3, docker-compose 1.23.1
@@ -68,33 +67,27 @@ jobs:
             docker run --rm -it -v $PWD/bids-validator/tests/data/valid_headers:/data bids/validator:latest /data --ignoreNiftiHeaders --json
   githubPagesTest:
     docker:
-      - image: mhart/alpine-node:12
+      - image: node:12.14.1-alpine
     steps:
-      - run: npm install --global npm@7
       - run: apk --no-cache add ca-certificates git openssh-client
       - checkout
       - restore_cache:
           keys:
-            - npm-deps-{{ checksum "package.json" }}-{{ checksum "./bids-validator/package.json" }}-{{ checksum "./bids-validator-web/package.json" }}-v1
-      - run: apk --no-cache add rsync git python3 build-base openssh
+            - npm-deps-{{ checksum "package.json" }}
+      - run: apk --no-cache add rsync git python build-base openssh
       - run:
           name: Install bids-validator and bids-validator-web dependencies
-          command: npm install
+          command: yarn
       - run:
           name: Build and export web-validator
-          command: npm run web-export && rsync -av ./bids-validator-web/out/ ~/web_version
-      - save_cache:
-          key: npm-deps-{{ checksum "package.json" }}-{{ checksum "./bids-validator/package.json" }}-{{ checksum "./bids-validator-web/package.json" }}-v1
-          paths:
-            - ./node_modules
-            - ./.next/cache
+          command: yarn web-export && rsync -av ./bids-validator-web/out/ ~/web_version
       - store_artifacts:
           path: ~/web_version
   pypi_precheck:
     docker:
-      - image: alpine:3.13
+      - image: alpine:3.8
     steps:
-      - run: apk --no-cache add ca-certificates git openssh-client rust cargo
+      - run: apk --no-cache add ca-certificates git openssh-client
       - checkout
       - run:
           name: Set up environment
@@ -104,9 +97,7 @@ jobs:
           command: apk --no-cache add python3 python3-dev
       - run:
           name: Update Python install tools
-          command: |
-            python3 -m ensurepip
-            python3 -m pip install --upgrade pip setuptools wheel
+          command: python3 -m pip install --upgrade pip setuptools wheel
       - run:
           name: Install twine, readme renderer
           command: python3 -m pip install twine readme_renderer[md]
@@ -132,7 +123,7 @@ jobs:
       - run: apk --no-cache add ca-certificates git openssh-client
       - add_ssh_keys:
           fingerprints:
-            - "86:74:77:4c:90:02:f4:5d:b4:f8:3c:b4:37:c3:c0:25"
+            - '86:74:77:4c:90:02:f4:5d:b4:f8:3c:b4:37:c3:c0:25'
       - checkout
       - run: apk --no-cache add python build-base openssh libffi-dev libressl-dev
       - run:
@@ -153,10 +144,10 @@ jobs:
           command: git checkout --orphan gh-pages
       - run:
           name: Install web demo dependencies
-          command: npm install
+          command: yarn
       - run:
           name: Build and export next project
-          command: npm run web-export
+          command: yarn web-export
       - run:
           name: Clean and remove bids-validator files
           command: git reset . && git clean --force -d --exclude bids-validator-web/out

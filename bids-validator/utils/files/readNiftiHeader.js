@@ -1,6 +1,7 @@
 import nifti from 'nifti-js'
 import pako from 'pako'
 import fs from 'fs'
+import zlib from 'zlib'
 import testFile from './testFile'
 import Issue from '../../utils/issues'
 import isNode from '../isNode'
@@ -41,8 +42,18 @@ function nodeNiftiTest(file, annexed, dir, callback) {
 }
 
 function extractNiftiFile(file, callback) {
-  const bytesRead = 1024
+  const bytesRead = 500
   const buffer = Buffer.alloc(bytesRead)
+
+  var decompressStream = zlib
+    .createGunzip()
+    .on('data', function(chunk) {
+      callback(parseNIfTIHeader(chunk, file))
+      decompressStream.pause()
+    })
+    .on('error', function() {
+      callback(handleGunzipError(buffer, file))
+    })
 
   fs.open(file.path, 'r', function(err, fd) {
     if (err) {
@@ -53,12 +64,7 @@ function extractNiftiFile(file, callback) {
         if (file.name.endsWith('.nii')) {
           callback(parseNIfTIHeader(buffer, file))
         } else {
-          try {
-            const data = pako.inflate(buffer)
-            callback(parseNIfTIHeader(data, file))
-          } catch (err) {
-            callback(handleGunzipError(buffer, file))
-          }
+          decompressStream.write(buffer)
         }
       })
     }
@@ -66,7 +72,7 @@ function extractNiftiFile(file, callback) {
 }
 
 function browserNiftiTest(file, callback) {
-  const bytesRead = 1024
+  const bytesRead = 500
   if (file.size == 0) {
     callback({ error: new Issue({ code: 44, file: file }) })
     return

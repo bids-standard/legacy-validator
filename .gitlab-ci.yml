@@ -12,13 +12,11 @@ tests:
     - windows
   before_script:
     - Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-    - npm install --global npm@7
-    - node -v
-    - npm -v
+    - choco install -y yarn
     - refreshenv
   script:
     - git config core.symlinks true
     - git checkout $CI_COMMIT_REF_NAME
     - git submodule update --init --depth 1
-    - npm install
-    - npm run test -- --testTimeout 30000
+    - yarn
+    - yarn jest --testTimeout 30000

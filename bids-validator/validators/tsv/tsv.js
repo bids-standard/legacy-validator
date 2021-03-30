@@ -193,6 +193,9 @@ const TSV = (file, contents, fileList, callback) => {
     file.relativePath.includes('phenotype/')
   ) {
     const participantIdColumn = headers.indexOf('participant_id')
+
+    // if the participant_id column is missing, an error
+    // will be raised
     if (participantIdColumn === -1) {
       issues.push(
         new Issue({
@@ -203,6 +206,8 @@ const TSV = (file, contents, fileList, callback) => {
         }),
       )
     } else {
+      // otherwise, the participants should comprise of
+      // sub-<subject_id> and one subject per row
       participants = []
       for (let l = 1; l < rows.length; l++) {
         const row = rows[l]
@@ -210,6 +215,23 @@ const TSV = (file, contents, fileList, callback) => {
         if (!row || /^\s*$/.test(row)) {
           continue
         }
+
+        // check if any incorrect patterns in participant_id column
+        if (!row[participantIdColumn].startsWith('sub-')) {
+          issues.push(
+            new Issue({
+              file: file,
+              evidence: headersEvidence(headers),
+              reason:
+                'Participant_id column should be named ' +
+                'as sub-<subject_id>.',
+              line: l,
+              code: 211,
+            }),
+          )
+        }
+
+        // obtain a list of the subject IDs in the participants.tsv file
         const participant = row[participantIdColumn].replace('sub-', '')
         if (participant == 'emptyroom') {
           continue

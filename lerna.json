@@ -1,7 +1,4 @@
 {
-  "packages": [
-    "bids-validator",
-    "bids-validator-web"
-  ],
-  "version": "1.5.8-dev.0"
+  "packages": ["bids-validator", "bids-validator-web"],
+  "version": "1.6.3-dev.0"
 }

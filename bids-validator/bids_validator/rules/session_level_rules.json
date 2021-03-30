@@ -20,6 +20,18 @@
     }
   },
 
+  "asl_ses": {
+    "regexp": "^\\/(sub-[a-zA-Z0-9]+)\\/(?:(ses-[a-zA-Z0-9]+)\\/)?\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(@@@_asl_ses_ext_@@@)$",
+    "tokens": {
+      "@@@_asl_ses_ext_@@@": [
+        "_asl.json",
+        "_aslcontext.tsv",
+        "_m0scan.json",
+        "_asllabeling.jpg"
+      ]
+    }
+  },
+
   "anat_ses": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?\\1(_\\2)?(?:_acq-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_run-[0-9]+_)?(@@@_anat_ses_type_@@@).json$",
     "tokens": {
@@ -54,6 +66,7 @@
       "@@@_meg_ses_type_@@@": [
         "_events.tsv",
         "_channels.tsv",
+        "_channels.json",
         "_meg.json",
         "_coordsystem.json",
         "_photo.jpg",
@@ -63,29 +76,119 @@
   },
 
   "eeg_ses": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?\\1(_\\2)?(?:_task-[a-zA-Z0-9]+)?(?:_acq-[a-zA-Z0-9]+)?(?:_proc-[a-zA-Z0-9]+)?(@@@_eeg_ses_type_@@@)$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?\\1(_\\2)?(?:_task-[a-zA-Z0-9]+)?(?:_acq-[a-zA-Z0-9]+)?(?:_proc-[a-zA-Z0-9]+)?(?:_space-(@@@_eeg_space_@@@))?(@@@_eeg_ses_type_@@@)$",
     "tokens": {
       "@@@_eeg_ses_type_@@@": [
         "_events.tsv",
         "_channels.tsv",
+        "_channels.json",
         "_electrodes.tsv",
+        "_electrodes.json",
         "_eeg.json",
         "_coordsystem.json",
         "_photo.jpg"
+      ],
+      "@@@_eeg_space_@@@": [
+        "Other",
+        "CapTrak",
+        "CTF",
+        "ElektaNeuromag",
+        "4DBti",
+        "KitYokogawa",
+        "ChietiItab",
+        "ICBM452AirSpace",
+        "ICBM452Warp5Space",
+        "IXI549Space",
+        "fsaverage",
+        "fsaverageSym",
+        "fsLR",
+        "MNIColin27",
+        "MNI152Lin",
+        "MNI152NLin2009aSym",
+        "MNI152NLin2009bSym",
+        "MNI152NLin2009cSym",
+        "MNI152NLin2009aAsym",
+        "MNI152NLin2009bAsym",
+        "MNI152NLin2009cAsym",
+        "MNI152NLin6Sym",
+        "MNI152NLin6ASym",
+        "MNI305",
+        "NIHPD",
+        "OASIS30AntsOASISAnts",
+        "OASIS30Atropos",
+        "Talairach",
+        "UNCInfant",
+        "fsaverage3",
+        "fsaverage4",
+        "fsaverage5",
+        "fsaverage6",
+        "fsaveragesym",
+        "UNCInfant0V21",
+        "UNCInfant1V21",
+        "UNCInfant2V21",
+        "UNCInfant0V22",
+        "UNCInfant1V22",
+        "UNCInfant2V22",
+        "UNCInfant0V23",
+        "UNCInfant1V23",
+        "UNCInfant2V23"
       ]
     }
   },
 
   "ieeg_ses": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?\\1(_\\2)?(?:_task-[a-zA-Z0-9]+)?(?:_acq-[a-zA-Z0-9]+)?(?:_proc-[a-zA-Z0-9]+)?(?:_space-[a-zA-Z0-9]+)?(@@@_ieeg_ses_type_@@@)$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?\\1(_\\2)?(?:_task-[a-zA-Z0-9]+)?(?:_acq-[a-zA-Z0-9]+)?(?:_proc-[a-zA-Z0-9]+)?(?:_space-(@@@_ieeg_space_@@@))?(@@@_ieeg_ses_type_@@@)$",
     "tokens": {
       "@@@_ieeg_ses_type_@@@": [
         "_events.tsv",
         "_channels.tsv",
+        "_channels.json",
         "_electrodes.tsv",
+        "_electrodes.json",
         "_ieeg.json",
         "_coordsystem.json",
         "_photo.jpg"
+      ],
+      "@@@_ieeg_space_@@@": [
+        "Other",
+        "Pixels",
+        "ACPC",
+        "ICBM452AirSpace",
+        "ICBM452Warp5Space",
+        "IXI549Space",
+        "fsaverage",
+        "fsaverageSym",
+        "fsLR",
+        "MNIColin27",
+        "MNI152Lin",
+        "MNI152NLin2009aSym",
+        "MNI152NLin2009bSym",
+        "MNI152NLin2009cSym",
+        "MNI152NLin2009aAsym",
+        "MNI152NLin2009bAsym",
+        "MNI152NLin2009cAsym",
+        "MNI152NLin6Sym",
+        "MNI152NLin6ASym",
+        "MNI305",
+        "NIHPD",
+        "OASIS30AntsOASISAnts",
+        "OASIS30Atropos",
+        "Talairach",
+        "UNCInfant",
+        "fsaverage3",
+        "fsaverage4",
+        "fsaverage5",
+        "fsaverage6",
+        "fsaveragesym",
+        "UNCInfant0V21",
+        "UNCInfant1V21",
+        "UNCInfant2V21",
+        "UNCInfant0V22",
+        "UNCInfant1V22",
+        "UNCInfant2V22",
+        "UNCInfant0V23",
+        "UNCInfant1V23",
+        "UNCInfant2V23"
       ]
     }
   }

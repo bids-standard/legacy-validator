@@ -138,7 +138,7 @@ describe('TSV', function() {
   it('should allow a valid participants.tsv file', function() {
     var tsv =
       'participant_id\theader-two\theader-three\n' +
-      'value-one\tvalue-two\tvalue-three'
+      'sub-01\tvalue-two\tvalue-three'
     validate.TSV.TSV(participantsFile, tsv, [], function(issues) {
       assert.deepEqual(issues, [])
     })
@@ -148,6 +148,15 @@ describe('TSV', function() {
     var tsv = 'participant_id\theader-two\tage\n' + 'sub-01\tvalue-two\t89'
     validate.TSV.TSV(participantsFile, tsv, [], function(issues) {
       assert(issues.length === 1 && issues[0].code === 56)
+    })
+  })
+
+  it('should not allow participants written with incorrect pattern', function() {
+    var tsv =
+      'participant_id\theader-two\theader-three\n' +
+      '01\tvalue-two\tvalue-three'
+    validate.TSV.TSV(participantsFile, tsv, [], function(issues) {
+      assert(issues.length === 1 && issues[0].code === 211)
     })
   })
 

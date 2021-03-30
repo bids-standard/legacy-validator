@@ -25,14 +25,14 @@ the [Software Carpentry introduction to git][link_swc_intro].
 
 In particular, you will want to become conversant with the following operations:
 
-  - [`git clone`](https://git-scm.com/docs/git-clone)
-  - [`git branch`](https://git-scm.com/docs/git-branch)
-  - [`git checkout`](https://git-scm.com/docs/git-checkout)
-  - [`git status`](https://git-scm.com/docs/git-status)
-  - [`git pull`](https://git-scm.com/docs/git-pull)
-  - [`git add`](https://git-scm.com/docs/git-add)
-  - [`git commit`](https://git-scm.com/docs/git-commit)
-  - [`git push`](https://git-scm.com/docs/git-push)
+- [`git clone`](https://git-scm.com/docs/git-clone)
+- [`git branch`](https://git-scm.com/docs/git-branch)
+- [`git checkout`](https://git-scm.com/docs/git-checkout)
+- [`git status`](https://git-scm.com/docs/git-status)
+- [`git pull`](https://git-scm.com/docs/git-pull)
+- [`git add`](https://git-scm.com/docs/git-add)
+- [`git commit`](https://git-scm.com/docs/git-commit)
+- [`git push`](https://git-scm.com/docs/git-push)
 
 You should also configure [configure git for your
 user](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration), so your commits
@@ -44,24 +44,23 @@ We use [GitHub](https://github.com) to manage contributions and have development
 discussions in the open.
 To participate, be sure you know how to
 
- - [Fork the repository][link_fork]
- - [Open pull requests][link_pullrequest]
+- [Fork the repository][link_fork]
+- [Open pull requests][link_pullrequest]
 
 ### Coding knowledge
 
-  - Familiarize yourself with the command line on your system (e.g., `bash`)
-  - Basic knowledge about coding is helpful and familiarity with JavaScript
-    is a big bonus, but you can contribute to the BIDS validator also without
-    specific knowledge of JavaScript
-  - Some knowledge about software testing (why we are doing it) would be nice
+- Familiarize yourself with the command line on your system (e.g., `bash`)
+- Basic knowledge about coding is helpful and familiarity with JavaScript
+  is a big bonus, but you can contribute to the BIDS validator also without
+  specific knowledge of JavaScript
+- Some knowledge about software testing (why we are doing it) would be nice
 
 ## Using the development version of BIDS validator
 
 1. [Make a GitHub account][link_signupinstructions]
 1. Install the required software:
    - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-   - [NodeJS](https://nodejs.org/en/download/)
-   - [yarn](https://yarnpkg.com/lang/en/docs/install)
+   - [NodeJS](https://nodejs.org/en/download/), including `npm` of version 7 or higher
 1. In the GitHub interface, [make a fork][link_fork] of
    https://github.com/bids-standard/bids-validator to your own user (called `USER` for the
    sake of the example)
@@ -72,7 +71,7 @@ To participate, be sure you know how to
    - You will now have a new directory called `bids-validator`
    - navigate to that directory and run `git status` to verify that it's a `git`
      directory
-   - run `yarn` to install the BIDS validator
+   - run `npm install` to install the BIDS validator
 1. Upon inspection of the `bids-validator` repository we can find the
    "executable" BIDS validator, located in `<...>/bids-validator/bin`, where
    `<...>` is the path to your `bids-validator` repository
@@ -86,14 +85,14 @@ To participate, be sure you know how to
      typing `bids-validator --version`, and it should print the version number
 
 Now your development version of BIDS validator is set up and you can use it.
-Whenever you *checkout* a new branch in your git repository, the
+Whenever you _checkout_ a new branch in your git repository, the
 `bids-validator` executable is now pointing to that branch, and all changes in
 that branch will be reflected in the behavior of `bids-validator`.
 
 Before you start making changes, there are some more important points to
 consider:
 
-1. We need to tell **your** git directory, that it has a *remote*
+1. We need to tell **your** git directory, that it has a _remote_
    counterpart (namely, the original BIDS validator). When that counterpart
    gets updated, you have to update your BIDS validator as well, to keep in
    sync.
@@ -161,7 +160,6 @@ You can get a good impression using the following links:
 [link_git]: https://git-scm.com/
 [link_handbook]: https://guides.github.com/introduction/git-handbook/
 [link_swc_intro]: http://swcarpentry.github.io/git-novice/
-
 [link_signupinstructions]: https://help.github.com/articles/signing-up-for-a-new-github-account
 [link_pullrequest]: https://help.github.com/articles/creating-a-pull-request-from-a-fork
 [link_fork]: https://help.github.com/articles/fork-a-repo/

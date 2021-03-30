@@ -17,7 +17,8 @@ export const getTsvType = function(file) {
     file.name.endsWith('_electrodes.tsv') ||
     file.name.endsWith('_events.tsv') ||
     file.name.endsWith('_scans.tsv') ||
-    file.name.endsWith('_sessions.tsv')
+    file.name.endsWith('_sessions.tsv') ||
+    file.name.endsWith('_aslcontext.tsv')
   ) {
     const split = file.name.split('_')
     tsvType = split[split.length - 1].replace('.tsv', '')
@@ -49,7 +50,7 @@ const getCustomColumns = function(headers, type) {
  * @param {array} tsvs - Array of objects containing TSV file objects and contents
  * @param {Object} jsonContentsDict
  */
-const validateTsvColumns = function(tsvs, jsonContentsDict) {
+const validateTsvColumns = function(tsvs, jsonContentsDict, headers) {
   const tsvIssues = []
   tsvs.map(tsv => {
     const customColumns = getCustomColumns(
@@ -84,6 +85,238 @@ const validateTsvColumns = function(tsvs, jsonContentsDict) {
     }
   })
   // Return array of all instances of undescribed custom columns
+
+  // Manage custom instances made from asl_context
+
+  // Manage custom instances from asl_context tsv files
+  // get all headers associated with asl_context data
+  tsvs.map(tsv => {
+    const aslHeaders = headers.filter(header => {
+      const file = header[0]
+      return file.relativePath.includes('_asl')
+    })
+
+    aslHeaders.forEach(aslHeader => {
+      // extract the fourth element of 'dim' field of header - this is the
+      // number of volumes that were obtained during scan (numVols)
+      const file = aslHeader[0]
+      const header = aslHeader[1]
+      const dim = header.dim
+      const numVols = dim[4]
+
+      // get the json sidecar dictionary associated with that nifti scan
+      var potentialSidecars = utils.files.potentialLocations(
+        file.relativePath.replace('.gz', '').replace('.nii', '.json'),
+      )
+
+      // get the _asl_context.tsv associated with this asl scan
+      const potentialAslContext = utils.files.potentialLocations(
+        file.relativePath
+          .replace('.gz', '')
+          .replace('asl.nii', 'aslcontext.tsv'),
+      )
+      const associatedAslContext = potentialAslContext.indexOf(
+        tsv.file.relativePath,
+      )
+
+      if (associatedAslContext > -1) {
+        const rows = tsv.contents
+          .replace(/[\r]+/g, '')
+          .split('\n')
+          .filter(row => !(!row || /^\s*$/.test(row)))
+
+        const m0scan_filters = ['m0scan']
+        const filtered_m0scan_rows = rows.filter(row =>
+          m0scan_filters.includes(row),
+        )
+
+        const control_filters = ['control']
+        const filtered_control_rows = rows.filter(row =>
+          control_filters.includes(row),
+        )
+
+        const asl_filters = [
+          'cbf',
+          'm0scan',
+          'label',
+          'control',
+          'deltam',
+          'volume_type',
+        ]
+        const filtered_tsv_rows = rows.filter(row => asl_filters.includes(row))
+        if (rows.length != filtered_tsv_rows.length) {
+          tsvIssues.push(
+            new Issue({
+              code: 176,
+              file: file,
+            }),
+          )
+        }
+
+        if (rows.length - 1 != numVols) {
+          tsvIssues.push(
+            new Issue({
+              code: 165,
+              file: file,
+            }),
+          )
+        }
+
+        // Get merged data dictionary for this file
+        potentialSidecars = utils.files.potentialLocations(
+          tsv.file.relativePath.replace('aslcontext.tsv', 'asl.json'),
+        )
+        const mergedDict = utils.files.generateMergedSidecarDict(
+          potentialSidecars,
+          jsonContentsDict,
+        )
+
+        //check M0Type and tsv list for m0scan in case of an Included M0Type
+        if (
+          mergedDict.hasOwnProperty('M0Type') &&
+          mergedDict['M0Type'] === 'Included' &&
+          filtered_m0scan_rows.length < 1
+        ) {
+          tsvIssues.push(
+            new Issue({
+              file: file,
+              code: 154,
+              reason:
+                "''M0Type' is set to 'Included' however the tsv file does not contain any m0scan volume.",
+            }),
+          )
+        }
+        //check M0Type and tsv list for m0scan in case of an Absent M0Type
+        if (
+          mergedDict.hasOwnProperty('M0Type') &&
+          mergedDict['M0Type'] === 'Absent' &&
+          filtered_m0scan_rows.length >= 1
+        ) {
+          tsvIssues.push(
+            new Issue({
+              file: file,
+              code: 199,
+              reason:
+                "''M0Type' is set to 'Absent' however the tsv file contains an m0scan volume. This should be avoided.",
+            }),
+          )
+        }
+
+        // check Flip Angle requirements with LookLocker acquisitions
+        if (
+          mergedDict.hasOwnProperty('FlipAngle') &&
+          mergedDict['FlipAngle'].constructor === Array
+        ) {
+          let FlipAngle = mergedDict['FlipAngle']
+          const FlipAngleLength = FlipAngle.length
+          if (FlipAngleLength !== rows.length - 1) {
+            tsvIssues.push(
+              new Issue({
+                file: file,
+                code: 172,
+                reason:
+                  "''FlipAngle' for this file does not match the TSV length. Please make sure that the size of the FlipAngle array in the json corresponds to the number of volume listed in the tsv file.",
+              }),
+            )
+          }
+        }
+        // check Labelling Duration matching with TSV lenght only for PCASL or CASL
+        if (
+          mergedDict.hasOwnProperty('LabelingDuration') &&
+          mergedDict['LabelingDuration'].constructor === Array &&
+          mergedDict.hasOwnProperty('ArterialSpinLabelingType') &&
+          (mergedDict['ArterialSpinLabelingType'] == 'CASL' ||
+            mergedDict['ArterialSpinLabelingType'] == 'PCASL')
+        ) {
+          let LabelingDuration = mergedDict['LabelingDuration']
+          const LabelingDurationLength = LabelingDuration.length
+          if (LabelingDurationLength !== rows.length - 1) {
+            tsvIssues.push(
+              new Issue({
+                file: file,
+                code: 175,
+                reason:
+                  "''LabelingDuration' for this file does not match the TSV lenght. Please be sure that the size of the LabelingDuration array in the json corresponds to the number of volume listed in the tsv file.",
+              }),
+            )
+          }
+        }
+
+        // check VolumeTiming with TSV lenght
+        if (
+          mergedDict.hasOwnProperty('RepetitionTimePreparation') &&
+          mergedDict['RepetitionTimePreparation'].constructor === Array
+        ) {
+          let RepetitionTimePreparation =
+            mergedDict['RepetitionTimePreparation']
+          const RepetitionTimePreparationLength =
+            RepetitionTimePreparation.length
+          if (RepetitionTimePreparationLength !== rows.length - 1) {
+            tsvIssues.push(
+              new Issue({
+                file: file,
+                code: 177,
+                reason:
+                  "''RepetitionTimePreparation' for this file do not match the TSV lenght. Please be sure that the size of the RepetitionTimePreparation array in the json corresponds to the number of volume listed in the tsv file.",
+              }),
+            )
+          }
+        }
+
+        // check Post Labelling Delays matching with TSV lenght
+        if (
+          mergedDict.hasOwnProperty('PostLabelingDelay') &&
+          mergedDict['PostLabelingDelay'].constructor === Array
+        ) {
+          let PostLabelingDelay = mergedDict['PostLabelingDelay']
+          const PostLabelingDelayLength = PostLabelingDelay.length
+          if (PostLabelingDelayLength !== rows.length - 1) {
+            tsvIssues.push(
+              new Issue({
+                file: file,
+                code: 174,
+                reason:
+                  "''PostLabelingDelay' for this file do not match the TSV lenght. Please be sure that the size of the PostLabelingDelay array in the json corresponds to the number of volume listed in the tsv file.",
+              }),
+            )
+          }
+        }
+
+        if (mergedDict.hasOwnProperty('TotalAcquiredVolumes')) {
+          let TotalAcquiredVolumes = mergedDict['TotalAcquiredVolumes']
+          const TotalAcquiredVolumesLength = TotalAcquiredVolumes.length
+          if (TotalAcquiredVolumesLength !== rows.length - 1) {
+            tsvIssues.push(
+              new Issue({
+                file: file,
+                code: 181,
+                reason:
+                  "''TotalAcquiredVolumes' for this file do not match the TSV lenght. Please be sure that the size of the TotalAcquiredVolumes array in the json corresponds to the number of volume listed in the tsv file.",
+              }),
+            )
+          }
+        }
+
+        if (
+          mergedDict.hasOwnProperty('EchoTime') &&
+          mergedDict['EchoTime'].constructor === Array
+        ) {
+          let EchoTime = mergedDict['EchoTime']
+          const EchoTimeLength = EchoTime.length
+          if (EchoTimeLength !== rows.length - 1) {
+            tsvIssues.push(
+              new Issue({
+                file: file,
+                code: 196,
+                reason:
+                  "''EchoTime' for this file do not match the TSV lenght. Please be sure that the size of the EchoTime array in the json corresponds to the number of volume listed in the tsv file.",
+              }),
+            )
+          }
+        }
+      }
+    })
+  })
   return tsvIssues
 }
 

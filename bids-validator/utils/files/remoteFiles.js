@@ -1,8 +1,8 @@
-import AWS from 'aws-sdk'
+import { S3Client } from '@aws-sdk/client-s3'
 import fs from 'fs'
 import cp from 'child_process'
 import Issue from '../issues'
-import zlib from 'zlib'
+import pako from 'pako'
 import isNode from '../isNode'
 
 /**
@@ -81,11 +81,8 @@ const remoteFiles = {
       ? Object.keys(process.env).indexOf('AWS_ACCESS_KEY_ID') > -1
       : false
     if (hasCreds) {
-      const s3 = new AWS.S3()
-      return s3
-        .getObject(config.s3Params)
-        .promise()
-        .then(data => data.Body)
+      const s3 = new S3Client()
+      return s3.getObject(config.s3Params).then(data => data.Body)
     } else {
       let url = this.constructAwsUrl(config)
       return fetch(url).then(resp => {
@@ -119,16 +116,7 @@ const remoteFiles = {
   extractGzipBuffer: function(buffer, config) {
     return new Promise((resolve, reject) => {
       try {
-        const decompressStream = zlib
-          .createGunzip()
-          .on('data', function(chunk) {
-            resolve(chunk)
-            decompressStream.pause()
-          })
-          .on('error', function() {
-            return reject(new Issue({ code: 28, file: config.file }))
-          })
-        decompressStream.write(buffer)
+        resolve(pako.inflate(buffer))
       } catch (e) {
         return reject(new Issue({ code: 28, file: config.file }))
       }

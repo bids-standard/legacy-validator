@@ -37,6 +37,11 @@ describe('NIFTI', function() {
   })
 
   it('should ignore missing events files for rest scans', function() {
+    let header = {
+      dim: [4, 128, 128, 72, 71],
+      pixdim: [-1, 2, 2, 2, 16.5],
+      xyzt_units: ['mm', 'mm', 'mm', 's'],
+    }
     jsonContentsDict[
       '/sub-15/func/sub-15_task-mixedeventrelatedproberest_run-01_bold.json'
     ] =
@@ -45,7 +50,7 @@ describe('NIFTI', function() {
       ]
     file.relativePath =
       '/sub-15/func/sub-15_task-mixedeventrelatedproberest_run-01_bold.nii.gz'
-    validate.NIFTI(null, file, jsonContentsDict, {}, [], events, function(
+    validate.NIFTI(header, file, jsonContentsDict, {}, [], events, function(
       issues,
     ) {
       assert.deepEqual(issues, [])
@@ -164,6 +169,12 @@ describe('NIFTI', function() {
   })
 
   it('should generate warning if files listed in IntendedFor of fieldmap json do not exist', function() {
+    let header = {
+      dim: [4, 128, 128, 1, 71],
+      pixdim: [-1, 2, 2, 2, 16.5],
+      xyzt_units: ['mm', 'mm', 'mm', 's'],
+    }
+
     var file = {
       name: 'sub-09_ses-test_run-01_fieldmap.nii.gz',
       path:
@@ -175,6 +186,8 @@ describe('NIFTI', function() {
     var jsonContentsDict = {
       '/sub-09/ses-test/fmap/sub-09_ses-test_run-01_fieldmap.json': {
         TaskName: 'Mixed Event Related Probe',
+        RepetitionTime: 2,
+        SliceTiming: [0.4],
         IntendedFor: [
           'func/sub-15_task-mixedeventrelatedprobe_run-05_bold.nii.gz',
           'func/sub-15_task-mixedeventrelatedprobe_run-02_bold.nii.gz',
@@ -188,7 +201,9 @@ describe('NIFTI', function() {
       relativePath:
         '/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
     })
-    validate.NIFTI(null, file, jsonContentsDict, {}, [], [], function(issues) {
+    validate.NIFTI(header, file, jsonContentsDict, {}, [], [], function(
+      issues,
+    ) {
       assert(
         issues.length === 3 && issues[0].code == 17 && issues[1].code == 37,
       )
@@ -230,6 +245,11 @@ describe('NIFTI', function() {
   })
 
   it('SliceTiming should not be greater than RepetitionTime', function() {
+    let header = {
+      dim: [4, 128, 128, 7, 71],
+      pixdim: [-1, 2, 2, 2, 16.5],
+      xyzt_units: ['mm', 'mm', 'mm', 's'],
+    }
     var jsonContentsDict_new = {
       '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.json': {
         RepetitionTime: 1.5,
@@ -248,7 +268,7 @@ describe('NIFTI', function() {
         '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
     }
     validate.NIFTI(
-      null,
+      header,
       file_new,
       jsonContentsDict_new,
       {},
@@ -398,6 +418,51 @@ describe('NIFTI', function() {
       issues,
     ) {
       assert(issues.length === 0)
+    })
+  })
+  it('should give error if VolumeTiming missing acquisition time', function() {
+    let header = {
+      dim: [4, 128, 128, 72, 71],
+      pixdim: [-1, 2, 2, 2, 16.5],
+      xyzt_units: ['mm', 'mm', 'mm', 's'],
+    }
+    let volumeJson = {
+      '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.json': {
+        VolumeTiming: 1,
+        TaskName: 'mixedeventrelatedprobrest',
+      },
+    }
+
+    let fileList = [
+      {
+        name: 'sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
+        path:
+          'sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
+        relativePath:
+          '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
+      },
+    ]
+    file.relativePath =
+      '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz'
+    validate.NIFTI(header, file, volumeJson, {}, fileList, events, function(
+      issues,
+    ) {
+      assert(issues.filter(x => x.code === 171).length === 1)
+    })
+  })
+  it('should not give error if VolumeTiming has an acquisition time', function() {
+    let volumeJson = {
+      '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.json': {
+        VolumeTiming: 1,
+        SliceTiming: 1,
+        TaskName: 'mixedeventrelatedprobe',
+      },
+    }
+
+    file.relativePath =
+      '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz'
+    validate.NIFTI(null, file, volumeJson, {}, [], events, function(issues) {
+      assert(issues.filter(x => x.code === 171).length === 0)
     })
   })
 })

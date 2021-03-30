@@ -20,15 +20,31 @@ import top_level_rules from '../bids_validator/rules/top_level_rules.json'
 // Associated data
 const associatedData = buildRegExp(associated_data_rules.associated_data)
 // File level
-const anatData = buildRegExp(file_level_rules.anat)
-const anatDefacemaskData = buildRegExp(file_level_rules.anat_defacemask)
+const anatNonparametric = buildRegExp(file_level_rules.anat_nonparametric)
+const anatParametric = buildRegExp(file_level_rules.anat_parametric)
+const anatDefacemask = buildRegExp(file_level_rules.anat_defacemask)
+const anatMultiEcho = buildRegExp(file_level_rules.anat_multiecho)
+const anatMultiFlip = buildRegExp(file_level_rules.anat_multiflip)
+const anatMultiInv = buildRegExp(file_level_rules.anat_multiinv)
+const anatMP2RAGE = buildRegExp(file_level_rules.anat_mp2rage)
+const anatVFAMT = buildRegExp(file_level_rules.anat_vfa_mt)
+const anatMTR = buildRegExp(file_level_rules.anat_mtr)
 const behavioralData = buildRegExp(file_level_rules.behavioral)
 const dwiData = buildRegExp(file_level_rules.dwi)
 const eegData = buildRegExp(file_level_rules.eeg)
-const fieldmapData = buildRegExp(file_level_rules.field_map)
-const fieldmapMainNiiData = buildRegExp(file_level_rules.field_map_main_nii)
-const funcData = buildRegExp(file_level_rules.func)
+const fmapGre = buildRegExp(file_level_rules.fmap_gre)
+const fmapPepolarAsl = buildRegExp(file_level_rules.fmap_pepolar_asl)
+const fmapTB1DAM = buildRegExp(file_level_rules.fmap_TB1DAM)
+const fmapTB1EPI = buildRegExp(file_level_rules.fmap_TB1EPI)
+const fmapRF = buildRegExp(file_level_rules.fmap_rf)
+const fmapTB1SRGE = buildRegExp(file_level_rules.fmap_TB1SRGE)
+const fmapParametric = buildRegExp(file_level_rules.fmap_parametric)
+const func = buildRegExp(file_level_rules.func)
+const funcPhaseDeprecated = buildRegExp(file_level_rules.func_phase_deprecated)
+const funcEvents = buildRegExp(file_level_rules.func_events)
+const funcTimeseries = buildRegExp(file_level_rules.func_timeseries)
 const funcBoldData = buildRegExp(file_level_rules.func_bold)
+const aslData = buildRegExp(file_level_rules.asl)
 const ieegData = buildRegExp(file_level_rules.ieeg)
 const megData = buildRegExp(file_level_rules.meg)
 const megCalibrationData = buildRegExp(file_level_rules.meg_calbibration)
@@ -41,6 +57,7 @@ const anatSes = buildRegExp(session_level_rules.anat_ses)
 const dwiSes = buildRegExp(session_level_rules.dwi_ses)
 const eegSes = buildRegExp(session_level_rules.eeg_ses)
 const funcSes = buildRegExp(session_level_rules.func_ses)
+const aslSes = buildRegExp(session_level_rules.asl_ses)
 const ieegSes = buildRegExp(session_level_rules.ieeg_ses)
 const megSes = buildRegExp(session_level_rules.meg_ses)
 const scansSes = buildRegExp(session_level_rules.scans)
@@ -49,6 +66,7 @@ const subjectLevel = buildRegExp(subject_level_rules.subject_level)
 // Top level
 const rootTop = buildRegExp(top_level_rules.root_top)
 const funcTop = buildRegExp(top_level_rules.func_top)
+const aslTop = buildRegExp(top_level_rules.asl_top)
 const anatTop = buildRegExp(top_level_rules.anat_top)
 const dwiTop = buildRegExp(top_level_rules.dwi_top)
 const eegTop = buildRegExp(top_level_rules.eeg_top)
@@ -73,6 +91,7 @@ export default {
       this.file.isAnat(path) ||
       this.file.isDWI(path) ||
       this.file.isFunc(path) ||
+      this.file.isAsl(path) ||
       this.file.isMeg(path) ||
       this.file.isIEEG(path) ||
       this.file.isEEG(path) ||
@@ -93,6 +112,7 @@ export default {
       return (
         rootTop.test(path) ||
         funcTop.test(path) ||
+        aslTop.test(path) ||
         dwiTop.test(path) ||
         anatTop.test(path) ||
         multiDirFieldmap.test(path) ||
@@ -147,6 +167,7 @@ export default {
       return (
         conditionalMatch(scansSes, path) ||
         conditionalMatch(funcSes, path) ||
+        conditionalMatch(aslSes, path) ||
         conditionalMatch(anatSes, path) ||
         conditionalMatch(dwiSes, path) ||
         conditionalMatch(megSes, path) ||
@@ -167,8 +188,15 @@ export default {
      */
     isAnat: function(path) {
       return (
-        conditionalMatch(anatData, path) ||
-        conditionalMatch(anatDefacemaskData, path)
+        conditionalMatch(anatNonparametric, path) ||
+        conditionalMatch(anatParametric, path) ||
+        conditionalMatch(anatDefacemask, path) ||
+        conditionalMatch(anatMultiEcho, path) ||
+        conditionalMatch(anatMultiFlip, path) ||
+        conditionalMatch(anatMultiInv, path) ||
+        conditionalMatch(anatMP2RAGE, path) ||
+        conditionalMatch(anatVFAMT, path) ||
+        conditionalMatch(anatMTR, path)
       )
     },
 
@@ -183,18 +211,45 @@ export default {
      * Check if the file has a name appropriate for a fieldmap scan
      */
     isFieldMap: function(path) {
-      return conditionalMatch(fieldmapData, path)
+      return (
+        conditionalMatch(fmapGre, path) ||
+        conditionalMatch(fmapPepolarAsl, path) ||
+        conditionalMatch(fmapTB1DAM, path) ||
+        conditionalMatch(fmapTB1EPI, path) ||
+        conditionalMatch(fmapTB1SRGE, path) ||
+        conditionalMatch(fmapRF, path) ||
+        conditionalMatch(fmapParametric, path)
+      )
     },
 
     isFieldMapMainNii: function(path) {
-      return conditionalMatch(fieldmapMainNiiData, path)
+      return (
+        !path.endsWith('.json') &&
+        /* isFieldMap */
+        (conditionalMatch(fmapGre, path) ||
+          conditionalMatch(fmapPepolarAsl, path) ||
+          conditionalMatch(fmapTB1DAM, path) ||
+          conditionalMatch(fmapTB1EPI, path) ||
+          conditionalMatch(fmapTB1SRGE, path) ||
+          conditionalMatch(fmapRF, path) ||
+          conditionalMatch(fmapParametric, path))
+      )
     },
 
     /**
      * Check if the file has a name appropriate for a functional scan
      */
     isFunc: function(path) {
-      return conditionalMatch(funcData, path)
+      return (
+        conditionalMatch(func, path) ||
+        conditionalMatch(funcPhaseDeprecated, path) ||
+        conditionalMatch(funcEvents, path) ||
+        conditionalMatch(funcTimeseries, path)
+      )
+    },
+
+    isAsl: function(path) {
+      return conditionalMatch(aslData, path)
     },
 
     isMeg: function(path) {
@@ -228,6 +283,7 @@ export default {
         this.isFieldMap(path) ||
         this.isFieldMapMainNii(path) ||
         this.isFunc(path) ||
+        this.isAsl(path) ||
         this.isMeg(path) ||
         this.isEEG(path) ||
         this.isIEEG(path) ||

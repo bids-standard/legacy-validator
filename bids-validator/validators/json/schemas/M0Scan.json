@@ -3,7 +3,7 @@
   "properties": {
     "EchoTime": {
       "type": "number",
-      "exclusiveMinimum": 0 
+      "exclusiveMinimum": 0
     },
     "EffectiveEchoSpacing": {
       "type": "number",
@@ -15,16 +15,14 @@
     },
     "RepetitionTimePreparation": {
       "anyOf": [
-        { "type": "number",
-          "Minimum": 0 
-        },
+        { "type": "number", "minimum": 0 },
         {
           "type": "array",
           "items": { "type": "number" },
-          "Minimum": 0
+          "minimum": 0
         }
-      ]  
-    }, 
+      ]
+    },
     "SliceEncodingDirection": {
       "type": "string",
       "enum": ["i", "j", "k", "i-", "j-", "k-"]
@@ -36,11 +34,11 @@
         "minimum": 0
       }
     },
-    "AcquisitionVoxelSize" :{
+    "AcquisitionVoxelSize": {
       "type": "array",
       "items": {
-          "type": "number",
-          "exclusiveMinimum": 0
+        "type": "number",
+        "exclusiveMinimum": 0
       }
     }
   }

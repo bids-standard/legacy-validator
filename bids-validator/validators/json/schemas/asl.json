@@ -20,11 +20,11 @@
     },
     "RepetitionTimePreparation": {
       "anyOf": [
-        { "type": "number", "Minimum": 0 },
+        { "type": "number", "minimum": 0 },
         {
           "type": "array",
           "items": { "type": "number" },
-          "Minimum": 0
+          "minimum": 0
         }
       ]
     },
@@ -54,21 +54,21 @@
     },
     "LabelingDuration": {
       "anyOf": [
-        { "type": "number", "Minimum": 0 },
+        { "type": "number", "minimum": 0 },
         {
           "type": "array",
           "items": { "type": "number" },
-          "Minimum": 0
+          "minimum": 0
         }
       ]
     },
     "PostLabelingDelay": {
       "anyOf": [
-        { "type": "number", "Minimum": 0 },
+        { "type": "number", "minimum": 0 },
         {
           "type": "array",
           "items": { "type": "number" },
-          "Minimum": 0
+          "minimum": 0
         }
       ]
     },
@@ -95,7 +95,7 @@
     "LabelingPulseFlipAngle": {
       "type": "number",
       "exclusiveMinimum": 0,
-      "Maximum": 360
+      "maximum": 360
     },
     "LabelingSlabThickness": {
       "type": "number",
@@ -167,11 +167,11 @@
     },
     "BolusCutOffDelayTime": {
       "anyOf": [
-        { "type": "number", "Minimum": 0 },
+        { "type": "number", "minimum": 0 },
         {
           "type": "array",
           "items": { "type": "number" },
-          "Minimum": 0
+          "minimum": 0
         }
       ]
     },

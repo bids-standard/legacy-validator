@@ -95,8 +95,7 @@
     "LabelingPulseFlipAngle": {
       "type": "number",
       "exclusiveMinimum": 0,
-      "inclusiveMaximum": 360,
-      "_inclusiveMaximum_comment": "to be checked"
+      "Maximum": 360
     },
     "LabelingSlabThickness": {
       "type": "number",

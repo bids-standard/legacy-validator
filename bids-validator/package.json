@@ -3,6 +3,12 @@
   "version": "1.7.0",
   "description": "",
   "main": "index.js",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./commonjs/index.js"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/bids-standard/bids-validator.git"

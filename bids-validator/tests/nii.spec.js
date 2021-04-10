@@ -1,5 +1,5 @@
 import assert from 'assert'
-import validate from '../index'
+import validate from '../esm/index'
 
 describe('NIFTI', function() {
   var file = {

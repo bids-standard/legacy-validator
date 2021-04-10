@@ -1,6 +1,6 @@
 /*eslint no-console: ["error", {allow: ["log"]}] */
 
-import validate from './index.js'
+import validate from './esm/index.js'
 
 const format = validate.consoleFormat
 import colors from 'colors/safe'

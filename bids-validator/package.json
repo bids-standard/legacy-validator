@@ -2,7 +2,7 @@
   "name": "bids-validator",
   "version": "1.7.0",
   "description": "",
-  "main": "index.js",
+  "main": "./commonjs/index.js",
   "exports": {
     ".": {
       "import": "./esm/index.js",

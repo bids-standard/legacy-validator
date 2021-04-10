@@ -2,4 +2,4 @@
 import validate from '../validators'
 
 // export validations for use in other applications
-export default validate
+module.exports = validate

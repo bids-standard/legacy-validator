@@ -3,11 +3,27 @@
  */
 import { assert } from 'chai'
 
-import validate from '../index.js'
 import fs from 'fs'
 import path from 'path'
 import { createFileList } from './env/FileList.js'
 import isNode from '../utils/isNode.js'
+
+/**
+ * Returns validator from commonjs or esm entrypoints, depending on jest-environment.
+ * The esm entrypoint is used by bids-web.spec.js.
+ * @returns bids-validator module
+ */
+async function getValidator() {
+  if (
+    typeof navigator !== 'undefined' &&
+    navigator.userAgent.includes('jsdom')
+  ) {
+    const module = await import('../esm/index.js')
+    return module.default
+  } else {
+    return require('../commonjs/index.js')
+  }
+}
 
 function getDirectories(srcpath) {
   return fs.readdirSync(srcpath).filter(function(file) {
@@ -58,6 +74,10 @@ function assertErrorCode(errors, expected_error_code) {
 }
 
 describe('BIDS example datasets ', function() {
+  let validate
+  beforeAll(async () => {
+    validate = await getValidator()
+  })
   // Default validate.BIDS options
   const options = { ignoreNiftiHeaders: true, json: true }
   const enableNiftiHeaders = { json: true }

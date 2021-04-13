@@ -1,11 +1,10 @@
-import utils from '../../utils'
 import Issue from '../../utils/issues/issue'
 import checkAcqTimeFormat from './checkAcqTimeFormat'
 import checkAge89 from './checkAge89'
 import checkStatusCol from './checkStatusCol'
 import checkTypecol from './checkTypeCol'
 import parseTSV from './tsvParser'
-var path = require('path')
+import path from 'path'
 
 /**
  * Format TSV headers for evidence string
@@ -194,7 +193,7 @@ const TSV = (file, contents, fileList, callback) => {
   ) {
     const participantIdColumn = headers.indexOf('participant_id')
 
-    // if the participant_id column is missing, an error 
+    // if the participant_id column is missing, an error
     // will be raised
     if (participantIdColumn === -1) {
       issues.push(
@@ -206,7 +205,7 @@ const TSV = (file, contents, fileList, callback) => {
         }),
       )
     } else {
-      // otherwise, the participants should comprise of 
+      // otherwise, the participants should comprise of
       // sub-<subject_id> and one subject per row
       participants = []
       for (let l = 1; l < rows.length; l++) {
@@ -222,14 +221,15 @@ const TSV = (file, contents, fileList, callback) => {
             new Issue({
               file: file,
               evidence: headersEvidence(headers),
-              reason: 'Participant_id column should be named ' +
-                      'as sub-<subject_id>.',
+              reason:
+                'Participant_id column should be named ' +
+                'as sub-<subject_id>.',
               line: l,
               code: 212,
             }),
           )
         }
-        
+
         // obtain a list of the subject IDs in the participants.tsv file
         const participant = row[participantIdColumn].replace('sub-', '')
         if (participant == 'emptyroom') {
@@ -298,10 +298,7 @@ const TSV = (file, contents, fileList, callback) => {
   }
 
   // blood.tsv
-  if (
-    file.relativePath.includes('/pet/') &&
-    file.name.endsWith('_blood.tsv')
-  ) {
+  if (file.relativePath.includes('/pet/') && file.name.endsWith('_blood.tsv')) {
     // Validate fields here
     checkheader('time', 0, file, 126)
   }

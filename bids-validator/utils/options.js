@@ -1,5 +1,6 @@
 import path from 'path'
 import getFileStats from '../utils/files/getFileStats'
+import readFile from '../utils/files/readFile'
 import json from './json'
 import isNode from '../utils/isNode.js'
 
@@ -57,8 +58,7 @@ export default {
         }
       }
       configFile.stats = getFileStats(configFile)
-      files
-        .readFile(configFile)
+      readFile(configFile)
         .then(contents => {
           callback(null, configFile, contents)
         })

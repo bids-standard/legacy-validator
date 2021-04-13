@@ -1,4 +1,4 @@
-const Issue = require('../../utils').issues.Issue
+import Issue from '../../utils/issues/issue.js'
 
 const fieldmapWithoutMagnitude = files => {
   // Check for _fieldmap nifti exists without corresponding _magnitude

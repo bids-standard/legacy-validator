@@ -1,4 +1,4 @@
-const Issue = require('../../utils').issues.Issue
+import Issue from '../../utils/issues/issue.js'
 
 const duplicateNiftis = files => {
   // check if same file with .nii and .nii.gz extensions is present

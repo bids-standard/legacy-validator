@@ -1,4 +1,4 @@
-const Issue = require('../../utils').issues.Issue
+import Issue from '../../utils/issues/issue.js'
 
 const phasediffWithoutMagnitude = files => {
   // check to see if each phasediff is associated with magnitude

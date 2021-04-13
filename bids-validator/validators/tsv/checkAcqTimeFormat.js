@@ -1,4 +1,4 @@
-const Issue = require('../../utils').issues.Issue
+import Issue from '../../utils/issues/issue.js'
 import { isValid as dateIsValid, parseISO } from 'date-fns'
 
 const checkAcqTimeFormat = function(rows, file, issues) {

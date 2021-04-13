@@ -1,4 +1,4 @@
-const Issue = require('../../utils').issues.Issue
+import Issue from '../../utils/issues/issue.js'
 
 /**
  * Checks status column in a electroencephalography _channels.tsv file to

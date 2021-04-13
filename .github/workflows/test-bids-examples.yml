@@ -2,9 +2,9 @@ name: test-bids-examples
 
 on:
   push:
-    branches: ["**"]
+    branches: ["*"]
   pull_request:
-    branches: ["**"]
+    branches: ["*"]
 
 jobs:
   build:
@@ -12,7 +12,6 @@ jobs:
       fail-fast: false
       matrix:
         platform: [ubuntu-latest]
-        bids-validator-branch: [master]
         bids-examples-branch: [master]
 
     runs-on: ${{ matrix.platform }}
@@ -26,11 +25,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
 
       - name: Install bids-validator
         run: |
-          git clone --depth 1 https://github.com/bids-standard/bids-validator -b ${{ matrix.bids-validator-branch }}
-          npm install -g bids-validator/bids-validator
+          npm install -g ./bids-validator
 
       - name: Get bids-examples data
         run: |
@@ -46,8 +47,7 @@ jobs:
 
       - name: Validate all BIDS datasets using bids-validator
         run: |
-          pushd ./bids-examples
           cat ./run_tests.sh
           bash ./run_tests.sh
-          popd
         shell: bash
+        working-directory: ./bids-examples

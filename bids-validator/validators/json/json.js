@@ -1,8 +1,10 @@
 import utils from '../../utils'
 import Ajv from 'ajv'
 const ajv = new Ajv({ allErrors: true })
-ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'))
-ajv.addSchema(require('./schemas/common_definitions.json'))
+import JSONSchemaDraft from 'ajv/lib/refs/json-schema-draft-06.json'
+ajv.addMetaSchema(JSONSchemaDraft)
+import commonDefinitionsSchema from './schemas/common_definitions.json'
+ajv.addSchema(commonDefinitionsSchema)
 const Issue = utils.issues.Issue
 
 /**
@@ -13,7 +15,7 @@ const Issue = utils.issues.Issue
  * it finds while validating against the BIDS
  * specification.
  */
-export default function(file, jsonContentsDict, callback) {
+export default async function(file, jsonContentsDict, callback) {
   // primary flow --------------------------------------------------------------------
   let issues = []
   const potentialSidecars = utils.files.potentialLocations(file.relativePath)
@@ -22,7 +24,7 @@ export default function(file, jsonContentsDict, callback) {
     jsonContentsDict,
   )
   if (mergedDictionary) {
-    issues = issues.concat(checkUnits(file, mergedDictionary))
+    issues = issues.concat(await checkUnits(file, mergedDictionary))
     issues = issues.concat(compareSidecarProperties(file, mergedDictionary))
   }
   callback(issues, mergedDictionary)
@@ -30,9 +32,9 @@ export default function(file, jsonContentsDict, callback) {
 
 // individual checks ---------------------------------------------------------------
 
-function checkUnits(file, sidecar) {
+async function checkUnits(file, sidecar) {
   let issues = []
-  const schema = selectSchema(file)
+  const schema = await selectSchema(file)
   issues = issues.concat(validateSchema(file, sidecar, schema))
 
   issues = issues.concat(
@@ -74,57 +76,59 @@ const compareSidecarProperties = (file, sidecar) => {
   return issues
 }
 
-const selectSchema = file => {
+const importSchema = async filepath => (await import(filepath)).default
+
+const selectSchema = async file => {
   let schema = null
   if (file.name) {
     if (file.name.endsWith('participants.json')) {
-      schema = require('./schemas/data_dictionary.json')
+      schema = await importSchema('./schemas/data_dictionary.json')
     } else if (
       file.name.endsWith('bold.json') ||
       file.name.endsWith('sbref.json')
     ) {
-      schema = require('./schemas/bold.json')
+      schema = await importSchema('./schemas/bold.json')
     } else if (file.name.endsWith('asl.json')) {
-      schema = require('./schemas/asl.json')
+      schema = await importSchema('./schemas/asl.json')
     } else if (file.name.endsWith('pet.json')) {
-      schema = require('./schemas/pet.json')
+      schema = await importSchema('./schemas/pet.json')
     } else if (file.relativePath === '/dataset_description.json') {
-      schema = require('./schemas/dataset_description.json')
+      schema = await importSchema('./schemas/dataset_description.json')
     } else if (file.name.endsWith('meg.json')) {
-      schema = require('./schemas/meg.json')
+      schema = await importSchema('./schemas/meg.json')
     } else if (file.name.endsWith('ieeg.json')) {
-      schema = require('./schemas/ieeg.json')
+      schema = await importSchema('./schemas/ieeg.json')
     } else if (file.name.endsWith('eeg.json')) {
-      schema = require('./schemas/eeg.json')
+      schema = await importSchema('./schemas/eeg.json')
     } else if (
       file.relativePath.includes('/meg/') &&
       file.name.endsWith('coordsystem.json')
     ) {
-      schema = require('./schemas/coordsystem_meg.json')
+      schema = await importSchema('./schemas/coordsystem_meg.json')
     } else if (
       file.relativePath.includes('/ieeg/') &&
       file.name.endsWith('coordsystem.json')
     ) {
-      schema = require('./schemas/coordsystem_ieeg.json')
+      schema = await importSchema('./schemas/coordsystem_ieeg.json')
     } else if (
       file.relativePath.includes('/eeg/') &&
       file.name.endsWith('coordsystem.json')
     ) {
-      schema = require('./schemas/coordsystem_eeg.json')
+      schema = await importSchema('./schemas/coordsystem_eeg.json')
     } else if (
       file.relativePath.includes('/pet/') &&
       file.name.endsWith('blood.json')
     ) {
-      schema = require('./schemas/pet_blood.json')
+      schema = await importSchema('./schemas/pet_blood.json')
     } else if (file.name.endsWith('genetic_info.json')) {
-      schema = require('./schemas/genetic_info.json')
+      schema = await importSchema('./schemas/genetic_info.json')
     } else if (
-        file.name.endsWith('physio.json') ||
-        file.name.endsWith('stim.json')
+      file.name.endsWith('physio.json') ||
+      file.name.endsWith('stim.json')
     ) {
-      schema = require('./schemas/physio.json')
+      schema = await importSchema('./schemas/physio.json')
     } else if (file.name.endsWith('events.json')) {
-      schema = require('./schemas/events.json')
+      schema = await importSchema('./schemas/events.json')
     }
   }
   return schema

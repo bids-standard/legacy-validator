@@ -13,38 +13,38 @@ describe('validateTsvColumns', () => {
       '/participants.json': { NewColumn: 'description' },
     }
 
-    it('allows for tabular files with columns that are described in the bids spec', () => {
+    it('allows for tabular files with columns that are described in the bids spec', async () => {
       const tsvs = [
         {
           contents: 'participant_id\n',
           file: file,
         },
       ]
-      const issues = validateTsvColumns(tsvs, {}, [])
+      const issues = await validateTsvColumns(tsvs, {}, [])
       assert.lengthOf(issues, 0)
     })
-    it('checks for tabular files with custom columns not described in a data dictionary', () => {
+    it('checks for tabular files with custom columns not described in a data dictionary', async () => {
       const tsvs = [
         {
           contents: 'header1\n',
           file: file,
         },
       ]
-      const issues = validateTsvColumns(tsvs, {}, [])
+      const issues = await validateTsvColumns(tsvs, {}, [])
       assert.lengthOf(issues, 1)
       assert.equal(issues[0].code, 82)
     })
-    it('allows custom columns if they are described in a data dictionary', () => {
+    it('allows custom columns if they are described in a data dictionary', async () => {
       const tsvs = [
         {
           contents: 'NewColumn\n',
           file: file,
         },
       ]
-      const issues = validateTsvColumns(tsvs, jsonContentsDict, [])
+      const issues = await validateTsvColumns(tsvs, jsonContentsDict, [])
       assert.lengthOf(issues, 0)
     })
-    it('should trim the new line carriages created by windows tabular files,', () => {
+    it('should trim the new line carriages created by windows tabular files,', async () => {
       const tsvs = [
         {
           contents: 'participant_id\t\r\n',
@@ -55,7 +55,7 @@ describe('validateTsvColumns', () => {
           file: file,
         },
       ]
-      const issues = validateTsvColumns(tsvs, {}, [])
+      const issues = await validateTsvColumns(tsvs, {}, [])
       assert.lengthOf(issues, 0)
     })
   })
@@ -114,7 +114,7 @@ describe('validateTsvColumns', () => {
       assert.lengthOf(issues, 2)
     })
   })
-  it('should strip byte order marks from the start of TSV files', () => {
+  it('should strip byte order marks from the start of TSV files', async () => {
     const tsvs = [
       {
         contents: '\uFEFFparticipant_id\t\r\n',
@@ -124,10 +124,10 @@ describe('validateTsvColumns', () => {
         },
       },
     ]
-    const issues = validateTsvColumns(tsvs, {}, [])
+    const issues = await validateTsvColumns(tsvs, {}, [])
     assert.lengthOf(issues, 0)
   })
-  it('should generate error with empty columns', () => {
+  it('should generate error with empty columns', async () => {
     const tsvs = [
       {
         contents: '\t',
@@ -144,7 +144,7 @@ describe('validateTsvColumns', () => {
         },
       },
     ]
-    const issues = validateTsvColumns(tsvs, {}, [])
+    const issues = await validateTsvColumns(tsvs, {}, [])
     assert.lengthOf(issues, 2)
   })
 })

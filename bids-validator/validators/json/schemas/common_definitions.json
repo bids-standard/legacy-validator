@@ -15,7 +15,7 @@
         "Other"
       ]
     },
-    "EEGCoordSys": { "type": "string", "enum": ["CapTrak", "EEGLAB", "Other"] },
+    "EEGCoordSys": { "type": "string", "enum": ["CapTrak", "EEGLAB", "EEGLAB-HJ", "Other"] },
     "iEEGCoordSys": { "type": "string", "enum": ["Pixels", "ACPC", "Other"] },
     "StandardTemplateCoordSys": {
       "type": "string",

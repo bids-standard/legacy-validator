@@ -4,10 +4,20 @@
     "CogAtlasID": { "type": "string", "format": "uri" },
     "CogPOID": { "type": "string", "format": "uri" },
     "CoordUnits": { "type": "string", "enum": ["m", "mm", "cm", "n/a"] },
-    "MEGCoordSys": { "type": "string", "enum": ["CTF", "ElektaNeuromag", "4DBti", "KitYokogawa", "ChietiItab", "Other"] },
-    "EEGCoordSys": { "type": "string", "enum": ["CapTrak", "Other"] },
+    "MEGCoordSys": {
+      "type": "string",
+      "enum": [
+        "CTF",
+        "ElektaNeuromag",
+        "4DBti",
+        "KitYokogawa",
+        "ChietiItab",
+        "Other"
+      ]
+    },
+    "EEGCoordSys": { "type": "string", "enum": ["CapTrak", "EEGLAB", "Other"] },
     "iEEGCoordSys": { "type": "string", "enum": ["Pixels", "ACPC", "Other"] },
-    "StandardTemplateCoordSys" :{
+    "StandardTemplateCoordSys": {
       "type": "string",
       "enum": [
         "ICBM452AirSpace",
@@ -32,8 +42,9 @@
         "OASIS30Atropos",
         "Talairach",
         "UNCInfant"
-        ] },
-    "StandardTemplateDeprecatedCoordSys" :{
+      ]
+    },
+    "StandardTemplateDeprecatedCoordSys": {
       "type": "string",
       "enum": [
         "fsaverage3",
@@ -50,7 +61,8 @@
         "UNCInfant0V23",
         "UNCInfant1V23",
         "UNCInfant2V23"
-        ] },
+      ]
+    },
     "DeviceSerialNumber": { "type": "string" },
     "ECGChannelCount": { "type": "integer", "minimum": 0 },
     "EEGChannelCount": { "type": "integer", "minimum": 0 },
@@ -88,11 +100,7 @@
     "RecordingDuration": { "type": "number" },
     "RecordingType": {
       "type": "string",
-      "enum": [
-        "continuous",
-        "epoched",
-        "discontinuous"
-      ]
+      "enum": ["continuous", "epoched", "discontinuous"]
     },
     "SamplingFrequency": { "type": "number" },
     "SoftwareFilters": {

@@ -11,6 +11,7 @@ const data_without_errors = path.join(data_dir, 'valid_dataset')
 const cli_path = './bids-validator/bin/bids-validator'
 
 const colorRegEx = new RegExp(
+  // eslint-disable-next-line no-control-regex
   '[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]',
 )
 
@@ -125,6 +126,7 @@ describe('CLI', () => {
 
     command.on('exit', code => {
       assert.equal(colorRegEx.test(commandOutput), true)
+      assert.equal(code, 0)
       done()
     })
   })
@@ -140,6 +142,7 @@ describe('CLI', () => {
 
     command.on('exit', code => {
       assert.equal(colorRegEx.test(commandOutput), false)
+      assert.equal(code, 0)
       done()
     })
   })
@@ -157,6 +160,7 @@ describe('CLI', () => {
 
     command.on('exit', code => {
       assert.equal(colorRegEx.test(commandOutput), false)
+      assert.equal(code, 0)
       done()
     })
   })

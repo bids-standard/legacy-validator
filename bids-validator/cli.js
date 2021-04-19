@@ -41,6 +41,9 @@ const writeStdout = (data, cb) => {
 }
 
 export default function(dir, options) {
+  if (process.env['NO_COLOR'] !== undefined) {
+    colors.disable()
+  }
   process.on('unhandledRejection', err => {
     console.log(
       format.unexpectedError(

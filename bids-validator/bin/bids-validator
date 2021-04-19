@@ -25,9 +25,6 @@ const argv = require('yargs')
   .describe('verbose', 'Log more extensive information about issues')
   .boolean('json')
   .describe('json', 'Output results as JSON')
-  .boolean('no-color')
-  .describe('no-color', 'Disable colors in output text.')
-  .default('no-color', false)
   .boolean('ignoreSymlinks')
   .describe(
     'ignoreSymlinks',

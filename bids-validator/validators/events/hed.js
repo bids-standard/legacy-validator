@@ -30,6 +30,7 @@ export default function checkHedStrings(events, headers, jsonContents, dir) {
       let hedStringsFound = false
       const sidecarIssueTypes = {}
       let sidecarErrorsFound = false
+      const sidecarHedStringsUsed = {}
       // loop through event data files
       events.forEach(eventFile => {
         const hedStrings = []
@@ -69,6 +70,7 @@ export default function checkHedStrings(events, headers, jsonContents, dir) {
                 true,
                 true,
               )
+              sidecarHedStringsUsed[hedString] = false
               if (!isHedStringValid) {
                 const convertedIssues = convertHedIssuesToBidsIssues(
                   hedIssues,
@@ -169,9 +171,11 @@ export default function checkHedStrings(events, headers, jsonContents, dir) {
                 continue
               }
               if (typeof sidecarHedData === 'string') {
+                sidecarHedStringsUsed[sidecarHedData] = true
                 sidecarHedString = sidecarHedData.replace('#', rowCell)
               } else {
                 sidecarHedString = sidecarHedData[rowCell]
+                sidecarHedStringsUsed[sidecarHedString] = true
               }
               if (sidecarHedString !== undefined) {
                 hedStringParts.push(sidecarHedString)
@@ -191,6 +195,13 @@ export default function checkHedStrings(events, headers, jsonContents, dir) {
             continue
           }
           hedStrings.push(hedStringParts.join(','))
+        }
+
+        // Add unused sidecar strings
+        for (const hedString in sidecarHedStringsUsed) {
+          if (!sidecarHedStringsUsed[hedString]) {
+            hedStrings.push(hedString)
+          }
         }
 
         if (hedStrings.length > 0) {

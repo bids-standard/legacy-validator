@@ -1,10 +1,10 @@
-import { version } from '../../package.json'
-import BIDS from './obj'
-import reset from './reset'
-import quickTest from './quickTest'
-import quickTestError from './quickTestError'
-import fullTest from './fullTest'
-import utils from '../../utils'
+import { version } from '../package.json'
+import BIDS from '../validators/bids/obj'
+import reset from '../validators/bids/reset'
+import quickTest from '../validators/bids/quickTest'
+import quickTestError from '../validators/bids/quickTestError'
+import fullTest from '../validators/bids/fullTest'
+import utils from '../utils'
 
 /**
  * Start

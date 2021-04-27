@@ -131,22 +131,6 @@ describe('CLI', () => {
     })
   })
 
-  it('should respect --no-color', done => {
-    const command = spawn('node', [cli_path, data_without_errors, '--no-color'])
-
-    let commandOutput = ''
-    command.stdout.on('data', data => {
-      const dataLines = data.toString()
-      commandOutput = commandOutput.concat(dataLines)
-    })
-
-    command.on('exit', code => {
-      assert.equal(colorRegEx.test(commandOutput), false)
-      assert.equal(code, 0)
-      done()
-    })
-  })
-
   it('should print without colors when NO_COLOR env set', done => {
     const command = spawn('node', [cli_path, data_without_errors], {
       env: { ...process.env, NO_COLOR: 'any value' },

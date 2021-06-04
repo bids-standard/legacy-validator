@@ -1342,6 +1342,9 @@ describe('Events', function() {
         assert.strictEqual(issues.length, 3)
         assert.strictEqual(issues[0].code, 210)
         assert.strictEqual(issues[1].code, 208)
+        // Check for correct file properties
+        expect(issues[0].file).toHaveProperty('path')
+        expect(issues[1].file).toHaveProperty('path')
       })
     })
   })

@@ -72,7 +72,7 @@ export default function checkHedStrings(events, headers, jsonContents, dir) {
               if (!isHedStringValid) {
                 const convertedIssues = convertHedIssuesToBidsIssues(
                   hedIssues,
-                  sidecarName,
+                  eventFile.file,
                 )
                 fileIssues = fileIssues.concat(convertedIssues)
               }
@@ -87,10 +87,22 @@ export default function checkHedStrings(events, headers, jsonContents, dir) {
                 }
               }
               if (fileErrorsFound) {
-                issues.push(new Issue({ code: 209, file: sidecarName }))
+                issues.push(
+                  new Issue({
+                    code: 209,
+                    file: eventFile.file,
+                    evidence: sidecarName,
+                  }),
+                )
                 sidecarIssueTypes[sidecarName] = 'error'
               } else {
-                issues.push(new Issue({ code: 210, file: sidecarName }))
+                issues.push(
+                  new Issue({
+                    code: 210,
+                    file: eventFile.file,
+                    evidence: sidecarName,
+                  }),
+                )
                 sidecarIssueTypes[sidecarName] = 'warning'
               }
               issues = issues.concat(fileIssues)

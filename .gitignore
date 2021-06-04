@@ -15,7 +15,9 @@ bids-validator-web/.next/
 
 # Only use global yarn.lock
 bids-validator/yarn.lock
+bids-validator/package-lock.json
 bids-validator-web/yarn.lock
+bids-validator-web/package-lock.json
 .vscode/
 
 *.swp

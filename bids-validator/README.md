@@ -437,7 +437,7 @@ To run the linter which checks code conventions run `npm run lint`.
 
 ### Publishing
 
-Publishing is done with [Lerna](https://github.com/lerna/lerna). Use the command `npm run lernaPublish` and follow instructions to set a new version.
+Publishing is done with [Lerna](https://github.com/lerna/lerna). Use the command `npx lerna publish` and follow instructions to set a new version.
 
 Using lerna publish will create a git commit with updated version information and create a version number tag for it, push the tag to GitHub, then publish to NPM and PyPI. The GitHub release is manual following that.
 

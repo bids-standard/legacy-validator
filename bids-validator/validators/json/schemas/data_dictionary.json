@@ -36,6 +36,25 @@
           "description": "URL pointing to a formal definition in an ontology available on the web.",
           "type": "string",
           "format": "uri"
+        },
+        "HED": {
+          "anyOf": [
+            {
+              "type": "object",
+              "title": "HED",
+              "description": "For categorical variables: a dictionary of possible values (keys) and their HED strings (values).",
+              "patternProperties": {
+                "^.+$": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "type": "string",
+              "title": "HED",
+              "description": "For value variables: a string with a single '#' character where the cell value is to be interpolated."
+            }
+          ]
         }
       }
     }

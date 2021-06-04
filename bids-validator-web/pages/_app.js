@@ -1,8 +1,8 @@
-import React from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../index.scss";
-import App from "../components/App";
 
-const AppComponent = () => <App />;
+function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />;
+}
 
-export default AppComponent;
+export default MyApp;

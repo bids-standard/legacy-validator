@@ -323,6 +323,8 @@
       "@@@_eeg_space_@@@": [
         "Other",
         "CapTrak",
+        "EEGLAB",
+        "EEGLAB-HJ",
         "CTF",
         "ElektaNeuromag",
         "4DBti",

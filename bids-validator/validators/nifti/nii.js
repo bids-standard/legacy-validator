@@ -1260,8 +1260,8 @@ export default function NIFTI(
         checkIfValidFiletype(intendedForFile, issues, file)
       }
     }
-    callback(issues)
   }
+  callback(issues)
 }
 
 function missingEvents(path, potentialEvents, events) {

@@ -21,7 +21,7 @@ const constructHelpUrl = issue => {
  * @param {Object} options
  * @param {string} options.key The descriptive string matching the issue code
  * @param {number} options.code Issue code - see 'list.js' for definitions
- * @param {string} [options.file] The relative path of the affected file
+ * @param {File} [options.file] File object for the affected file
  * @param {string} [options.evidence] The value throwing this issue
  * @param {number} [options.line] The line of the affected file (if within a file)
  * @param {number} [options.character] The character offset in the affected line

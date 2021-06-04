@@ -1148,4 +1148,10 @@ export default {
     reason:
       'Participant_id column labels must consist of the pattern "sub-<subject_id>".',
   },
+  213: {
+    key: 'README_FILE_SMALL',
+    severity: 'warning',
+    reason:
+      'The recommended file /README is very small. Please consider expanding it with additional information about the dataset.',
+  },
 }

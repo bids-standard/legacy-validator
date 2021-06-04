@@ -35,11 +35,7 @@
   "pet_ses": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?\\1(_\\2)?(?:_trc-[a-zA-Z0-9]+)?(?:_rec-[a-zA-Z0-9]+)?(?:_task-[a-zA-Z0-9]+)?(?:_run-[0-9]+_)?(@@@_pet_ses_type_@@@)$",
     "tokens": {
-      "@@@_pet_ses_type_@@@": [
-        "_pet.json",
-        "_events.json",
-        "_events.tsv"
-      ]
+      "@@@_pet_ses_type_@@@": ["_pet.json", "_events.json", "_events.tsv"]
     }
   },
 
@@ -102,6 +98,8 @@
       "@@@_eeg_space_@@@": [
         "Other",
         "CapTrak",
+        "EEGLAB",
+        "EEGLAB-HJ",
         "CTF",
         "ElektaNeuromag",
         "4DBti",

@@ -127,26 +127,43 @@ jobs:
             python --version
             pip install -U pip setuptools>=27.0 wheel
             pip install dist/*.tar.gz
-  deployment:
+  pypi_deployment:
     docker:
-      - image: node:12.14.1-alpine
+      - image: alpine:3.13
     steps:
+      - run: apk --no-cache add ca-certificates git openssh-client rust cargo
+      - checkout
+      - run:
+          name: Set up environment
+          command: apk --no-cache add build-base libffi-dev libressl-dev
+      - run:
+          name: Install Python 3 and build tools
+          command: apk --no-cache add python3 python3-dev
+      - run:
+          name: Update Python install tools
+          command: |
+            python3 -m ensurepip
+            python3 -m pip install --upgrade pip setuptools wheel
+      - run:
+          name: Install twine, readme renderer
+          command: python3 -m pip install twine readme_renderer[md]
+      - run: git checkout -f $CIRCLE_TAG
+      - run: cd bids-validator && python3 setup.py sdist bdist_wheel
+      - run: cd bids-validator && twine upload dist/*
+  gh-pages_deployment:
+    docker:
+      - image: mhart/alpine-node:12
+    steps:
+      - run: npm install --global npm@7
       - run: apk --no-cache add ca-certificates git openssh-client
       - add_ssh_keys:
           fingerprints:
             - "86:74:77:4c:90:02:f4:5d:b4:f8:3c:b4:37:c3:c0:25"
       - checkout
-      - run: apk --no-cache add python build-base openssh libffi-dev libressl-dev
-      - run:
-          name: Install Python 3 and update setuptools
-          command: |
-            apk --no-cache add python3 python3-dev py3-cffi
-            python3 -m pip install --upgrade pip setuptools wheel twine
-      - run: git checkout -f $CIRCLE_TAG
-      - run: cd bids-validator && python3 setup.py sdist bdist_wheel
-      # Publish to PyPI
-      - run: cd bids-validator && twine upload dist/*
-      # Update gh-pages demo site
+      - restore_cache:
+          keys:
+            - npm-deps-{{ checksum "package.json" }}-{{ checksum "./bids-validator/package.json" }}-{{ checksum "./bids-validator-web/package.json" }}-v1
+      - run: apk --no-cache add rsync git python3 build-base openssh
       - run: git config --global user.email "bids.maintenance@gmail.com"
       - run: git config --global user.name "bids-maintenance"
       - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
@@ -154,10 +171,10 @@ jobs:
           name: Create new gh-pages branch without history
           command: git checkout --orphan gh-pages
       - run:
-          name: Install web demo dependencies
+          name: Install bids-validator and bids-validator-web dependencies
           command: npm install
       - run:
-          name: Build and export next project
+          name: Build and export web-validator
           command: npm run web-export
       - run:
           name: Clean and remove bids-validator files
@@ -176,6 +193,12 @@ jobs:
           name: Commit updates
           command: git add . && git commit --allow-empty --no-verify -m "Circle CI - Generate validator demo with version $CIRCLE_TAG"
       - run: git push origin gh-pages -f
+      - save_cache:
+          key: npm-deps-{{ checksum "package.json" }}-{{ checksum "./bids-validator/package.json" }}-{{ checksum "./bids-validator-web/package.json" }}-v1
+          paths:
+            - ./node_modules
+      - store_artifacts:
+          path: ~/
 
 workflows:
   version: 2
@@ -209,13 +232,22 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - deployment:
+      - pypi_deployment:
           requires:
             - test_python
             - test
             - test_docker
-            - githubPagesTest
             - pypi_precheck
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+      - gh-pages_deployment:
+          requires:
+            - test
+            - test_docker
+            - githubPagesTest
           filters:
             branches:
               ignore: /.*/

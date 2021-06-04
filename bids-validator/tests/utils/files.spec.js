@@ -86,6 +86,19 @@ describe('README', () => {
     const issues = checkReadme(fileList)
     assert(issues[0].key === 'README_FILE_MISSING')
   })
+
+  it('throws warning if it is too small', () => {
+    const fileList = {
+      1: {
+        name: 'README',
+        path: 'tests/data/bids-examples/ds001/README',
+        relativePath: '/README',
+        stats: { size: 20 },
+      },
+    }
+    const issues = checkReadme(fileList)
+    assert(issues[0].key === 'README_FILE_SMALL')
+  })
 })
 
 describe('validateMisc', () => {
@@ -111,7 +124,10 @@ describe('validateMisc', () => {
       // *.meg4 and BadChannels files are empty. But only *.meg4 is an issue
       assert.ok(issues.length == 1)
       assert.ok(issues.every(issue => issue instanceof utils.issues.Issue))
-      assert.notStrictEqual(issues.findIndex(issue => issue.code === 99), -1)
+      assert.notStrictEqual(
+        issues.findIndex(issue => issue.code === 99),
+        -1,
+      )
       assert.ok(issues[0].file.name == 'sub-0001_task-AEF_run-01_meg.meg4')
       done()
     })

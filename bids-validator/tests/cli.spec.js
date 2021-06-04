@@ -10,6 +10,11 @@ const data_without_errors = path.join(data_dir, 'valid_dataset')
 
 const cli_path = './bids-validator/bin/bids-validator'
 
+const colorRegEx = new RegExp(
+  // eslint-disable-next-line no-control-regex
+  '[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]',
+)
+
 describe('CLI', () => {
   it('should import the cli without issue', function() {
     try {
@@ -107,6 +112,40 @@ describe('CLI', () => {
       } catch (e) {
         done(e)
       }
+    })
+  })
+
+  it('should print with colors by default', done => {
+    const command = spawn('node', [cli_path, data_without_errors])
+
+    let commandOutput = ''
+    command.stdout.on('data', data => {
+      const dataLines = data.toString()
+      commandOutput = commandOutput.concat(dataLines)
+    })
+
+    command.on('exit', code => {
+      assert.equal(colorRegEx.test(commandOutput), true)
+      assert.equal(code, 0)
+      done()
+    })
+  })
+
+  it('should print without colors when NO_COLOR env set', done => {
+    const command = spawn('node', [cli_path, data_without_errors], {
+      env: { ...process.env, NO_COLOR: 'any value' },
+    })
+
+    let commandOutput = ''
+    command.stdout.on('data', data => {
+      const dataLines = data.toString()
+      commandOutput = commandOutput.concat(dataLines)
+    })
+
+    command.on('exit', code => {
+      assert.equal(colorRegEx.test(commandOutput), false)
+      assert.equal(code, 0)
+      done()
     })
   })
 })

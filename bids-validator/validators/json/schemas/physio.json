@@ -9,12 +9,11 @@
         "type": "string",
         "minLength": 1
       }
-    }
+    },
+    "Manufacturer": { "type": "string" },
+    "ManufacturersModelName": { "type": "string" },
+    "SoftwareVersions": { "type": "string" },
+    "DeviceSerialNumber": { "type": "string" }
   },
-  "required": [
-    "SamplingFrequency",
-    "StartTime",
-    "Columns"
-  ]
+  "required": ["SamplingFrequency", "StartTime", "Columns"]
 }
-

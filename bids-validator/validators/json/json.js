@@ -125,7 +125,12 @@ const selectSchema = file => {
       schema = require('./schemas/physio.json')
     } else if (file.name.endsWith('events.json')) {
       schema = require('./schemas/events.json')
-    }
+    } else if (
+      file.relativePath.includes('/beh/') &&
+      file.name.endsWith('beh.json')
+    ) {
+      schema = require('./schemas/beh.json')
+    } 
   }
   return schema
 }

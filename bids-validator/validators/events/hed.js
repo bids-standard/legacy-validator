@@ -131,18 +131,21 @@ function validateSidecars(
   for (const sidecarName of potentialSidecars) {
     if (!(sidecarName in sidecarIssueTypes)) {
       const sidecarDictionary = jsonContents[sidecarName]
+      if (!sidecarDictionary) {
+        continue
+      }
       const sidecarHedValueStrings = []
       let sidecarHedCategoricalStrings = []
-      for (const sidecarKey in sidecarDictionary) {
-        const sidecarValue = sidecarDictionary[sidecarKey]
-        if (sidecarValueHasHed(sidecarValue)) {
-          if (typeof sidecarValue.HED === 'string') {
-            sidecarHedValueStrings.push(sidecarValue.HED)
-          } else {
-            sidecarHedCategoricalStrings = sidecarHedCategoricalStrings.concat(
-              Object.values(sidecarValue.HED),
-            )
-          }
+      const sidecarHedData = Object.values(sidecarDictionary).filter(
+        sidecarValueHasHed,
+      )
+      for (const sidecarValue of sidecarHedData) {
+        if (typeof sidecarValue.HED === 'string') {
+          sidecarHedValueStrings.push(sidecarValue.HED)
+        } else {
+          sidecarHedCategoricalStrings = sidecarHedCategoricalStrings.concat(
+            Object.values(sidecarValue.HED),
+          )
         }
       }
       const jsonFileObject = getSidecarFileObject(sidecarName, jsonFiles)
@@ -171,15 +174,14 @@ function validateSidecars(
         return categoricalStringIssues
       }
       const fileIssues = [].concat(valueStringIssues, categoricalStringIssues)
-      if (fileIssues.length > 0) {
-        for (const fileIssue of fileIssues) {
-          if (fileIssue.severity === 'error') {
-            sidecarErrorsFound = true
-            break
-          }
-        }
-        issues = issues.concat(fileIssues)
+      if (
+        fileIssues.some(fileIssue => {
+          return fileIssue.severity === 'error'
+        })
+      ) {
+        sidecarErrorsFound = true
       }
+      issues = issues.concat(fileIssues)
     } else if (sidecarIssueTypes[sidecarName] === 'error') {
       sidecarErrorsFound = true
     }

@@ -587,5 +587,4 @@ describe('JSON', function() {
       assert(issues[1].evidence == '.CogPOID should match format "uri"')
     })
   })
-
 })

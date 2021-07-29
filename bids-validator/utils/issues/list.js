@@ -610,12 +610,6 @@ export default {
     reason:
       "You should define 'HEDVersion' for this file. If you don't provide this information, the HED validation will use the latest version available.",
   },
-  110: {
-    key: 'HED_WRONG_NUMBER_OF_NUMBER_SIGNS',
-    severity: 'error',
-    reason:
-      'You must have exactly one number sign in a HED value-taking string template.',
-  },
   113: {
     key: 'NO_AUTHORS',
     severity: 'warning',

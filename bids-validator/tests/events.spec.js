@@ -172,8 +172,9 @@ describe('Events', function() {
         jsonFiles,
         '',
       ).then(issues => {
-        assert.strictEqual(issues.length, 1)
+        assert.strictEqual(issues.length, 2)
         assert.strictEqual(issues[0].code, 104)
+        assert.strictEqual(issues[1].code, 104)
       })
     })
 
@@ -289,8 +290,9 @@ describe('Events', function() {
         jsonFiles,
         '',
       ).then(issues => {
-        assert.strictEqual(issues.length, 1)
+        assert.strictEqual(issues.length, 2)
         assert.strictEqual(issues[0].code, 104)
+        assert.strictEqual(issues[1].code, 104)
       })
     })
 
@@ -394,8 +396,9 @@ describe('Events', function() {
         jsonFiles,
         '',
       ).then(issues => {
-        assert.strictEqual(issues.length, 1)
+        assert.strictEqual(issues.length, 2)
         assert.strictEqual(issues[0].code, 104)
+        assert.strictEqual(issues[1].code, 104)
       })
     })
 
@@ -508,8 +511,9 @@ describe('Events', function() {
         jsonFiles,
         '',
       ).then(issues => {
-        assert.strictEqual(issues.length, 1)
+        assert.strictEqual(issues.length, 2)
         assert.strictEqual(issues[0].code, 104)
+        assert.strictEqual(issues[1].code, 104)
       })
     })
 
@@ -746,7 +750,7 @@ describe('Events', function() {
         '',
       ).then(issues => {
         assert.strictEqual(issues.length, 1)
-        assert.strictEqual(issues[0].code, 110)
+        assert.strictEqual(issues[0].code, 104)
       })
     })
 
@@ -785,8 +789,9 @@ describe('Events', function() {
         jsonFiles,
         '',
       ).then(issues => {
-        assert.strictEqual(issues.length, 1)
-        assert.strictEqual(issues[0].code, 110)
+        assert.strictEqual(issues.length, 2)
+        assert.strictEqual(issues[0].code, 104)
+        assert.strictEqual(issues[1].code, 104)
       })
     })
 

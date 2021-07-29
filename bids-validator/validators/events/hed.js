@@ -145,52 +145,32 @@ function validateSidecars(
           }
         }
       }
-      let fileIssues = []
-      let isHedStringValid, hedIssues
-      for (const hedString of sidecarHedValueStrings) {
-        try {
-          ;[
-            isHedStringValid,
-            hedIssues,
-          ] = hedValidator.validator.validateHedString(
-            hedString,
-            hedSchema,
-            true,
-            true,
-          )
-        } catch (error) {
-          return [internalHedValidatorIssue(error)]
-        }
-        if (!isHedStringValid) {
-          const convertedIssues = convertHedIssuesToBidsIssues(
-            hedIssues,
-            getSidecarFileObject(sidecarName, jsonFiles),
-          )
-          fileIssues = fileIssues.concat(convertedIssues)
-        }
+      const jsonFileObject = getSidecarFileObject(sidecarName, jsonFiles)
+      const [
+        valueValidationSucceeded,
+        valueStringIssues,
+      ] = validateSidecarStrings(
+        sidecarHedValueStrings,
+        hedSchema,
+        jsonFileObject,
+        true,
+      )
+      if (!valueValidationSucceeded) {
+        return valueStringIssues
       }
-      for (const hedString of sidecarHedCategoricalStrings) {
-        try {
-          ;[
-            isHedStringValid,
-            hedIssues,
-          ] = hedValidator.validator.validateHedString(
-            hedString,
-            hedSchema,
-            true,
-            false,
-          )
-        } catch (error) {
-          return [internalHedValidatorIssue(error)]
-        }
-        if (!isHedStringValid) {
-          const convertedIssues = convertHedIssuesToBidsIssues(
-            hedIssues,
-            getSidecarFileObject(sidecarName, jsonFiles),
-          )
-          fileIssues = fileIssues.concat(convertedIssues)
-        }
+      const [
+        categoricalValidationSucceeded,
+        categoricalStringIssues,
+      ] = validateSidecarStrings(
+        sidecarHedCategoricalStrings,
+        hedSchema,
+        jsonFileObject,
+        false,
+      )
+      if (!categoricalValidationSucceeded) {
+        return categoricalStringIssues
       }
+      const fileIssues = [].concat(valueStringIssues, categoricalStringIssues)
       if (fileIssues.length > 0) {
         for (const fileIssue of fileIssues) {
           if (fileIssue.severity === 'error') {
@@ -205,6 +185,36 @@ function validateSidecars(
     }
   }
   return [sidecarErrorsFound, issues]
+}
+
+function validateSidecarStrings(
+  sidecarHedStrings,
+  hedSchema,
+  jsonFileObject,
+  areValueStrings,
+) {
+  let sidecarIssues = []
+  let isHedStringValid, hedIssues
+  for (const hedString of sidecarHedStrings) {
+    try {
+      ;[isHedStringValid, hedIssues] = hedValidator.validator.validateHedString(
+        hedString,
+        hedSchema,
+        true,
+        areValueStrings,
+      )
+    } catch (error) {
+      return [false, internalHedValidatorIssue(error)]
+    }
+    if (!isHedStringValid) {
+      const convertedIssues = convertHedIssuesToBidsIssues(
+        hedIssues,
+        jsonFileObject,
+      )
+      sidecarIssues = sidecarIssues.concat(convertedIssues)
+    }
+  }
+  return [true, sidecarIssues]
 }
 
 function getSidecarFileObject(sidecarName, jsonFiles) {

@@ -578,7 +578,7 @@ describe('JSON', function() {
       CogAtlasID:
         'we did a search on https://ww.idontexist.com for the word "atlas"',
       CogPOID:
-        'we did a search on https://ww.idontexisteither.com for the word "paradigm"',        
+        'we did a search on https://ww.idontexisteither.com for the word "paradigm"',
     }
     jsonDict[beh_file.relativePath] = jsonObj
     validate.JSON(beh_file, jsonDict, function(issues) {
@@ -587,6 +587,5 @@ describe('JSON', function() {
       assert(issues[1].evidence == '.CogPOID should match format "uri"')
     })
   })
-
 
 })

@@ -7,7 +7,6 @@
     "CogAtlasID": { "$ref": "common_definitions.json#/definitions/CogAtlasID" },
     "CogPOID": { "$ref": "common_definitions.json#/definitions/CogPOID" },
     "InstitutionName": { "$ref": "common_definitions.json#/definitions/InstitutionName" },
-    "InstitutionalDepartmentName": { "type": "string" },
     "InstitutionAddress": { "$ref": "common_definitions.json#/definitions/InstitutionAddress" },
     "Manufacturer": { "$ref": "common_definitions.json#/definitions/Manufacturer" },
     "ManufacturersModelName": { "type": "string", "minLength": 1 },

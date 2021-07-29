@@ -795,6 +795,47 @@ describe('Events', function() {
       })
     })
 
+    it('should throw an issue if a sidecar HED categorical column has any number signs', () => {
+      const events = [
+        {
+          file: { path: '/sub01/sub01_task-test_events.tsv' },
+          path: '/sub01/sub01_task-test_events.tsv',
+          contents:
+            'onset\tduration\ttestingCodes\tmyValue\n' +
+            '7\tsomething\tfirst\t0.5\n',
+        },
+      ]
+      const jsonDictionary = {
+        '/sub01/sub01_task-test_events.json': {
+          testingCodes: {
+            HED: {
+              first:
+                'Event/Label/Test,Event/Category/Miscellaneous/Test,Event/Description/Test,Attribute/Visual/Color/Red/#',
+              second:
+                'Event/Label/Test,Event/Category/Miscellaneous/Test,Event/Description/Test,Attribute/Visual/Color/Blue/#',
+            },
+          },
+          myValue: {
+            HED: 'Attribute/Visual/Color/Green/#',
+          },
+        },
+        '/dataset_description.json': { HEDVersion: '7.1.1' },
+      }
+
+      return validate.Events.validateEvents(
+        events,
+        [],
+        headers,
+        jsonDictionary,
+        jsonFiles,
+        '',
+      ).then(issues => {
+        assert.strictEqual(issues.length, 2)
+        assert.strictEqual(issues[0].code, 104)
+        assert.strictEqual(issues[1].code, 104)
+      })
+    })
+
     it('should not throw an issue if the HED string is valid in a previous remote schema version', () => {
       const events = [
         {

@@ -1,0 +1,70 @@
+{
+  "type": "object",
+  "properties": {
+    "Manufacturer": { "type": "string", "minLength": 1 },
+    "ManufacturersModelName": { "type": "string", "minLength": 1 },
+    "DeviceSerialNumber": {"type": "string", "minLength": 1},
+    "StationName": { "type": "string", "minLength": 1 },
+    "SoftwareVersions": { "type": "string", "minLength": 1 },
+    "InstitutionName": { "type": "string", "minLength": 1 },
+    "InstitutionAddress": { "type": "string", "minLength": 1 },  
+    "InstitutionalDepartmentName": { "type": "string", "minLength": 1 }, 
+    "BodyPart": { "type": "string", "minLength": 1 },
+    "BodyPartDetails": { "type": "string", "minLength": 1 },
+    "BodyPartDetailsOntology": { "type": "string", "minLength": 1 },
+    "Environment": { "type": "string", "minLength": 1  },
+    "SampleEmbedding": { "type": "string", "minLength": 1 },
+    "SampleFixation": { "type": "string", "minLength": 1 },
+    "SampleStaining": { 
+      "anyOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "array", "items": { "type": "string" } }
+      ]
+    },
+    "SamplePrimaryAntibody": { 
+      "anyOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "array", "items": { "type": "string" } }
+      ]
+    },
+    "SampleSecondaryAntibody": { 
+      "anyOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "array", "items": { "type": "string" } }
+      ]
+    },
+    "SliceThickness": { "type": "number" },
+    "SampleExtractionProtocol": { "type": "string", "minLength": 1 },
+    "SampleExtractionInstitution": { "type": "string", "minLength": 1 },
+    "ShrinkageFactor": { "type": "number" },
+    "PixelSize": {"type": "array", "items": { "type": "number" } },
+    "PixelSizeUnits": { "type": "string", "minLength": 1 },
+    "ImageAcquisitionProtocol": { "type": "string", "minLength": 1 },
+    "AcquisitionParameters": { "type": "string", "minLength": 1 }
+  },
+
+  "required": [
+    "Manufacturer",
+    "ManufacturersModelName",
+    "DeviceSerialNumber",
+    "StationName",
+    "SoftwareVersions",
+    "InstitutionName",
+    "InstitutionAddress",
+    "InstitutionalDepartmentName",
+
+    "BodyPart",
+    "Environment",
+    "SampleStaining",
+    "SamplePrimaryAntibody",
+    "SampleSecondaryAntibody",
+
+    "PixelSize",
+    "PixelSizeUnits"
+  ],
+
+  "dependencies": {
+    "PixelSize": ["PixelSizeUnits"]
+  }
+
+}

@@ -132,14 +132,14 @@ function validateSidecars(
     if (!(sidecarName in sidecarIssueTypes)) {
       const sidecarDictionary = jsonContents[sidecarName]
       const sidecarHedValueStrings = []
-      let sidecarHedCategorialStrings = []
+      let sidecarHedCategoricalStrings = []
       for (const sidecarKey in sidecarDictionary) {
         const sidecarValue = sidecarDictionary[sidecarKey]
         if (sidecarValueHasHed(sidecarValue)) {
           if (typeof sidecarValue.HED === 'string') {
             sidecarHedValueStrings.push(sidecarValue.HED)
           } else {
-            sidecarHedCategorialStrings = sidecarHedCategorialStrings.concat(
+            sidecarHedCategoricalStrings = sidecarHedCategoricalStrings.concat(
               Object.values(sidecarValue.HED),
             )
           }
@@ -169,7 +169,7 @@ function validateSidecars(
           fileIssues = fileIssues.concat(convertedIssues)
         }
       }
-      for (const hedString of sidecarHedCategorialStrings) {
+      for (const hedString of sidecarHedCategoricalStrings) {
         try {
           ;[
             isHedStringValid,

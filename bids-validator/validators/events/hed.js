@@ -77,8 +77,13 @@ function parseHedVersion(jsonContents, dir) {
   return [schemaDefinition, issues]
 }
 
+let sidecarIssueTypes
+let sidecarFileIssues
+
 function extractHed(events, jsonContents, jsonFiles, hedSchema) {
   let issues = []
+  sidecarIssueTypes = {}
+  sidecarFileIssues = {}
   // loop through event data files
   events.forEach(eventFile => {
     let hedStrings = []
@@ -109,8 +114,6 @@ function extractHed(events, jsonContents, jsonFiles, hedSchema) {
   })
   return issues
 }
-
-const sidecarIssueTypes = {}
 
 function validateSidecars(
   potentialSidecars,
@@ -173,10 +176,15 @@ function validateSidecars(
         })
       ) {
         sidecarErrorsFound = true
+        sidecarIssueTypes[sidecarName] = 'error'
+      } else if (fileIssues.length > 0) {
+        sidecarIssueTypes[sidecarName] = 'warning'
       }
       issues = issues.concat(fileIssues)
+      sidecarFileIssues[sidecarName] = fileIssues
     } else if (sidecarIssueTypes[sidecarName] === 'error') {
       sidecarErrorsFound = true
+      issues = issues.concat(sidecarFileIssues[sidecarName])
     }
   }
   return [sidecarErrorsFound, issues]

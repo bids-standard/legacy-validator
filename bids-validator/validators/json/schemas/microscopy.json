@@ -40,7 +40,7 @@
     "PixelSize": {"type": "array", "items": { "type": "number" } },
     "PixelSizeUnits": { "type": "string", "minLength": 1 },
     "ImageAcquisitionProtocol": { "type": "string", "minLength": 1 },
-    "AcquisitionParameters": { "type": "string", "minLength": 1 }
+    "OtherAcquisitionParameters": { "type": "string", "minLength": 1 }
   },
 
   "required": [

@@ -336,23 +336,14 @@ function internalHedValidatorIssue(error) {
 function convertHedIssuesToBidsIssues(hedIssues, file) {
   const convertedIssues = []
   for (const hedIssue of hedIssues) {
-    if (hedIssue.level === 'warning') {
-      convertedIssues.push(
-        new Issue({
-          code: 105,
-          file: file,
-          evidence: hedIssue.message,
-        }),
-      )
-    } else {
-      convertedIssues.push(
-        new Issue({
-          code: 104,
-          file: file,
-          evidence: hedIssue.message,
-        }),
-      )
-    }
+    const issueCode = hedIssue.level === 'warning' ? 105 : 104
+    convertedIssues.push(
+      new Issue({
+        code: issueCode,
+        file: file,
+        evidence: hedIssue.message,
+      }),
+    )
   }
 
   return convertedIssues

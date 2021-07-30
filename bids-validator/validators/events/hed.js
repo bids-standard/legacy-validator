@@ -58,6 +58,7 @@ function detectHed(events, jsonContents) {
 function parseHedVersion(jsonContents, dir) {
   const schemaDefinition = {}
   const datasetDescription = jsonContents['/dataset_description.json']
+  const issues = []
 
   if (datasetDescription && datasetDescription.HEDVersion) {
     if (semver.valid(datasetDescription.HEDVersion)) {
@@ -69,10 +70,7 @@ function parseHedVersion(jsonContents, dir) {
         datasetDescription.HEDVersion,
       )
     }
-  }
-
-  const issues = []
-  if (Object.entries(schemaDefinition).length === 0) {
+  } else {
     issues.push(new Issue({ code: 109 }))
   }
 

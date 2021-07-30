@@ -8,6 +8,7 @@
     "CogPOID": { "$ref": "common_definitions.json#/definitions/CogPOID" },
     "InstitutionName": { "$ref": "common_definitions.json#/definitions/InstitutionName" },
     "InstitutionAddress": { "$ref": "common_definitions.json#/definitions/InstitutionAddress" },
+    "InstitutionalDepartmentName": { "$ref": "common_definitions.json#/definitions/InstitutionalDepartmentName" },
     "Manufacturer": { "$ref": "common_definitions.json#/definitions/Manufacturer" },
     "ManufacturersModelName": { "type": "string", "minLength": 1 },
     "DeviceSerialNumber": { "$ref": "common_definitions.json#/definitions/DeviceSerialNumber" },

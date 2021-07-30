@@ -78,6 +78,7 @@
     "InstitutionAddress": { "type": "string" },
     "InstitutionName": { "type": "string" },
     "Instructions": { "type": "string" },
+    "InstitutionalDepartmentName": { "type": "string", "minLength": 1},
     "LandmarkCoordinates": {
       "type": "object",
       "additionalProperties": {

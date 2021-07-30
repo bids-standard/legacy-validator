@@ -11,7 +11,7 @@
     "TracerRadionuclide": { "type": "string", "minLength": 1 },
     "InstitutionName": { "type": "string", "minLength": 1 },
     "InstitutionAddress": { "type": "string", "minLength": 1 },  
-    "InstitutionalDepartmentName": { "type": "string", "minLength": 1 }, 
+    "InstitutionalDepartmentName": { "$ref": "common_definitions.json#/definitions/InstitutionalDepartmentName" },
     "BodyPart": { "type": "string", "minLength": 1 },
     "TracerRadLex": { "type": "string", "minLength": 1 },
     "TracerSNOMED": { "type": "string", "minLength": 1 },

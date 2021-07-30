@@ -15,6 +15,7 @@
     "CogPOID": { "$ref": "common_definitions.json#/definitions/CogPOID" },
     "InstitutionName": { "$ref": "common_definitions.json#/definitions/InstitutionName" },
     "InstitutionAddress": { "$ref": "common_definitions.json#/definitions/InstitutionAddress" },
+    "InstitutionalDepartmentName": { "$ref": "common_definitions.json#/definitions/InstitutionalDepartmentName" },
     "DeviceSerialNumber": { "$ref": "common_definitions.json#/definitions/DeviceSerialNumber" },
     "ECOGChannelCount": { "type": "integer", "minimum": 0 },
     "SEEGChannelCount": { "type": "integer", "minimum": 0 },

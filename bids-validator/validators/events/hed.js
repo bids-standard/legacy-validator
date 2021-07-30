@@ -11,7 +11,10 @@ export default function checkHedStrings(events, jsonContents, jsonFiles, dir) {
   if (!hedDataExists) {
     return Promise.resolve([])
   }
-  const schemaDefinition = parseHedVersion(jsonContents, dir)
+  const [schemaDefinition, schemaDefinitionIssues] = parseHedVersion(
+    jsonContents,
+    dir,
+  )
   let hedSchemaPromise
   try {
     hedSchemaPromise = hedValidator.validator.buildSchema(schemaDefinition)
@@ -19,12 +22,8 @@ export default function checkHedStrings(events, jsonContents, jsonFiles, dir) {
     return Promise.resolve([internalHedValidatorIssue(error)])
   }
   return hedSchemaPromise.then(hedSchema => {
-    return extractHed(
-      events,
-      jsonContents,
-      jsonFiles,
-      hedSchema,
-      schemaDefinition,
+    return schemaDefinitionIssues.concat(
+      extractHed(events, jsonContents, jsonFiles, hedSchema),
     )
   })
 }
@@ -72,16 +71,15 @@ function parseHedVersion(jsonContents, dir) {
     }
   }
 
-  return schemaDefinition
+  const issues = []
+  if (Object.entries(schemaDefinition).length === 0) {
+    issues.push(new Issue({ code: 109 }))
+  }
+
+  return [schemaDefinition, issues]
 }
 
-function extractHed(
-  events,
-  jsonContents,
-  jsonFiles,
-  hedSchema,
-  schemaDefinition,
-) {
+function extractHed(events, jsonContents, jsonFiles, hedSchema) {
   let issues = []
   // loop through event data files
   events.forEach(eventFile => {
@@ -111,9 +109,6 @@ function extractHed(
       issues = issues.concat(sidecarIssues, tsvIssues, datasetIssues)
     }
   })
-  if (Object.entries(schemaDefinition).length === 0) {
-    issues.push(new Issue({ code: 109 }))
-  }
   return issues
 }
 

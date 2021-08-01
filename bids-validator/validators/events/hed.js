@@ -7,7 +7,8 @@ import parseTsv from '../tsv/tsvParser'
 const Issue = utils.issues.Issue
 
 export default function checkHedStrings(events, jsonContents, jsonFiles, dir) {
-  const hedDataExists = detectHed(events, jsonContents)
+  const eventData = getNeededEventData(events)
+  const hedDataExists = detectHed(eventData, jsonContents)
   if (!hedDataExists) {
     return Promise.resolve([])
   }
@@ -23,31 +24,40 @@ export default function checkHedStrings(events, jsonContents, jsonFiles, dir) {
   }
   return hedSchemaPromise.then(hedSchema => {
     return schemaDefinitionIssues.concat(
-      extractHed(events, jsonContents, jsonFiles, hedSchema),
+      extractHed(eventData, jsonContents, jsonFiles, hedSchema),
     )
   })
 }
 
-function detectHed(events, jsonContents) {
-  const checkedSidecars = []
-  for (const eventFile of events) {
+function getNeededEventData(events) {
+  return events.map(eventFile => {
     const potentialSidecars = utils.files.potentialLocations(
       eventFile.path.replace('.tsv', '.json'),
     )
-    for (const sidecarName of potentialSidecars) {
+    const parsedTsv = parseTsv(eventFile.contents)
+    const file = eventFile.file
+    return {
+      potentialSidecars: potentialSidecars,
+      parsedTsv: parsedTsv,
+      file: file,
+    }
+  })
+}
+
+function detectHed(eventData, jsonContents) {
+  const checkedSidecars = []
+  for (const eventFileData of eventData) {
+    for (const sidecarName of eventFileData.potentialSidecars) {
       if (checkedSidecars.includes(sidecarName)) {
         continue
       }
       checkedSidecars.push(sidecarName)
-      const sidecarDictionary = jsonContents[sidecarName]
-      for (const sidecarKey in sidecarDictionary) {
-        if (sidecarValueHasHed(sidecarDictionary[sidecarKey])) {
-          return true
-        }
+      const sidecarDictionary = jsonContents[sidecarName] || {}
+      if (Object.values(sidecarDictionary).some(sidecarValueHasHed)) {
+        return true
       }
     }
-    const parsedTsv = parseTsv(eventFile.contents)
-    const hedColumnIndex = parsedTsv.headers.indexOf('HED')
+    const hedColumnIndex = eventFileData.parsedTsv.headers.indexOf('HED')
     if (hedColumnIndex !== -1) {
       return true
     }
@@ -80,19 +90,16 @@ function parseHedVersion(jsonContents, dir) {
 let sidecarIssueTypes
 let sidecarFileIssues
 
-function extractHed(events, jsonContents, jsonFiles, hedSchema) {
+function extractHed(eventData, jsonContents, jsonFiles, hedSchema) {
   let issues = []
   sidecarIssueTypes = {}
   sidecarFileIssues = {}
   // loop through event data files
-  events.forEach(eventFile => {
+  eventData.forEach(eventFileData => {
     let hedStrings = []
     // get the json sidecar dictionary associated with the event data
-    const potentialSidecars = utils.files.potentialLocations(
-      eventFile.path.replace('.tsv', '.json'),
-    )
     const [sidecarErrorsFound, sidecarIssues] = validateSidecars(
-      potentialSidecars,
+      eventFileData.potentialSidecars,
       jsonContents,
       hedSchema,
       jsonFiles,
@@ -101,14 +108,24 @@ function extractHed(events, jsonContents, jsonFiles, hedSchema) {
       issues = issues.concat(sidecarIssues)
       return
     }
-    const sidecarHedTags = mergeSidecarHed(potentialSidecars, jsonContents)
+    const sidecarHedTags = mergeSidecarHed(
+      eventFileData.potentialSidecars,
+      jsonContents,
+    )
 
-    const [tsvHedStrings, tsvIssues] = parseTsvHed(sidecarHedTags, eventFile)
+    const [tsvHedStrings, tsvIssues] = parseTsvHed(
+      sidecarHedTags,
+      eventFileData,
+    )
     hedStrings = tsvHedStrings
     if (!hedStrings) {
       issues = issues.concat(sidecarIssues)
     } else {
-      const datasetIssues = validateDataset(hedStrings, hedSchema, eventFile)
+      const datasetIssues = validateDataset(
+        hedStrings,
+        hedSchema,
+        eventFileData,
+      )
       issues = issues.concat(sidecarIssues, tsvIssues, datasetIssues)
     }
   })
@@ -250,14 +267,15 @@ function sidecarValueHasHed(sidecarValue) {
   )
 }
 
-function parseTsvHed(sidecarHedTags, eventFile) {
+function parseTsvHed(sidecarHedTags, eventFileData) {
   const hedStrings = []
   const issues = []
-  const parsedTsv = parseTsv(eventFile.contents)
-  const hedColumnIndex = parsedTsv.headers.indexOf('HED')
+  const hedColumnIndex = eventFileData.parsedTsv.headers.indexOf('HED')
   const sidecarHedColumnIndices = {}
   for (const sidecarHedColumn in sidecarHedTags) {
-    const sidecarHedColumnHeader = parsedTsv.headers.indexOf(sidecarHedColumn)
+    const sidecarHedColumnHeader = eventFileData.parsedTsv.headers.indexOf(
+      sidecarHedColumn,
+    )
     if (sidecarHedColumnHeader > -1) {
       sidecarHedColumnIndices[sidecarHedColumn] = sidecarHedColumnHeader
     }
@@ -266,7 +284,7 @@ function parseTsvHed(sidecarHedTags, eventFile) {
     return [[], []]
   }
 
-  for (const rowCells of parsedTsv.rows.slice(1)) {
+  for (const rowCells of eventFileData.parsedTsv.rows.slice(1)) {
     // get the 'HED' field
     const hedStringParts = []
     if (rowCells[hedColumnIndex] && rowCells[hedColumnIndex] !== 'n/a') {
@@ -292,7 +310,7 @@ function parseTsvHed(sidecarHedTags, eventFile) {
           issues.push(
             new Issue({
               code: 108,
-              file: eventFile.file,
+              file: eventFileData.file,
               evidence: rowCell,
             }),
           )
@@ -308,7 +326,7 @@ function parseTsvHed(sidecarHedTags, eventFile) {
   return [hedStrings, issues]
 }
 
-function validateDataset(hedStrings, hedSchema, eventFile) {
+function validateDataset(hedStrings, hedSchema, eventFileData) {
   let isHedDatasetValid, hedIssues
   try {
     ;[isHedDatasetValid, hedIssues] = hedValidator.validator.validateHedDataset(
@@ -322,7 +340,7 @@ function validateDataset(hedStrings, hedSchema, eventFile) {
   if (!isHedDatasetValid) {
     const convertedIssues = convertHedIssuesToBidsIssues(
       hedIssues,
-      eventFile.file,
+      eventFileData.file,
     )
     return convertedIssues
   } else {

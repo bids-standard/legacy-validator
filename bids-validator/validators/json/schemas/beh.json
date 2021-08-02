@@ -7,7 +7,8 @@
     "CogAtlasID": { "$ref": "common_definitions.json#/definitions/CogAtlasID" },
     "CogPOID": { "$ref": "common_definitions.json#/definitions/CogPOID" },
     "InstitutionName": { "$ref": "common_definitions.json#/definitions/InstitutionName" },
-    "InstitutionAddress": { "$ref": "common_definitions.json#/definitions/InstitutionAddress" }
+    "InstitutionAddress": { "$ref": "common_definitions.json#/definitions/InstitutionAddress" },
+    "InstitutionalDepartmentName": { "$ref": "common_definitions.json#/definitions/InstitutionalDepartmentName" }
   },
   "additionalProperties": false
 }

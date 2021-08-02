@@ -157,6 +157,8 @@ You can get a good impression using the following links:
 - [How JSON schemas are tested](https://github.com/bids-standard/bids-validator/blob/master/bids-validator/tests/json.spec.js)
 - [How TSV files are tested](https://github.com/bids-standard/bids-validator/blob/master/bids-validator/tests/tsv.spec.js)
 
+For more information on how to run the tests check the [testing section](./README.md#testing) of the README.
+
 [link_git]: https://git-scm.com/
 [link_handbook]: https://guides.github.com/introduction/git-handbook/
 [link_swc_intro]: http://swcarpentry.github.io/git-novice/

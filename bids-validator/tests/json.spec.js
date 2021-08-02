@@ -566,4 +566,25 @@ describe('JSON', function() {
       )
     })
   })
+
+  var beh_file = {
+    name: 'sub-01_run-01_beh.json',
+    relativePath: '/sub-01_run-01_beh.json',
+  }
+
+  it('*beh.json sidecars with CogPOID or CogAtlasID fields should require a uri format', function() {
+    var jsonObj = {
+      TaskName: 'stroop',
+      CogAtlasID:
+        'we did a search on https://ww.idontexist.com for the word "atlas"',
+      CogPOID:
+        'we did a search on https://ww.idontexisteither.com for the word "paradigm"',
+    }
+    jsonDict[beh_file.relativePath] = jsonObj
+    validate.JSON(beh_file, jsonDict, function(issues) {
+      assert(issues.length === 2)
+      assert(issues[0].evidence == '.CogAtlasID should match format "uri"')
+      assert(issues[1].evidence == '.CogPOID should match format "uri"')
+    })
+  })
 })

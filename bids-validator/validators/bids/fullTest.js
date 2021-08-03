@@ -14,6 +14,7 @@ import subSesMismatchTest from './subSesMismatchTest'
 import groupFileTypes from './groupFileTypes'
 import subjects from './subjects'
 import checkDatasetDescription from './checkDatasetDescription'
+import checkSamples from './checkSamples'
 import checkReadme from './checkReadme'
 import validateMisc from '../../utils/files/validateMisc'
 import collectSubjectMetadata from '../../utils/summary/collectSubjectMetadata'
@@ -135,6 +136,10 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
       // Check for datasetDescription file in the proper place
       const datasetDescriptionIssues = checkDatasetDescription(jsonContentsDict)
       self.issues = self.issues.concat(datasetDescriptionIssues)
+
+      // Check for samples file in the proper place
+      const samplesIssues = checkSamples(jsonContentsDict)
+      self.issues = self.issues.concat(samplesIssues)
 
       // Check for README file in the proper place
       const readmeIssues = checkReadme(fileList)

@@ -1042,4 +1042,16 @@ export default {
     reason:
       'The recommended file /README is very small. Please consider expanding it with additional information about the dataset.',
   },
+  214: {
+    key: 'SAMPLES_JSON_MISSING',
+    severity: 'error',
+    reason:
+      'The compulsory file /samples.json is missing. See Section 03 (Modality agnostic files) of the BIDS specification.',
+  },
+  215: {
+    key: 'SAMPLES_TSV_MISSING',
+    severity: 'error',
+    reason:
+      'The compulsory file /samples.tsv is missing. See Section 03 (Modality agnostic files) of the BIDS specification.',
+  },
 }

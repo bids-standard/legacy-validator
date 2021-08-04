@@ -1054,4 +1054,16 @@ export default {
     reason:
       'The compulsory file /samples.tsv is missing. See Section 03 (Modality agnostic files) of the BIDS specification.',
   },
+  216: {
+    key: 'PIXEL_SIZE_UNITS',
+    severity: 'error',
+    reason:
+      "PixelSizeUnits was not defined in microseconds (um) in the image's metadata.",
+  },
+217: {
+    key: 'JSON_FIELD_MISSING',
+    severity: 'warning',
+    reason:
+      'One or more recommended fields are missing in the JSON file. See Section Microscopy of the BIDS specification.',
+  }
 }

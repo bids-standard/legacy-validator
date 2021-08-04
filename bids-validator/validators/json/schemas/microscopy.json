@@ -44,6 +44,11 @@
   },
 
   "required": [
+    "PixelSize",
+    "PixelSizeUnits"
+  ],
+
+  "recommended": [
     "Manufacturer",
     "ManufacturersModelName",
     "DeviceSerialNumber",
@@ -57,10 +62,7 @@
     "Environment",
     "SampleStaining",
     "SamplePrimaryAntibody",
-    "SampleSecondaryAntibody",
-
-    "PixelSize",
-    "PixelSizeUnits"
+    "SampleSecondaryAntibody"
   ],
 
   "dependencies": {

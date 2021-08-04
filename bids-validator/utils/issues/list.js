@@ -1043,24 +1043,18 @@ export default {
       'The recommended file /README is very small. Please consider expanding it with additional information about the dataset.',
   },
   214: {
-    key: 'SAMPLES_JSON_MISSING',
-    severity: 'error',
-    reason:
-      'The compulsory file /samples.json is missing. See Section 03 (Modality agnostic files) of the BIDS specification.',
-  },
-  215: {
     key: 'SAMPLES_TSV_MISSING',
     severity: 'error',
     reason:
       'The compulsory file /samples.tsv is missing. See Section 03 (Modality agnostic files) of the BIDS specification.',
   },
-  216: {
+  215: {
     key: 'PIXEL_SIZE_UNITS',
     severity: 'error',
     reason:
       "PixelSizeUnits was not defined in microseconds (um) in the image's metadata.",
   },
-217: {
+216: {
     key: 'JSON_FIELD_MISSING',
     severity: 'warning',
     reason:

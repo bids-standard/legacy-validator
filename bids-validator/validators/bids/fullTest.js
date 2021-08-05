@@ -14,7 +14,6 @@ import subSesMismatchTest from './subSesMismatchTest'
 import groupFileTypes from './groupFileTypes'
 import subjects from './subjects'
 import checkDatasetDescription from './checkDatasetDescription'
-import checkSamples from './checkSamples'
 import checkReadme from './checkReadme'
 import validateMisc from '../../utils/files/validateMisc'
 import collectSubjectMetadata from '../../utils/summary/collectSubjectMetadata'
@@ -43,6 +42,7 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
   const phenotypeParticipants = []
 
   const tsvs = []
+  const samples = []
 
   const summary = utils.collectSummary(fileList, self.options, schema)
 
@@ -90,6 +90,10 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
     )
   }
 
+  // Does 
+  // Does 'files.tsv' has a file with <sample> in it? --Yes--> needSample
+
+
   validateMisc(files.misc)
     .then(miscIssues => {
       self.issues = self.issues.concat(miscIssues)
@@ -103,6 +107,7 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
         participants,
         phenotypeParticipants,
         stimuli,
+        samples
       )
     })
     .then(({ tsvIssues, participantsTsvContent }) => {
@@ -136,10 +141,6 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
       // Check for datasetDescription file in the proper place
       const datasetDescriptionIssues = checkDatasetDescription(jsonContentsDict)
       self.issues = self.issues.concat(datasetDescriptionIssues)
-
-      // Check for samples file in the proper place
-      const samplesIssues = checkSamples(jsonContentsDict)
-      self.issues = self.issues.concat(samplesIssues)
 
       // Check for README file in the proper place
       const readmeIssues = checkReadme(fileList)

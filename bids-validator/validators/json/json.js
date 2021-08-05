@@ -116,7 +116,6 @@ const selectSchema = file => {
       file.name.endsWith('spim.json')
       ) {
       schema = require('./schemas/microscopy.json')
-  
     } else if (
       file.relativePath.includes('/meg/') &&
       file.name.endsWith('coordsystem.json')
@@ -131,31 +130,7 @@ const selectSchema = file => {
       file.relativePath.includes('/eeg/') &&
       file.name.endsWith('coordsystem.json')
     ) {
-      schema = require('./schemas/coordsystem_eeg.json')
-    } else if (
-      file.relativePath.includes('/microscopy/') &&
-      (
-        file.name.endsWith('tem.json') ||
-        file.name.endsWith('sem.json') ||
-        file.name.endsWith('ct.json') ||
-        file.name.endsWith('bf.json') ||
-        file.name.endsWith('df.json') ||
-        file.name.endsWith('pc.json') ||
-        file.name.endsWith('dic.json') ||
-        file.name.endsWith('fluo.json') ||
-        file.name.endsWith('conf.json') ||
-        file.name.endsWith('pli.json') ||
-        file.name.endsWith('cars.json') ||
-        file.name.endsWith('2pe.json') ||
-        file.name.endsWith('mpe.json') ||
-        file.name.endsWith('sr.json') ||
-        file.name.endsWith('nlo.json') ||
-        file.name.endsWith('oct.json') ||
-        file.name.endsWith('spim.json')
-      )
-    ) {
-      schema = require('./schemas/microscopy.json')
-     
+      schema = require('./schemas/coordsystem_eeg.json')     
     } else if (
       file.relativePath.includes('/pet/') &&
       file.name.endsWith('blood.json')

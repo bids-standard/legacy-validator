@@ -1053,11 +1053,5 @@ export default {
     severity: 'error',
     reason:
       "PixelSizeUnits was not defined in microseconds (um) in the image's metadata.",
-  },
-216: {
-    key: 'JSON_FIELD_MISSING',
-    severity: 'warning',
-    reason:
-      'One or more recommended fields are missing in the JSON file. See Section Microscopy of the BIDS specification.',
   }
 }

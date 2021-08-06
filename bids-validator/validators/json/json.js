@@ -130,7 +130,7 @@ const selectSchema = file => {
       file.relativePath.includes('/eeg/') &&
       file.name.endsWith('coordsystem.json')
     ) {
-      schema = require('./schemas/coordsystem_eeg.json')     
+      schema = require('./schemas/coordsystem_eeg.json')
     } else if (
       file.relativePath.includes('/pet/') &&
       file.name.endsWith('blood.json')

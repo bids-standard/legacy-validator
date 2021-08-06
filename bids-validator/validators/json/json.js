@@ -97,23 +97,23 @@ const selectSchema = file => {
     } else if (file.name.endsWith('eeg.json')) {
       schema = require('./schemas/eeg.json')
     } else if (
-      file.name.endsWith('tem.json') ||
-      file.name.endsWith('sem.json') ||
-      file.name.endsWith('ct.json') ||
-      file.name.endsWith('bf.json') ||
-      file.name.endsWith('df.json') ||
-      file.name.endsWith('pc.json') ||
-      file.name.endsWith('dic.json') ||
-      file.name.endsWith('fluo.json') ||
-      file.name.endsWith('conf.json') ||
-      file.name.endsWith('pli.json') ||
-      file.name.endsWith('cars.json') ||
-      file.name.endsWith('2pe.json') ||
-      file.name.endsWith('mpe.json') ||
-      file.name.endsWith('sr.json') ||
-      file.name.endsWith('nlo.json') ||
-      file.name.endsWith('oct.json') ||
-      file.name.endsWith('spim.json')
+      file.name.endsWith('TEM.json') ||
+      file.name.endsWith('SEM.json') ||
+      file.name.endsWith('CT.json') ||
+      file.name.endsWith('BF.json') ||
+      file.name.endsWith('DF.json') ||
+      file.name.endsWith('PC.json') ||
+      file.name.endsWith('DIC.json') ||
+      file.name.endsWith('FLUO.json') ||
+      file.name.endsWith('CONF.json') ||
+      file.name.endsWith('PLI.json') ||
+      file.name.endsWith('CARS.json') ||
+      file.name.endsWith('2PE.json') ||
+      file.name.endsWith('MPE.json') ||
+      file.name.endsWith('SR.json') ||
+      file.name.endsWith('NLO.json') ||
+      file.name.endsWith('OCT.json') ||
+      file.name.endsWith('SPIM.json')
       ) {
       schema = require('./schemas/microscopy.json')
     } else if (

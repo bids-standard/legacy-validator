@@ -1052,6 +1052,6 @@ export default {
     key: 'PIXEL_SIZE_UNITS',
     severity: 'error',
     reason:
-      "PixelSizeUnits was not defined in microseconds (um) in the image's metadata.",
+      "PixelSizeUnits was not defined in micrometers (um) in the image's metadata.",
   }
 }

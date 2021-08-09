@@ -7,6 +7,7 @@ export const collectModalities = filenames => {
     MEG: 0,
     EEG: 0,
     iEEG: 0,
+    Microscopy: 0,
   }
   const secondary = {
     MRI_Diffusion: 0,
@@ -55,6 +56,9 @@ export const collectModalities = filenames => {
     }
     if (type.file.isIEEG(path)) {
       modalities.iEEG++
+    }
+    if (type.file.isMicroscopy(path)) {
+      modalities.Microscopy++
     }
   }
   // Order by matching file count

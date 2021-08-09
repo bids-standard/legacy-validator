@@ -15,6 +15,8 @@ import groupFileTypes from './groupFileTypes'
 import subjects from './subjects'
 import checkDatasetDescription from './checkDatasetDescription'
 import checkReadme from './checkReadme'
+import checkSamples from './checkSamples'
+import type from '../../utils/type'
 import validateMisc from '../../utils/files/validateMisc'
 import collectSubjectMetadata from '../../utils/summary/collectSubjectMetadata'
 import collectPetFields from '../../utils/summary/collectPetFields'
@@ -140,6 +142,11 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
       const readmeIssues = checkReadme(fileList)
       self.issues = self.issues.concat(readmeIssues)
 
+      // Check for samples file in the proper place (only for the microscopy modality)
+      if (summary.modalities.includes('Microscopy')) {
+        const samplesIssues = checkSamples(fileList)
+        self.issues = self.issues.concat(samplesIssues)
+    }
       // Validate json files and contents
       return json.validate(jsonFiles, fileList, jsonContentsDict, summary)
     })

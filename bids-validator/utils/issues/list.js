@@ -1049,6 +1049,42 @@ export default {
       'The compulsory file /samples.tsv is missing. See Section 03 (Modality agnostic files) of the BIDS specification.',
   },
   215: {
+    key: 'SAMPLE_ID_PATTERN',
+    severity: 'error',
+    reason:
+      'sample_id column labels must consist of the pattern "sample-<sample_id>".',
+  },
+  216: {
+    key: 'SAMPLE_ID_COLUMN',
+    severity: 'error',
+    reason:
+      "Samples .tsv files must have a 'sample_id' column.",
+  },
+  217: {
+    key: 'PARTICIPANT_ID_COLUMN',
+    severity: 'error',
+    reason:
+      "Samples .tsv files must have a 'participant_id' column.",
+  },
+  218: {
+    key: 'SAMPLE_TYPE_COLUMN',
+    severity: 'error',
+    reason:
+      "Samples .tsv files must have a 'sample_type' column.",
+  },
+  219: {
+    key: 'SAMPLE_TYPE_VALUE',
+    severity: 'error',
+    reason:
+      "sample_type MUST consist of one of the following values: cell line, in vitro differentiated cells, primary cell, cell-free sample, cloning host, tissue, whole organisms, organoid or technical sample.",
+  },
+  220: {
+    key: 'SAMPLE_ID_DUPLICATE',
+    severity: 'error',
+    reason:
+      "Each sample MUST be described by one and only one row.",
+  },
+  221: {
     key: 'PIXEL_SIZE_UNITS',
     severity: 'error',
     reason:

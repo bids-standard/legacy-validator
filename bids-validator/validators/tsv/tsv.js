@@ -242,6 +242,152 @@ const TSV = (file, contents, fileList, callback) => {
     }
   }
 
+  // samples.tsv
+  let samples = null
+  if (file.name === 'samples.tsv') {
+    const sampleIdColumnValues = []
+    const sampleIdColumn = headers.indexOf('sample_id')
+    const participantIdColumn = headers.indexOf('participant_id')
+    const sampleTypeColumn = headers.indexOf('sample_type')
+
+    // if the sample_id column is missing, an error 
+    // will be raised
+    if (sampleIdColumn === -1) {
+      issues.push(
+        new Issue({
+          file: file,
+          evidence: headersEvidence(headers),
+          line: 1,
+          code: 216,
+        }),
+      )
+    }
+    // if the participant_id column is missing, an error 
+    // will be raised
+    else if (participantIdColumn === -1) {
+      issues.push(
+        new Issue({
+          file: file,
+          evidence: headersEvidence(headers),
+          line: 1,
+          code: 217,
+        }),
+      )
+    }
+    // if the sample_type column is missing, an error 
+    // will be raised
+    else if (sampleTypeColumn === -1) {
+      issues.push(
+        new Issue({
+          file: file,
+          evidence: headersEvidence(headers),
+          line: 1,
+          code: 218,
+        }),
+      )
+    } else {
+      // otherwise, the samples should comprise of 
+      // sample-<sample_id> and one sample per row
+      samples = []
+      for (let l = 1; l < rows.length; l++) {
+        const row = rows[l]
+        // skip empty rows
+        if (!row || /^\s*$/.test(row)) {
+          continue
+        }
+        sampleIdColumnValues.push(row[sampleIdColumn])
+        // check if any incorrect patterns in sample_id column
+        if (!row[sampleIdColumn].startsWith('sample-')) {
+          issues.push(
+            new Issue({
+              file: file,
+              evidence: row[sampleIdColumn],
+              reason: 'sample_id column should be named ' +
+                      'as sample-<sample_id>.',
+              line: l,
+              code: 215,
+            }),
+          )
+        }
+
+        // check if a sample is described by one and only one row
+        const doesArrayHaveDuplicates = sampleIdColumnValues.some(
+          (val, i) => sampleIdColumnValues.indexOf(val) !== i
+        )
+        if (doesArrayHaveDuplicates == true) {
+          issues.push(
+            new Issue({
+              file: file,
+              evidence: sampleIdColumnValues,
+              reason: 'Each sample MUST be described by one and only one row.',
+              line: l,
+              code: 220,
+            }),
+          )
+        }
+      }
+      // The participants should comprise of 
+      // sub-<subject_id> and one subject per row
+      participants = []
+      for (let l = 1; l < rows.length; l++) {
+        const row = rows[l]
+        // skip empty rows
+        if (!row || /^\s*$/.test(row)) {
+          continue
+        }
+
+        // check if any incorrect patterns in participant_id column
+        if (!row[participantIdColumn].startsWith('sub-')) {
+          issues.push(
+            new Issue({
+              file: file,
+              evidence: row[participantIdColumn],
+              reason: 'Participant_id column should be named ' +
+                      'as sub-<subject_id>.',
+              line: l,
+              code: 212,
+            }),
+          )
+        }
+
+        // obtain a list of the sample IDs in the samples.tsv file
+        const sample = row[sampleIdColumn].replace('sample-', '')
+        if (sample == 'emptyroom') {
+          continue
+        }
+        samples.push(sample)
+      }
+    }
+  
+
+    // check if any incorrect patterns in sample_type column
+    for (let c = 1; c < rows.length; c++) {
+      const row = rows[c]
+      if ((row[sampleTypeColumn] != 'cell line') &&
+          (row[sampleTypeColumn] != 'in vitro differentiated cells') &&
+          (row[sampleTypeColumn] != 'primary cell') &&
+          (row[sampleTypeColumn] != 'cell-free sample') &&
+          (row[sampleTypeColumn] != 'cloning host') &&
+          (row[sampleTypeColumn] != 'tissue') &&
+          (row[sampleTypeColumn] != 'whole organisms') &&
+          (row[sampleTypeColumn] != 'organoid') &&
+          (row[sampleTypeColumn] != 'technical sample')) {
+          issues.push(
+          new Issue({
+            file: file,
+            evidence: row[sampleTypeColumn],
+            reason: 'sample_type can\'t be any value.',
+            line: c,
+            code: 219,
+          }),
+        )
+      }
+    }
+  }
+      
+    
+
+
   if (
     file.relativePath.includes('/meg/') &&
     file.name.endsWith('_channels.tsv')
@@ -414,5 +560,4 @@ const TSV = (file, contents, fileList, callback) => {
   }
   callback(issues, participants, stimPaths)
 }
-
 export default TSV

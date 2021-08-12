@@ -1083,11 +1083,5 @@ export default {
     severity: 'error',
     reason:
       "Each sample MUST be described by one and only one row.",
-  },
-  221: {
-    key: 'PIXEL_SIZE_UNITS',
-    severity: 'error',
-    reason:
-      "PixelSizeUnits was not defined in micrometers (um) in the image's metadata.",
   }
 }

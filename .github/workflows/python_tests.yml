@@ -55,9 +55,11 @@ jobs:
       - name: Check formatting
         shell: bash -l {0}
         run: |
-          flake8 bids-validator/bids_validator
-          pydocstyle bids-validator/bids_validator/bids_validator.py
+          cd bids-validator
+          flake8 bids_validator
+          pydocstyle bids_validator/bids_validator.py
       - name: Test with pytest
         shell: bash -l {0}
         run: |
-          pytest --doctest-modules bids-validator/bids_validator --verbose
+          cd bids-validator
+          pytest --doctest-modules bids_validator --verbose

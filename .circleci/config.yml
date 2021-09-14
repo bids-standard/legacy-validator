@@ -25,9 +25,10 @@ jobs:
           name: test python
           command: |
             conda activate testenv
-            pytest --doctest-modules bids-validator/bids_validator
-            flake8 bids-validator/bids_validator
-            pydocstyle bids-validator/bids_validator/bids_validator.py
+            cd bids-validator
+            pytest --doctest-modules bids_validator
+            flake8 bids_validator
+            pydocstyle bids_validator/bids_validator.py
   test:
     docker:
       - image: node:12.16.1

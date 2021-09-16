@@ -60,6 +60,7 @@ const stimuliData = buildRegExp(file_level_rules.stimuli)
 const petData = buildRegExp(file_level_rules.pet)
 const petBlood = buildRegExp(file_level_rules.pet_blood)
 const microscopyData = buildRegExp(file_level_rules.microscopy)
+const microscopyJSON = buildRegExp(file_level_rules.microscopy_json)
 // Phenotypic data
 const phenotypicData = buildRegExp(phenotypic_rules.phenotypic_data)
 // Session level
@@ -114,7 +115,8 @@ export default {
       this.file.isPhenotypic(path) ||
       this.file.isPET(path) ||
       this.file.isPETBlood(path) ||
-      this.file.isMicroscopy(path)
+      this.file.isMicroscopy(path) ||
+      this.file.isMicroscopyJSON(path)
     )
   },
 
@@ -350,6 +352,10 @@ export default {
       return conditionalMatch(microscopyData, path)
     },
 
+    isMicroscopyJSON: function(path) {
+      return conditionalMatch(microscopyJSON, path)
+    },
+
     isBehavioral: function(path) {
       if (bids_schema) {
         return bids_schema.datatypes['beh'].some(regex => regex.exec(path))
@@ -377,7 +383,8 @@ export default {
         this.isFuncBold(path) ||
         this.isPET(path) ||
         this.isPETBlood(path) ||
-        this.isMicroscopy(path)
+        this.isMicroscopy(path) ||
+        this.isMicroscopyJSON(path)
       )
     },
   },

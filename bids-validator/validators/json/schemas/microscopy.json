@@ -39,8 +39,13 @@
     "ShrinkageFactor": { "type": "number" },
     "PixelSize": {"type": "array", "items": { "type": "number" } },
     "PixelSizeUnits": { "type": "string", "enum": ["um"] },
+    "Immersion": { "type": "string", "minLength": 1 },
+    "NumericalAperture": { "type": "number" },
+    "Magnification": { "type": "number" },
     "ImageAcquisitionProtocol": { "type": "string", "minLength": 1 },
-    "OtherAcquisitionParameters": { "type": "string", "minLength": 1 }
+    "OtherAcquisitionParameters": { "type": "string", "minLength": 1 },
+    "ChunkTransformationMatrix": {"type": "array", "items": { "type": "array", "items":{ "type": "number"} } },
+    "ChunkTransformationMatrixAxis": { "type": "array", "items": { "type": "string" } }
   },
 
   "required": [
@@ -66,7 +71,8 @@
   ],
 
   "dependencies": {
-    "PixelSize": ["PixelSizeUnits"]
+    "PixelSize": ["PixelSizeUnits"],
+    "ChunkTransformationMatrix": ["ChunkTransformationMatrixAxis"]
   }
 
 }

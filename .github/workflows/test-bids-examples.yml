@@ -12,7 +12,8 @@ jobs:
       fail-fast: false
       matrix:
         platform: [ubuntu-latest]
-        bids-examples-branch: [master]
+        bids-examples-branch: ["test/args_variable"]
+        mode: [disable, v1.6.0, master]
 
     runs-on: ${{ matrix.platform }}
 
@@ -60,3 +61,5 @@ jobs:
           bash ./run_tests.sh
         shell: bash
         working-directory: ./bids-examples
+        env:
+          VALIDATOR_ARGS: -s ${{ matrix.mode }}

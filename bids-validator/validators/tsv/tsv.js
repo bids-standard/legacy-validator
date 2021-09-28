@@ -363,6 +363,12 @@ const TSV = (file, contents, fileList, callback) => {
           // CTF or BTI data
           const fDir = path.dirname(fPath)
           pathList.push(fDir)
+        } else if (fPath.includes('_ieeg.mefd/')) {
+          // MEF3 data
+          const fDir = fPath.substring(0, fPath.indexOf('_ieeg.mefd/') + 10);
+          if (!pathList.includes(fDir)) {
+            pathList.push(fDir)
+          }
         } else {
           // all other data kinds
           pathList.push(fPath)

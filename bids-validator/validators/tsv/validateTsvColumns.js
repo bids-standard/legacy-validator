@@ -185,11 +185,6 @@ const validateASL = (tsvs, jsonContentsDict, headers) => {
       const dim = header.dim
       const numVols = dim[4]
 
-      // get the json sidecar dictionary associated with that nifti scan
-      var potentialSidecars = utils.files.potentialLocations(
-        file.relativePath.replace('.gz', '').replace('.nii', '.json'),
-      )
-
       // get the _asl_context.tsv associated with this asl scan
       const potentialAslContext = utils.files.potentialLocations(
         file.relativePath.replace('.gz', '').replace('asl.nii', 'aslcontext.tsv'),
@@ -228,16 +223,18 @@ const validateASL = (tsvs, jsonContentsDict, headers) => {
           )
         }
 
-        // Get merged data dictionary for this file
-        potentialSidecars = utils.files.potentialLocations(
+        // get the json sidecar dictionary associated with that nifti scan
+        var potentialSidecars = utils.files.potentialLocations(
           tsv.file.relativePath.replace('aslcontext.tsv', 'asl.json'),
         )
+
+        // get merged data dictionary for this file
         const mergedDict = utils.files.generateMergedSidecarDict(
           potentialSidecars,
           jsonContentsDict,
         )
 
-        //check M0Type and tsv list for m0scan in case of an Included M0Type
+        // check M0Type and tsv list for m0scan in case of an Included M0Type
         if (mergedDict.hasOwnProperty('M0Type') &&
             mergedDict['M0Type'] === "Included" &&
             filtered_m0scan_rows.length < 1
@@ -252,7 +249,7 @@ const validateASL = (tsvs, jsonContentsDict, headers) => {
             }),
           )
         }
-        //check M0Type and tsv list for m0scan in case of an Absent M0Type
+        // check M0Type and tsv list for m0scan in case of an Absent M0Type
         if (mergedDict.hasOwnProperty('M0Type') &&
             mergedDict['M0Type'] === "Absent" &&
             filtered_m0scan_rows.length >= 1

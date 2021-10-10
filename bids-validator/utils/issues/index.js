@@ -86,32 +86,30 @@ var issues = {
 
     // organize by severity
     for (const codePropertyName in categorized) {
-      if (codePropertyName !== undefined) {
-        // Properties are always strings but error codes are always integers
-        const code = parseInt(codePropertyName)
-        issue = categorized[code]
-        issue.code = code
+      // Properties are always strings but error codes are always integers
+      const code = parseInt(codePropertyName)
+      issue = categorized[code]
+      issue.code = code
 
-        if (severityMap.hasOwnProperty(issue.code)) {
-          issue.severity = severityMap[issue.code]
-        }
+      if (severityMap.hasOwnProperty(issue.code)) {
+        issue.severity = severityMap[issue.code]
+      }
 
-        if (severityMap.hasOwnProperty(issue.key)) {
-          issue.severity = severityMap[issue.key]
+      if (severityMap.hasOwnProperty(issue.key)) {
+        issue.severity = severityMap[issue.key]
+      }
+      if (issue.severity === 'error') {
+        // Schema validation issues will yield the JSON file invalid, we should display them first to attract
+        // user attention.
+        if (code == 55) {
+          errors.unshift(issue)
+        } else {
+          errors.push(issue)
         }
-        if (issue.severity === 'error') {
-          // Schema validation issues will yield the JSON file invalid, we should display them first to attract
-          // user attention.
-          if (code == 55) {
-            errors.unshift(issue)
-          } else {
-            errors.push(issue)
-          }
-        } else if (issue.severity === 'warning' && !options.ignoreWarnings) {
-          warnings.push(issue)
-        } else if (issue.severity === 'ignore') {
-          ignored.push(issue)
-        }
+      } else if (issue.severity === 'warning' && !options.ignoreWarnings) {
+        warnings.push(issue)
+      } else if (issue.severity === 'ignore') {
+        ignored.push(issue)
       }
     }
     return { errors, warnings, ignored }

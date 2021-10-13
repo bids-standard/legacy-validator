@@ -246,6 +246,7 @@ const TSV = (file, contents, fileList, callback) => {
   let samples = null
   if (file.name === 'samples.tsv') {
     const sampleIdColumnValues = []
+    const participantIdColumnValues = []
     const sampleIdColumn = headers.indexOf('sample_id')
     const participantIdColumn = headers.indexOf('participant_id')
     const sampleTypeColumn = headers.indexOf('sample_type')
@@ -296,6 +297,7 @@ const TSV = (file, contents, fileList, callback) => {
           continue
         }
         sampleIdColumnValues.push(row[sampleIdColumn])
+
         // check if any incorrect patterns in sample_id column
         if (!row[sampleIdColumn].startsWith('sample-')) {
           issues.push(
@@ -309,22 +311,6 @@ const TSV = (file, contents, fileList, callback) => {
             }),
           )
         }
-
-        // check if a sample is described by one and only one row
-        const doesArrayHaveDuplicates = sampleIdColumnValues.some(
-          (val, i) => sampleIdColumnValues.indexOf(val) !== i
-        )
-        if (doesArrayHaveDuplicates == true) {
-          issues.push(
-            new Issue({
-              file: file,
-              evidence: sampleIdColumnValues,
-              reason: 'Each sample MUST be described by one and only one row.',
-              line: l,
-              code: 220,
-            }),
-          )
-        }
       }
       // The participants should comprise of 
       // sub-<subject_id> and one subject per row
@@ -335,6 +321,7 @@ const TSV = (file, contents, fileList, callback) => {
         if (!row || /^\s*$/.test(row)) {
           continue
         }
+        participantIdColumnValues.push(row[participantIdColumn])
 
         // check if any incorrect patterns in participant_id column
         if (!row[participantIdColumn].startsWith('sub-')) {
@@ -349,6 +336,7 @@ const TSV = (file, contents, fileList, callback) => {
             }),
           )
         }
+        
 
         // obtain a list of the sample IDs in the samples.tsv file
         const sample = row[sampleIdColumn].replace('sample-', '')
@@ -357,6 +345,40 @@ const TSV = (file, contents, fileList, callback) => {
         }
         samples.push(sample)
       }
+
+      // check if a sample froma same subject is described by one and only one row
+      var doesSampleIdHaveDuplicates = sampleIdColumnValues.some(
+        (val, i) => sampleIdColumnValues.indexOf(val) !== i
+      )
+
+      for (let r = 0; r < rows.length-1; r++) {
+        for (let l = 0; l < rows.length-1; l++) {
+          if (l == r) {}
+          else {
+            if (sampleIdColumnValues[r] == sampleIdColumnValues[l]) {
+              if (participantIdColumnValues[r] != participantIdColumnValues[l]){
+                doesSampleIdHaveDuplicates = false
+              }
+              else {
+                doesSampleIdHaveDuplicates = true
+              }
+            }
+          }
+        }
+      }
+      if(doesSampleIdHaveDuplicates == true) {
+        issues.push(
+          new Issue({
+            file: file,
+            evidence: sampleIdColumnValues,
+            reason: 'Each sample from a same subject MUST be described by one and only one row.',
+            line: 1,
+            code: 220,
+          })
+        )
+      }
+      else {}
+      
     }
   
 

@@ -1082,6 +1082,6 @@ export default {
     key: 'SAMPLE_ID_DUPLICATE',
     severity: 'error',
     reason:
-      "Each sample MUST be described by one and only one row.",
+      "Each sample from a same subject MUST be described by one and only one row.",
   }
 }

@@ -38,7 +38,7 @@
     "SampleExtractionInstitution": { "type": "string", "minLength": 1 },
     "ShrinkageFactor": { "type": "number" },
     "PixelSize": {"type": "array", "items": { "type": "number" } },
-    "PixelSizeUnits": { "type": "string", "enum": ["um"] },
+    "PixelSizeUnits": { "type": "string", "enum": ["mm", "um", "nm"] },
     "Immersion": { "type": "string", "minLength": 1 },
     "NumericalAperture": { "type": "number" },
     "Magnification": { "type": "number" },

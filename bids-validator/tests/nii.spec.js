@@ -39,7 +39,7 @@ describe('NIFTI', function() {
   it('should ignore missing events files for rest scans', function() {
     let header = {
       dim: [4, 128, 128, 72, 71],
-      pixdim: [-1, 2, 2, 2, 16.5],
+      pixdim: [-1, 2, 2, 2, 1],
       xyzt_units: ['mm', 'mm', 'mm', 's'],
     }
     jsonContentsDict[
@@ -275,7 +275,8 @@ describe('NIFTI', function() {
       [],
       events,
       function(issues) {
-        assert(issues[2].code === 66 && issues.length === 3)
+        assert(issues[3].code === 66 && issues.length === 4)
+        assert(issues[2].code === 12 && issues.length === 4)
       },
     )
   })

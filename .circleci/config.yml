@@ -31,7 +31,7 @@ jobs:
             pydocstyle bids_validator/bids_validator.py
   test:
     docker:
-      - image: node:12.16.1
+      - image: node:14
     steps:
       - checkout
       - restore_cache:
@@ -80,7 +80,7 @@ jobs:
             - ./image.tar
   githubPagesTest:
     docker:
-      - image: mhart/alpine-node:12
+      - image: mhart/alpine-node:14
     steps:
       - run: npm install --global npm@7
       - run: apk --no-cache add ca-certificates git openssh-client
@@ -162,7 +162,7 @@ jobs:
       - run: cd bids-validator && twine upload dist/*
   gh-pages_deployment:
     docker:
-      - image: mhart/alpine-node:12
+      - image: mhart/alpine-node:14
     steps:
       - run: npm install --global npm@7
       - run: apk --no-cache add ca-certificates git openssh-client

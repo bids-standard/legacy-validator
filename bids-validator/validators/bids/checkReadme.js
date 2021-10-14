@@ -4,7 +4,6 @@ const Issue = require('../../utils').issues.Issue
 
 const checkReadme = fileList => {
   const issues = []
-  const fileKeys = Object.keys(fileList)
   const readmeFile = Array.from(Object.values(fileList)).find(
     file => file.relativePath && file.relativePath == '/README',
   )

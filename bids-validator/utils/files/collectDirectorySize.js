@@ -1,4 +1,3 @@
-import fs from 'fs'
 import isNode from '../isNode'
 import getFileStats from './getFileStats'
 

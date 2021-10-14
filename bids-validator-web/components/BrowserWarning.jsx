@@ -1,5 +1,4 @@
 import React from 'react'
-import bowser from 'bowser'
 
 // component setup -----------------------------------------------------------
 

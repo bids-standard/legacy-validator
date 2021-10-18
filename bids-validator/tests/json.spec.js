@@ -587,4 +587,22 @@ describe('JSON', function() {
       assert(issues[1].evidence == '.CogPOID should match format "uri"')
     })
   })
+
+  it('*beh.json with extra content throws no error', function() {
+    var jsonObj = {
+      TaskName: 'stroop',
+      trial: {
+        LongName: 'Trial name',
+        Description: 'Indicator of the type of trial',
+        Levels: {
+          congruent: 'Word and color font are congruent.',
+          incongruent: 'Word and color font are not congruent.',
+        },
+      },
+    }
+    jsonDict[beh_file.relativePath] = jsonObj
+    validate.JSON(beh_file, jsonDict, function(issues) {
+      assert(issues.length === 0)
+    })
+  })
 })

@@ -10,5 +10,5 @@
     "InstitutionAddress": { "$ref": "common_definitions.json#/definitions/InstitutionAddress" },
     "InstitutionalDepartmentName": { "$ref": "common_definitions.json#/definitions/InstitutionalDepartmentName" }
   },
-  "additionalProperties": false
+  "additionalProperties": true
 }

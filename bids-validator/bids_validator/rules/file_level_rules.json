@@ -531,7 +531,7 @@
       "@@@_microscopy_type_@@@": [
         "_TEM",
         "_SEM",
-        "_CT",
+        "_uCT",
         "_BF",
         "_DF",
         "_PC",
@@ -547,12 +547,7 @@
         "_OCT",
         "_SPIM"
       ],
-      "@@@_microscopy_ext_@@@": [
-        ".ome\\.tif",
-        ".ome\\.btf",
-        ".tif",
-        ".png"
-      ]
+      "@@@_microscopy_ext_@@@": [".ome\\.tif", ".ome\\.btf", ".tif", ".png"]
     }
   },
   "microscopy_json": {
@@ -561,7 +556,7 @@
       "@@@_microscopy_type_@@@": [
         "_TEM",
         "_SEM",
-        "_CT",
+        "_uCT",
         "_BF",
         "_DF",
         "_PC",

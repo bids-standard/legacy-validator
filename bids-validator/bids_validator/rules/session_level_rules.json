@@ -209,7 +209,7 @@
       "@@@_microscopy_ses_type_@@@": [
         "_TEM.json",
         "_SEM.json",
-        "_CT.json",
+        "_uCT.json",
         "_BF.json",
         "_DF.json",
         "_PC.json",

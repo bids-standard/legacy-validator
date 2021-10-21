@@ -99,7 +99,7 @@ const selectSchema = file => {
     } else if (
       file.name.endsWith('TEM.json') ||
       file.name.endsWith('SEM.json') ||
-      file.name.endsWith('CT.json') ||
+      file.name.endsWith('uCT.json') ||
       file.name.endsWith('BF.json') ||
       file.name.endsWith('DF.json') ||
       file.name.endsWith('PC.json') ||
@@ -114,7 +114,7 @@ const selectSchema = file => {
       file.name.endsWith('NLO.json') ||
       file.name.endsWith('OCT.json') ||
       file.name.endsWith('SPIM.json')
-      ) {
+    ) {
       schema = require('./schemas/microscopy.json')
     } else if (
       file.relativePath.includes('/meg/') &&

@@ -51,9 +51,7 @@
   "pet_top": {
     "regexp": "^[\\/\\\\](?:ses-[a-zA-Z0-9]+_)?(?:trc-[a-zA-Z0-9]+_)?(?:rec-[a-zA-Z0-9]+_)?(?:task-[a-zA-Z0-9]+_)?(?:run-[0-9]+_)?(@@@_pet_suffixes_@@@)\\.json$",
     "tokens": {
-      "@@@_pet_suffixes_@@@": [
-        "pet"
-      ]
+      "@@@_pet_suffixes_@@@": ["pet"]
     }
   },
 
@@ -143,7 +141,7 @@
       "@@@_microscopy_top_ext_@@@": [
         "_TEM\\.json",
         "_SEM\\.json",
-        "_CT\\.json",
+        "_uCT\\.json",
         "_BF\\.json",
         "_DF\\.json",
         "_PC\\.json",

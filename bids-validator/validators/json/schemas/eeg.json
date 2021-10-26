@@ -32,7 +32,8 @@
     "RecordingDuration": { "$ref": "common_definitions.json#/definitions/RecordingDuration" },
     "RecordingType": { "$ref": "common_definitions.json#/definitions/RecordingType" },
     "EpochLength": { "$ref": "common_definitions.json#/definitions/EpochLength" },
-    "SubjectArtefactDescription": { "type": "string" }
+    "SubjectArtefactDescription": { "type": "string" },
+    "Sources": { "$ref": "common_definitions.json#/definitions/Sources" }
   },
   "required": [
     "TaskName",

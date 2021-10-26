@@ -60,7 +60,8 @@
     "MaxMovement": { "type": "number" },
     "SubjectArtefactDescription": { "type": "string" },
     "DigitizedLandmarks": { "type": "boolean" },
-    "DigitizedHeadPoints": { "type": "boolean" }
+    "DigitizedHeadPoints": { "type": "boolean" },
+    "Sources": { "$ref": "common_definitions.json#/definitions/Sources" }
   },
   "required": [
     "TaskName",

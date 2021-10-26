@@ -111,6 +111,12 @@
       ]
     },
     "SoftwareVersions": { "type": "string" },
+    "Sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "TaskDescription": { "type": "string" },
     "TaskName": { "type": "string", "minLength": 1 },
     "TriggerChannelCount": { "type": "integer", "minimum": 0 }

@@ -37,7 +37,8 @@
     "iEEGPlacementScheme": { "type": "string" },
     "iEEGElectrodeGroups": { "type": "string" },
     "ElectricalStimulation": { "type": "boolean" },
-    "ElectricalStimulationParameters": { "type": "string" }
+    "ElectricalStimulationParameters": { "type": "string" },
+    "Sources": { "$ref": "common_definitions.json#/definitions/Sources" }
   },
   "required": [
     "TaskName",

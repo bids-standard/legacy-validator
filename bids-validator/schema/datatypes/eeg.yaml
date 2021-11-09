@@ -4,6 +4,7 @@
   extensions:
     - .json
     - .edf
+    - .EDF
     - .vhdr
     - .vmrk
     - .eeg

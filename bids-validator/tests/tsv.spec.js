@@ -180,9 +180,9 @@ describe('TSV', function() {
       '/sub-08/ses-test/eeg/sub-08_ses-test_task-linebisection_run-01_eeg.fif',
   }
   var ieegFile = {
-    name: 'sub-08_ses-test_task-linebisection_run-01_ieeg.edf',
+    name: 'sub-08_ses-test_task-linebisection_run-01_ieeg.EDF',
     relativePath:
-      '/sub-08/ses-test/ieeg/sub-08_ses-test_task-linebisection_run-01_ieeg.edf',
+      '/sub-08/ses-test/ieeg/sub-08_ses-test_task-linebisection_run-01_ieeg.EDF',
   }
 
   var btiFiles = [

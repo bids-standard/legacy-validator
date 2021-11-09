@@ -5,6 +5,7 @@
     - .mefd/
     - .json
     - .edf
+    - .EDF
     - .vhdr
     - .eeg
     - .vmrk

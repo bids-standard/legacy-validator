@@ -11,8 +11,8 @@
     "InstitutionalDepartmentName": { "type": "string", "minLength": 1 },
     "BodyPart": { "type": "string", "minLength": 1 },
     "BodyPartDetails": { "type": "string", "minLength": 1 },
-    "BodyPartDetailsOntology": { "type": "string", "minLength": 1 },
-    "SampleEnvironment": { "type": "string", "minLength": 1 },
+    "BodyPartDetailsOntology": { "type": "string", "minLength": 1, "format": "uri" },
+    "SampleEnvironment": { "type": "string", "minLength": 1, "enum": ["in vivo", "ex vivo", "in vitro"]  },
     "SampleEmbedding": { "type": "string", "minLength": 1 },
     "SampleFixation": { "type": "string", "minLength": 1 },
     "SampleStaining": {
@@ -65,12 +65,13 @@
     "InstitutionName",
     "InstitutionAddress",
     "InstitutionalDepartmentName",
-
     "BodyPart",
+    "BodyPartDetails",
     "Environment",
     "SampleStaining",
     "SamplePrimaryAntibody",
-    "SampleSecondaryAntibody"
+    "SampleSecondaryAntibody",
+    "ChunkTransformationMatrix"
   ],
 
   "dependencies": {

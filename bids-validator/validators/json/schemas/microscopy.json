@@ -67,7 +67,7 @@
     "InstitutionalDepartmentName",
     "BodyPart",
     "BodyPartDetails",
-    "Environment",
+    "SampleEnvironment",
     "SampleStaining",
     "SamplePrimaryAntibody",
     "SampleSecondaryAntibody",

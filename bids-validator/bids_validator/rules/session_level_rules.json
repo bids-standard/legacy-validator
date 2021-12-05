@@ -77,8 +77,6 @@
         "_meg.json",
         "_coordsystem.json",
         "_photo.jpg",
-        "_photo.png",
-        "_photo.tif",
         "_headshape.pos"
       ]
     }
@@ -95,9 +93,7 @@
         "_electrodes.json",
         "_eeg.json",
         "_coordsystem.json",
-        "_photo.jpg",
-        "_photo.png",
-        "_photo.tif"
+        "_photo.jpg"
       ],
       "@@@_eeg_space_@@@": [
         "Other",
@@ -160,9 +156,7 @@
         "_electrodes.json",
         "_ieeg.json",
         "_coordsystem.json",
-        "_photo.jpg",
-        "_photo.png",
-        "_photo.tif"
+        "_photo.jpg"
       ],
       "@@@_ieeg_space_@@@": [
         "Other",

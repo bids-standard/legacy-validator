@@ -60,6 +60,7 @@ const stimuliData = buildRegExp(file_level_rules.stimuli)
 const petData = buildRegExp(file_level_rules.pet)
 const petBlood = buildRegExp(file_level_rules.pet_blood)
 const microscopyData = buildRegExp(file_level_rules.microscopy)
+const microscopyPhotoData = buildRegExp(file_level_rules.microscopy_photo)
 const microscopyJSON = buildRegExp(file_level_rules.microscopy_json)
 // Phenotypic data
 const phenotypicData = buildRegExp(phenotypic_rules.phenotypic_data)
@@ -349,7 +350,10 @@ export default {
     },
 
     isMicroscopy: function(path) {
-      return conditionalMatch(microscopyData, path)
+      return (
+        conditionalMatch(microscopyData, path) ||
+        conditionalMatch(microscopyPhotoData, path)
+      )
     },
 
     isMicroscopyJSON: function(path) {
@@ -390,10 +394,10 @@ export default {
   },
 
   checkType(obj, typeString) {
-    if (typeString == 'number') {
+    if (typeString === 'number') {
       return !isNaN(parseFloat(obj)) && isFinite(obj)
     } else {
-      return typeof obj == typeString
+      return typeof obj === typeString
     }
   },
 

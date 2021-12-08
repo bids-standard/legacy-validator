@@ -394,10 +394,10 @@ export default {
   },
 
   checkType(obj, typeString) {
-    if (typeString === 'number') {
+    if (typeString == 'number') {
       return !isNaN(parseFloat(obj)) && isFinite(obj)
     } else {
-      return typeof obj === typeString
+      return typeof obj == typeString
     }
   },
 

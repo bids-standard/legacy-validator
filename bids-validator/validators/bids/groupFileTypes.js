@@ -11,6 +11,7 @@ const groupFileTypes = (fileList, options) => {
     bvec: [],
     contRecord: [],
     invalid: [],
+    ome: [],
     // used to check all files not already passed through testFile()
     misc: [],
   }
@@ -52,6 +53,9 @@ const sortFiles = (fileList, options, files) => {
       files.misc.push(file)
     } else if (ofType(filename, 'tsv.gz')) {
       files.contRecord.push(file)
+    } else if (ofType(filename, 'ome.tif')) {
+      // collect ome-tiff
+      files.ome.push(file)
     } else {
       files.misc.push(file)
     }

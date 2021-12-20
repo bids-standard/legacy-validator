@@ -1057,31 +1057,63 @@ export default {
   216: {
     key: 'SAMPLE_ID_COLUMN',
     severity: 'error',
-    reason:
-      "Samples .tsv files must have a 'sample_id' column.",
+    reason: "Samples .tsv files must have a 'sample_id' column.",
   },
   217: {
     key: 'PARTICIPANT_ID_COLUMN',
     severity: 'error',
-    reason:
-      "Samples .tsv files must have a 'participant_id' column.",
+    reason: "Samples .tsv files must have a 'participant_id' column.",
   },
   218: {
     key: 'SAMPLE_TYPE_COLUMN',
     severity: 'error',
-    reason:
-      "Samples .tsv files must have a 'sample_type' column.",
+    reason: "Samples .tsv files must have a 'sample_type' column.",
   },
   219: {
     key: 'SAMPLE_TYPE_VALUE',
     severity: 'error',
     reason:
-      "sample_type MUST consist of one of the following values: cell line, in vitro differentiated cells, primary cell, cell-free sample, cloning host, tissue, whole organisms, organoid or technical sample.",
+      'sample_type MUST consist of one of the following values: cell line, in vitro differentiated cells, primary cell, cell-free sample, cloning host, tissue, whole organisms, organoid or technical sample.',
   },
   220: {
     key: 'SAMPLE_ID_DUPLICATE',
     severity: 'error',
     reason:
-      "Each sample from a same subject MUST be described by one and only one row.",
-  }
+      'Each sample from a same subject MUST be described by one and only one row.',
+  },
+  221: {
+    key: 'PIXEL_SIZE_INCONSISTENT',
+    severity: 'error',
+    reason:
+      'PixelSize need to be consistent with PhysicalSizeX, PhysicalSizeY and PhysicalSizeZ OME metadata fields',
+  },
+  222: {
+    key: 'INVALID_PIXEL_SIZE_UNIT',
+    severity: 'error',
+    reason: 'PixelSize consistency is only validated for "mm", "µm" and "nm".',
+  },
+  223: {
+    key: 'NO_VALID_JSON_FILES',
+    severity: 'error',
+    reason:
+      'No enough JSON files used to check PixelSize OME metadata fields consistency',
+  },
+  224: {
+    key: 'CHUNK_TRANSFORMATION_MATRIX_MISSING',
+    severity: 'warning',
+    reason:
+      "It is recommended to define 'ChunkTransformationMatrix' for this file.",
+  },
+  225: {
+    key: 'OPTIONAL_FIELDS_NON_EXIST',
+    severity: 'error',
+    reason:
+      'The optional fields are present in the JSON file but not found in the OME-TIFF file',
+  },
+  226: {
+    key: 'OPTIONAL_FIELDS_INCONSISTENT',
+    severity: 'error',
+    reason:
+      'The optional fields are not consistent between the OME-TIFF files and JSON files',
+  },
 }

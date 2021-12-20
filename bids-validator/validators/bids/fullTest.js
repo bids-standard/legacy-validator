@@ -19,11 +19,12 @@ import checkSamples from './checkSamples'
 import validateMisc from '../../utils/files/validateMisc'
 import collectSubjectMetadata from '../../utils/summary/collectSubjectMetadata'
 import collectPetFields from '../../utils/summary/collectPetFields'
+import checkConsistency from './checkConsistency'
 
 /**
  * Full Test
  *
- * Takes on an array of files, callback, and boolean inidicating if git-annex is used.
+ * Takes on an array of files, callback, and boolean indicating if git-annex is used.
  * Starts the validation process for a BIDS package.
  */
 const fullTest = (fileList, options, annexed, dir, schema, callback) => {
@@ -145,12 +146,18 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
       if (summary.modalities.includes('Microscopy')) {
         const samplesIssues = checkSamples(fileList)
         self.issues = self.issues.concat(samplesIssues)
-    }
+      }
       // Validate json files and contents
       return json.validate(jsonFiles, fileList, jsonContentsDict, summary)
     })
     .then(jsonIssues => {
       self.issues = self.issues.concat(jsonIssues)
+
+      // ome-tiff consistency check
+      return checkConsistency(files.ome, files.json, jsonContentsDict)
+    })
+    .then(omeIssues => {
+      self.issues = self.issues.concat(omeIssues)
       // Nifti validation
       return NIFTI.validate(
         files.nifti,

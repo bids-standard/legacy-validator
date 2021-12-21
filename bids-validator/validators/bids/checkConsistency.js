@@ -136,7 +136,7 @@ const validateOptionalFields = async (omeData, jsonData) => {
   let fields = {
     Immersion: 'Immersion',
     NumericalAperture: 'LensNA',
-    NominalMagnification: 'Magnification',
+    Magnification: 'NominalMagnification',
   }
 
   if (
@@ -146,11 +146,9 @@ const validateOptionalFields = async (omeData, jsonData) => {
     let objective = omeData['OME']['Instrument'][0]['Objective'][0]['$']
     for (let field in fields) {
       let property = fields[field]
-      if (jsonData.hasOwnProperty(field) && !objective[property]) {
-        issues.push(new Issue({ code: 225 }))
-      } else if (jsonData.hasOwnProperty(field) && objective[property]) {
+      if (jsonData.hasOwnProperty(field) && objective[property]) {
         if (objective[property] != jsonData[field]) {
-          issues.push(new Issue({ code: 226 }))
+          issues.push(new Issue({ code: 225 }))
         }
       }
     }
@@ -210,6 +208,9 @@ const validatePixelSize = async (omeData, jsonData) => {
       issues.push(new Issue({ code: 222 }))
     }
   })
+
+  // if any physicalSizeUnit is not valid, skip the consistency check
+  if (issues) return issues
 
   let factorX = convertFactor(physicalSizeXUnit, physicalSizeUnit)
   let factorY = convertFactor(physicalSizeYUnit, physicalSizeUnit)

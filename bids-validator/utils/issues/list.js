@@ -1089,7 +1089,7 @@ export default {
   },
   222: {
     key: 'INVALID_PIXEL_SIZE_UNIT',
-    severity: 'error',
+    severity: 'warning',
     reason: 'PixelSize consistency is only validated for "mm", "µm" and "nm".',
   },
   223: {
@@ -1105,13 +1105,7 @@ export default {
       "It is recommended to define 'ChunkTransformationMatrix' for this file.",
   },
   225: {
-    key: 'OPTIONAL_FIELDS_NON_EXIST',
-    severity: 'error',
-    reason:
-      'The optional fields are present in the JSON file but not found in the OME-TIFF file',
-  },
-  226: {
-    key: 'OPTIONAL_FIELDS_INCONSISTENT',
+    key: 'OPTIONAL_FIELD_INCONSISTENT',
     severity: 'error',
     reason:
       'The optional fields are not consistent between the OME-TIFF files and JSON files',

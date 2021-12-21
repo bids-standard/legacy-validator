@@ -53,7 +53,7 @@ const sortFiles = (fileList, options, files) => {
       files.misc.push(file)
     } else if (ofType(filename, 'tsv.gz')) {
       files.contRecord.push(file)
-    } else if (ofType(filename, 'ome.tif')) {
+    } else if (ofType(filename, 'ome.tif') || ofType(filename, 'ome.btf')) {
       // collect ome-tiff
       files.ome.push(file)
     } else {

@@ -1093,21 +1093,19 @@ export default {
     reason: 'PixelSize consistency is only validated for "mm", "µm" and "nm".',
   },
   223: {
-    key: 'NO_VALID_JSON_FILES',
-    severity: 'error',
-    reason:
-      'No enough JSON files used to check PixelSize OME metadata fields consistency',
-  },
-  224: {
     key: 'CHUNK_TRANSFORMATION_MATRIX_MISSING',
     severity: 'warning',
     reason:
       "It is recommended to define 'ChunkTransformationMatrix' for this file.",
   },
-  225: {
+  224: {
     key: 'OPTIONAL_FIELD_INCONSISTENT',
     severity: 'error',
-    reason:
-      'The optional fields are not consistent between the OME-TIFF files and JSON files',
+    reason: 'Optional JSON field is not consistent with the OME-TIFF metadata',
+  },
+  225: {
+    key: 'NO_VALID_JSON',
+    severity: 'error',
+    reason: 'No valid JSON file found for this file',
   },
 }

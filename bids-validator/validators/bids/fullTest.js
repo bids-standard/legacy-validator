@@ -154,7 +154,7 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
       self.issues = self.issues.concat(jsonIssues)
 
       // ome-tiff consistency check
-      return checkConsistency(files.ome, files.json, jsonContentsDict)
+      return checkConsistency(files.ome, jsonContentsDict)
     })
     .then(omeIssues => {
       self.issues = self.issues.concat(omeIssues)

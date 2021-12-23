@@ -56,7 +56,7 @@ const convertFactor = (omeUnit, jsonUnit) => {
   }
 }
 
-const getMatchingComponents = (omeFiles, jsonFiles) => {
+const getMatchingComponents = (omeFiles, jsonContentsDict) => {
   let components = []
   omeFiles.forEach(omeFile => {
     let possibleJsonPath = omeFile.relativePath
@@ -65,35 +65,24 @@ const getMatchingComponents = (omeFiles, jsonFiles) => {
 
     let potentialSidecars = utils.files.potentialLocations(possibleJsonPath)
 
-    // Find the path before filename
-    let regExp = new RegExp('(.*/).*')
-    let preFilename = regExp.exec(possibleJsonPath)[1]
+    const mergedDictionary = utils.files.generateMergedSidecarDict(
+      potentialSidecars,
+      jsonContentsDict,
+    )
 
-    // Retrieve all json files at the same path with ome-tiff files
-    let jsonPaths = potentialSidecars.filter(path => {
-      let jsonpath = regExp.exec(path)[1]
-      return jsonpath === preFilename
-    })
-
-    // if possible json paths are not empty
-    jsonFiles.forEach(jsonFile => {
-      // if possible json file exists
-      if (jsonPaths.includes(jsonFile.relativePath)) {
-        components.push({
-          omeFile: omeFile,
-          jsonFilePath: jsonFile.relativePath,
-        })
-      }
+    components.push({
+      omeFile: omeFile,
+      jsonData: mergedDictionary,
     })
   })
 
   return components
 }
 
-const checkConsistency = (omeFiles, jsonFiles, jsonContentsDict) => {
+const checkConsistency = (omeFiles, jsonContentsDict) => {
   let issues = []
 
-  let components = getMatchingComponents(omeFiles, jsonFiles)
+  let components = getMatchingComponents(omeFiles, jsonContentsDict)
 
   // if at least one ome-tiff file has no corresponding json file
   if (components.length !== omeFiles.length) {
@@ -104,22 +93,15 @@ const checkConsistency = (omeFiles, jsonFiles, jsonContentsDict) => {
     return utils.limit(
       () =>
         new Promise(async resolve => {
-          let jsonData = jsonContentsDict[component.jsonFilePath]
+          let jsonData = component.jsonData
           let omeData = await getOMETiffData(component.omeFile)
           let optionalFieldsIssues = await validateOptionalFields(
+            component.omeFile.relativePath,
             omeData,
             jsonData,
           )
           let pixelSizeIssues = await validatePixelSize(omeData, jsonData)
-          let matrixIssues = validateChunkTransformationMatrix(
-            component.jsonFilePath,
-            component.omeFile.path,
-            jsonData,
-          )
-          issues = issues
-            .concat(optionalFieldsIssues)
-            .concat(pixelSizeIssues)
-            .concat(matrixIssues)
+          issues = issues.concat(optionalFieldsIssues).concat(pixelSizeIssues)
           return resolve()
         }),
     )
@@ -130,7 +112,7 @@ const checkConsistency = (omeFiles, jsonFiles, jsonContentsDict) => {
   )
 }
 
-const validateOptionalFields = async (omeData, jsonData) => {
+const validateOptionalFields = async (omePath, omeData, jsonData) => {
   let issues = []
 
   let fields = {
@@ -148,7 +130,16 @@ const validateOptionalFields = async (omeData, jsonData) => {
       let property = fields[field]
       if (jsonData.hasOwnProperty(field) && objective[property]) {
         if (objective[property] != jsonData[field]) {
-          issues.push(new Issue({ code: 225 }))
+          issues.push(
+            new Issue({
+              file: {
+                relativePath: omePath,
+                path: omePath,
+              },
+              evidence: `JSON field '${field}' is inconsistent`,
+              code: 224,
+            }),
+          )
         }
       }
     }
@@ -170,7 +161,7 @@ const validateChunkTransformationMatrix = (
 
   if (regex.exec(jsonFilePath) || regex.exec(omeFilePath)) {
     if (!jsonData.hasOwnProperty('ChunkTransformationMatrix')) {
-      issues.push(new Issue({ code: 224 }))
+      issues.push(new Issue({ code: 223 }))
     }
   }
 
@@ -194,8 +185,8 @@ const validatePixelSize = async (omeData, jsonData) => {
   const physicalSizeZUnit =
     omeData['OME']['Image'][0]['Pixels'][0]['$']['PhysicalSizeZUnit']
 
-  let pixelSize = jsonData['PixelSize']
-  let physicalSizeUnit = jsonData['PixelSizeUnits']
+  // if no corresponding json file
+  if (Object.keys(jsonData).length === 0) issues.push(new Issue({ code: 225 }))
 
   let unitsPendToCheck = [
     physicalSizeXUnit,
@@ -209,8 +200,11 @@ const validatePixelSize = async (omeData, jsonData) => {
     }
   })
 
-  // if any physicalSizeUnit is not valid, skip the consistency check
-  if (issues) return issues
+  // if any physicalSizeUnit is not valid or no valid json file, skip the consistency check
+  if (issues.length > 0) return issues
+
+  let pixelSize = jsonData['PixelSize']
+  let physicalSizeUnit = jsonData['PixelSizeUnits']
 
   let factorX = convertFactor(physicalSizeXUnit, physicalSizeUnit)
   let factorY = convertFactor(physicalSizeYUnit, physicalSizeUnit)

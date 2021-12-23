@@ -3,6 +3,7 @@ import FileAPI from './FileAPI'
 
 import newFile from './newFile'
 import readFile from './readFile'
+import readOMEFile from './readOMEFile'
 import readNiftiHeader from './readNiftiHeader'
 import readDir from './readDir'
 import potentialLocations from './potentialLocations'
@@ -13,6 +14,7 @@ import illegalCharacterTest from './illegalCharacterTest'
 import sessions from './sessions'
 import remoteFiles from './remoteFiles'
 import getFileStats from './getFileStats'
+import generateMergedSidecarDictWithPath from './generateMergedSidecarWithPath'
 
 // public API ---------------------------------------------------------------------
 
@@ -21,8 +23,10 @@ export default {
   newFile,
   readFile,
   readDir,
+  readOMEFile,
   readNiftiHeader,
   generateMergedSidecarDict,
+  generateMergedSidecarDictWithPath,
   potentialLocations,
   getBFileContent,
   collectDirectorySize,

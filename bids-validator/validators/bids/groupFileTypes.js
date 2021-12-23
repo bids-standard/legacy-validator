@@ -12,6 +12,8 @@ const groupFileTypes = (fileList, options) => {
     contRecord: [],
     invalid: [],
     ome: [],
+    png: [],
+    tif: [],
     // used to check all files not already passed through testFile()
     misc: [],
   }
@@ -56,6 +58,10 @@ const sortFiles = (fileList, options, files) => {
     } else if (ofType(filename, 'ome.tif') || ofType(filename, 'ome.btf')) {
       // collect ome-tiff
       files.ome.push(file)
+    } else if (ofType(filename, 'png')) {
+      files.png.push(file)
+    } else if (ofType(filename, 'tif') && !ofType(filename, 'ome.tif')) {
+      files.tif.push(file)
     } else {
       files.misc.push(file)
     }

@@ -14,7 +14,7 @@ import illegalCharacterTest from './illegalCharacterTest'
 import sessions from './sessions'
 import remoteFiles from './remoteFiles'
 import getFileStats from './getFileStats'
-import generateMergedSidecarDictWithPath from './generateMergedSidecarWithPath'
+import generateMergedSidecarDictWithPath from './generateMergedSidecarDictWithPath'
 
 // public API ---------------------------------------------------------------------
 

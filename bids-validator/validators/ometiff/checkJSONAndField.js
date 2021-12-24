@@ -63,7 +63,7 @@ const checkMatrixField = (file, mergedDictionary) => {
   let regex = new RegExp('_chunk-[a-zA-Z0-9]+')
   let jsonPath = mergedDictionary.sidecarName
 
-  // ChunkTransformationMatrix was OPTIONAL and is now RECOMMENDED if <chunk-index> is used in filenames
+  // ChunkTransformationMatrix is RECOMMENDED if <chunk-index> is used in filenames
   if (regex.exec(file.relativePath) || regex.exec(jsonPath)) {
     if (!mergedDictionary.hasOwnProperty('ChunkTransformationMatrix')) {
       issues.push(

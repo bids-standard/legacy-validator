@@ -336,7 +336,6 @@ const TSV = (file, contents, fileList, callback) => {
             }),
           )
         }
-        
 
         // obtain a list of the sample IDs in the samples.tsv file
         const sample = row[sampleIdColumn].replace('sample-', '')
@@ -346,59 +345,49 @@ const TSV = (file, contents, fileList, callback) => {
         samples.push(sample)
       }
 
-      // check if a sample froma same subject is described by one and only one row
-      var doesSampleIdHaveDuplicates = sampleIdColumnValues.some(
-        (val, i) => sampleIdColumnValues.indexOf(val) !== i
-      )
-
-      for (let r = 0; r < rows.length-1; r++) {
-        for (let l = 0; l < rows.length-1; l++) {
-          if (l == r) {}
-          else {
-            if (sampleIdColumnValues[r] == sampleIdColumnValues[l]) {
-              if (participantIdColumnValues[r] != participantIdColumnValues[l]){
-                doesSampleIdHaveDuplicates = false
-              }
-              else {
-                doesSampleIdHaveDuplicates = true
-              }
-            }
-          }
-        }
-      }
-      if(doesSampleIdHaveDuplicates == true) {
-        issues.push(
-          new Issue({
-            file: file,
-            evidence: sampleIdColumnValues,
-            reason: 'Each sample from a same subject MUST be described by one and only one row.',
-            line: 1,
-            code: 220,
-          })
+      // check if a sample from same subject is described by one and only one row
+      let samplePartIdsSet = new Set()
+      for (let r = 0; r < rows.length - 1; r++) {
+        let uniqueString = sampleIdColumnValues[r].concat(
+          participantIdColumnValues[r],
         )
+        // check if SampleId Have Duplicate
+        if (samplePartIdsSet.has(uniqueString)) {
+          issues.push(
+            new Issue({
+              file: file,
+              evidence: sampleIdColumnValues,
+              reason:
+                'Each sample from a same subject MUST be described by one and only one row.',
+              line: 1,
+              code: 220,
+            }),
+          )
+          break
+        } else samplePartIdsSet.add(uniqueString)
       }
-      else {}
-      
     }
-  
 
     // check if any incorrect patterns in sample_type column
     for (let c = 1; c < rows.length; c++) {
       const row = rows[c]
-      if ((row[sampleTypeColumn] != 'cell line') &&
-          (row[sampleTypeColumn] != 'in vitro differentiated cells') &&
-          (row[sampleTypeColumn] != 'primary cell') &&
-          (row[sampleTypeColumn] != 'cell-free sample') &&
-          (row[sampleTypeColumn] != 'cloning host') &&
-          (row[sampleTypeColumn] != 'tissue') &&
-          (row[sampleTypeColumn] != 'whole organisms') &&
-          (row[sampleTypeColumn] != 'organoid') &&
-          (row[sampleTypeColumn] != 'technical sample')) {
-          issues.push(
+      const validSampleTypes = [
+        'cell line',
+        'in vitro differentiated cells',
+        'primary cell',
+        'cell-free sample',
+        'cloning host',
+        'tissue',
+        'whole organisms',
+        'organoid',
+        'technical sample',
+      ]
+      if (!validSampleTypes.includes(row[sampleTypeColumn])) {
+        issues.push(
           new Issue({
             file: file,
             evidence: row[sampleTypeColumn],
-            reason: 'sample_type can\'t be any value.',
+            reason: "sample_type can't be any value.",
             line: c,
             code: 219,
           }),
@@ -406,9 +395,6 @@ const TSV = (file, contents, fileList, callback) => {
       }
     }
   }
-      
-    
-
 
   if (
     file.relativePath.includes('/meg/') &&

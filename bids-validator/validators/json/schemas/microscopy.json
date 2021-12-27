@@ -33,27 +33,25 @@
         { "type": "array", "items": { "type": "string" } }
       ]
     },
-    "SliceThickness": { "type": "number" },
+    "SliceThickness": { "type": "number", "exclusiveMinimum": 0 },
     "SampleExtractionProtocol": { "type": "string", "minLength": 1 },
     "SampleExtractionInstitution": { "type": "string", "minLength": 1 },
     "TissueDeformationScaling": { "type": "number" },
-    "PixelSize": { "type": "array", "items": { "type": "number" } },
+    "PixelSize": {"type": "array", "minItems": 2, "maxItems": 3, "items": { "type": "number", "minimum": 0 } },
     "PixelSizeUnits": { "type": "string", "enum": ["mm", "um", "nm"] },
     "Immersion": { "type": "string", "minLength": 1 },
-    "NumericalAperture": { "type": "number" },
-    "Magnification": { "type": "number" },
+    "NumericalAperture": { "type": "number", "exclusiveMinimum": 0 },
+    "Magnification": { "type": "number", "exclusiveMinimum": 0 },
     "ImageAcquisitionProtocol": { "type": "string", "minLength": 1 },
     "OtherAcquisitionParameters": { "type": "string", "minLength": 1 },
     "ChunkTransformationMatrix": {
-      "type": "array",
-      "items": { "type": "array", "items": { "type": "number" } }
+      "anyOf": [
+        {"type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "array", "minItems": 3, "maxItems": 3, "items":{ "type": "number"} } },
+        {"type": "array", "minItems": 4, "maxItems": 4, "items": { "type": "array", "minItems": 4, "maxItems": 4, "items":{ "type": "number"} } }
+      ]
     },
-    "ChunkTransformationMatrixAxis": {
-      "type": "array",
-      "items": { "type": "string" }
-    }
-  },
-
+    "ChunkTransformationMatrixAxis": { "type": "array", "minItems": 2, "maxItems": 3, "items": { "type": "string" }}
+    },
   "required": ["PixelSize", "PixelSizeUnits"],
 
   "recommended": [

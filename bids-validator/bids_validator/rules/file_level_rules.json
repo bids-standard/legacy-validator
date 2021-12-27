@@ -526,7 +526,7 @@
   },
 
   "microscopy": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?micr[\\/\\\\](sub-[a-zA-Z0-9]+)(?:(_ses-[a-zA-Z0-9]+))?(?:_sample-[a-zA-Z0-9]+)(?:_acq-[a-zA-Z0-9]+)?(?:_stain-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_chunk-[a-zA-Z0-9]+)?((@@@_microscopy_type_@@@)(@@@_microscopy_ext_@@@))$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?micr[\\/\\\\](sub-[a-zA-Z0-9]+)(?:(_ses-[a-zA-Z0-9]+))?(?:_sample-[a-zA-Z0-9]+)(?:_acq-[a-zA-Z0-9]+)?(?:_stain-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_chunk-[0-9]+)?((@@@_microscopy_type_@@@)(@@@_microscopy_ext_@@@))$",
     "tokens": {
       "@@@_microscopy_type_@@@": [
         "_TEM",
@@ -566,7 +566,7 @@
     }
   },
   "microscopy_json": {
-    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?micr[\\/\\\\](sub-[a-zA-Z0-9]+)(?:(_ses-[a-zA-Z0-9]+))?(?:_sample-[a-zA-Z0-9]+)?(?:_acq-[a-zA-Z0-9]+)?(?:_stain-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_chunk-[a-zA-Z0-9]+)?(@@@_microscopy_type_@@@)\\.json$",
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?micr[\\/\\\\](sub-[a-zA-Z0-9]+)(?:(_ses-[a-zA-Z0-9]+))?(?:_sample-[a-zA-Z0-9]+)?(?:_acq-[a-zA-Z0-9]+)?(?:_stain-[a-zA-Z0-9]+)?(?:_run-[0-9]+)?(?:_chunk-[0-9]+)?(@@@_microscopy_type_@@@)\\.json$",
     "tokens": {
       "@@@_microscopy_type_@@@": [
         "_TEM",

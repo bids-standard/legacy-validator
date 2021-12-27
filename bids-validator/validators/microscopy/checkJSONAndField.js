@@ -60,7 +60,7 @@ const ifJsonExist = (file, possibleJsonPath, jsonContentsDict) => {
 
 const checkMatrixField = (file, mergedDictionary) => {
   let issues = []
-  let regex = new RegExp('_chunk-[a-zA-Z0-9]+')
+  let regex = new RegExp('_chunk-[0-9]+')
   let jsonPath = mergedDictionary.sidecarName
 
   // ChunkTransformationMatrix is RECOMMENDED if <chunk-index> is used in filenames

@@ -369,7 +369,7 @@ const TSV = (file, contents, fileList, callback) => {
     }
 
     // check if any incorrect patterns in sample_type column
-    for (let c = 1; c < rows.length; c++) {
+    for (let c = 0; c < rows.length; c++) {
       const row = rows[c]
       const validSampleTypes = [
         'cell line',

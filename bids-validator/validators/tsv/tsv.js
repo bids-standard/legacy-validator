@@ -369,26 +369,26 @@ const TSV = (file, contents, fileList, callback) => {
     }
 
     // check if any incorrect patterns in sample_type column
-    for (let c = 0; c < rows.length; c++) {
+    const validSampleTypes = [
+      'cell line',
+      'in vitro differentiated cells',
+      'primary cell',
+      'cell-free sample',
+      'cloning host',
+      'tissue',
+      'whole organisms',
+      'organoid',
+      'technical sample',
+    ]
+    for (let c = 1; c < rows.length; c++) {
       const row = rows[c]
-      const validSampleTypes = [
-        'cell line',
-        'in vitro differentiated cells',
-        'primary cell',
-        'cell-free sample',
-        'cloning host',
-        'tissue',
-        'whole organisms',
-        'organoid',
-        'technical sample',
-      ]
       if (!validSampleTypes.includes(row[sampleTypeColumn])) {
         issues.push(
           new Issue({
             file: file,
             evidence: row[sampleTypeColumn],
             reason: "sample_type can't be any value.",
-            line: c,
+            line: c + 1,
             code: 219,
           }),
         )

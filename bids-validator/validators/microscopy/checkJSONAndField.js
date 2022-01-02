@@ -7,6 +7,7 @@ const checkJSONAndField = (files, jsonContentsDict) => {
     files.ome.forEach(file => {
       let possibleJsonPath = file.relativePath
         .replace('.tif', '')
+        .replace('.btf', '')
         .replace('.ome', '.json')
 
       issues = issues.concat(

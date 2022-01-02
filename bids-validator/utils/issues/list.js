@@ -1108,4 +1108,15 @@ export default {
     severity: 'error',
     reason: 'No valid JSON file found for this file',
   },
+  226: {
+    key: 'UNSUPPORTED_BIG_TIFF',
+    severity: 'error',
+    reason:
+      'BigTiff OME-TIFF file is not supported for consistency check right now, please use Tiff OME-TIFF file instead',
+  },
+  227: {
+    key: 'INCONSISTENT_TIFF_EXTENSION',
+    severity: 'error',
+    reason: 'Inconsistent TIFF file type and extension',
+  },
 }

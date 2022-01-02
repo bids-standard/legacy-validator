@@ -1,6 +1,5 @@
 import utils from '../../utils'
-
-const Issue = require('../../utils').issues.Issue
+const Issue = utils.issues.Issue
 
 /**
  * ometiff

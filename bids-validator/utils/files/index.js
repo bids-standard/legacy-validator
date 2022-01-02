@@ -4,6 +4,7 @@ import FileAPI from './FileAPI'
 import newFile from './newFile'
 import readFile from './readFile'
 import readOMEFile from './readOMEFile'
+import readBuffer from './readBuffer'
 import readNiftiHeader from './readNiftiHeader'
 import readDir from './readDir'
 import potentialLocations from './potentialLocations'
@@ -23,6 +24,7 @@ export default {
   newFile,
   readFile,
   readDir,
+  readBuffer,
   readOMEFile,
   readNiftiHeader,
   generateMergedSidecarDict,

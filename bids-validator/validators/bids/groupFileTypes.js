@@ -60,7 +60,11 @@ const sortFiles = (fileList, options, files) => {
       files.ome.push(file)
     } else if (ofType(filename, 'png')) {
       files.png.push(file)
-    } else if (ofType(filename, 'tif') && !ofType(filename, 'ome.tif')) {
+    } else if (
+      ofType(filename, 'tif') &&
+      !ofType(filename, 'ome.tif') &&
+      !ofType(filename, 'ome.btf')
+    ) {
       files.tif.push(file)
     } else {
       files.misc.push(file)

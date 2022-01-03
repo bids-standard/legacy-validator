@@ -1110,9 +1110,8 @@ export default {
   },
   226: {
     key: 'UNSUPPORTED_BIG_TIFF',
-    severity: 'error',
-    reason:
-      'BigTiff OME-TIFF file is not supported for consistency check right now, please use Tiff OME-TIFF file instead',
+    severity: 'warning',
+    reason: 'Metadata consistency check skipped for BigTiff OME-TIFF file',
   },
   227: {
     key: 'INCONSISTENT_TIFF_EXTENSION',

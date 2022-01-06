@@ -39,7 +39,6 @@ const checkJSONAndField = (files, jsonContentsDict) => {
 
 const ifJsonExist = (file, possibleJsonPath, jsonContentsDict) => {
   let potentialSidecars = utils.files.potentialLocations(possibleJsonPath)
-  console.log(potentialSidecars)
   const chunkRegex = new RegExp('_chunk-[0-9]+')
 
   const jsonChunkFiles = potentialSidecars.filter(
@@ -52,7 +51,6 @@ const ifJsonExist = (file, possibleJsonPath, jsonContentsDict) => {
     potentialSidecars,
     jsonContentsDict,
   )
-  //console.log(mergedDictionary)
 
   // check if the given file has a corresponding JSON file
   if (Object.keys(mergedDictionary).length === 0) {

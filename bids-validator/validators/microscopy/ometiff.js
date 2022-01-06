@@ -14,16 +14,23 @@ export default function ometiff(file, omeData, jsonContentsDict, callback) {
 
   let mergedDictionary = getMergedDictionary(file, jsonContentsDict)
 
+  let rootKey = Object.keys(omeData)[0]
+  let namespace = ''
+  if (rootKey.includes(':OME')) {
+    namespace = rootKey.split(':OME')[0].concat(':')
+  }
+
   // Check for consistency with optional OME-TIFF metadata if present for
   // Immersion, NumericalAperture and Magnification
   let optionalFieldsIssues = checkOptionalFields(
     file.relativePath,
     omeData,
+    namespace,
     mergedDictionary,
   )
 
   // Check for consistency for PixelSize between JSON and OME-TIFF metadata
-  let pixelSizeIssues = checkPixelSize(omeData, mergedDictionary)
+  let pixelSizeIssues = checkPixelSize(omeData, namespace, mergedDictionary)
 
   issues = issues.concat(optionalFieldsIssues).concat(pixelSizeIssues)
 
@@ -67,7 +74,7 @@ const getMergedDictionary = (file, jsonContentsDict) => {
   )
 }
 
-const checkOptionalFields = (omePath, omeData, jsonData) => {
+const checkOptionalFields = (omePath, omeData, namespace, jsonData) => {
   let issues = []
 
   let fields = {
@@ -77,10 +84,15 @@ const checkOptionalFields = (omePath, omeData, jsonData) => {
   }
 
   if (
-    omeData['OME']['Instrument'] &&
-    omeData['OME']['Instrument'][0]['Objective']
+    omeData[`${namespace}OME`][`${namespace}Instrument`] &&
+    omeData[`${namespace}OME`][`${namespace}Instrument`][0][
+      `${namespace}Objective`
+    ]
   ) {
-    let objective = omeData['OME']['Instrument'][0]['Objective'][0]['$']
+    let objective =
+      omeData[`${namespace}OME`][`${namespace}Instrument`][0][
+        `${namespace}Objective`
+      ][0]['$']
     for (let field in fields) {
       let property = fields[field]
       if (jsonData.hasOwnProperty(field) && objective[property]) {
@@ -103,22 +115,34 @@ const checkOptionalFields = (omePath, omeData, jsonData) => {
   return issues
 }
 
-const checkPixelSize = (omeData, jsonData) => {
+const checkPixelSize = (omeData, namespace, jsonData) => {
   let issues = []
   let validUnits = ['um', 'µm', 'nm', 'mm']
 
   const PhysicalSizeX =
-    omeData['OME']['Image'][0]['Pixels'][0]['$']['PhysicalSizeX']
+    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0][
+      '$'
+    ]['PhysicalSizeX']
   const physicalSizeXUnit =
-    omeData['OME']['Image'][0]['Pixels'][0]['$']['PhysicalSizeXUnit']
+    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0][
+      '$'
+    ]['PhysicalSizeXUnit']
   const PhysicalSizeY =
-    omeData['OME']['Image'][0]['Pixels'][0]['$']['PhysicalSizeY']
+    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0][
+      '$'
+    ]['PhysicalSizeY']
   const physicalSizeYUnit =
-    omeData['OME']['Image'][0]['Pixels'][0]['$']['PhysicalSizeYUnit']
+    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0][
+      '$'
+    ]['PhysicalSizeYUnit']
   const PhysicalSizeZ =
-    omeData['OME']['Image'][0]['Pixels'][0]['$']['PhysicalSizeZ']
+    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0][
+      '$'
+    ]['PhysicalSizeZ']
   const physicalSizeZUnit =
-    omeData['OME']['Image'][0]['Pixels'][0]['$']['PhysicalSizeZUnit']
+    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0][
+      '$'
+    ]['PhysicalSizeZUnit']
 
   // if no corresponding json file, skip the consistency check
   if (Object.keys(jsonData).length === 0) return []

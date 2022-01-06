@@ -55,6 +55,15 @@ const validate = (files, jsonContentsDict) => {
                 }),
               )
               resolve()
+            } else {
+              issues.push(
+                new Issue({
+                  code: 227,
+                  file: file,
+                  evidence: `3rd byte of file does not identify file as tiff.`,
+                }),
+              )
+              resolve()
             }
           })
         }),

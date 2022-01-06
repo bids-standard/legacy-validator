@@ -9,7 +9,6 @@ const checkJSONAndField = (files, jsonContentsDict) => {
         .replace('.tif', '')
         .replace('.btf', '')
         .replace('.ome', '.json')
-
       issues = issues.concat(
         ifJsonExist(file, possibleJsonPath, jsonContentsDict),
       )
@@ -40,11 +39,20 @@ const checkJSONAndField = (files, jsonContentsDict) => {
 
 const ifJsonExist = (file, possibleJsonPath, jsonContentsDict) => {
   let potentialSidecars = utils.files.potentialLocations(possibleJsonPath)
+  console.log(potentialSidecars)
+  const chunkRegex = new RegExp('_chunk-[0-9]+')
+
+  const jsonChunkFiles = potentialSidecars.filter(
+    name => jsonContentsDict.hasOwnProperty(name) && chunkRegex.exec(name),
+  )
+  const chunkPresent =
+    jsonChunkFiles.length || chunkRegex.exec(file.relativePath)
 
   const mergedDictionary = utils.files.generateMergedSidecarDictWithPath(
     potentialSidecars,
     jsonContentsDict,
   )
+  //console.log(mergedDictionary)
 
   // check if the given file has a corresponding JSON file
   if (Object.keys(mergedDictionary).length === 0) {
@@ -54,30 +62,26 @@ const ifJsonExist = (file, possibleJsonPath, jsonContentsDict) => {
         code: 225,
       }),
     ]
-  } else {
+  }
+
+  if (chunkPresent) {
     return checkMatrixField(file, mergedDictionary)
   }
 }
 
 const checkMatrixField = (file, mergedDictionary) => {
   let issues = []
-  let regex = new RegExp('_chunk-[0-9]+')
-  let jsonPath = mergedDictionary.sidecarName
-
-  // ChunkTransformationMatrix is RECOMMENDED if <chunk-index> is used in filenames
-  if (regex.exec(file.relativePath) || regex.exec(jsonPath)) {
-    if (!mergedDictionary.hasOwnProperty('ChunkTransformationMatrix')) {
-      issues.push(
-        new Issue({
-          file: {
-            path: jsonPath,
-            relativePath: jsonPath,
-          },
-          code: 223,
-        }),
-      )
-    }
+  if (!mergedDictionary.hasOwnProperty('ChunkTransformationMatrix')) {
+    issues.push(
+      new Issue({
+        file: {
+          path: file,
+        },
+        code: 223,
+      }),
+    )
   }
+  // }
   return issues
 }
 

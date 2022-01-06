@@ -25,7 +25,11 @@ const checkEncoding = (file, data, cb) => {
 }
 
 /**
- * Read
+ * readFile
+ * @param {object | File} file - nodeJS fs file or browser File
+ * @param {boolean} annexed - is the file currently annexed?
+ * @param {string} dir - path to directory containing dataset. Only used if
+ *   annexed is true.
  *
  * A helper method for reading file contents.
  * Takes a file object and a callback and calls

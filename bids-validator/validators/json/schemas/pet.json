@@ -37,9 +37,19 @@
     "ModeOfAdministration": { "type": "string", "minLength": 1 },
     "InjectedRadioactivity": { "type": "number" },
     "InjectedRadioactivityUnits": { "type": "string", "minLength": 1 },
-    "InjectedMass": { "type": "number" },
+    "InjectedMass": { 
+      "anyOf": [
+        { "type": "number" },
+        { "type": "string", "pattern": "^n/a$"}
+      ]
+    },
     "InjectedMassUnits": { "type": "string", "minLength": 1 },
-    "SpecificRadioactivity": { "type": "number" },
+    "SpecificRadioactivity": { 
+      "anyOf": [
+        { "type": "number" },
+        { "type": "string", "pattern": "^n/a$"}
+      ]
+    },
     "SpecificRadioactivityUnits": { "type": "string", "minLength": 1 },
     "InjectedMassPerWeight": { "type": "number" },
     "InjectedMassPerWeightUnits": { "type": "string", "minLength": 1 },

@@ -1,6 +1,6 @@
 const Issue = require('../../utils').issues.Issue
 
-const checkAge89 = function(rows, file, issues) {
+export const checkAge89 = function(rows, file, issues) {
   const header = rows[0]
   const ageIdColumn = header.indexOf('age')
   for (let a = 0; a < rows.length; a++) {
@@ -11,7 +11,7 @@ const checkAge89 = function(rows, file, issues) {
       issues.push(
         new Issue({
           file: file,
-          evidence: line,
+          evidence: line.join(','),
           line: a + 1,
           reason: 'age of participant is above 89 ',
           code: 56,

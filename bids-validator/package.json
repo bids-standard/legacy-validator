@@ -1,6 +1,6 @@
 {
   "name": "bids-validator",
-  "version": "1.8.6-dev.0",
+  "version": "1.8.10-dev.0",
   "description": "",
   "main": "./dist/commonjs/index.js",
   "exports": {

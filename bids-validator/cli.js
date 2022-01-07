@@ -53,34 +53,37 @@ export function cli(argumentOverride) {
       return filenamesOnly()
     }
 
-    if (fs.existsSync(dir)) {
-      validate.BIDS(dir, options, function (issues, summary) {
-        function resolveOrReject() {
-          if (
-            issues === 'Invalid' ||
-            (issues.errors && issues.errors.length >= 1) ||
-            (issues.config && issues.config.length >= 1)
-          ) {
-            reject(1)
-          } else {
-            resolve(0)
-          }
-        }
-        if (options.json) {
-          writeStdout(JSON.stringify({ issues, summary }), resolveOrReject)
-        } else {
-          writeStdout(
-            format.issues(issues, options) +
-              '\n' +
-              format.summary(summary, options),
-            resolveOrReject,
-          )
-        }
-      })
-    } else {
-      console.log(colors.red(dir + ' does not exist '))
+    try {
+      // Test if we can access the dataset directory at all
+      fs.opendirSync(dir)
+    } catch (err) {
+      console.log(colors.red(dir + ' does not exist or is inaccessible'))
       reject(2)
     }
+
+    validate.BIDS(dir, options, function (issues, summary) {
+      function resolveOrReject() {
+        if (
+          issues === 'Invalid' ||
+          (issues.errors && issues.errors.length >= 1) ||
+          (issues.config && issues.config.length >= 1)
+        ) {
+          reject(1)
+        } else {
+          resolve(0)
+        }
+      }
+      if (options.json) {
+        writeStdout(JSON.stringify({ issues, summary }), resolveOrReject)
+      } else {
+        writeStdout(
+          format.issues(issues, options) +
+            '\n' +
+            format.summary(summary, options),
+          resolveOrReject,
+        )
+      }
+    })
   })
 }
 

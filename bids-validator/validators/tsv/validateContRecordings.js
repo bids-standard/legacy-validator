@@ -18,7 +18,7 @@ const validateContRec = function(contRecordings, jsonContentsDict) {
   contRecordings.map(contRecording => {
     // Get merged data dictionary for this file
     const potentialSidecars = utils.files.potentialLocations(
-      contRecording.relativePath.replace('.tsv.gz', '.json')
+      contRecording.relativePath.replace('.tsv.gz', '.json'),
     )
 
     const mergedDictionary = utils.files.generateMergedSidecarDict(
@@ -29,8 +29,8 @@ const validateContRec = function(contRecordings, jsonContentsDict) {
       issues.push(
         new Issue({
           file: contRecording,
-          code: 133
-        })
+          code: 133,
+        }),
       )
     }
   })

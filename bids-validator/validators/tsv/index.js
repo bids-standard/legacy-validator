@@ -15,5 +15,5 @@ export default {
   validate: validate,
   checkAge89: checkAge89,
   checkAcqTimeFormat: checkAcqTimeFormat,
-  validateContRec: validateContRec
+  validateContRec: validateContRec,
 }

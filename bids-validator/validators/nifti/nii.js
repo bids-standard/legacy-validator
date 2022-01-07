@@ -1342,7 +1342,7 @@ function checkIfIntendedExists(intendedForFile, fileList, issues, file) {
  *
  */
 
-function checkIfSeparateM0scanExists(m0scanFile, fileList, issues, file) {
+function checkIfSeparateM0scanExists(m0scanFile, fileList) {
   let rule = m0scanFile.replace('_m0scan.nii', '').replace('.gz', '')
   let m0scanFile_nii = m0scanFile.replace('.nii.gz', '.nii')
   let m0scanFile_niigz = m0scanFile
@@ -1364,7 +1364,7 @@ function checkIfSeparateM0scanExists(m0scanFile, fileList, issues, file) {
 }
 
 function matchRule_m0scan(str, rule) {
-  var escapeRegex = str => str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1')
+  var escapeRegex = str => str.replace(/([.*+?^=!:${}()|[]\/\\])/g, '\\$1')
   return new RegExp(
     rule
       .split('*')

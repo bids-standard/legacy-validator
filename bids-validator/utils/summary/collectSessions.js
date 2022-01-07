@@ -1,6 +1,6 @@
 import type from '../type'
 
-const collectSessions = (fileList, options) => {
+const collectSessions = fileList => {
   const sessions = []
   Object.keys(fileList).forEach(key => {
     const file = fileList[key]

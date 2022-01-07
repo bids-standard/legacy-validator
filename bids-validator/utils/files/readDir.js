@@ -114,7 +114,7 @@ async function preprocessNode(dir, ig, options) {
  * @returns {string[]}
  */
 const getGitLsTree = (cwd, gitRef) =>
-  new Promise((resolve, reject) => {
+  new Promise(resolve => {
     let output = ''
     const gitProcess = child_proccess.spawn(
       'git',
@@ -181,10 +181,14 @@ const readLsTreeLines = gitTreeLines =>
 const getGitCatFile = (cwd, input) =>
   new Promise(resolve => {
     let output = ''
-    const gitProcess = spawn('git', ['cat-file', '--batch', '--buffer'], {
-      cwd,
-      encoding: 'utf-8',
-    })
+    const gitProcess = child_proccess.spawn(
+      'git',
+      ['cat-file', '--batch', '--buffer'],
+      {
+        cwd,
+        encoding: 'utf-8',
+      },
+    )
 
     // pass in symlink objects
     gitProcess.stdin.write(input)

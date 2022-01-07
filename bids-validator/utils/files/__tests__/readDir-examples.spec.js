@@ -12,7 +12,7 @@ describe('readDir.js - examples integration', () => {
           'sub-02_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
         )
         expect(filenames[200]).toBe(
-          'sub-14_task-probabilisticclassification_run-02_events.tsv'
+          'sub-14_task-probabilisticclassification_run-02_events.tsv',
         )
         done()
       })

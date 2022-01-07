@@ -39,12 +39,12 @@ const checkEncoding = (file, data, cb) => {
 function readFile(file, annexed, dir) {
   return new Promise((resolve, reject) => {
     if (isNode) {
-      testFile(file, annexed, dir, function (issue, stats, remoteBuffer) {
+      testFile(file, annexed, dir, function(issue, stats, remoteBuffer) {
         if (issue) {
           return reject(issue)
         }
         if (!remoteBuffer) {
-          fs.readFile(file.path, function (err, data) {
+          fs.readFile(file.path, function(err, data) {
             if (err) {
               return reject(err)
             }

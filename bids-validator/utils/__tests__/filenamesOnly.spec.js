@@ -2,6 +2,7 @@ import { validateFilenames } from '../filenamesOnly.js'
 
 describe('test filenames mode', () => {
   beforeEach(() => {
+    // eslint-disable-next-line
     console.log = jest.fn()
   })
   it('throws an error when obviously non-BIDS input', async () => {

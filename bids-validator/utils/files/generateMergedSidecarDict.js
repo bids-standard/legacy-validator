@@ -13,7 +13,9 @@ function generateMergedSidecarDict(potentialSidecars, jsonContents) {
     const jsonObject = jsonContents[sidecarName]
     if (jsonObject) {
       for (var key in jsonObject) {
-        mergedDictionary[key] = jsonObject[key]
+        if (jsonObject.hasOwnProperty(key)) {
+          mergedDictionary[key] = jsonObject[key]
+        }
       }
     } else if (jsonObject === null) {
       mergedDictionary.invalid = true

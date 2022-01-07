@@ -87,36 +87,41 @@ describe('gitTreeMode functions', () => {
           size: 1,
         },
       ]
-      const expected = [
-        {
-          path: '/path/to/dataset/path/to/a',
-          size: 100,
-          relativePath: '/path/to/a',
-          name: 'a',
-        },
-        {
-          path: '/path/to/dataset/path/to/b',
-          size: 99,
-          relativePath: '/path/to/b',
-          name: 'b',
-        },
-        {
-          path: '/path/to/dataset/path/to/c',
-          size: 98,
-          relativePath: '/path/to/c',
-          name: 'c',
-        },
-        {
-          path: '/path/to/dataset/path/to/d',
-          size: 1,
-          relativePath: '/path/to/d',
-          name: 'd',
-        },
-      ]
+      /* Not currently in use.
+        const expected = [
+          {
+            path: '/path/to/dataset/path/to/a',
+            size: 100,
+            relativePath: '/path/to/a',
+            name: 'a',
+          },
+          {
+            path: '/path/to/dataset/path/to/b',
+            size: 99,
+            relativePath: '/path/to/b',
+            name: 'b',
+          },
+          {
+            path: '/path/to/dataset/path/to/c',
+            size: 98,
+            relativePath: '/path/to/c',
+            name: 'c',
+          },
+          {
+            path: '/path/to/dataset/path/to/d',
+            size: 1,
+            relativePath: '/path/to/d',
+            name: 'd',
+          },
+        ]
+      */
       const output = processFiles('/path/to/dataset', ig, filesA, filesB)
       const fileNames = output.map(file => file.name)
       assert(!fileNames.includes('.DS_Store'), 'filters out ignored files')
-      assert(!fileNames.includes('derivative_file'), 'filters out ignored directories',)
+      assert(
+        !fileNames.includes('derivative_file'),
+        'filters out ignored directories',
+      )
       assert.deepEqual(fileNames, ['a', 'b', 'c', 'd'], 'aggregates files')
       assert.isString(output[0].relativePath, 'adds relativePath to files')
       assert.isString(output[1].relativePath, 'adds name to files')

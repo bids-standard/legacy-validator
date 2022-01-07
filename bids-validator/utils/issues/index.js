@@ -86,6 +86,9 @@ var issues = {
 
     // organize by severity
     for (const codePropertyName in categorized) {
+      if (!categorized.hasOwnProperty(codePropertyName)) {
+        continue
+      }
       // Properties are always strings but error codes are always integers
       const code = parseInt(codePropertyName)
       issue = categorized[code]

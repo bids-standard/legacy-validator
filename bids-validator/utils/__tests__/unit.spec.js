@@ -9,7 +9,11 @@ describe('unit validator', () => {
       const goodOutput = unit.validate(validRoot)
       expect(goodOutput.isValid).toBe(true)
     })
-    const invalidRoots = ['definitielynotavalidroot', `%/${validRoot}`, `n/a*${validRoot}`]
+    const invalidRoots = [
+      'definitielynotavalidroot',
+      `%/${validRoot}`,
+      `n/a*${validRoot}`,
+    ]
     invalidRoots.forEach(invalidRoot => {
       const badOutput = unit.validate(invalidRoot)
       expect(badOutput.isValid).toBe(false)
@@ -25,7 +29,14 @@ describe('unit validator', () => {
     expect(badOutput.isValid).toBe(false)
   })
 
-  const validExponents = ['^2', '^543', '¹²³', ...unit.superscriptNumbers.slice(0, 3), '^-2', '⁻³']
+  const validExponents = [
+    '^2',
+    '^543',
+    '¹²³',
+    ...unit.superscriptNumbers.slice(0, 3),
+    '^-2',
+    '⁻³',
+  ]
   it('handles simple units with exponents', () => {
     validExponents.forEach(exp => {
       const goodOutput = unit.validate(validRoot + exp)

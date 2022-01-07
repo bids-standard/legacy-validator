@@ -1,6 +1,6 @@
 import type from '../type'
 
-const collectSubjects = (fileList, options) => {
+const collectSubjects = fileList => {
   const subjects = []
   const fileKeys = Object.keys(fileList)
   fileKeys.forEach(key => {

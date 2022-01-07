@@ -1,4 +1,3 @@
-import utils from '../../utils'
 import Issue from '../../utils/issues/issue'
 import checkAcqTimeFormat from './checkAcqTimeFormat'
 import checkAge89 from './checkAge89'
@@ -149,7 +148,9 @@ const TSV = (file, contents, fileList, callback) => {
     // create full dataset path list
     const pathList = []
     for (let f in fileList) {
-      pathList.push(fileList[f].relativePath)
+      if (fileList.hasOwnProperty(f)) {
+        pathList.push(fileList[f].relativePath)
+      }
     }
 
     // check for stimuli file
@@ -222,8 +223,9 @@ const TSV = (file, contents, fileList, callback) => {
             new Issue({
               file: file,
               evidence: headersEvidence(headers),
-              reason: 'Participant_id column should be named ' +
-                      'as sub-<subject_id>.',
+              reason:
+                'Participant_id column should be named ' +
+                'as sub-<subject_id>.',
               line: l,
               code: 212,
             }),
@@ -298,10 +300,7 @@ const TSV = (file, contents, fileList, callback) => {
   }
 
   // blood.tsv
-  if (
-    file.relativePath.includes('/pet/') &&
-    file.name.endsWith('_blood.tsv')
-  ) {
+  if (file.relativePath.includes('/pet/') && file.name.endsWith('_blood.tsv')) {
     // Validate fields here
     checkheader('time', 0, file, 126)
   }
@@ -365,7 +364,7 @@ const TSV = (file, contents, fileList, callback) => {
           pathList.push(fDir)
         } else if (fPath.includes('_ieeg.mefd/')) {
           // MEF3 data
-          const fDir = fPath.substring(0, fPath.indexOf('_ieeg.mefd/') + 10);
+          const fDir = fPath.substring(0, fPath.indexOf('_ieeg.mefd/') + 10)
           if (!pathList.includes(fDir)) {
             pathList.push(fDir)
           }

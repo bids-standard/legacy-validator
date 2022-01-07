@@ -26,7 +26,7 @@ const start = (dir, options, callback) => {
     console.log(`bids-specification@${options.schema}`)
   }
 
-  utils.options.parse(dir, options, async function (issues, options) {
+  utils.options.parse(dir, options, async function(issues, options) {
     if (issues && issues.length > 0) {
       // option parsing issues
       callback({ config: issues })

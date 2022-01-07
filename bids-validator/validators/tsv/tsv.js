@@ -245,16 +245,17 @@ const TSV = (file, contents, fileList, callback) => {
   // samples.tsv
   let samples = null
   if (file.name === 'samples.tsv') {
+    const sampleIssues = []
     const sampleIdColumnValues = []
     const participantIdColumnValues = []
     const sampleIdColumn = headers.indexOf('sample_id')
     const participantIdColumn = headers.indexOf('participant_id')
     const sampleTypeColumn = headers.indexOf('sample_type')
 
-    // if the sample_id column is missing, an error 
+    // if the sample_id column is missing, an error
     // will be raised
     if (sampleIdColumn === -1) {
-      issues.push(
+      sampleIssues.push(
         new Issue({
           file: file,
           evidence: headersEvidence(headers),
@@ -263,10 +264,10 @@ const TSV = (file, contents, fileList, callback) => {
         }),
       )
     }
-    // if the participant_id column is missing, an error 
+    // if the participant_id column is missing, an error
     // will be raised
-    else if (participantIdColumn === -1) {
-      issues.push(
+    if (participantIdColumn === -1) {
+      sampleIssues.push(
         new Issue({
           file: file,
           evidence: headersEvidence(headers),
@@ -275,10 +276,10 @@ const TSV = (file, contents, fileList, callback) => {
         }),
       )
     }
-    // if the sample_type column is missing, an error 
+    // if the sample_type column is missing, an error
     // will be raised
-    else if (sampleTypeColumn === -1) {
-      issues.push(
+    if (sampleTypeColumn === -1) {
+      sampleIssues.push(
         new Issue({
           file: file,
           evidence: headersEvidence(headers),
@@ -286,8 +287,12 @@ const TSV = (file, contents, fileList, callback) => {
           code: 218,
         }),
       )
-    } else {
-      // otherwise, the samples should comprise of 
+    }
+    // Fold sampleIssues into main issue array, only needed it for this
+    // conditional.
+    issues.push(...sampleIssues)
+    if (sampleIssues.length === 0) {
+      // otherwise, the samples should comprise of
       // sample-<sample_id> and one sample per row
       samples = []
       for (let l = 1; l < rows.length; l++) {
@@ -304,15 +309,15 @@ const TSV = (file, contents, fileList, callback) => {
             new Issue({
               file: file,
               evidence: row[sampleIdColumn],
-              reason: 'sample_id column should be named ' +
-                      'as sample-<sample_id>.',
+              reason:
+                'sample_id column should be named ' + 'as sample-<sample_id>.',
               line: l,
               code: 215,
             }),
           )
         }
       }
-      // The participants should comprise of 
+      // The participants should comprise of
       // sub-<subject_id> and one subject per row
       participants = []
       for (let l = 1; l < rows.length; l++) {
@@ -329,8 +334,9 @@ const TSV = (file, contents, fileList, callback) => {
             new Issue({
               file: file,
               evidence: row[participantIdColumn],
-              reason: 'Participant_id column should be named ' +
-                      'as sub-<subject_id>.',
+              reason:
+                'Participant_id column should be named ' +
+                'as sub-<subject_id>.',
               line: l,
               code: 212,
             }),
@@ -368,30 +374,32 @@ const TSV = (file, contents, fileList, callback) => {
       }
     }
 
-    // check if any incorrect patterns in sample_type column
-    const validSampleTypes = [
-      'cell line',
-      'in vitro differentiated cells',
-      'primary cell',
-      'cell-free sample',
-      'cloning host',
-      'tissue',
-      'whole organisms',
-      'organoid',
-      'technical sample',
-    ]
-    for (let c = 1; c < rows.length; c++) {
-      const row = rows[c]
-      if (!validSampleTypes.includes(row[sampleTypeColumn])) {
-        issues.push(
-          new Issue({
-            file: file,
-            evidence: row[sampleTypeColumn],
-            reason: "sample_type can't be any value.",
-            line: c + 1,
-            code: 219,
-          }),
-        )
+    if (sampleTypeColumn !== -1) {
+      // check if any incorrect patterns in sample_type column
+      const validSampleTypes = [
+        'cell line',
+        'in vitro differentiated cells',
+        'primary cell',
+        'cell-free sample',
+        'cloning host',
+        'tissue',
+        'whole organisms',
+        'organoid',
+        'technical sample',
+      ]
+      for (let c = 1; c < rows.length; c++) {
+        const row = rows[c]
+        if (!validSampleTypes.includes(row[sampleTypeColumn])) {
+          issues.push(
+            new Issue({
+              file: file,
+              evidence: row[sampleTypeColumn],
+              reason: "sample_type can't be any value.",
+              line: c + 1,
+              code: 219,
+            }),
+          )
+        }
       }
     }
   }

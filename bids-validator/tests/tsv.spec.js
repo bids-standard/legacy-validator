@@ -685,4 +685,30 @@ describe('TSV', function() {
     let issues = validate.TSV.validateContRec([physio_file], {})
     assert(issues.length === 1 && issues[0].code === 133)
   })
+
+  // samples checks -----------------------------------------------------------
+
+  const samplesFile = {
+    name: 'samples.tsv',
+    relativePath: '/samples.tsv',
+  }
+
+  it('should return errors for each missing mandatory header in samples.tsv', () => {
+    const tsv = 'wrong_col\nsome_data\n'
+    validate.TSV.TSV(samplesFile, tsv, [], function(issues) {
+      expect(issues.length).toBe(3)
+      const codes = issues.map(x => x.code)
+      expect(codes.includes(216)).toBe(true)
+      expect(codes.includes(217)).toBe(true)
+      expect(codes.includes(218)).toBe(true)
+    })
+  })
+
+  it('should return an error for invalid sample_type samples.tsv', () => {
+    const tsv = 'sample_type\nbad\n'
+    validate.TSV.TSV(samplesFile, tsv, [], function(issues) {
+      const codes = issues.map(x => x.code)
+      expect(codes.includes(219)).toBe(true)
+    })
+  })
 })

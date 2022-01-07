@@ -85,14 +85,10 @@ const checkOptionalFields = (omePath, omeData, namespace, jsonData) => {
 
   if (
     omeData[`${namespace}OME`][`${namespace}Instrument`] &&
-    omeData[`${namespace}OME`][`${namespace}Instrument`][0][
-      `${namespace}Objective`
-    ]
+    omeData[`${namespace}OME`][`${namespace}Instrument`][0][`${namespace}Objective`]
   ) {
     let objective =
-      omeData[`${namespace}OME`][`${namespace}Instrument`][0][
-        `${namespace}Objective`
-      ][0]['$']
+      omeData[`${namespace}OME`][`${namespace}Instrument`][0][`${namespace}Objective`][0]['$']
     for (let field in fields) {
       let property = fields[field]
       if (jsonData.hasOwnProperty(field) && objective[property]) {
@@ -120,29 +116,17 @@ const checkPixelSize = (omeData, namespace, jsonData) => {
   let validUnits = ['um', 'µm', 'nm', 'mm']
 
   const PhysicalSizeX =
-    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0][
-      '$'
-    ]['PhysicalSizeX']
+    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0]['$']['PhysicalSizeX']
   const physicalSizeXUnit =
-    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0][
-      '$'
-    ]['PhysicalSizeXUnit']
+    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0]['$']['PhysicalSizeXUnit']
   const PhysicalSizeY =
-    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0][
-      '$'
-    ]['PhysicalSizeY']
+    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0]['$']['PhysicalSizeY']
   const physicalSizeYUnit =
-    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0][
-      '$'
-    ]['PhysicalSizeYUnit']
+    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0]['$']['PhysicalSizeYUnit']
   const PhysicalSizeZ =
-    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0][
-      '$'
-    ]['PhysicalSizeZ']
+    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0]['$']['PhysicalSizeZ']
   const physicalSizeZUnit =
-    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0][
-      '$'
-    ]['PhysicalSizeZUnit']
+    omeData[`${namespace}OME`][`${namespace}Image`][0][`${namespace}Pixels`][0]['$']['PhysicalSizeZUnit']
 
   // if no corresponding json file, skip the consistency check
   if (Object.keys(jsonData).length === 0) return []

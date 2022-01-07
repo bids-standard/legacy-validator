@@ -21,4 +21,4 @@ tests:
     - git checkout $CI_COMMIT_REF_NAME
     - git submodule update --init --depth 1
     - npm install
-    - npm run test -- --testTimeout 30000 --colors
+    - npm run test -- --testTimeout 30000

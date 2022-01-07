@@ -47,7 +47,7 @@ const ifJsonExist = (file, possibleJsonPath, jsonContentsDict) => {
   const chunkPresent =
     jsonChunkFiles.length || chunkRegex.exec(file.relativePath)
 
-  const mergedDictionary = utils.files.generateMergedSidecarDictWithPath(
+  const mergedDictionary = utils.files.generateMergedSidecarDict(
     potentialSidecars,
     jsonContentsDict,
   )

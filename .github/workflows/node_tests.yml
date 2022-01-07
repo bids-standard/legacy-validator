@@ -20,8 +20,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: "14"
-          cache: "npm"
+          node-version: '14'
+          cache: 'npm'
       - name: Set git name/email
         run: |
           git config --global user.email "bids.maintenance@gmail.com"
@@ -35,10 +35,12 @@ jobs:
       - name: Get bids-examples data
         run: git submodule update --init
       - name: Jest tests
-        run: npm run coverage -- --maxWorkers=2 --testTimeout=10000 --colors
+        run: npm run coverage -- --maxWorkers=2 --testTimeout=10000
       - name: Upload to codecov
         run: npm run codecov
       - name: Smoke tests
         run: |
           bids-validator/bin/bids-validator bids-validator/tests/data/valid_headers/ --ignoreNiftiHeaders
           bids-validator/bin/bids-validator bids-validator/tests/data/valid_headers/ --ignoreNiftiHeaders --json
+
+

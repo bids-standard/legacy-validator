@@ -58,7 +58,9 @@
     "stream-browserify": "^3.0.0",
     "table": "^5.2.3",
     "yaml": "^1.10.2",
-    "yargs": "^16.2.0"
+    "yargs": "^16.2.0",
+    "exifreader": "^4.1.0",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "adm-zip": "",

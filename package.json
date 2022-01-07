@@ -5,9 +5,9 @@
     "bids-validator-web"
   ],
   "scripts": {
-    "lint": "./node_modules/eslint/bin/eslint.js ./bids-validator/**/*.js",
-    "coverage": "./node_modules/.bin/jest --coverage",
-    "codecov": "./node_modules/.bin/codecov",
+    "lint": "eslint ./bids-validator/**/*.js",
+    "coverage": "jest --coverage",
+    "codecov": "codecov",
     "test": "node bids-validator/bin/test-submodule-exists && jest",
     "postversion": "lerna version prerelease --preid dev --ignore-scripts --yes --force-publish=*",
     "web-dev": "cd bids-validator-web && npm run dev",

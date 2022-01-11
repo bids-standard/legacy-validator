@@ -65,6 +65,8 @@ const ifJsonExist = (file, possibleJsonPath, jsonContentsDict) => {
   if (chunkPresent) {
     return checkMatrixField(file, mergedDictionary)
   }
+  
+  return []
 }
 
 const checkMatrixField = (file, mergedDictionary) => {
@@ -72,14 +74,11 @@ const checkMatrixField = (file, mergedDictionary) => {
   if (!mergedDictionary.hasOwnProperty('ChunkTransformationMatrix')) {
     issues.push(
       new Issue({
-        file: {
-          path: file,
-        },
+        file: file,
         code: 223,
       }),
     )
   }
-  // }
   return issues
 }
 

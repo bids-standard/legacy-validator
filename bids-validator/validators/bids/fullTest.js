@@ -148,6 +148,7 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
           files,
           jsonContentsDict,
         )
+
         self.issues = self.issues
           .concat(samplesIssues)
           .concat(jsonAndFieldIssues)

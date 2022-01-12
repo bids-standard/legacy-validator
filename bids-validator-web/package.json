@@ -5,6 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime": "^7.16.7",
     "bootstrap": "^4.3.0",
     "bowser": "^1.0.0",
     "next": "^11.1.2",

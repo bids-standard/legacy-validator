@@ -8,6 +8,7 @@ function entry(cli) {
 try {
   // Test if there's a development tree to run
   require.resolve('../cli.js')
+  process.env.ESBUILD_MAX_BUFFER = 64 * 1024 * 1024
   // For dev, use esbuild-runner
   require('esbuild-runner/register')
   const { default: cli } = require('../cli.js')

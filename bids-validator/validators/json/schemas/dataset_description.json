@@ -54,15 +54,16 @@
     },
     "DatasetLinks": {
       "type": "object",
-      "properties": {
-        "^.*$": { "type": "uri" }
+      "properties": { },
+      "additionalProperties": {
+        "type": "string",
+        "format": "uri"
       },
       "not": {
         "anyOf": [
           { "required": [ "" ] }
         ]
       }
-
     },
     "GeneratedBy": {
       "type": "array",

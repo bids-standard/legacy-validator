@@ -52,6 +52,18 @@
     "DatasetDOI": {
       "type": "string"
     },
+    "DatasetLinks": {
+      "type": "object",
+      "properties": {
+        "^.*$": { "type": "uri" }
+      },
+      "not": {
+        "anyOf": [
+          { "required": [ "" ] }
+        ]
+      }
+
+    },
     "GeneratedBy": {
       "type": "array",
       "minItems": 1,

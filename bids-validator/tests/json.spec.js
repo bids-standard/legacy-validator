@@ -467,6 +467,70 @@ describe('JSON', function() {
     relativePath: '/dataset_description.json',
   }
 
+  it('dataset_description.json should validate DatasetLinks', function() {
+    var jsonObj = {
+      Name: 'Example Name',
+      BIDSVersion: '1.4.0',
+      DatasetLinks: {
+        "mylink": "https://www.google.com"
+      },
+    }
+    jsonDict[dataset_description_file.relativePath] = jsonObj
+    validate.JSON(dataset_description_file, jsonDict, function(issues) {
+      assert(issues.length === 0)
+    })
+  })
+
+  it('dataset_description.json should raise on empty key in DatasetLinks', function() {
+    var jsonObj = {
+      Name: 'Example Name',
+      BIDSVersion: '1.4.0',
+      DatasetLinks: {
+        "mylink": "https://www.google.com",
+        "": "https://www.yahoo.com"
+      },
+    }
+    jsonDict[dataset_description_file.relativePath] = jsonObj
+    validate.JSON(dataset_description_file, jsonDict, function(issues) {
+      assert(issues.length === 1)
+      assert(issues[0].evidence==".DatasetLinks should NOT be valid")
+    })
+  })
+
+  it('dataset_description.json should raise on wrong key in DatasetLinks', function() {
+    var jsonObj = {
+      Name: 'Example Name',
+      BIDSVersion: '1.4.0',
+      DatasetLinks: "https://www.google.com"
+    }
+    jsonDict[dataset_description_file.relativePath] = jsonObj
+    validate.JSON(dataset_description_file, jsonDict, function(issues) {
+      assert(issues.length === 2)
+      assert(issues[0].evidence==".DatasetLinks should be object")
+      assert(issues[1].evidence==".DatasetLinks should NOT be valid")
+    })
+  })
+
+  it('dataset_description.json should raise on invalid values in DatasetLinks', function() {
+    var jsonObj = {
+      Name: 'Example Name',
+      BIDSVersion: '1.4.0',
+      DatasetLinks: {
+        "mylink1": "https://www.google.com",
+        "mylink2": 1,
+        "mylink3": "nope",
+        "": "https://www.yahoo.com",
+      },
+    }
+    jsonDict[dataset_description_file.relativePath] = jsonObj
+    validate.JSON(dataset_description_file, jsonDict, function(issues) {
+      assert(issues[0].evidence==".DatasetLinks['mylink2'] should be string")
+      assert(issues[1].evidence==".DatasetLinks['mylink3'] should match format \"uri\"")
+      assert(issues[2].evidence==".DatasetLinks should NOT be valid")
+
+    })
+  })
+
   it('dataset_description.json should validate with enum of DatasetType', function() {
     var jsonObj = {
       Name: 'Example Name',

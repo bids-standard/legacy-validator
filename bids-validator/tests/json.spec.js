@@ -472,7 +472,7 @@ describe('JSON', function() {
       Name: 'Example Name',
       BIDSVersion: '1.4.0',
       DatasetLinks: {
-        "mylink": "https://www.google.com"
+        mylink: 'https://www.google.com',
       },
     }
     jsonDict[dataset_description_file.relativePath] = jsonObj
@@ -486,14 +486,14 @@ describe('JSON', function() {
       Name: 'Example Name',
       BIDSVersion: '1.4.0',
       DatasetLinks: {
-        "mylink": "https://www.google.com",
-        "": "https://www.yahoo.com"
+        mylink: 'https://www.google.com',
+        '': 'https://www.yahoo.com',
       },
     }
     jsonDict[dataset_description_file.relativePath] = jsonObj
     validate.JSON(dataset_description_file, jsonDict, function(issues) {
       assert(issues.length === 1)
-      assert(issues[0].evidence==".DatasetLinks should NOT be valid")
+      assert(issues[0].evidence == '.DatasetLinks should NOT be valid')
     })
   })
 
@@ -501,13 +501,13 @@ describe('JSON', function() {
     var jsonObj = {
       Name: 'Example Name',
       BIDSVersion: '1.4.0',
-      DatasetLinks: "https://www.google.com"
+      DatasetLinks: 'https://www.google.com',
     }
     jsonDict[dataset_description_file.relativePath] = jsonObj
     validate.JSON(dataset_description_file, jsonDict, function(issues) {
       assert(issues.length === 2)
-      assert(issues[0].evidence==".DatasetLinks should be object")
-      assert(issues[1].evidence==".DatasetLinks should NOT be valid")
+      assert(issues[0].evidence == '.DatasetLinks should be object')
+      assert(issues[1].evidence == '.DatasetLinks should NOT be valid')
     })
   })
 
@@ -516,18 +516,20 @@ describe('JSON', function() {
       Name: 'Example Name',
       BIDSVersion: '1.4.0',
       DatasetLinks: {
-        "mylink1": "https://www.google.com",
-        "mylink2": 1,
-        "mylink3": "nope",
-        "": "https://www.yahoo.com",
+        mylink1: 'https://www.google.com',
+        mylink2: 1,
+        mylink3: 'nope',
+        '': 'https://www.yahoo.com',
       },
     }
     jsonDict[dataset_description_file.relativePath] = jsonObj
     validate.JSON(dataset_description_file, jsonDict, function(issues) {
-      assert(issues[0].evidence==".DatasetLinks['mylink2'] should be string")
-      assert(issues[1].evidence==".DatasetLinks['mylink3'] should match format \"uri\"")
-      assert(issues[2].evidence==".DatasetLinks should NOT be valid")
-
+      assert(issues[0].evidence == ".DatasetLinks['mylink2'] should be string")
+      assert(
+        issues[1].evidence ==
+          '.DatasetLinks[\'mylink3\'] should match format "uri"',
+      )
+      assert(issues[2].evidence == '.DatasetLinks should NOT be valid')
     })
   })
 

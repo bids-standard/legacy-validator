@@ -492,8 +492,12 @@ describe('JSON', function() {
     }
     jsonDict[dataset_description_file.relativePath] = jsonObj
     validate.JSON(dataset_description_file, jsonDict, function(issues) {
-      assert(issues.length === 1)
-      assert(issues[0].evidence == '.DatasetLinks should NOT be valid')
+      assert(issues.length === 2)
+      assert(
+        issues[0].evidence ==
+          '.DatasetLinks should NOT be shorter than 1 characters',
+      )
+      assert(issues[1].evidence == ".DatasetLinks property name '' is invalid")
     })
   })
 
@@ -505,9 +509,8 @@ describe('JSON', function() {
     }
     jsonDict[dataset_description_file.relativePath] = jsonObj
     validate.JSON(dataset_description_file, jsonDict, function(issues) {
-      assert(issues.length === 2)
+      assert(issues.length === 1)
       assert(issues[0].evidence == '.DatasetLinks should be object')
-      assert(issues[1].evidence == '.DatasetLinks should NOT be valid')
     })
   })
 
@@ -524,12 +527,17 @@ describe('JSON', function() {
     }
     jsonDict[dataset_description_file.relativePath] = jsonObj
     validate.JSON(dataset_description_file, jsonDict, function(issues) {
-      assert(issues[0].evidence == ".DatasetLinks['mylink2'] should be string")
+      assert(issues.length === 4)
       assert(
-        issues[1].evidence ==
+        issues[0].evidence ==
+          '.DatasetLinks should NOT be shorter than 1 characters',
+      )
+      assert(issues[1].evidence == ".DatasetLinks property name '' is invalid")
+      assert(issues[2].evidence == ".DatasetLinks['mylink2'] should be string")
+      assert(
+        issues[3].evidence ==
           '.DatasetLinks[\'mylink3\'] should match format "uri"',
       )
-      assert(issues[2].evidence == '.DatasetLinks should NOT be valid')
     })
   })
 

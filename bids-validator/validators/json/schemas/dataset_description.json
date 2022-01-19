@@ -55,14 +55,14 @@
     "DatasetLinks": {
       "type": "object",
       "properties": { },
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[a-zA-Z0-9]*$"
+      },
       "additionalProperties": {
         "type": "string",
         "format": "uri"
-      },
-      "not": {
-        "anyOf": [
-          { "required": [ "" ] }
-        ]
       }
     },
     "GeneratedBy": {

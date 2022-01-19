@@ -62,7 +62,7 @@
       },
       "additionalProperties": {
         "type": "string",
-        "format": "uri"
+        "format": "uri-reference"
       }
     },
     "GeneratedBy": {

@@ -484,27 +484,42 @@ describe('JSON', function() {
     })
   })
 
-  it('dataset_description.json should raise on empty key in DatasetLinks', function() {
+  it('dataset_description.json should raise on bad keys in DatasetLinks', function() {
     var jsonObj = {
       Name: 'Example Name',
       BIDSVersion: '1.4.0',
       DatasetLinks: {
         mylink: 'https://www.google.com',
         '': 'https://www.yahoo.com',
+        'mylink!': ':/path',
+        'my link': ':/another/path',
       },
     }
     jsonDict[dataset_description_file.relativePath] = jsonObj
     validate.JSON(dataset_description_file, jsonDict, function(issues) {
-      assert(issues.length === 2)
+      assert(issues.length === 6)
       assert(
         issues[0].evidence ==
           '.DatasetLinks should NOT be shorter than 1 characters',
       )
       assert(issues[1].evidence == ".DatasetLinks property name '' is invalid")
+      assert(
+        issues[2].evidence ==
+          '.DatasetLinks should match pattern "^[a-zA-Z0-9]*$"',
+      )
+      assert(
+        issues[3].evidence ==
+          ".DatasetLinks property name 'mylink!' is invalid",
+      )
+      assert(issues[4].evidence == issues[2].evidence)
+      assert(
+        issues[5].evidence ==
+          ".DatasetLinks property name 'my link' is invalid",
+      )
     })
   })
 
-  it('dataset_description.json should raise on wrong key in DatasetLinks', function() {
+  it('dataset_description.json should raise on non-object value in DatasetLinks', function() {
     var jsonObj = {
       Name: 'Example Name',
       BIDSVersion: '1.4.0',
@@ -524,23 +539,18 @@ describe('JSON', function() {
       DatasetLinks: {
         mylink1: 'https://www.google.com',
         mylink2: 1,
-        mylink3: 'nope',
         '': 'https://www.yahoo.com',
       },
     }
     jsonDict[dataset_description_file.relativePath] = jsonObj
     validate.JSON(dataset_description_file, jsonDict, function(issues) {
-      assert(issues.length === 4)
+      assert(issues.length === 3)
       assert(
         issues[0].evidence ==
           '.DatasetLinks should NOT be shorter than 1 characters',
       )
       assert(issues[1].evidence == ".DatasetLinks property name '' is invalid")
       assert(issues[2].evidence == ".DatasetLinks['mylink2'] should be string")
-      assert(
-        issues[3].evidence ==
-          '.DatasetLinks[\'mylink3\'] should match format "uri"',
-      )
     })
   })
 

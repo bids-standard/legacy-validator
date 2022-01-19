@@ -473,6 +473,9 @@ describe('JSON', function() {
       BIDSVersion: '1.4.0',
       DatasetLinks: {
         mylink: 'https://www.google.com',
+        deriv1: 'derivatives/derivative1',
+        phantoms: 'file:///data/phantoms',
+        ds000001: 'doi:10.18112/openneuro.ds000001.v1.0.0',
       },
     }
     jsonDict[dataset_description_file.relativePath] = jsonObj

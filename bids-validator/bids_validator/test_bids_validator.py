@@ -14,7 +14,9 @@ from bids_validator import BIDSValidator
 HOME = os.path.expanduser('~')
 
 TEST_DATA_DICT = {
-    'eeg_matchingpennies': 'https://github.com/sappelhoff/eeg_matchingpennies'
+    'eeg_matchingpennies': (
+        'https://gin.g-node.org/sappelhoff/eeg_matchingpennies'
+    ),
     }
 
 EXCLUDE_KEYWORDS = ['git', 'datalad', 'sourcedata', 'bidsignore']

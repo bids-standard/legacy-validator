@@ -467,6 +467,93 @@ describe('JSON', function() {
     relativePath: '/dataset_description.json',
   }
 
+  it('dataset_description.json should validate DatasetLinks', function() {
+    var jsonObj = {
+      Name: 'Example Name',
+      BIDSVersion: '1.4.0',
+      DatasetLinks: {
+        mylink: 'https://www.google.com',
+        deriv1: 'derivatives/derivative1',
+        phantoms: 'file:///data/phantoms',
+        ds000001: 'doi:10.18112/openneuro.ds000001.v1.0.0',
+      },
+    }
+    jsonDict[dataset_description_file.relativePath] = jsonObj
+    validate.JSON(dataset_description_file, jsonDict, function(issues) {
+      assert(issues.length === 0)
+    })
+  })
+
+  it('dataset_description.json should raise on bad keys in DatasetLinks', function() {
+    var jsonObj = {
+      Name: 'Example Name',
+      BIDSVersion: '1.4.0',
+      DatasetLinks: {
+        mylink: 'https://www.google.com',
+        '': 'https://www.yahoo.com',
+        'mylink!': ':/path',
+        'my link': ':/another/path',
+      },
+    }
+    jsonDict[dataset_description_file.relativePath] = jsonObj
+    validate.JSON(dataset_description_file, jsonDict, function(issues) {
+      assert(issues.length === 6)
+      assert(
+        issues[0].evidence ==
+          '.DatasetLinks should NOT be shorter than 1 characters',
+      )
+      assert(issues[1].evidence == ".DatasetLinks property name '' is invalid")
+      assert(
+        issues[2].evidence ==
+          '.DatasetLinks should match pattern "^[a-zA-Z0-9]*$"',
+      )
+      assert(
+        issues[3].evidence ==
+          ".DatasetLinks property name 'mylink!' is invalid",
+      )
+      assert(issues[4].evidence == issues[2].evidence)
+      assert(
+        issues[5].evidence ==
+          ".DatasetLinks property name 'my link' is invalid",
+      )
+    })
+  })
+
+  it('dataset_description.json should raise on non-object value in DatasetLinks', function() {
+    var jsonObj = {
+      Name: 'Example Name',
+      BIDSVersion: '1.4.0',
+      DatasetLinks: 'https://www.google.com',
+    }
+    jsonDict[dataset_description_file.relativePath] = jsonObj
+    validate.JSON(dataset_description_file, jsonDict, function(issues) {
+      assert(issues.length === 1)
+      assert(issues[0].evidence == '.DatasetLinks should be object')
+    })
+  })
+
+  it('dataset_description.json should raise on invalid values in DatasetLinks', function() {
+    var jsonObj = {
+      Name: 'Example Name',
+      BIDSVersion: '1.4.0',
+      DatasetLinks: {
+        mylink1: 'https://www.google.com',
+        mylink2: 1,
+        '': 'https://www.yahoo.com',
+      },
+    }
+    jsonDict[dataset_description_file.relativePath] = jsonObj
+    validate.JSON(dataset_description_file, jsonDict, function(issues) {
+      assert(issues.length === 3)
+      assert(
+        issues[0].evidence ==
+          '.DatasetLinks should NOT be shorter than 1 characters',
+      )
+      assert(issues[1].evidence == ".DatasetLinks property name '' is invalid")
+      assert(issues[2].evidence == ".DatasetLinks['mylink2'] should be string")
+    })
+  })
+
   it('dataset_description.json should validate with enum of DatasetType', function() {
     var jsonObj = {
       Name: 'Example Name',

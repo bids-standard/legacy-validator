@@ -39,10 +39,8 @@ jobs:
           echo "./node_modules/.bin" >> $GITHUB_PATH
 
       - name: Get bids-examples data
-        # temporarily test IntendedFor bids URI branch (remove before merging this PR)
-        #git clone --depth 1 https://github.com/bids-standard/bids-examples -b ${{ matrix.bids-examples-branch }}
         run: |
-          git clone --depth 1 https://github.com/sappelhoff/bids-examples -b bids-uris
+          git clone --depth 1 https://github.com/bids-standard/bids-examples -b ${{ matrix.bids-examples-branch }}
 
       - name: Display versions and environment information
         run: |

@@ -25,7 +25,7 @@ export function parseOptions(argumentOverride) {
       default: [],
       describe: 'Array of modalities to error on if detected.',
       array: true,
-      choices: [ 'MRI', 'PET', 'MEG', 'EEG', 'iEEG', 'Microscopy' ],
+      choices: ['MRI', 'PET', 'MEG', 'EEG', 'iEEG', 'Microscopy'],
     })
     .boolean('verbose')
     .describe('verbose', 'Log more extensive information about issues')

@@ -218,8 +218,7 @@ describe('BIDS example datasets ', function() {
     })
   })
 
-it('blacklists modalities specified', function(isdone) {
-
+  it('blacklists modalities specified', function(isdone) {
     const _options = { ...options, blacklistModalities: ['MRI'] }
     validate.BIDS(createExampleFileList('ds001'), _options, function(
       issues,
@@ -246,7 +245,6 @@ it('blacklists modalities specified', function(isdone) {
       isdone()
     })
   })
-
 
   it('checks for data dictionaries without corresponding data files', function(isdone) {
     validate.BIDS(createDatasetFileList('unused_data_dict'), options, function(

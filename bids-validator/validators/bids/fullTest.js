@@ -46,6 +46,20 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
 
   const summary = utils.collectSummary(fileList, self.options, schema)
 
+  if (self.options.blacklistModalities) {
+    self.options.blacklistModalities.map(mod => {
+      if (summary.modalities.includes(mod)) {
+        self.issues.push(
+          new Issue({
+            file: mod,
+            evidence: `found ${mod} files`,
+            code: 139
+          })
+        )
+      }
+    })
+  }
+
   // remove size redundancies
   for (const key in fileList) {
     if (fileList.hasOwnProperty(key)) {

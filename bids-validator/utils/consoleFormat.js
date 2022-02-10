@@ -66,19 +66,23 @@ function logIssues(issues, color, options) {
       if (!file || !file.file) {
         continue
       }
-      output.push('\t\t.' + file.file.relativePath)
+      let indent = '\t\t'
+      if (file.file.relativePath) {
+        output.push(`${indent}.` + file.file.relativePath)
+        indent = '\t\t\t'
+      }
       if (options.verbose) {
-        output.push('\t\t\t' + file.reason)
+        output.push(indent + file.reason)
       }
       if (file.line) {
-        var msg = '\t\t\t@ line: ' + file.line
+        var msg = `${indent}@ line: ` + file.line
         if (file.character) {
           msg += ' character: ' + file.character
         }
         output.push(msg)
       }
       if (file.evidence) {
-        output.push('\t\t\tEvidence: ' + file.evidence)
+        output.push(`${indent}Evidence: ` + file.evidence)
       }
     }
     if (issue.additionalFileCount > 0) {

@@ -17,6 +17,7 @@ export default {
       ignoreNiftiHeaders: Boolean(options.ignoreNiftiHeaders),
       ignoreSymlinks: Boolean(options.ignoreSymlinks),
       ignoreSubjectConsistency: Boolean(options.ignoreSubjectConsistency),
+      blacklistModalities: options.blacklistModalities,
       verbose: Boolean(options.verbose),
       gitTreeMode: Boolean(options.gitTreeMode),
       remoteFiles: Boolean(options.remoteFiles),

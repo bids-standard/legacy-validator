@@ -21,6 +21,12 @@ export function parseOptions(argumentOverride) {
       'ignoreSubjectConsistency',
       'Skip checking that any given file for one subject is present for all other subjects.',
     )
+    .option('blacklistModalities', {
+      default: [],
+      describe: 'Array of modalities to error on if detected.',
+      array: true,
+      choices: [ 'MRI', 'PET', 'MEG', 'EEG', 'iEEG', 'Microscopy' ],
+    })
     .boolean('verbose')
     .describe('verbose', 'Log more extensive information about issues')
     .boolean('json')

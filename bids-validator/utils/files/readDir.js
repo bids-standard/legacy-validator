@@ -226,12 +226,9 @@ const processFiles = (dir, ig, ...fileLists) =>
       file.relativePath = path.normalize(`${path.sep}${file.path}`)
       return file
     })
-    .map(file => {
+    .filter(file => {
       const ignore = ig.ignores(file.relativePath.slice(1))
-      if (ignore) {
-        file.ignore = true
-      }
-      return file
+      return !ignore
     })
     .map(file => {
       file.relativePath = harmonizeRelativePath(file.relativePath)

@@ -226,9 +226,12 @@ const processFiles = (dir, ig, ...fileLists) =>
       file.relativePath = path.normalize(`${path.sep}${file.path}`)
       return file
     })
-    .filter(file => {
+    .map(file => {
       const ignore = ig.ignores(file.relativePath.slice(1))
-      return !ignore
+      if (ignore) {
+        file.ignore = true
+      }
+      return file
     })
     .map(file => {
       file.relativePath = harmonizeRelativePath(file.relativePath)
@@ -276,40 +279,41 @@ async function getFilesFromFs(dir, rootPath, ig, options) {
       path.relative(rootPath, fullPath),
     )
     const ignore = ig.ignores(path.relative('/', relativePath))
-    if (!ignore) {
-      const fileObj = {
-        name: file.name,
-        path: fullPath,
-        relativePath,
-      }
-      // Three cases to consider: directories, files, symlinks
-      if (file.isDirectory()) {
-        await recursiveMerge(fullPath)
-      } else if (file.isSymbolicLink()) {
-        // Allow skipping symbolic links which lead to recursion
-        // Disabling this is a big performance advantage on high latency
-        // storage but it's a good default for versatility
-        if (!options.ignoreSymlinks) {
-          try {
-            const targetPath = await fs.promises.realpath(fullPath)
-            const targetStat = await fs.promises.stat(targetPath)
-            // Either add or recurse from the target depending
-            if (targetStat.isDirectory()) {
-              await recursiveMerge(targetPath)
-            } else {
-              filesAccumulator.push(fileObj)
-            }
-          } catch (err) {
-            // Symlink points at an invalid target, skip it
-            return
+    const fileObj = {
+      name: file.name,
+      path: fullPath,
+      relativePath,
+    }
+    if (ignore) {
+      fileObj.ignore = true
+    }
+    // Three cases to consider: directories, files, symlinks
+    if (file.isDirectory()) {
+      await recursiveMerge(fullPath)
+    } else if (file.isSymbolicLink()) {
+      // Allow skipping symbolic links which lead to recursion
+      // Disabling this is a big performance advantage on high latency
+      // storage but it's a good default for versatility
+      if (!options.ignoreSymlinks) {
+        try {
+          const targetPath = await fs.promises.realpath(fullPath)
+          const targetStat = await fs.promises.stat(targetPath)
+          // Either add or recurse from the target depending
+          if (targetStat.isDirectory()) {
+            await recursiveMerge(targetPath)
+          } else {
+            filesAccumulator.push(fileObj)
           }
-        } else {
-          // This branch assumes all symbolic links are not directories
-          filesAccumulator.push(fileObj)
+        } catch (err) {
+          // Symlink points at an invalid target, skip it
+          return
         }
       } else {
+        // This branch assumes all symbolic links are not directories
         filesAccumulator.push(fileObj)
       }
+    } else {
+      filesAccumulator.push(fileObj)
     }
   }
   return filesAccumulator

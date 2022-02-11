@@ -19,6 +19,7 @@ import checkReadme from './checkReadme'
 import validateMisc from '../../utils/files/validateMisc'
 import collectSubjectMetadata from '../../utils/summary/collectSubjectMetadata'
 import collectPetFields from '../../utils/summary/collectPetFields'
+import collectModalities from '../../utils/summary/collectModalities'
 
 /**
  * Full Test
@@ -44,11 +45,13 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
 
   const tsvs = []
 
-  const summary = utils.collectSummary(fileList, self.options, schema)
-
   if (self.options.blacklistModalities) {
+    const relativePaths = Object.keys(fileList).map(
+      file => fileList[file].relativePath,
+    )
+    const preIgnoreModalities = collectModalities(relativePaths)
     self.options.blacklistModalities.map(mod => {
-      if (summary.modalities.includes(mod)) {
+      if (preIgnoreModalities.primary.includes(mod)) {
         self.issues.push(
           new Issue({
             file: mod,
@@ -59,6 +62,8 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
       }
     })
   }
+
+  const summary = utils.collectSummary(fileList, self.options, schema)
 
   // remove size redundancies
   for (const key in fileList) {

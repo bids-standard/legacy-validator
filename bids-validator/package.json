@@ -1,6 +1,6 @@
 {
   "name": "bids-validator",
-  "version": "1.8.10-dev.0",
+  "version": "1.9.0",
   "description": "",
   "main": "./dist/commonjs/index.js",
   "exports": {
@@ -43,6 +43,7 @@
     "cross-fetch": "^3.0.6",
     "date-fns": "^2.7.0",
     "events": "^3.3.0",
+    "exifreader": "^4.1.0",
     "hed-validator": "^3.5.0",
     "ignore": "^4.0.2",
     "is-utf8": "^0.2.1",
@@ -57,10 +58,9 @@
     "semver": "^7.3.2",
     "stream-browserify": "^3.0.0",
     "table": "^5.2.3",
+    "xml2js": "^0.4.23",
     "yaml": "^1.10.2",
-    "yargs": "^16.2.0",
-    "exifreader": "^4.1.0",
-    "xml2js": "^0.4.23"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "adm-zip": "",

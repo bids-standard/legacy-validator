@@ -10,6 +10,7 @@
     "codecov": "codecov",
     "test": "node bids-validator/bin/test-submodule-exists && jest",
     "postversion": "lerna version prerelease --preid dev --ignore-scripts --yes --force-publish=*",
+    "prepublish": "npm run prepublish -w bids-validator",
     "web-dev": "cd bids-validator-web && npm run dev",
     "web-build": "cd bids-validator-web && npm run build",
     "web-start": "cd bids-validator-web && npm run build && npm start",

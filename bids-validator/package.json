@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build": "node ./esbuild.mjs",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",

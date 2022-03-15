@@ -94,7 +94,7 @@ const checkOptionalFields = (omePath, omeData, namespace, jsonData) => {
         `${namespace}Objective`
       ][0]['$']
     for (let field in fields) {
-      if (!fields.hasOwnPorperty(field)) {
+      if (!fields.hasOwnProperty(field)) {
         continue
       }
       let property = fields[field]

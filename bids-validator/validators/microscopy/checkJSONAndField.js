@@ -65,7 +65,7 @@ const ifJsonExist = (file, possibleJsonPath, jsonContentsDict) => {
   if (chunkPresent) {
     return checkMatrixField(file, mergedDictionary)
   }
-  
+
   return []
 }
 

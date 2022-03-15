@@ -712,7 +712,8 @@ export default {
   139: {
     key: 'BLACKLISTED_MODALITY',
     severity: 'error',
-    reason: 'Found a modality that has been blacklisted through validator configuration.',
+    reason:
+      'Found a modality that has been blacklisted through validator configuration.',
   },
   140: {
     key: '140_EMPTY',

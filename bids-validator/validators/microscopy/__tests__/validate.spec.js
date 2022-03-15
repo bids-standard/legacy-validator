@@ -1,6 +1,5 @@
 import path from 'path'
 
-import readDir from '../../../utils/files/readDir'
 import validate from '../validate'
 
 const dataDir = path.join(__dirname, '/data')

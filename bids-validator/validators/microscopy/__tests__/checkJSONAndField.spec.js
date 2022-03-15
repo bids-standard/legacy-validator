@@ -1,4 +1,3 @@
-import { assert } from 'chai'
 import checkJSONAndField from '../checkJSONAndField'
 
 describe('checkJSONAndField()', () => {

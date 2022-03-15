@@ -5,7 +5,7 @@
     "bids-validator-web"
   ],
   "scripts": {
-    "lint": "eslint ./bids-validator/**/*.js",
+    "lint": "eslint './bids-validator/**/*.js'",
     "coverage": "jest --coverage",
     "codecov": "codecov",
     "test": "node bids-validator/bin/test-submodule-exists && jest",

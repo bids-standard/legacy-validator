@@ -56,8 +56,8 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
           new Issue({
             file: mod,
             evidence: `found ${mod} files`,
-            code: 139
-          })
+            code: 139,
+          }),
         )
       }
     })

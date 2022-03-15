@@ -15,7 +15,6 @@ import illegalCharacterTest from './illegalCharacterTest'
 import sessions from './sessions'
 import remoteFiles from './remoteFiles'
 import getFileStats from './getFileStats'
-import generateMergedSidecarDictWithPath from './generateMergedSidecarDictWithPath'
 
 // public API ---------------------------------------------------------------------
 
@@ -28,7 +27,6 @@ export default {
   readOMEFile,
   readNiftiHeader,
   generateMergedSidecarDict,
-  generateMergedSidecarDictWithPath,
   potentialLocations,
   getBFileContent,
   collectDirectorySize,

@@ -61,8 +61,9 @@ jobs:
     environment:
       IMAGE_NAME: bids/validator
     machine:
-      # Ubuntu 16.04, docker 18.09.3, docker-compose 1.23.1
-      image: ubuntu-1604:201903-01
+      # Ubuntu 20.04, Docker v20.10.11, Docker Compose v1.29.2
+      # see: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
+      image: ubuntu-2004:202111-02
     steps:
       - checkout
       - run: docker build -t $IMAGE_NAME:latest .

@@ -33,7 +33,7 @@
    1. Open [Google Chrome](https://www.google.com/chrome/) or
       [Mozilla Firefox](https://mozilla.org/firefox) (currently the only
       supported browsers)
-   1. Go to http://bids-standard.github.io/bids-validator/ and select a folder
+   1. Go to https://bids-standard.github.io/bids-validator/ and select a folder
       with your BIDS dataset. If the validator seems to be working longer than
       couple of minutes please open [developer tools ](https://developer.chrome.com/devtools)
       and report the error at [https://github.com/bids-standard/bids-validator/issues](https://github.com/bids-standard/bids-validator/issues).

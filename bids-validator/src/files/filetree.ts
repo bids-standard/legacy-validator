@@ -27,7 +27,7 @@ export class FileTree {
     this.path = path
     this.files = []
     this.directories = []
-    this.name = path
+    this.name = name
     this.parent = parent
   }
 }

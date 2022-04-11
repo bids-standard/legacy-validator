@@ -1,4 +1,5 @@
 export {
+  relative,
   resolve,
   join,
   basename,

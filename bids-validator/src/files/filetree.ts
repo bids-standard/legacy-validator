@@ -4,8 +4,10 @@
 
 // Avoid overloading the default File type
 export interface BIDSFile {
-  // Dataset relative path for the file
+  // Filename
   name: string
+  // Dataset relative path for the file
+  path: string
   // File size in bytes
   size: Promise<number>
   // BIDS ignore status of the file
@@ -15,7 +17,7 @@ export interface BIDSFile {
 }
 
 export class FileTree {
-  // Reference to this FileTree location
+  // Absolute path to this FileTree location
   path: string
   // Name of this directory level
   name: string

@@ -9,11 +9,13 @@ import { FileTree, BIDSFile } from './filetree.ts'
  */
 export class BIDSFileDeno implements BIDSFile {
   name: string
+  path: string
   ignored: boolean
   private _fileInfo: Deno.FileInfo | undefined
 
-  constructor(name: string) {
-    this.name = name
+  constructor(path: string) {
+    this.path = path
+    this.name = basename(path)
     this.ignored = false
   }
 
@@ -42,16 +44,15 @@ export class BIDSFileDeno implements BIDSFile {
 /**
  * Read in the target directory structure and return a FileTree
  */
-export async function readFileTree(path: string): Promise<FileTree> {
+export async function readFileTree(path: string, parent?: FileTree): Promise<FileTree> {
   const absPath = resolve(Deno.cwd(), path)
-  const base = basename(path)
-  const tree = new FileTree(absPath, base)
+  const tree = new FileTree(absPath, path, parent)
   for await (const dirEntry of Deno.readDir(tree.path)) {
     if (dirEntry.isFile) {
-      tree.files.push(new BIDSFileDeno(dirEntry.name))
+      tree.files.push(new BIDSFileDeno(resolve(tree.path, dirEntry.name)))
     }
     if (dirEntry.isDirectory) {
-      const dirTree = await readFileTree(join(tree.path, dirEntry.name))
+      const dirTree = await readFileTree(join(tree.path, dirEntry.name), tree)
       tree.directories.push(dirTree)
     }
   }

@@ -2,19 +2,31 @@
 import { ValidatorOptions } from './setup/options.ts'
 import { FileTree, BIDSFile } from './files/filetree.ts'
 import { walkFileTree } from './schema/walk.ts'
-import { createRequire } from './deps/node.ts'
+import { Issue } from './types/issues.ts'
+import validate from '../dist/esm/index.js'
 
-const require = createRequire(import.meta.url)
+class AdapterFile {
+  private _file: BIDSFile
+  path: string
+  webkitRelativePath: string
+  constructor(file: BIDSFile) {
+    this._file = file
+    this.path = file.name
+    this.webkitRelativePath = file.name
+  }
+}
 
 export async function fullTestAdapter(
   tree: FileTree,
   options: ValidatorOptions,
 ) {
-  const fullTest = require('../validators/bids/fullTest.js')
-  const fileList: Array<BIDSFile> = []
+  const fileList: Array<AdapterFile> = []
   for await (const context of walkFileTree(tree)) {
-    fileList.push(context.file)
+    fileList.push(new AdapterFile(context.file))
   }
 
-  fullTest(fileList, options, false, options._[0], false, () => {})
+  validate.BIDS(fileList, options, (issues: Issue[], summary: Record<string, any>) => {
+    console.log(issues)
+    console.log(summary)
+  })
 }

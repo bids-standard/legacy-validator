@@ -6,13 +6,12 @@ import { Issue } from './types/issues.ts'
 import validate from '../dist/esm/index.js'
 
 class AdapterFile {
-  private _file: BIDSFile
-  path: string
+  name: string
   webkitRelativePath: string
-  constructor(file: BIDSFile) {
-    this._file = file
-    this.path = file.name
-    this.webkitRelativePath = file.name
+  constructor(path: string, file: BIDSFile) {
+    // JS validator expects dataset-dir/contents filenames
+    this.name = `${path}/${file.name}`
+    this.webkitRelativePath = this.name
   }
 }
 
@@ -22,8 +21,10 @@ export async function fullTestAdapter(
 ) {
   const fileList: Array<AdapterFile> = []
   for await (const context of walkFileTree(tree)) {
-    fileList.push(new AdapterFile(context.file))
+    fileList.push(new AdapterFile(tree.name, context.file))
   }
+
+  console.log(fileList)
 
   validate.BIDS(fileList, options, (issues: Issue[], summary: Record<string, any>) => {
     console.log(issues)

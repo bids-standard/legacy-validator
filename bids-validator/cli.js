@@ -1,6 +1,6 @@
 /*eslint no-console: ["error", {allow: ["log"]}] */
 
-import { parseOptions } from './src/options'
+import { parseOptions } from './validators/options'
 import validate from './index.js'
 
 const format = validate.consoleFormat

@@ -5,7 +5,7 @@ import quickTest from './quickTest'
 import quickTestError from './quickTestError'
 import fullTest from './fullTest'
 import utils from '../../utils'
-import { schemaRegex } from '../../src/schemaTypes'
+import { schemaRegex } from '../../validators/schemaTypes'
 import { schemaSetup } from '../../utils/type'
 
 /**

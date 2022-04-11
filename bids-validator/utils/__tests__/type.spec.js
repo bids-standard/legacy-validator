@@ -1,4 +1,4 @@
-import { schemaRegex } from '../../src/schemaTypes.js'
+import { schemaRegex } from '../../validators/schemaTypes.js'
 import type, { schemaSetup } from '../type.js'
 
 describe('type.js', () => {

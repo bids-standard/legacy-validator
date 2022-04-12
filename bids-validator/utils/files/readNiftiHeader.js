@@ -78,14 +78,8 @@ function browserNiftiTest(file, callback) {
     return
   }
 
-  var blobSlice =
-    File.prototype.slice ||
-    File.prototype.mozSlice ||
-    File.prototype.webkitSlice
-
-  let fileReader = constructBrowserFileReader(file, callback)
-
-  fileReader.readAsArrayBuffer(blobSlice.call(file, 0, bytesRead))
+  const fileReader = constructBrowserFileReader(file, callback)
+  fileReader.readAsArrayBuffer(file)
 }
 
 function constructBrowserFileReader(file, callback) {

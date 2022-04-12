@@ -1,6 +1,6 @@
 import { parseOptions } from './setup/options.ts'
 import { readFileTree } from './files/deno.ts'
-import { fullTestAdapter } from './fulltest.ts'
+import { fullTestAdapter } from './compat/fulltest.ts'
 
 async function main() {
   const options = parseOptions(Deno.args)

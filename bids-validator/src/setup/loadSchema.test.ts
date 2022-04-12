@@ -13,7 +13,7 @@ Deno.test('schema yaml loader', async t => {
       if (top_level.hasOwnProperty('README')) {
         assertEquals(top_level.README, {
           required: true,
-          extensions: ['None'],
+          extensions: ['None', '.md', '.rst', '.txt'],
         })
       }
     } else {

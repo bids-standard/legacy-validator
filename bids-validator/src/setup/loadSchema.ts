@@ -21,7 +21,9 @@ const yamlBasePath = join(
   '..',
   '..',
   '..',
-  'schema',
+  'spec',
+  'src',
+  'schema'
 )
 
 /**

@@ -26,19 +26,11 @@ const quickTestError = function(dir) {
 }
 
 const constructFileName = dir => {
-  let filename
-  // Browser side we need to look it up more carefully
-  if (dir.length && 'webkitRelativePath' in dir[0]) {
-    let wrp = dir[0].webkitRelativePath
-    while (wrp.indexOf(path.sep) !== -1) {
-      wrp = path.dirname(wrp)
-    }
-    filename = wrp
-  } else {
-    // Fallback for non-standard webkitRelativePath
-    filename = 'uploaded-directory'
+  try {
+    return dir[0].webkitRelativePath.split(path.sep).pop()
+  } catch (err) {
+    return 'uploaded-directory'
   }
-  return filename
 }
 
 export default quickTestError

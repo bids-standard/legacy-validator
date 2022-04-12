@@ -21,7 +21,7 @@ export class BIDSFileDeno implements BIDSFile {
 
   private async _getSize(): Promise<number> {
     if (!this._fileInfo) {
-      this._fileInfo = await Deno.stat(this.name)
+      this._fileInfo = await Deno.stat(this.path)
     }
     return this._fileInfo.size
   }

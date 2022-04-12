@@ -20,8 +20,12 @@ export async function fullTestAdapter(
     fileList,
     options,
     (issues: Issue[], summary: Record<string, any>) => {
-      console.log(issues)
-      console.log(summary)
+      const inspectOpts = {
+        depth: 6,
+        colors: true,
+      }
+      console.log(Deno.inspect(issues, inspectOpts))
+      console.log(Deno.inspect(summary, inspectOpts))
     },
   )
 }

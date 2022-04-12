@@ -33,7 +33,7 @@ export class BIDSFileDeno implements BIDSFile {
   private async _getStream(): Promise<ReadableStream<Uint8Array>> {
     // Avoid asking for write access
     const openOptions = { read: true, write: false }
-    return (await Deno.open(this.name, openOptions)).readable
+    return (await Deno.open(this.path, openOptions)).readable
   }
 
   get stream(): Promise<ReadableStream<Uint8Array>> {

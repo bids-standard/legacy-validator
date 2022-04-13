@@ -21,7 +21,7 @@ export async function fullTestAdapter(
     const file = new AdapterFile(context.dataset.path, context.file, stream)
     fileList.push(file)
   }
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     validate.BIDS(
       fileList,
       options,

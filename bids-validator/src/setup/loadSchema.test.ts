@@ -20,4 +20,12 @@ Deno.test('schema yaml loader', async t => {
       assert(false, 'failed to test schema defs')
     }
   })
+  await t.step('loads all schema files', async () => {
+    const schemaDefs = await loadSchema()
+    if (typeof schemaDefs.objects === 'object' && typeof schemaDefs.rules === 'object') {
+      
+    } else {
+      assert(false, 'failed to load objects/rules')
+    }
+  })
 })

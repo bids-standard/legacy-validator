@@ -17,7 +17,7 @@ export interface BIDSFile {
 }
 
 export class FileTree {
-  // Absolute path to this FileTree location
+  // Relative path to this FileTree location
   path: string
   // Name of this directory level
   name: string

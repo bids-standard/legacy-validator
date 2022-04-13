@@ -6,26 +6,28 @@ import { Issue } from '../types/issues.ts'
 import validate from '../../dist/esm/index.js'
 import { AdapterFile } from './adapter-file.ts'
 
+export interface FullTestAdapterReturn {
+  issues: Issue[]
+  summary: Record<string, any>
+}
+
 export async function fullTestAdapter(
   tree: FileTree,
   options: ValidatorOptions,
-) {
+): Promise<FullTestAdapterReturn> {
   const fileList: Array<AdapterFile> = []
   for await (const context of walkFileTree(tree)) {
     const stream = await context.file.stream
     const file = new AdapterFile(context.dataset.path, context.file, stream)
     fileList.push(file)
   }
-  validate.BIDS(
-    fileList,
-    options,
-    (issues: Issue[], summary: Record<string, any>) => {
-      const inspectOpts = {
-        depth: 6,
-        colors: true,
-      }
-      console.log(Deno.inspect(issues, inspectOpts))
-      console.log(Deno.inspect(summary, inspectOpts))
-    },
-  )
+  return new Promise((resolve, reject) => {
+    validate.BIDS(
+      fileList,
+      options,
+      (issues: Issue[], summary: Record<string, any>) => {
+        resolve({ issues, summary })
+      },
+    )
+  })
 }

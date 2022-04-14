@@ -19,7 +19,11 @@
     "testEnvironment": "node",
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
-    }
+    },
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/bids-validator/src/"
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",

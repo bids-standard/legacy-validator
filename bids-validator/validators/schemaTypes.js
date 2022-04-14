@@ -52,21 +52,21 @@ async function loadYaml(base, path, local) {
  * @param {boolean} local Avoid any network access
  */
 async function loadSchema(base, local = false) {
-  const top = 'top_level_files.yaml'
-  const entities = 'entities.yaml'
+  const top = 'rules/top_level_files.yaml'
+  const entities = 'rules/entities.yaml'
   return {
     top_level_files: await loadYaml(base, top, local),
     entities: await loadYaml(base, entities, local),
     datatypes: {
-      anat: await loadYaml(base, `datatypes/anat.yaml`, local),
-      beh: await loadYaml(base, `datatypes/beh.yaml`, local),
-      dwi: await loadYaml(base, `datatypes/dwi.yaml`, local),
-      eeg: await loadYaml(base, `datatypes/eeg.yaml`, local),
-      fmap: await loadYaml(base, `datatypes/fmap.yaml`, local),
-      func: await loadYaml(base, `datatypes/func.yaml`, local),
-      ieeg: await loadYaml(base, 'datatypes/ieeg.yaml', local),
-      meg: await loadYaml(base, 'datatypes/meg.yaml', local),
-      pet: await loadYaml(base, 'datatypes/pet.yaml', local),
+      anat: await loadYaml(base, `rules/datatypes/anat.yaml`, local),
+      beh: await loadYaml(base, `rules/datatypes/beh.yaml`, local),
+      dwi: await loadYaml(base, `rules/datatypes/dwi.yaml`, local),
+      eeg: await loadYaml(base, `rules/datatypes/eeg.yaml`, local),
+      fmap: await loadYaml(base, `rules/datatypes/fmap.yaml`, local),
+      func: await loadYaml(base, `rules/datatypes/func.yaml`, local),
+      ieeg: await loadYaml(base, 'rules/datatypes/ieeg.yaml', local),
+      meg: await loadYaml(base, 'rules/datatypes/meg.yaml', local),
+      pet: await loadYaml(base, 'rules/datatypes/pet.yaml', local),
     },
   }
 }
@@ -153,7 +153,7 @@ export async function generateRegex(schema, pythonRegex = false) {
 export async function schemaRegex(version = localVersion, options = {}) {
   let schema
   if ('local' in options) {
-    schema = await loadSchema('./bids-validator/schema', true)
+    schema = await loadSchema('./bids-validator/spec/src/schema', true)
   } else {
     schema = await loadSchema(
       `https://raw.githubusercontent.com/bids-standard/bids-specification/${version}/src/schema`,

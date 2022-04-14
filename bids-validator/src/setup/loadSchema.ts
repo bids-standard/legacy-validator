@@ -1,4 +1,4 @@
-// Simplified version of the remote loading schemaTypes implementation
+// Loading schema yaml files from local filesystem
 import { join, fromFileUrl, relative, parse as pathParse, SEP } from '../deps/path.ts'
 import { parse as yamlParse } from '../deps/yaml.ts'
 import { walk } from '../deps/fs.ts'

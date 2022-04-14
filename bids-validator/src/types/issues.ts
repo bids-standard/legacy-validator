@@ -1,6 +1,6 @@
-const warning = Symbol('warning')
-const error = Symbol('error')
-const ignore = Symbol('ignore')
+export const warning = Symbol('warning')
+export const error = Symbol('error')
+export const ignore = Symbol('ignore')
 type Severity = typeof warning | typeof error | typeof ignore
 
 export interface IssueFileDetail {

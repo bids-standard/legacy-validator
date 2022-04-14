@@ -2,10 +2,12 @@
 import { join, fromFileUrl, relative, parse as pathParse, SEP } from '../deps/path.ts'
 import { parse as yamlParse } from '../deps/yaml.ts'
 import { walk } from '../deps/fs.ts'
+import { Schema } from '../types/schema.ts'
 
 // TODO - This can't depend on Deno later, must support all environments
 const yamlBasePath = join(
-  fromFileUrl(Deno.mainModule),
+  fromFileUrl(import.meta.url),
+  '..',
   '..',
   '..',
   'spec',
@@ -13,12 +15,7 @@ const yamlBasePath = join(
   'schema',
 )
 
-export interface SchemaDictionary {
-  objects: unknown
-  rules: unknown
-}
-
-export async function loadSchema(): Promise<SchemaDictionary> {
+export async function loadSchema(): Promise<Schema> {
   const schemaObj = {}
   for await (const entry of walk(yamlBasePath, {
     includeDirs: false,
@@ -38,5 +35,5 @@ export async function loadSchema(): Promise<SchemaDictionary> {
     // Parse and load the schema definition
     (lastLevel as any)[yamlPathName] = await yamlParse(await Deno.readTextFile(entry.path))
   }
-  return (schemaObj as SchemaDictionary)
+  return (schemaObj as Schema)
 }

@@ -28,7 +28,7 @@ export async function loadSchema(): Promise<Schema> {
 
     let lastLevel = schemaObj
     for (const level of yamlPathComponents) {
-      (lastLevel as any)[level] = (schemaObj as any)[level] || {}
+      (lastLevel as any)[level] = (lastLevel as any)[level] || {}
       lastLevel = (lastLevel as any)[level]
     }
 

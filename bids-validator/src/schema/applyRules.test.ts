@@ -41,7 +41,7 @@ const schemaDefs = {
   }
 }
 
-Deno.test("evalCheck test", async(t) => {
+Deno.test("evalCheck test", () => {
   ruleContextData.map(rcd => {
     const rule = rcd.path.reduce((obj, key) => obj[key], schemaDefs)
     rule.selectors.map(selector => {
@@ -51,4 +51,12 @@ Deno.test("evalCheck test", async(t) => {
       assert(evalCheck(check, rcd.context), `${check}, ${rcd.context}`)
     })
   })
+})
+
+Deno.test("evalCheck ensure constructor access", () => {
+  assert(evalCheck('foo.constructor.isArray(foo)', {foo: [1]}), 'cant access Array protoype via consturctor')
+})
+
+Deno.test("evalCheck built in apis fail", () => {
+  assert(evalCheck('fetch', {}) === undefined, 'fetch in evalCheck namespace')
 })

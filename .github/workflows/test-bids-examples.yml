@@ -12,7 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         platform: [ubuntu-latest]
-        bids-examples-branch: [ngff]
+        bids-examples-branch: [master]
 
     runs-on: ${{ matrix.platform }}
 
@@ -40,7 +40,7 @@ jobs:
 
       - name: Get bids-examples data
         run: |
-          git clone --depth 1 https://github.com/TheChymera/bids-examples -b ${{ matrix.bids-examples-branch }}
+          git clone --depth 1 https://github.com/bids-standard/bids-examples -b ${{ matrix.bids-examples-branch }}
 
       - name: Display versions and environment information
         run: |

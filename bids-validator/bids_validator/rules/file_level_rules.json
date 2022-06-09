@@ -556,6 +556,7 @@
       "@@@_microscopy_ext_@@@": [
         ".ome\\.tif",
         ".ome\\.btf",
+        ".ome\\.zarr[\\/\\\\].*",
         ".tif",
         ".png"
       ]

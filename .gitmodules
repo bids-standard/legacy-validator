@@ -1,3 +1,5 @@
 [submodule "bids-examples"]
 	path = bids-validator/tests/data/bids-examples
 	url = https://github.com/bids-standard/bids-examples.git
+[submodule "bids-validator/tests/data/bids-examples"]
+	branch = master

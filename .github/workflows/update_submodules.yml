@@ -1,6 +1,6 @@
 name: update submodules
 
-# This workflow will checkout the tracked branch of all (or a subset of) submodules
+# This workflow will checkout the tracked branch of all submodules
 # and will update the submodule pull the latest commit of that submodule branch 
 
 # If the branch was not up to date this will then open a PR against the base branch
@@ -10,8 +10,6 @@ name: update submodules
 # Currently if the submodule is not tracking the default branch, 
 # this will workflow will fail.
 #
-
-
 
 # requires sudmodules URL to be "https..." (no ssh)
 
@@ -54,12 +52,6 @@ on:
         description: "Log"
         required: false
 
-env:
-  # to update all submodules
-  SUBMOD_TO_UPDATE: "*"
-  # otherwise use a space separated list of the relative paths of each submodule to update
-  # SUBMOD_TO_UPDATE: "lib/sub_3 lib/sub_1"
-
 defaults:
   run:
     shell: bash
@@ -82,21 +74,22 @@ jobs:
       # https://stackoverflow.com/questions/5828324/update-git-submodule-to-latest-commit-on-origin
       - name: Update submodules
         run: |
+              set -e -u
               start_dir=$PWD
-              if [ "${SUBMOD_TO_UPDATE}" = "*" ]; then
-                  submodules=$(git submodule | awk '{print $2}')
-              else
-                  submodules=$(echo -e ${SUBMOD_TO_UPDATE} | sed "s/ /\n/g")
-              fi
+              submodules=$(git submodule | awk '{print $2}')
               nb_submod=$(echo "${submodules}" | wc -l)
               echo -e "\nUPDATING ${nb_submod} SUBMODULES"
               echo -e "${submodules}"
-              for i in $(seq 1 ${nb_submod}); do
-                  path=$(echo -e ${submodules} | awk -v i=${i} '{print $i}')
-                  branch=$(git config --get --file .gitmodules submodule.${path}.branch)
+              paths=$(git config --file .gitmodules --name-only --get-regexp path)
+              branches=$(git config --file .gitmodules --name-only --get-regexp branch)
+              for i in $(seq 1 "${nb_submod}"); do
+                  path=$(echo "${paths}" | awk -v i="${i}" '{print $i}')
+                  path=$(git config --get --file .gitmodules "${path}")
+                  branch=$(echo "${branches}" | awk -v i="${i}" '{print $i}')
+                  branch=$(git config --get --file .gitmodules "${branch}")
                   echo -e "\nswitching submodule ${path} to ${branch}"
                   cd "${path}" || exit
-                  git checkout ${branch}
+                  git checkout "${branch}"
                   cd "${start_dir}"
               done
               git submodule update --remote --merge

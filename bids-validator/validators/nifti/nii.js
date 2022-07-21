@@ -1258,11 +1258,10 @@ export default function NIFTI(
         const intendedForFile = intendedFor[key]
         // Only check for presence of IntendedFor files if not a BIDS-URI
         // https://github.com/bids-standard/bids-validator/issues/1393
-        if (!intendedForFile.startsWith("bids:")) {
+        if (!intendedForFile.startsWith('bids:')) {
           checkIfIntendedExists(intendedForFile, fileList, issues, file)
           checkIfValidFiletype(intendedForFile, issues, file)
         }
-
       }
     }
   }

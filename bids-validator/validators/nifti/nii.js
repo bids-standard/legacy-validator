@@ -1257,12 +1257,8 @@ export default function NIFTI(
       for (let key = 0; key < intendedFor.length; key++) {
         const intendedForFile = intendedFor[key]
         // Only check for presence of IntendedFor files if not a BIDS-URI
-        // pointing to an **external** dataset (local is allowed --> 'bids::')
         // https://github.com/bids-standard/bids-validator/issues/1393
-        if (
-          !intendedForFile.startsWith('bids:') ||
-          intendedForFile.startsWith('bids::')
-        ) {
+        if (!intendedForFile.startsWith('bids:')) {
           checkIfIntendedExists(intendedForFile, fileList, issues, file)
           checkIfValidFiletype(intendedForFile, issues, file)
         }

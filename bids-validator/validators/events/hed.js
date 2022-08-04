@@ -1,6 +1,4 @@
 import hedValidator from 'hed-validator'
-import path from 'path'
-import semver from 'semver'
 import union from 'lodash/union'
 import utils from '../../utils'
 import parseTsv from '../tsv/tsvParser'
@@ -14,14 +12,25 @@ export default function checkHedStrings(events, jsonContents, jsonFiles, dir) {
   if (!hedDataExists) {
     return Promise.resolve([])
   }
-  const dataset = new hedValidator.validator.BidsDataset(eventData, sidecarData)
-  const [schemaDefinition, schemaDefinitionIssues] = parseHedVersion(
-    jsonContents,
+  // New stuff here
+  const datasetDescription = jsonContents['/dataset_description.json']
+  const datasetDescriptionData = new hedValidator.validator.BidsJsonFile(
+    '/dataset_description.json',
+    datasetDescription,
+    jsonFiles['/dataset_description.json'],
+  )
+  const dataset = new hedValidator.validator.BidsDataset(
+    eventData,
+    sidecarData,
+    datasetDescriptionData,
     dir,
   )
+  // New stuff end does parseHedVersion need to be called anymore?
+  const schemaDefinitionIssues = parseHedVersion(jsonContents)
+  // Change here schemaDefinition is not passed to validateBidsDataset.
   try {
     return hedValidator.validator
-      .validateBidsDataset(dataset, schemaDefinition)
+      .validateBidsDataset(dataset)
       .then(hedValidationIssues => {
         return schemaDefinitionIssues.concat(
           convertHedIssuesToBidsIssues(hedValidationIssues),
@@ -99,6 +108,7 @@ function sidecarValueHasHed(sidecarValue) {
   )
 }
 
+/*
 function parseHedVersion(jsonContents, dir) {
   const schemaDefinition = {}
   const datasetDescription = jsonContents['/dataset_description.json']
@@ -117,6 +127,18 @@ function parseHedVersion(jsonContents, dir) {
   }
 
   return [schemaDefinition, issues]
+}
+
+ */
+
+function parseHedVersion(jsonContents) {
+  const datasetDescription = jsonContents['/dataset_description.json']
+
+  if (!(datasetDescription && datasetDescription.HEDVersion)) {
+    return [new Issue({ code: 109 })]
+  } else {
+    return []
+  }
 }
 
 function internalHedValidatorIssue(error) {

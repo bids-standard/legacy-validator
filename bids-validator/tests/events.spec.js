@@ -182,6 +182,77 @@ describe('Events', function() {
       })
     })
 
+    it('should not throw an issue if a value column is annotated', () => {
+      const events = [
+        {
+          file: { path: '/sub01/sub01_task-test_events.tsv' },
+          path: '/sub01/sub01_task-test_events.tsv',
+          contents:
+            'onset\tduration\ttest\tHED\n' + '7\t3.0\tone\tSpeed/30 mph\n',
+        },
+      ]
+      const jsonDictionary = {
+        '/sub01/sub01_task-test_events.json': {
+          myCodes: {
+            test: {
+              HED: {
+                one: 'Label/#',
+              },
+            },
+          },
+        },
+        '/dataset_description.json': { HEDVersion: '8.0.0' },
+      }
+
+      return validate.Events.validateEvents(
+        events,
+        [],
+        headers,
+        jsonDictionary,
+        jsonFiles,
+        '',
+      ).then(issues => {
+        assert.deepStrictEqual(issues, [])
+      })
+    })
+
+    it('should not throw an issue if a library schema is included', () => {
+      const events = [
+        {
+          file: { path: '/sub01/sub01_task-test_events.tsv' },
+          path: '/sub01/sub01_task-test_events.tsv',
+          contents:
+            'onset\tduration\ttest\tHED\n' + '7\t3.0\tone\tSpeed/30 mph\n',
+        },
+      ]
+
+      const jsonDictionary = {
+        '/sub01/sub01_task-test_events.json': {
+          myCodes: {
+            test: {
+              HED: {
+                one: 'ts:Sensory-presentation, Label/#',
+              },
+            },
+          },
+        },
+        '/dataset_description.json': {
+          HEDVersion: ['8.0.0', 'ts:testlib_1.0.2'],
+        },
+      }
+
+      return validate.Events.validateEvents(
+        events,
+        [],
+        headers,
+        jsonDictionary,
+        jsonFiles,
+        '',
+      ).then(issues => {
+        assert.deepStrictEqual(issues, [])
+      })
+    })
+
     it('should throw an issue if the HED data is invalid', () => {
       const events = [
         {
@@ -213,6 +284,43 @@ describe('Events', function() {
       ).then(issues => {
         assert.strictEqual(issues.length, 1)
         assert.strictEqual(issues[0].code, 104)
+      })
+    })
+
+    it('should not throw an issue if multiple library schemas are included', () => {
+      const events = [
+        {
+          file: { path: '/sub01/sub01_task-test_events.tsv' },
+          path: '/sub01/sub01_task-test_events.tsv',
+          contents:
+            'onset\tduration\ttest\tHED\n' + '7\t3.0\tone\tSpeed/30 mph\n',
+        },
+      ]
+
+      const jsonDictionary = {
+        '/sub01/sub01_task-test_events.json': {
+          myCodes: {
+            test: {
+              HED: {
+                one: 'ts:Sensory-presentation, Label/#, sc:Sleep-deprivation',
+              },
+            },
+          },
+        },
+        '/dataset_description.json': {
+          HEDVersion: ['8.0.0', 'ts:testlib_1.0.2', 'sc:score_0.0.1'],
+        },
+      }
+
+      return validate.Events.validateEvents(
+        events,
+        [],
+        headers,
+        jsonDictionary,
+        jsonFiles,
+        '',
+      ).then(issues => {
+        assert.deepStrictEqual(issues, [])
       })
     })
 

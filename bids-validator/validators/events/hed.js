@@ -108,29 +108,6 @@ function sidecarValueHasHed(sidecarValue) {
   )
 }
 
-/*
-function parseHedVersion(jsonContents, dir) {
-  const schemaDefinition = {}
-  const datasetDescription = jsonContents['/dataset_description.json']
-  const issues = []
-
-  if (!(datasetDescription && datasetDescription.HEDVersion)) {
-    issues.push(new Issue({ code: 109 }))
-  } else if (semver.valid(datasetDescription.HEDVersion)) {
-    schemaDefinition.version = datasetDescription.HEDVersion
-  } else {
-    schemaDefinition.path = path.join(
-      path.resolve(dir),
-      'sourcedata',
-      datasetDescription.HEDVersion,
-    )
-  }
-
-  return [schemaDefinition, issues]
-}
-
- */
-
 function parseHedVersion(jsonContents) {
   const datasetDescription = jsonContents['/dataset_description.json']
 

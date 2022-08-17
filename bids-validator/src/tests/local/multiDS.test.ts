@@ -1,9 +1,14 @@
 import { assert } from '../../deps/asserts.ts'
+import { nonSchemaIssues } from '../../issues/list.ts'
+import { loadSchema } from '../../setup/loadSchema.ts'
 import { validatePath } from './common.ts'
 
 const pathPrefix = 'tests/data/'
 
-const toTest = {
+/*
+ * Object whose keys are dataset names in our test data and values are lists of error codes that should or shouldn't be present after validation of that dataset
+ */
+const toTest: Record<string, { present: string[]; notPresent: string[] }> = {
   valid_filenames: {
     present: [
       'DUPLICATE_NIFTI_FILES',
@@ -53,3 +58,44 @@ for (const [dataset, tests] of Object.entries(toTest)) {
     })
   })
 }
+
+type Obj = { [key: string]: Obj }
+
+function findKey(obj: Obj, target: string, found: Set<string>) {
+  if (typeof obj !== 'object') {
+    return
+  }
+  for (const key in obj) {
+    if (key === target && typeof obj[key] === 'string') {
+      found.add(obj[key] as unknown as string)
+    } else {
+      if (key in obj && typeof obj[key] !== 'object') {
+        continue
+      } else if (key in obj) {
+        findKey(obj[key], target, found)
+      }
+    }
+  }
+}
+
+Deno.test('All error codes present in schema or list', async (t) => {
+  const schema = await loadSchema()
+  const allCodes: Set<string> = new Set()
+  for (const key in nonSchemaIssues) {
+    allCodes.add(key)
+  }
+  findKey(schema.rules as unknown as Obj, 'code', allCodes)
+  console.log(allCodes)
+
+  for (const key in toTest) {
+    const notFound = [...toTest[key].present, ...toTest[key].notPresent].filter(
+      (x) => !allCodes.has(x),
+    )
+    assert(
+      notFound.length === 0,
+      `Test case for ${key} included codes that do not exist in schema or issue list: ${notFound.join(
+        ', ',
+      )}`,
+    )
+  }
+})

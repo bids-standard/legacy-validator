@@ -141,7 +141,18 @@
     "SinglesRate": {
       "type": "array",
       "items": { "type": "number" }
-    }
+    },
+    "CogAtlasID": { "$ref": "common_definitions.json#/definitions/CogAtlasID" },
+    "CogPOID": { "$ref": "common_definitions.json#/definitions/CogPOID" }, 
+    "TaskName": {
+      "type": "string"
+    },
+    "TaskDescription": {
+      "$ref": "common_definitions.json#/definitions/TaskDescription"
+    },
+    "Instructions": {
+      "$ref": "common_definitions.json#/definitions/Instructions"
+    }       
   },
   "allOf": [
     {

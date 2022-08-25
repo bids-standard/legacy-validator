@@ -7,9 +7,9 @@
  * otherwise it will throw a callback with a
  * generic error.
  */
-const quickTest = fileList => {
+const quickTest = (fileList) => {
   const keys = Object.keys(fileList)
-  const couldBeBIDS = keys.some(key => {
+  const couldBeBIDS = keys.some((key) => {
     const file = fileList[key]
     let path = file.relativePath
     if (path) {

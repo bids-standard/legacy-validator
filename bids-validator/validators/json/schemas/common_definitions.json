@@ -15,8 +15,14 @@
         "Other"
       ]
     },
-    "EEGCoordSys": { "type": "string", "enum": ["CapTrak", "EEGLAB", "EEGLAB-HJ", "Other"] },
-    "iEEGCoordSys": { "type": "string", "enum": ["Pixels", "ACPC", "ScanRAS", "Other"] },
+    "EEGCoordSys": {
+      "type": "string",
+      "enum": ["CapTrak", "EEGLAB", "EEGLAB-HJ", "Other"]
+    },
+    "iEEGCoordSys": {
+      "type": "string",
+      "enum": ["Pixels", "ACPC", "ScanRAS", "Other"]
+    },
     "StandardTemplateCoordSys": {
       "type": "string",
       "enum": [
@@ -78,7 +84,7 @@
     "InstitutionAddress": { "type": "string" },
     "InstitutionName": { "type": "string" },
     "Instructions": { "type": "string" },
-    "InstitutionalDepartmentName": { "type": "string", "minLength": 1},
+    "InstitutionalDepartmentName": { "type": "string", "minLength": 1 },
     "LandmarkCoordinates": {
       "type": "object",
       "additionalProperties": {

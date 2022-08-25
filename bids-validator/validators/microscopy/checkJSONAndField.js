@@ -4,7 +4,7 @@ const Issue = utils.issues.Issue
 const checkJSONAndField = (files, jsonContentsDict, fileList) => {
   let issues = []
   if (files.ome) {
-    files.ome.forEach(file => {
+    files.ome.forEach((file) => {
       let possibleJsonPath = file.relativePath
         .replace('.tif', '')
         .replace('.btf', '')
@@ -15,7 +15,7 @@ const checkJSONAndField = (files, jsonContentsDict, fileList) => {
     })
   }
   if (files.png) {
-    files.png.forEach(file => {
+    files.png.forEach((file) => {
       let possibleJsonPath = file.relativePath.replace('.png', '.json')
       issues = issues.concat(
         ifJsonExist(file, possibleJsonPath, jsonContentsDict, fileList),
@@ -23,7 +23,7 @@ const checkJSONAndField = (files, jsonContentsDict, fileList) => {
     })
   }
   if (files.tif) {
-    files.tif.forEach(file => {
+    files.tif.forEach((file) => {
       let possibleJsonPath = file.relativePath.replace('.tif', '.json')
       issues = issues.concat(
         ifJsonExist(file, possibleJsonPath, jsonContentsDict, fileList),
@@ -31,7 +31,7 @@ const checkJSONAndField = (files, jsonContentsDict, fileList) => {
     })
   }
   if (files.jpg) {
-    files.jpg.forEach(file => {
+    files.jpg.forEach((file) => {
       let possibleJsonPath = file.relativePath.replace('.jpg', '.json')
       issues = issues.concat(
         ifJsonExist(file, possibleJsonPath, jsonContentsDict, fileList),
@@ -46,7 +46,7 @@ const ifJsonExist = (file, possibleJsonPath, jsonContentsDict, fileList) => {
   const chunkRegex = new RegExp('_chunk-[0-9]+')
 
   const jsonChunkFiles = potentialSidecars.filter(
-    name => jsonContentsDict.hasOwnProperty(name) && chunkRegex.exec(name),
+    (name) => jsonContentsDict.hasOwnProperty(name) && chunkRegex.exec(name),
   )
   const chunkPresent =
     jsonChunkFiles.length || chunkRegex.exec(file.relativePath)

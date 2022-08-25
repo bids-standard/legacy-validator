@@ -1,7 +1,7 @@
 import assert from 'assert'
 import validate from '../index'
 
-describe('TSV', function() {
+describe('TSV', function () {
   // general tsv checks ------------------------------------------------------------------
 
   var file = {
@@ -10,30 +10,30 @@ describe('TSV', function() {
       '/sub-08/ses-test/func/sub-08_ses-test_task-linebisection_events.tsv',
   }
 
-  it('should not allow empty values saved as empty cells.', function() {
+  it('should not allow empty values saved as empty cells.', function () {
     var tsv =
       'header-one\theader-two\theader-three\theader-four\theader-five\n' +
       '1.0\t\t0.2\tresponse 1\t12.32'
-    validate.TSV.TSV(file, tsv, [], function(issues) {
+    validate.TSV.TSV(file, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 23)
     })
   })
 
-  it('should not allow missing values that are specified by something other than "n/a".', function() {
+  it('should not allow missing values that are specified by something other than "n/a".', function () {
     var tsv =
       'header-one\theader-two\theader-three\theader-four\theader-five\n' +
       'n1.0\tNA\t0.2\tresponse 1\t12.32'
-    validate.TSV.TSV(file, tsv, [], function(issues) {
+    validate.TSV.TSV(file, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 24)
     })
   })
 
-  it('should not allow different length rows', function() {
+  it('should not allow different length rows', function () {
     var tsv =
       'header-one\theader-two\theader-three\n' +
       'value-one\tvalue-two\n' +
       'value-one\tvalue-two\tvalue-three'
-    validate.TSV.TSV(file, tsv, [], function(issues) {
+    validate.TSV.TSV(file, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 22)
     })
   })
@@ -59,68 +59,69 @@ describe('TSV', function() {
       '/sub-08/ses-test/func/sub-08_ses-test_task-linebisection_events.tsv',
   }
 
-  it('should require events files to have "onset" as first header', function() {
+  it('should require events files to have "onset" as first header', function () {
     var tsv =
       'header-one\tduration\theader-three\n' +
       'value-one\tvalue-two\tvalue-three'
-    validate.TSV.TSV(eventsFile, tsv, [], function(issues) {
+    validate.TSV.TSV(eventsFile, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 20)
     })
   })
 
-  it('should require events files to have "duration" as second header', function() {
+  it('should require events files to have "duration" as second header', function () {
     var tsv =
       'onset\theader-two\theader-three\n' + 'value-one\tvalue-two\tvalue-three'
-    validate.TSV.TSV(eventsFile, tsv, [], function(issues) {
+    validate.TSV.TSV(eventsFile, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 21)
     })
   })
 
-  it('should not throw issues for a valid events file', function() {
+  it('should not throw issues for a valid events file', function () {
     var tsv =
       'onset\tduration\theader-three\n' + 'value-one\tvalue-two\tvalue-three'
-    validate.TSV.TSV(eventsFile, tsv, [], function(issues) {
+    validate.TSV.TSV(eventsFile, tsv, [], function (issues) {
       assert.deepEqual(issues, [])
     })
   })
 
-  it('should not throw issues for a valid events file with only two columns', function() {
+  it('should not throw issues for a valid events file with only two columns', function () {
     var tsv = 'onset\tduration\n' + 'value-one\tvalue-two'
-    validate.TSV.TSV(eventsFile, tsv, [], function(issues) {
+    validate.TSV.TSV(eventsFile, tsv, [], function (issues) {
       assert.deepEqual(issues, [])
     })
   })
 
-  it('should check for the presence of any stimulus files declared', function() {
+  it('should check for the presence of any stimulus files declared', function () {
     var tsv =
       'onset\tduration\tstim_file\n' +
       'value-one\tvalue-two\timages/red-square.jpg'
     var fileList = [{ relativePath: '/stimuli/images/blue-square.jpg' }]
-    validate.TSV.TSV(eventsFile, tsv, fileList, function(issues) {
+    validate.TSV.TSV(eventsFile, tsv, fileList, function (issues) {
       assert(issues.length === 1 && issues[0].code === 52)
     })
 
     fileList.push({ relativePath: '/stimuli/images/red-square.jpg' })
-    validate.TSV.TSV(eventsFile, tsv, fileList, function(issues) {
+    validate.TSV.TSV(eventsFile, tsv, fileList, function (issues) {
       assert.deepEqual(issues, [])
     })
   })
 
-  it('should return all values in the stim_file column as a list', function() {
+  it('should return all values in the stim_file column as a list', function () {
     var tsv =
       'onset\tduration\tstim_file\n' +
       'value-one\tvalue-two\timages/red-square.jpg'
     var fileList = [{ relativePath: '/stimuli/images/red-square.jpg' }]
-    validate.TSV.TSV(eventsFile, tsv, fileList, function(
-      issues,
-      participants,
-      stimFiles,
-    ) {
-      assert(
-        stimFiles.length === 1 &&
-          stimFiles[0] === '/stimuli/images/red-square.jpg',
-      )
-    })
+    validate.TSV.TSV(
+      eventsFile,
+      tsv,
+      fileList,
+      function (issues, participants, stimFiles) {
+        assert(
+          stimFiles.length === 1 &&
+            stimFiles[0] === '/stimuli/images/red-square.jpg',
+        )
+      },
+    )
   })
 
   // participants checks -----------------------------------------------------------------
@@ -130,36 +131,36 @@ describe('TSV', function() {
     relativePath: '/participants.tsv',
   }
 
-  it('should not allow participants.tsv files without participant_id columns', function() {
+  it('should not allow participants.tsv files without participant_id columns', function () {
     var tsv =
       'subject_id\theader-two\theader-three\n' +
       'value-one\tvalue-two\tvalue-three'
-    validate.TSV.TSV(participantsFile, tsv, [], function(issues) {
+    validate.TSV.TSV(participantsFile, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 48)
     })
   })
 
-  it('should allow a valid participants.tsv file', function() {
+  it('should allow a valid participants.tsv file', function () {
     var tsv =
       'participant_id\theader-two\theader-three\n' +
       'sub-01\tvalue-two\tvalue-three'
-    validate.TSV.TSV(participantsFile, tsv, [], function(issues) {
+    validate.TSV.TSV(participantsFile, tsv, [], function (issues) {
       assert.deepEqual(issues, [])
     })
   })
 
-  it('should not allow particpants with age 89 and above in participants.tsv file', function() {
+  it('should not allow particpants with age 89 and above in participants.tsv file', function () {
     var tsv = 'participant_id\theader-two\tage\n' + 'sub-01\tvalue-two\t89'
-    validate.TSV.TSV(participantsFile, tsv, [], function(issues) {
+    validate.TSV.TSV(participantsFile, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 56)
     })
   })
 
-  it('should not allow participants written with incorrect pattern', function() {
+  it('should not allow participants written with incorrect pattern', function () {
     var tsv =
       'participant_id\theader-two\theader-three\n' +
       '01\tvalue-two\tvalue-three'
-    validate.TSV.TSV(participantsFile, tsv, [], function(issues) {
+    validate.TSV.TSV(participantsFile, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 212)
     })
   })
@@ -265,70 +266,70 @@ describe('TSV', function() {
     },
   ]
 
-  it('should not allow _scans.tsv files without filename column', function() {
+  it('should not allow _scans.tsv files without filename column', function () {
     var tsv =
       'header-one\theader-two\theader-three\n' +
       'value-one\tvalue-two\tvalue-three'
-    validate.TSV.TSV(scansFile, tsv, [], function(issues) {
+    validate.TSV.TSV(scansFile, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 68)
     })
   })
 
-  it('should allow _scans.tsv files with filename column', function() {
+  it('should allow _scans.tsv files with filename column', function () {
     var tsv =
       'header-one\tfilename\theader-three\n' +
       'value-one\tfunc/sub-08_ses-test_task-linebisection_run-01_bold.nii.gz\tvalue-three'
-    validate.TSV.TSV(scansFile, tsv, [niftiFile], function(issues) {
+    validate.TSV.TSV(scansFile, tsv, [niftiFile], function (issues) {
       assert.deepEqual(issues, [])
     })
   })
 
-  it('should not allow improperly formatted acq_time column entries', function() {
+  it('should not allow improperly formatted acq_time column entries', function () {
     const tsv =
       'filename\tacq_time\n' +
       'func/sub-08_ses-test_task-linebisection_run-01_bold.nii.gz\t000001'
-    validate.TSV.TSV(scansFile, tsv, [niftiFile], function(issues) {
+    validate.TSV.TSV(scansFile, tsv, [niftiFile], function (issues) {
       assert(issues.length === 1 && issues[0].code === 84)
     })
   })
 
-  it('should allow n/a as acq_time column entries', function() {
+  it('should allow n/a as acq_time column entries', function () {
     const tsv =
       'filename\tacq_time\n' +
       'func/sub-08_ses-test_task-linebisection_run-01_bold.nii.gz\tn/a'
-    validate.TSV.TSV(scansFile, tsv, [niftiFile], function(issues) {
+    validate.TSV.TSV(scansFile, tsv, [niftiFile], function (issues) {
       assert.deepEqual(issues, [])
     })
   })
 
-  it('should allow properly formatted acq_time column entries', function() {
+  it('should allow properly formatted acq_time column entries', function () {
     const tsv =
       'filename\tacq_time\n' +
       'func/sub-08_ses-test_task-linebisection_run-01_bold.nii.gz\t2017-05-03T06:45:45'
-    validate.TSV.TSV(scansFile, tsv, [niftiFile], function(issues) {
+    validate.TSV.TSV(scansFile, tsv, [niftiFile], function (issues) {
       assert.deepEqual(issues, [])
     })
   })
 
-  it('should allow acq_time column entries with optional fractional seconds', function() {
+  it('should allow acq_time column entries with optional fractional seconds', function () {
     const tsv =
       'filename\tacq_time\n' +
       'func/sub-08_ses-test_task-linebisection_run-01_bold.nii.gz\t2017-05-03T06:45:45.88288'
-    validate.TSV.TSV(scansFile, tsv, [niftiFile], function(issues) {
+    validate.TSV.TSV(scansFile, tsv, [niftiFile], function (issues) {
       assert.deepEqual(issues, [])
     })
   })
 
-  it('should allow acq_time column entries with optional UTC specifier: "Z"', function() {
+  it('should allow acq_time column entries with optional UTC specifier: "Z"', function () {
     const tsv =
       'filename\tacq_time\n' +
       'func/sub-08_ses-test_task-linebisection_run-01_bold.nii.gz\t2017-05-03T06:45:45.88288Z'
-    validate.TSV.TSV(scansFile, tsv, [niftiFile], function(issues) {
+    validate.TSV.TSV(scansFile, tsv, [niftiFile], function (issues) {
       assert.deepEqual(issues, [])
     })
   })
 
-  it('should allow session missing', function() {
+  it('should allow session missing', function () {
     var niftiNoSesFile = {
       name: 'sub-08_task-linebisection_run-01_bold.nii.gz',
       relativePath: '/sub-08/func/sub-08_task-linebisection_run-01_bold.nii.gz',
@@ -340,52 +341,51 @@ describe('TSV', function() {
     const tsv =
       'filename\tacq_time\n' +
       'func/sub-08_task-linebisection_run-01_bold.nii.gz\t2017-05-03T06:45:45'
-    validate.TSV.TSV(scansNoSesFile, tsv, [niftiNoSesFile], function(issues) {
+    validate.TSV.TSV(scansNoSesFile, tsv, [niftiNoSesFile], function (issues) {
       assert.deepEqual(issues, [])
     })
   })
 
-  it('should not allow mismatched filename entries', function() {
+  it('should not allow mismatched filename entries', function () {
     const fileList = [eegFile]
     const tsv =
       'filename\tacq_time\n' +
       'func/sub-08_ses-test_task-linebisection_run-01_bold.nii.gz\t2017-05-03T06:45:45'
-    validate.TSV.TSV(scansFile, tsv, fileList, function(issues) {
+    validate.TSV.TSV(scansFile, tsv, fileList, function (issues) {
       assert(issues.length === 1 && issues[0].code === 129)
     })
   })
 
-  it('should allow matching filename entries', function() {
+  it('should allow matching filename entries', function () {
     const fileList = [niftiFile, eegFile, ieegFile]
     const tsv =
       'filename\tacq_time\n' +
       'func/sub-08_ses-test_task-linebisection_run-01_bold.nii.gz\t2017-05-03T06:45:45\n' +
       'eeg/sub-08_ses-test_task-linebisection_run-01_eeg.fif\t2017-05-03T06:45:45\n' +
       'ieeg/sub-08_ses-test_task-linebisection_run-01_ieeg.edf\t2017-05-03T06:45:45'
-    validate.TSV.TSV(scansFile, tsv, fileList, function(issues) {
+    validate.TSV.TSV(scansFile, tsv, fileList, function (issues) {
       assert.deepEqual(issues, [])
     })
   })
 
-  it('should allow matching filename entries for CTF and BTI data', function() {
+  it('should allow matching filename entries for CTF and BTI data', function () {
     const fileList = btiFiles.concat(ctfFiles)
     const tsv =
       'filename\tacq_time\n' +
       'meg/sub-08_ses-test_task-linebisection_acq-01_run-01_meg\t2017-05-03T06:45:45\n' +
       'meg/sub-08_ses-test_task-linebisection_acq-01_run-01_meg.ds\t2017-05-03T06:45:45'
-    validate.TSV.TSV(scansFile, tsv, fileList, function(issues) {
+    validate.TSV.TSV(scansFile, tsv, fileList, function (issues) {
       assert.deepEqual(issues, [])
     })
   })
 
-  it('should check participants listed in phenotype/*tsv and sub-ids ', function() {
+  it('should check participants listed in phenotype/*tsv and sub-ids ', function () {
     var phenotypeParticipants = [
       {
         list: ['10159', '10171', '10189'],
         file: {
           name: 'vmnm.tsv',
-          path:
-            '/corral-repl/utexas/poldracklab/openfmri/shared2/ds000030/ds030_R1.0.5/ds000030_R1.0.5//phenotype/vmnm.tsv',
+          path: '/corral-repl/utexas/poldracklab/openfmri/shared2/ds000030/ds030_R1.0.5/ds000030_R1.0.5//phenotype/vmnm.tsv',
           relativePath: '/phenotype/vmnm.tsv',
         },
       },
@@ -402,7 +402,7 @@ describe('TSV', function() {
       phenotypeParticipants,
       summary,
       issues,
-      function(issues) {
+      function (issues) {
         assert(issues.length === 1 && issues[0].code === 51)
       },
     )
@@ -416,31 +416,31 @@ describe('TSV', function() {
       '/sub-01/ses-meg/meg/sub-01_ses-meg_task-facerecognition_run-01_channels.tsv',
   }
 
-  it('should not allow MEG channels.tsv files without name column', function() {
+  it('should not allow MEG channels.tsv files without name column', function () {
     var tsv = 'header-one\ttype\tunits\n' + 'value-one\tEEG\tmV'
-    validate.TSV.TSV(channelsFileMEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileMEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 71)
     })
   })
 
-  it('should not allow MEG channels.tsv files without type column', function() {
+  it('should not allow MEG channels.tsv files without type column', function () {
     var tsv = 'name\theader-two\tunits\n' + 'value-one\tEEG\tmV'
-    validate.TSV.TSV(channelsFileMEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileMEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 71)
     })
   })
 
-  it('should not allow MEG channels.tsv files without units column', function() {
+  it('should not allow MEG channels.tsv files without units column', function () {
     var tsv = 'name\ttype\theader-three\n' + 'value-one\tEEG\tvalue-three'
-    validate.TSV.TSV(channelsFileMEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileMEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 71)
     })
   })
 
-  it('should allow MEG channels.tsv files with name, type and units columns', function() {
+  it('should allow MEG channels.tsv files with name, type and units columns', function () {
     var tsv =
       'name\ttype\tunits\theader-four\n' + 'value-one\tEEG\tmV\tvalue-four'
-    validate.TSV.TSV(channelsFileMEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileMEG, tsv, [], function (issues) {
       assert(issues.length === 0)
     })
   })
@@ -451,39 +451,39 @@ describe('TSV', function() {
       '/sub-01/ses-001/eeg/sub-01_ses-001_task-rest_run-01_channels.tsv',
   }
 
-  it('should not allow EEG channels.tsv files without name column', function() {
+  it('should not allow EEG channels.tsv files without name column', function () {
     var tsv = 'header-one\ttype\tunits\n' + 'value-one\tEEG\tmV'
-    validate.TSV.TSV(channelsFileEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 71)
     })
   })
 
-  it('should not allow EEG channels.tsv files with name column in wrong place', function() {
+  it('should not allow EEG channels.tsv files with name column in wrong place', function () {
     var tsv =
       'header-one\ttype\tunits\tname\n' + 'value-one\tEEG\tmV\tvalue-name'
-    validate.TSV.TSV(channelsFileEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 230)
     })
   })
 
-  it('should not allow EEG channels.tsv files without type column', function() {
+  it('should not allow EEG channels.tsv files without type column', function () {
     var tsv = 'name\theader-two\tunits\n' + 'value-one\tEEG\tmV'
-    validate.TSV.TSV(channelsFileEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 71)
     })
   })
 
-  it('should not allow EEG channels.tsv files without units column', function() {
+  it('should not allow EEG channels.tsv files without units column', function () {
     var tsv = 'name\ttype\theader-three\n' + 'value-one\tEEG\tvalue-three'
-    validate.TSV.TSV(channelsFileEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 71)
     })
   })
 
-  it('should allow EEG channels.tsv files with name, type and units columns', function() {
+  it('should allow EEG channels.tsv files with name, type and units columns', function () {
     var tsv =
       'name\ttype\tunits\theader-four\n' + 'value-one\tEEG\tmV\tvalue-four'
-    validate.TSV.TSV(channelsFileEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileEEG, tsv, [], function (issues) {
       assert(issues.length === 0)
     })
   })
@@ -494,114 +494,115 @@ describe('TSV', function() {
       '/sub-01/ses-ieeg/ieeg/sub-01_ses-meg_task-facerecognition_run-01_channels.tsv',
   }
 
-  it('should not allow iEEG channels.tsv files without low_cutoff column', function() {
+  it('should not allow iEEG channels.tsv files without low_cutoff column', function () {
     var tsv =
       'name\ttype\tunits\textra-column\thigh_cutoff\n' +
       'value-name\tECOG\tmV\tvalue-fake\tvalue-highcut'
-    validate.TSV.TSV(channelsFileIEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileIEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 72)
     })
   })
 
-  it('should not allow iEEG channels.tsv files with low_cutoff column in wrong place', function() {
+  it('should not allow iEEG channels.tsv files with low_cutoff column in wrong place', function () {
     var tsv =
       'name\ttype\tunits\thigh_cutoff\tlow_cutoff\n' +
       'value-name\tECOG\tmV\tvalue-highcut\tvalue-lowcut'
-    validate.TSV.TSV(channelsFileIEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileIEEG, tsv, [], function (issues) {
       assert(
         issues.length === 2 && issues[0].code === 229 && issues[1].code === 229,
       )
     })
   })
 
-  it('should not allow iEEG channels.tsv files without high_cutoff column', function() {
+  it('should not allow iEEG channels.tsv files without high_cutoff column', function () {
     var tsv =
       'name\ttype\tunits\tlow_cutoff\textra-column\n' +
       'value-name\tECOG\tmV\tvalue-lowcut\tvalue-fake'
-    validate.TSV.TSV(channelsFileIEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileIEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 72)
     })
   })
 
-  it('should not allow iEEG channels.tsv files with value other than good/bad in status column', function() {
+  it('should not allow iEEG channels.tsv files with value other than good/bad in status column', function () {
     var tsv =
       'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
       'value-name\tECOG\tmV\tvalue-lowcut\tvalue-highcut\tnot-good'
-    validate.TSV.TSV(channelsFileIEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileIEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 125)
     })
   })
 
-  it('correct columns should pass for iEEG channels.tsv file', function() {
+  it('correct columns should pass for iEEG channels.tsv file', function () {
     var tsv =
       'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
       'value-name\tECOG\tmV\tvalue-lowcut\tvalue-highcut\tgood'
-    validate.TSV.TSV(channelsFileIEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileIEEG, tsv, [], function (issues) {
       assert(issues.length === 0)
     })
   })
 
-  it('should not allow iEEG channels.tsv files with value other than accepted values in type column', function() {
+  it('should not allow iEEG channels.tsv files with value other than accepted values in type column', function () {
     var tsv =
       'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
       'value-name\tMEEG\tmV\tvalue-lowcut\tvalue-highcut\tgood'
-    validate.TSV.TSV(channelsFileIEEG, tsv, [], function(issues) {
-      assert(issues.length === 1 && issues[0].code === 131)
-    })
-  })
-
-  it('should return a string value for evidence for issue 130', function() {
-    const tsv =
-      'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
-      'value-name\teeg\tmV\tvalue-lowcut\tvalue-highcut\tgood'
-    validate.TSV.TSV(channelsFileEEG, tsv, [], function(issues) {
-      assert(issues.length === 1 && issues[0].code === 130)
-      expect(typeof issues[0].evidence).toBe('string')
-    })
-  })
-
-  it('should return a string value for evidence for issue 131', function() {
-    const tsv =
-      'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
-      'value-name\tMEEG\tmV\tvalue-lowcut\tvalue-highcut\tgood'
-    validate.TSV.TSV(channelsFileIEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileIEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 131)
       expect(typeof issues[0].evidence).toBe('string')
     })
   })
 
-  it('should not allow EEG channels.tsv files with value other than accepted values in type column', function() {
+  it('should return a string value for evidence for issue 130', function () {
+    const tsv =
+      'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
+      'value-name\teeg\tmV\tvalue-lowcut\tvalue-highcut\tgood'
+    validate.TSV.TSV(channelsFileEEG, tsv, [], function (issues) {
+      assert(issues.length === 1 && issues[0].code === 130)
+      expect(typeof issues[0].evidence).toBe('string')
+    })
+  })
+
+  it('should return a string value for evidence for issue 131', function () {
+    const tsv =
+      'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
+      'value-name\tMEEG\tmV\tvalue-lowcut\tvalue-highcut\tgood'
+    validate.TSV.TSV(channelsFileIEEG, tsv, [], function (issues) {
+      assert(issues.length === 1 && issues[0].code === 131)
+      expect(typeof issues[0].evidence).toBe('string')
+    })
+  })
+
+  it('should not allow EEG channels.tsv files with value other than accepted values in type column', function () {
     var tsv =
       'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
       'value-name\tMEEG\tmV\tvalue-lowcut\tvalue-highcut\tgood'
-    validate.TSV.TSV(channelsFileEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 131)
     })
   })
 
-  it('should not allow MEG channels.tsv files with value other than accepted values in type column', function() {
+  it('should not allow MEG channels.tsv files with value other than accepted values in type column', function () {
     var tsv =
       'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
       'value-name\tMEEG\tmV\tvalue-lowcut\tvalue-highcut\tgood'
-    validate.TSV.TSV(channelsFileEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 131)
     })
   })
 
-  it('should not allow channels.tsv files with lower-casing in type column', function() {
+  it('should not allow channels.tsv files with lower-casing in type column', function () {
     var tsv =
       'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
       'value-name\teeg\tmV\tvalue-lowcut\tvalue-highcut\tgood'
-    validate.TSV.TSV(channelsFileEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 130)
     })
   })
 
-  it('should allow iEEG channels.tsv files with accepted values in type column', function() {
+  it('should allow iEEG channels.tsv files with accepted values in type column', function () {
     var tsv =
       'name\ttype\tunits\tlow_cutoff\thigh_cutoff\tstatus\n' +
       'value-name\tECOG\tmV\tvalue-lowcut\tvalue-highcut\tgood'
-    validate.TSV.TSV(channelsFileEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(channelsFileEEG, tsv, [], function (issues) {
       assert(issues.length === 0)
     })
   })
@@ -613,47 +614,47 @@ describe('TSV', function() {
       '/sub-01/ses-001/eeg/sub-01_ses-001_task-rest_run-01_electrodes.tsv',
   }
 
-  it('should not allow EEG electrodes.tsv files without name column', function() {
+  it('should not allow EEG electrodes.tsv files without name column', function () {
     var tsv =
       'wrongcolumn\tx\ty\tz\ttype\tmaterial\timpedance\n' +
       'valName\tvalX\tvalY\tvalZ\tvalType\tvalMaterial\tvalImpedance\n'
-    validate.TSV.TSV(electrodesFileEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(electrodesFileEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 96)
     })
   })
 
-  it('should not allow EEG electrodes.tsv files without x column', function() {
+  it('should not allow EEG electrodes.tsv files without x column', function () {
     var tsv =
       'name\twrongcolumn\ty\tz\ttype\tmaterial\timpedance\n' +
       'valName\tvalX\tvalY\tvalZ\tvalType\tvalMaterial\tvalImpedance\n'
-    validate.TSV.TSV(electrodesFileEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(electrodesFileEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 96)
     })
   })
 
-  it('should not allow EEG electrodes.tsv files without y column', function() {
+  it('should not allow EEG electrodes.tsv files without y column', function () {
     var tsv =
       'name\tx\twrongcolumn\tz\ttype\tmaterial\timpedance\n' +
       'valName\tvalX\tvalY\tvalZ\tvalType\tvalMaterial\tvalImpedance\n'
-    validate.TSV.TSV(electrodesFileEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(electrodesFileEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 96)
     })
   })
 
-  it('should not allow EEG electrodes.tsv files without z column', function() {
+  it('should not allow EEG electrodes.tsv files without z column', function () {
     var tsv =
       'name\tx\ty\twrongcolumn\ttype\tmaterial\timpedance\n' +
       'valName\tvalX\tvalY\tvalZ\tvalType\tvalMaterial\tvalImpedance\n'
-    validate.TSV.TSV(electrodesFileEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(electrodesFileEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 96)
     })
   })
 
-  it('correct columns should pass for EEG electrodes file', function() {
+  it('correct columns should pass for EEG electrodes file', function () {
     var tsv =
       'name\tx\ty\tz\ttype\tmaterial\timpedance\n' +
       'valName\tvalX\tvalY\tvalZ\tvalType\tvalMaterial\tvalImpedance\n'
-    validate.TSV.TSV(electrodesFileEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(electrodesFileEEG, tsv, [], function (issues) {
       assert(issues.length === 0)
     })
   })
@@ -664,56 +665,56 @@ describe('TSV', function() {
       '/sub-01/ses-ieeg/ieeg/sub-01_ses-ieeg_task-facerecognition_run-01_electrodes.tsv',
   }
 
-  it('should not allow iEEG electrodes.tsv files without name column', function() {
+  it('should not allow iEEG electrodes.tsv files without name column', function () {
     var tsv =
       'blah\tx\ty\tz\tsize\ttype\n' +
       'value-one\tvalue-two\tvalue-three\tvalue-four\tvalue-five\tvalue-six\n'
-    validate.TSV.TSV(electrodesFileIEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(electrodesFileIEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 73)
     })
   })
 
-  it('should not allow iEEG electrodes.tsv files without x column', function() {
+  it('should not allow iEEG electrodes.tsv files without x column', function () {
     var tsv =
       'name\tblah\ty\tz\tsize\ttype\n' +
       'value-one\tvalue-two\tvalue-three\tvalue-four\tvalue-five\tvalue-six\n'
-    validate.TSV.TSV(electrodesFileIEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(electrodesFileIEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 73)
     })
   })
 
-  it('should not allow iEEG electrodes.tsv files without y column', function() {
+  it('should not allow iEEG electrodes.tsv files without y column', function () {
     var tsv =
       'name\tx\tblah\tz\tsize\ttype\n' +
       'value-one\tvalue-two\tvalue-three\tvalue-four\tvalue-five\tvalue-six\n'
-    validate.TSV.TSV(electrodesFileIEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(electrodesFileIEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 73)
     })
   })
 
-  it('should not allow iEEG electrodes.tsv files without z column', function() {
+  it('should not allow iEEG electrodes.tsv files without z column', function () {
     var tsv =
       'name\tx\ty\tblah\tsize\ttype\n' +
       'value-one\tvalue-two\tvalue-three\tvalue-four\tvalue-five\tvalue-six\n'
-    validate.TSV.TSV(electrodesFileIEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(electrodesFileIEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 73)
     })
   })
 
-  it('should not allow iEEG electrodes.tsv files without size column', function() {
+  it('should not allow iEEG electrodes.tsv files without size column', function () {
     var tsv =
       'name\tx\ty\tz\tblah\ttype\n' +
       'value-one\tvalue-two\tvalue-three\tvalue-four\tvalue-five\tvalue-six\n'
-    validate.TSV.TSV(electrodesFileIEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(electrodesFileIEEG, tsv, [], function (issues) {
       assert(issues.length === 1 && issues[0].code === 73)
     })
   })
 
-  it('correct columns should pass for iEEG electrodes file', function() {
+  it('correct columns should pass for iEEG electrodes file', function () {
     var tsv =
       'name\tx\ty\tz\tsize\ttype\n' +
       'value-one\tvalue-two\tvalue-three\tvalue-four\tvalue-five\tvalue-six\n'
-    validate.TSV.TSV(electrodesFileIEEG, tsv, [], function(issues) {
+    validate.TSV.TSV(electrodesFileIEEG, tsv, [], function (issues) {
       assert(issues.length === 0)
     })
   })
@@ -724,7 +725,7 @@ describe('TSV', function() {
       '/sub-20/ses-1/func/sub-20_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
   }
 
-  it('should not allow physio.tsv.gz file without some associated json', function() {
+  it('should not allow physio.tsv.gz file without some associated json', function () {
     let issues = validate.TSV.validateContRec([physio_file], {})
     assert(issues.length === 1 && issues[0].code === 133)
   })
@@ -738,9 +739,9 @@ describe('TSV', function() {
 
   it('should return errors for each missing mandatory header in samples.tsv', () => {
     const tsv = 'wrong_col\nsome_data\n'
-    validate.TSV.TSV(samplesFile, tsv, [], function(issues) {
+    validate.TSV.TSV(samplesFile, tsv, [], function (issues) {
       expect(issues.length).toBe(3)
-      const codes = issues.map(x => x.code)
+      const codes = issues.map((x) => x.code)
       expect(codes.includes(216)).toBe(true)
       expect(codes.includes(217)).toBe(true)
       expect(codes.includes(218)).toBe(true)
@@ -749,8 +750,8 @@ describe('TSV', function() {
 
   it('should return an error for invalid sample_type samples.tsv', () => {
     const tsv = 'sample_type\nbad\n'
-    validate.TSV.TSV(samplesFile, tsv, [], function(issues) {
-      const codes = issues.map(x => x.code)
+    validate.TSV.TSV(samplesFile, tsv, [], function (issues) {
+      const codes = issues.map((x) => x.code)
       expect(codes.includes(219)).toBe(true)
     })
   })

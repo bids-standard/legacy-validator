@@ -11,7 +11,7 @@ function createFileList(dir) {
   const str = dir.substr(dir.lastIndexOf(path.sep) + 1) + '$'
   const rootpath = dir.replace(new RegExp(str), '')
   const paths = getFilepaths(dir, [], rootpath)
-  return paths.map(path => {
+  return paths.map((path) => {
     return createFile(path, path.replace(rootpath, ''))
   })
 }
@@ -20,8 +20,8 @@ function getFilepaths(dir, files_) {
   files_ = files_ || []
   const files = fs.readdirSync(dir)
   files
-    .map(file => path.join(dir, file))
-    .map(path =>
+    .map((file) => path.join(dir, file))
+    .map((path) =>
       isDirectory(path) ? getFilepaths(path, files_) : files_.push(path),
     )
   return files_
@@ -49,7 +49,7 @@ function addFileList(input, file_paths) {
     )
   }
 
-  const file_list = file_paths.map(fp => createFile(fp))
+  const file_list = file_paths.map((fp) => createFile(fp))
   file_list.__proto__ = Object.create(FileList.prototype)
 
   Object.defineProperty(input, 'files', {

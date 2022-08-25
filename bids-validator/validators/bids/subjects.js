@@ -43,10 +43,10 @@ const constructMismatchEvidence = (participants, subjects) => {
   return evidence
 }
 
-const atLeastOneSubject = fileList => {
+const atLeastOneSubject = (fileList) => {
   const issues = []
   const fileKeys = Object.keys(fileList)
-  const hasSubjectDir = fileKeys.some(key => {
+  const hasSubjectDir = fileKeys.some((key) => {
     const file = fileList[key]
     return file.relativePath && file.relativePath.startsWith('/sub-')
   })

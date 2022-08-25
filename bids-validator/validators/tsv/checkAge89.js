@@ -1,6 +1,6 @@
 const Issue = require('../../utils').issues.Issue
 
-export const checkAge89 = function(rows, file, issues) {
+export const checkAge89 = function (rows, file, issues) {
   const header = rows[0]
   const ageIdColumn = header.indexOf('age')
   for (let a = 0; a < rows.length; a++) {

@@ -2,17 +2,10 @@
   "Name": "Latin-1 encoded",
   "BIDSVersion": "1.0.2",
   "License": "CC0",
-  "Authors": [
-      "Béa"
-  ],
-  "Acknowledgements": "Conseil régional Auvergne ",
+  "Authors": ["Bï¿½a"],
+  "Acknowledgements": "Conseil rï¿½gional Auvergne ",
   "HowToAcknowledge": "shoutout on insta plz",
-  "Funding": [
-      "Contrat AIB 23000400",
-      "AIC AromaSalt"
-  ],
-  "ReferencesAndLinks": [
-      "e0123456. doi:99.9999/journal.pone.0123456"
-  ],
+  "Funding": ["Contrat AIB 23000400", "AIC AromaSalt"],
+  "ReferencesAndLinks": ["e0123456. doi:99.9999/journal.pone.0123456"],
   "DatasetDOI": "doidoidoidoi"
 }

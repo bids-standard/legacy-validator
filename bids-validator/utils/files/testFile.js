@@ -11,13 +11,13 @@ import options from '../../utils/options'
  * or null and stats if it is.
  */
 function testFile(file, annexed, dir, callback) {
-  fs.access(file.path, function(accessErr) {
+  fs.access(file.path, function (accessErr) {
     if (!accessErr) {
       // accessible
       handleFsAccess(file, callback)
     } else {
       // inaccessible
-      fs.lstat(file.path, function(lstatErr, lstats) {
+      fs.lstat(file.path, function (lstatErr, lstats) {
         if (!lstatErr && lstats && lstats.isSymbolicLink()) {
           // symlink
           if (options.getOptions().remoteFiles)
@@ -41,7 +41,7 @@ function testFile(file, annexed, dir, callback) {
 }
 
 function handleFsAccess(file, callback) {
-  process.nextTick(function() {
+  process.nextTick(function () {
     if (file.stats.size === 0) {
       callback(
         new Issue({

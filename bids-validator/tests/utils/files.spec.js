@@ -112,20 +112,20 @@ describe('validateMisc', () => {
   })
 
   beforeEach(() => {
-    return utils.files.readDir(dir).then(files => {
+    return utils.files.readDir(dir).then((files) => {
       filelist = files
     })
   })
-  it('returns issues for empty files (0kb), accepting a limited set of exceptions', done => {
+  it('returns issues for empty files (0kb), accepting a limited set of exceptions', (done) => {
     utils.collectSummary(filelist, {})
     const files = groupFileTypes(filelist, {})
 
-    validateMisc(files.misc).then(issues => {
+    validateMisc(files.misc).then((issues) => {
       // *.meg4 and BadChannels files are empty. But only *.meg4 is an issue
       assert.ok(issues.length == 1)
-      assert.ok(issues.every(issue => issue instanceof utils.issues.Issue))
+      assert.ok(issues.every((issue) => issue instanceof utils.issues.Issue))
       assert.notStrictEqual(
-        issues.findIndex(issue => issue.code === 99),
+        issues.findIndex((issue) => issue.code === 99),
         -1,
       )
       assert.ok(issues[0].file.name == 'sub-0001_task-AEF_run-01_meg.meg4')

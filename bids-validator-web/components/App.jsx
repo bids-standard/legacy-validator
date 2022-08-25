@@ -23,7 +23,7 @@ const initState = () => ({
   options: {
     ignoreWarnings: false,
     ignoreNiftiHeaders: false,
-    ignoreSubjectConsistency: false
+    ignoreSubjectConsistency: false,
   },
 })
 
@@ -74,9 +74,9 @@ export default class App extends React.Component {
     this.setState(initState())
   }
 
-  handleOptionToggle = e => {
+  handleOptionToggle = (e) => {
     const { name } = e.target
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       ...prevState,
       options: {
         ...prevState.options,

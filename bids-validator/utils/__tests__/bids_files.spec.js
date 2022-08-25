@@ -9,7 +9,7 @@ describe('bids_files', () => {
           'ds001/sub-02/func/sub-02_task-balloonanalogrisktask_run-01_events.json',
       }
       const fileList = {
-        '1': {
+        1: {
           name: 'sub-02_task-balloonanalogrisktask_run-01_events.tsv',
           relativePath:
             'ds001/sub-02/func/sub-02_task-balloonanalogrisktask_run-01_events.tsv',
@@ -25,7 +25,7 @@ describe('bids_files', () => {
           'ds001/sub-02/func/sub-02_task-balloonanalogrisktask_run-01_events.json',
       }
       const fileList = {
-        '1': {
+        1: {
           name: 'sub-02_task-balloonanalogrisktask_run-01_events.tsv',
           relativePath:
             'ds001/sub-02/func/sub-02_task-balloonanalogrisktask_run-01_events.tsn',

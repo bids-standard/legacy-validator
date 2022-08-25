@@ -4,7 +4,7 @@
  * Resets the in object data back to original values.
  */
 
-const reset = BIDS => {
+const reset = (BIDS) => {
   BIDS.issues = []
 }
 

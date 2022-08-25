@@ -37,7 +37,7 @@ describe('validate', () => {
     ]
 
     expect.assertions(3)
-    return validate(files, {}).then(issues => {
+    return validate(files, {}).then((issues) => {
       expect(issues.length).toBe(2)
       expect(issues[0].code).toBe(227)
       expect(issues[1].code).toBe(226)
@@ -54,7 +54,7 @@ describe('validate', () => {
       },
     ]
     expect.assertions(2)
-    return validate(files, {}).then(issues => {
+    return validate(files, {}).then((issues) => {
       expect(issues.length).toBe(1)
       expect(issues[0].code).toBe(227)
     })
@@ -71,7 +71,7 @@ describe('validate', () => {
     ]
 
     expect.assertions(2)
-    return validate(files, {}).then(issues => {
+    return validate(files, {}).then((issues) => {
       expect(issues.length).toBe(1)
       expect(issues[0].code).toBe(227)
     })
@@ -91,7 +91,7 @@ describe('validate', () => {
     jsonContentDict[relativePath.replace('.ome.tif', '.json')] = jsonContent
 
     expect.assertions(1)
-    return validate(files, jsonContentDict).then(issues => {
+    return validate(files, jsonContentDict).then((issues) => {
       expect(issues.length).toBe(0)
     })
   })

@@ -6,7 +6,7 @@ import { JSHINT } from 'jshint'
  * runs jshint for more thorough error reporting
  */
 function parse(file, contents) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     let jsObj
     let err
     try {
@@ -15,7 +15,7 @@ function parse(file, contents) {
       err = exception
     } finally {
       if (err) {
-        jshint(file, contents, function(issues) {
+        jshint(file, contents, function (issues) {
           resolve({ issues, parsed: null })
         })
       } else {

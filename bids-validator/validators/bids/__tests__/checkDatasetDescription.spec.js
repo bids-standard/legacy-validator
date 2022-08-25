@@ -20,7 +20,7 @@ describe('checkDatasetDescription', () => {
       }
       const issues = checkDatasetDescription(invalidJsonContentsDict)
       assert(
-        issues.findIndex(issue => issue.code === 102) > -1,
+        issues.findIndex((issue) => issue.code === 102) > -1,
         'issues include a code 102',
       )
     })
@@ -32,7 +32,7 @@ describe('checkDatasetDescription', () => {
       }
       const issues = checkDatasetDescription(invalidJsonContentsDict)
       assert(
-        issues.findIndex(issue => issue.code === 103) > -1,
+        issues.findIndex((issue) => issue.code === 103) > -1,
         'issues include a code 103',
       )
     })
@@ -44,7 +44,7 @@ describe('checkDatasetDescription', () => {
       }
       let issues = checkDatasetDescription(invalidJsonContentsDict)
       assert(
-        issues.findIndex(issue => issue.code === 113) > -1,
+        issues.findIndex((issue) => issue.code === 113) > -1,
         'issues include a code 113',
       )
 
@@ -53,7 +53,7 @@ describe('checkDatasetDescription', () => {
       }
       issues = checkDatasetDescription(invalidJsonContentsDict2)
       assert(
-        issues.findIndex(issue => issue.code === 113) > -1,
+        issues.findIndex((issue) => issue.code === 113) > -1,
         'issues include a code 113',
       )
     })
@@ -66,7 +66,7 @@ describe('checkDatasetDescription', () => {
       }
       let issues = checkDatasetDescription(invalidJsonContentsDict)
       assert(
-        issues.findIndex(issue => issue.code === 128) > -1,
+        issues.findIndex((issue) => issue.code === 128) > -1,
         'issues include a code 128',
       )
     })
@@ -80,7 +80,7 @@ describe('checkDatasetDescription', () => {
       }
       let issues = checkDatasetDescription(validJsonContentsDict)
       assert(
-        issues.findIndex(issue => issue.code === 128) === -1,
+        issues.findIndex((issue) => issue.code === 128) === -1,
         'issues does not include a code 128',
       )
     })

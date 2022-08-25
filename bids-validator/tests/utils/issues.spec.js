@@ -61,7 +61,7 @@ describe('issues', () => {
 
       promise = () => {
         return new Promise((resolve, reject) => {
-          innerPromise().catch(err =>
+          innerPromise().catch((err) =>
             utils.issues.redirect(err, reject, () => {
               resolve()
             }),
@@ -70,7 +70,7 @@ describe('issues', () => {
       }
     })
 
-    it('resolves with valid issue', done => {
+    it('resolves with valid issue', (done) => {
       innerPromise = () =>
         new Promise((_, reject) => {
           reject(validIssue)
@@ -79,7 +79,7 @@ describe('issues', () => {
       promise().then(() => done())
     })
 
-    it('rejects exceptions', done => {
+    it('rejects exceptions', (done) => {
       innerPromise = () =>
         new Promise((_, reject) => {
           reject(invalidIssue)
@@ -88,13 +88,13 @@ describe('issues', () => {
       promise().catch(() => done())
     })
 
-    it('passes the exception through the error', done => {
+    it('passes the exception through the error', (done) => {
       innerPromise = () =>
         new Promise((_, reject) => {
           reject(invalidIssue)
         })
 
-      promise().catch(err => {
+      promise().catch((err) => {
         assert.deepEqual(err, invalidIssue)
         done()
       })

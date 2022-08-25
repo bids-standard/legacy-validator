@@ -4,12 +4,12 @@ const Issue = utils.issues.Issue
 /**
  * subid and sesid mismatch test. Generates error if ses-id and sub-id are different for any file, Takes a file list and return issues
  */
-const subSesMismatchTest = fileList => {
+const subSesMismatchTest = (fileList) => {
   const issues = []
 
   // validates if sub/ses-id in filename matches with ses/sub directory file is saved
   const fileKeys = Object.keys(fileList)
-  fileKeys.forEach(key => {
+  fileKeys.forEach((key) => {
     let file = fileList[key]
     if (utils.type.file.isStimuliData(file.relativePath)) {
       return
@@ -42,7 +42,7 @@ const subSesMismatchTest = fileList => {
  *
  * @param {string} path the string to extract subject and session level values
  */
-const getPathandFileValues = path => {
+const getPathandFileValues = (path) => {
   const values = {}
   const file_name = {}
 

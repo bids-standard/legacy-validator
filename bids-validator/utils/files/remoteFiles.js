@@ -13,10 +13,10 @@ import isNode from '../isNode'
  */
 
 const remoteFiles = {
-  // Initiaties access of a remote file from git-annex remote
+  // Initiates access of a remote file from git-annex remote
   // Get remotes info the call to try successive remotes
   // Called by testFile
-  getAnnexedFile: function(file, dir, limit, callback) {
+  getAnnexedFile: function (file, dir, limit, callback) {
     // Build config object
     const config = {
       file: file,
@@ -29,8 +29,8 @@ const remoteFiles = {
     // if all remotes fail, throw issue code 97
     config.remotesInfo.map((remote, idx) => {
       return this.tryRemote(remote, config)
-        .then(data => callback(null, null, data))
-        .catch(err => {
+        .then((data) => callback(null, null, data))
+        .catch((err) => {
           if (err.code) {
             return callback(err, null, null)
           }
@@ -46,7 +46,7 @@ const remoteFiles = {
   },
 
   // Try to access file from a remote
-  tryRemote: function(remote, config) {
+  tryRemote: function (remote, config) {
     // Get current remote
     config.s3Params = this.getSingleRemoteInfo(config.dir, remote.remoteUuid)
     const dir = config.dir.endsWith('/') ? config.dir.slice(0, -1) : config.dir
@@ -59,15 +59,15 @@ const remoteFiles = {
   },
 
   // Download a remote file from its path
-  accessRemoteFile: function(config) {
+  accessRemoteFile: function (config) {
     if (config.limit) config.s3Params['Range'] = 'bytes=0-' + config.limit
     return new Promise((resolve, reject) => {
       this.constructAwsRequest(config)
-        .then(buffer => {
+        .then((buffer) => {
           if (config.file.name.endsWith('.gz')) {
             this.extractGzipBuffer(buffer, config)
-              .then(data => resolve(data))
-              .catch(err => reject(err))
+              .then((data) => resolve(data))
+              .catch((err) => reject(err))
           } else {
             resolve(buffer)
           }
@@ -76,16 +76,16 @@ const remoteFiles = {
     })
   },
 
-  constructAwsRequest: function(config) {
+  constructAwsRequest: function (config) {
     const hasCreds = isNode
       ? Object.keys(process.env).indexOf('AWS_ACCESS_KEY_ID') > -1
       : false
     if (hasCreds) {
       const s3 = new S3Client()
-      return s3.getObject(config.s3Params).then(data => data.Body)
+      return s3.getObject(config.s3Params).then((data) => data.Body)
     } else {
       let url = this.constructAwsUrl(config)
-      return fetch(url).then(resp => {
+      return fetch(url).then((resp) => {
         if (resp.ok) {
           return resp.buffer()
         } else {
@@ -99,7 +99,7 @@ const remoteFiles = {
     }
   },
 
-  constructAwsUrl: function(config) {
+  constructAwsUrl: function (config) {
     // bucket + key url
     let url = `http://s3.amazonaws.com/${config.s3Params.Bucket}/${config.s3Params.Key}`
 
@@ -113,7 +113,7 @@ const remoteFiles = {
     return url
   },
 
-  extractGzipBuffer: function(buffer, config) {
+  extractGzipBuffer: function (buffer, config) {
     return new Promise((resolve, reject) => {
       try {
         resolve(pako.inflate(buffer))
@@ -124,7 +124,7 @@ const remoteFiles = {
   },
 
   // Function for calling local git-annex
-  callGitAnnex: function(cmd, cwd) {
+  callGitAnnex: function (cmd, cwd) {
     const stream = cp.execSync(cmd, {
       shell: true,
       cwd,
@@ -133,7 +133,7 @@ const remoteFiles = {
   },
 
   // Ask git-annex for more information about a file
-  getRemotesInfo: function(dir, file) {
+  getRemotesInfo: function (dir, file) {
     // Remove leading slash from  relativePath
     const relativePath =
       file.relativePath && file.relativePath.startsWith('/')
@@ -147,13 +147,13 @@ const remoteFiles = {
   },
 
   // get the key for a particular file's relative path
-  getLookupKey: function(relativePath, dir) {
+  getLookupKey: function (relativePath, dir) {
     const lookupKeyCmd = `git-annex lookupkey ${relativePath}`
     return this.callGitAnnex(lookupKeyCmd, dir).trim()
   },
 
   // get hashdirlower property from the git-annex examinekey command
-  getHashDirLower: function(lookupkey, dir) {
+  getHashDirLower: function (lookupkey, dir) {
     try {
       const examineKeyCmd = `git-annex examinekey --json ${lookupkey}`
       const examineKey = JSON.parse(this.callGitAnnex(examineKeyCmd, dir))
@@ -164,13 +164,13 @@ const remoteFiles = {
   },
 
   // get the remote metadata log content from git show command
-  getRemoteMetadata: function(hashDirLower, lookupkey, dir) {
+  getRemoteMetadata: function (hashDirLower, lookupkey, dir) {
     const gitShowCmd = `git show git-annex:${hashDirLower}${lookupkey}.log.rmet`
     return this.callGitAnnex(gitShowCmd, dir)
   },
 
   // Get info from a given git-annex remote
-  getSingleRemoteInfo: function(dir, uuid) {
+  getSingleRemoteInfo: function (dir, uuid) {
     const infoCmd = `cd ${dir}
     git-annex info ${uuid}`
     const resp = this.callGitAnnex(infoCmd)
@@ -178,7 +178,7 @@ const remoteFiles = {
   },
 
   // Obtain bucket field from git-annex info query
-  getRemoteBucket: function(resp) {
+  getRemoteBucket: function (resp) {
     const params = {
       Bucket: null,
     }
@@ -191,10 +191,10 @@ const remoteFiles = {
   },
 
   // Manipulate the response from git-annex lookupkey query
-  processRemoteMetadata: function(resp) {
+  processRemoteMetadata: function (resp) {
     const remotesInfo = []
     const lines = resp.split('\n')
-    lines.map(line => {
+    lines.map((line) => {
       const splitSpace = line.split(' ')
       if (splitSpace.length == 3) {
         const fileInfo = splitSpace[2].split('#')
@@ -212,7 +212,7 @@ const remoteFiles = {
     return remotesInfo
   },
   // Check if a local directory is a git-annex repo
-  isGitAnnex: function(path) {
+  isGitAnnex: function (path) {
     if (isNode) return fs.existsSync(path + '/.git/annex')
     return false
   },

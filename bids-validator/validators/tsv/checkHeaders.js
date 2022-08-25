@@ -3,7 +3,7 @@ import { headersEvidence } from './tsv'
 
 const checkHeaders = (headers, file, issues) => {
   headers.map((header, i) => {
-    if (i !== headers.findIndex(x => x === header)) {
+    if (i !== headers.findIndex((x) => x === header)) {
       issues.push(
         new Issue({
           file: file,

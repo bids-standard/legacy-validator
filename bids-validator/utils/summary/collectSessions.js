@@ -1,8 +1,8 @@
 import type from '../type'
 
-const collectSessions = fileList => {
+const collectSessions = (fileList) => {
   const sessions = []
-  Object.keys(fileList).forEach(key => {
+  Object.keys(fileList).forEach((key) => {
     const file = fileList[key]
     if (
       !type.file.isStimuliData(file.relativePath) &&

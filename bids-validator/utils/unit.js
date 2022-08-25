@@ -134,8 +134,8 @@ const unitWithExponentPattern = new RegExp(
 
 const unitOperatorPattern = new RegExp(`[${unitOperators.join('')}]`)
 
-const isUnavailable = unit => unit.trim().toLowerCase() === 'n/a'
-const isPercent = unit => unit.trim() === '%'
+const isUnavailable = (unit) => unit.trim().toLowerCase() === 'n/a'
+const isPercent = (unit) => unit.trim() === '%'
 
 /* Validate currently not used, out of line with specification:
  * https://github.com/bids-standard/bids-specification/pull/411
@@ -158,15 +158,15 @@ const isPercent = unit => unit.trim() === '%'
  * @param {string} derivedUnit - a simple or complex SI unit
  * @returns {object} - { isValid, evidence }
  */
-const validate = derivedUnit => {
+const validate = (derivedUnit) => {
   if (isUnavailable(derivedUnit) || isPercent(derivedUnit)) {
     return { isValid: true, evidence: '' }
   } else {
     const separatedUnits = derivedUnit
       .split(unitOperatorPattern)
-      .map(str => str.trim())
+      .map((str) => str.trim())
     const invalidUnits = separatedUnits.filter(
-      unit => !unitWithExponentPattern.test(unit),
+      (unit) => !unitWithExponentPattern.test(unit),
     )
 
     const isValid = invalidUnits.length === 0

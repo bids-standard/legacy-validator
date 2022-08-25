@@ -2,13 +2,23 @@
   "type": "object",
   "properties": {
     "TaskName": { "$ref": "common_definitions.json#/definitions/TaskName" },
-    "TaskDescription": { "$ref": "common_definitions.json#/definitions/TaskDescription" },
-    "Instructions": { "$ref": "common_definitions.json#/definitions/Instructions" },
+    "TaskDescription": {
+      "$ref": "common_definitions.json#/definitions/TaskDescription"
+    },
+    "Instructions": {
+      "$ref": "common_definitions.json#/definitions/Instructions"
+    },
     "CogAtlasID": { "$ref": "common_definitions.json#/definitions/CogAtlasID" },
     "CogPOID": { "$ref": "common_definitions.json#/definitions/CogPOID" },
-    "InstitutionName": { "$ref": "common_definitions.json#/definitions/InstitutionName" },
-    "InstitutionAddress": { "$ref": "common_definitions.json#/definitions/InstitutionAddress" },
-    "InstitutionalDepartmentName": { "$ref": "common_definitions.json#/definitions/InstitutionalDepartmentName" }
+    "InstitutionName": {
+      "$ref": "common_definitions.json#/definitions/InstitutionName"
+    },
+    "InstitutionAddress": {
+      "$ref": "common_definitions.json#/definitions/InstitutionAddress"
+    },
+    "InstitutionalDepartmentName": {
+      "$ref": "common_definitions.json#/definitions/InstitutionalDepartmentName"
+    }
   },
   "additionalProperties": true
 }

@@ -38,9 +38,9 @@ describe('checkReadme', () => {
     }
     const issues = checkReadme(fileList)
     assert.lengthOf(issues, 3)
-    const codes = issues.map(issue => issue.code)
-    assert.equal(codes.filter(x => x === 213).length, 2)
-    assert.equal(codes.filter(x => x === 228).length, 1)
+    const codes = issues.map((issue) => issue.code)
+    assert.equal(codes.filter((x) => x === 213).length, 2)
+    assert.equal(codes.filter((x) => x === 228).length, 1)
   })
   it('returns no issues on readme with extension', () => {
     const fileList = {

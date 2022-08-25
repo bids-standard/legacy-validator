@@ -6,7 +6,7 @@ var array = {
    * equal. Takes a third optional boolean argument
    * to sort arrays before checking equality.
    */
-  equals: function(array1, array2, sort) {
+  equals: function (array1, array2, sort) {
     // if the other array is a falsy value, return
     if (!array1 || !array2) {
       return false
@@ -43,7 +43,7 @@ var array = {
    * arrays contains the differences contained
    * in each array.
    */
-  diff: function(array1, array2) {
+  diff: function (array1, array2) {
     var diff1 = [],
       diff2 = []
     for (var i = 0; i < array1.length; i++) {

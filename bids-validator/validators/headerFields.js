@@ -13,7 +13,7 @@ import isNode from '../utils/isNode'
  * arrays more arguments will need to be added to headerField.
  */
 
-const headerFields = headers => {
+const headerFields = (headers) => {
   var finalIssues = []
   var allIssues39Dict = {}
   var fields = ['dim', 'pixdim']
@@ -22,7 +22,7 @@ const headerFields = headers => {
   for (var i = 0; i < fields.length; i++) {
     var field = fields[i]
     var issues = headerField(headers, field)
-    issues.forEach(issue => {
+    issues.forEach((issue) => {
       if (issue.code == 39) {
         if (allIssues39Dict.hasOwnProperty(issue.file.relativePath)) {
           allIssues39Dict[issue.file.relativePath].push(issue)
@@ -40,7 +40,7 @@ const headerFields = headers => {
   return finalIssues
 }
 
-const collect39Issues = allIssues39Dict => {
+const collect39Issues = (allIssues39Dict) => {
   const finalIssues = []
   for (let file of Object.keys(allIssues39Dict)) {
     const firstIssue = allIssues39Dict[file][0]

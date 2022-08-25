@@ -24,7 +24,7 @@ const groupFileTypes = (fileList, options) => {
 
 const sortFiles = (fileList, options, files) => {
   const keys = Object.keys(fileList)
-  keys.forEach(key => {
+  keys.forEach((key) => {
     const file = fileList[key]
     const filename = file.name
     if (utils.type.file.isStimuliData(file.relativePath)) {
@@ -78,7 +78,7 @@ const sortFiles = (fileList, options, files) => {
   })
 }
 
-const ephysTest = filename => {
+const ephysTest = (filename) => {
   return [
     'edf',
     'vhdr',

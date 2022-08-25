@@ -12,7 +12,7 @@ var path = require('path')
  * @param {Array[string]} headers
  * @returns {string}
  */
-export const headersEvidence = headers =>
+export const headersEvidence = (headers) =>
   `Column headers: ${headers.join(', ')}`
 
 /**
@@ -20,7 +20,7 @@ export const headersEvidence = headers =>
  * @param {Array[string]} filename
  * @returns {string}
  */
-const filenameEvidence = filename => `Filename: ${filename}`
+const filenameEvidence = (filename) => `Filename: ${filename}`
 
 /**
  * TSV

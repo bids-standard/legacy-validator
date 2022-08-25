@@ -10,7 +10,7 @@ const Issue = require('../../utils').issues.Issue
  *     found.
  * @returns {null} Results of this function are stored in issues.
  */
-const checkStatusCol = function(rows, file, issues) {
+const checkStatusCol = function (rows, file, issues) {
   const header = rows[0]
   const statusColumn = header.indexOf('status')
   if (statusColumn !== -1) {

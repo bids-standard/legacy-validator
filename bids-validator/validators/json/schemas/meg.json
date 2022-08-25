@@ -2,39 +2,81 @@
   "type": "object",
   "properties": {
     "TaskName": { "$ref": "common_definitions.json#/definitions/TaskName" },
-    "TaskDescription": { "$ref": "common_definitions.json#/definitions/TaskDescription" },
-    "Instructions": { "$ref": "common_definitions.json#/definitions/Instructions" },
+    "TaskDescription": {
+      "$ref": "common_definitions.json#/definitions/TaskDescription"
+    },
+    "Instructions": {
+      "$ref": "common_definitions.json#/definitions/Instructions"
+    },
     "CogAtlasID": { "$ref": "common_definitions.json#/definitions/CogAtlasID" },
     "CogPOID": { "$ref": "common_definitions.json#/definitions/CogPOID" },
-    "InstitutionName": { "$ref": "common_definitions.json#/definitions/InstitutionName" },
-    "InstitutionAddress": { "$ref": "common_definitions.json#/definitions/InstitutionAddress" },
-    "InstitutionalDepartmentName": { "$ref": "common_definitions.json#/definitions/InstitutionalDepartmentName" },
-    "Manufacturer": { "$ref": "common_definitions.json#/definitions/Manufacturer" },
+    "InstitutionName": {
+      "$ref": "common_definitions.json#/definitions/InstitutionName"
+    },
+    "InstitutionAddress": {
+      "$ref": "common_definitions.json#/definitions/InstitutionAddress"
+    },
+    "InstitutionalDepartmentName": {
+      "$ref": "common_definitions.json#/definitions/InstitutionalDepartmentName"
+    },
+    "Manufacturer": {
+      "$ref": "common_definitions.json#/definitions/Manufacturer"
+    },
     "ManufacturersModelName": { "type": "string", "minLength": 1 },
-    "DeviceSerialNumber": { "$ref": "common_definitions.json#/definitions/DeviceSerialNumber" },
-    "SoftwareVersions": { "$ref": "common_definitions.json#/definitions/SoftwareVersions" },
-    "PowerLineFrequency": { "$ref": "common_definitions.json#/definitions/PowerLineFrequency" },
-    "SamplingFrequency": { "$ref": "common_definitions.json#/definitions/SamplingFrequency" },
+    "DeviceSerialNumber": {
+      "$ref": "common_definitions.json#/definitions/DeviceSerialNumber"
+    },
+    "SoftwareVersions": {
+      "$ref": "common_definitions.json#/definitions/SoftwareVersions"
+    },
+    "PowerLineFrequency": {
+      "$ref": "common_definitions.json#/definitions/PowerLineFrequency"
+    },
+    "SamplingFrequency": {
+      "$ref": "common_definitions.json#/definitions/SamplingFrequency"
+    },
     "MEGChannelCount": { "type": "integer", "minimum": 0 },
     "MEGREFChannelCount": { "type": "integer", "minimum": 0 },
-    "EEGChannelCount": { "$ref": "common_definitions.json#/definitions/EEGChannelCount" },
+    "EEGChannelCount": {
+      "$ref": "common_definitions.json#/definitions/EEGChannelCount"
+    },
     "ECOGChannelCount": { "type": "integer", "minimum": 0 },
     "SEEGChannelCount": { "type": "integer", "minimum": 0 },
-    "EOGChannelCount": { "$ref": "common_definitions.json#/definitions/EOGChannelCount" },
-    "ECGChannelCount": { "$ref": "common_definitions.json#/definitions/ECGChannelCount" },
-    "EMGChannelCount": { "$ref": "common_definitions.json#/definitions/EMGChannelCount" },
-    "MiscChannelCount": { "$ref": "common_definitions.json#/definitions/MiscChannelCount" },
-    "TriggerChannelCount": { "$ref": "common_definitions.json#/definitions/TriggerChannelCount" },
+    "EOGChannelCount": {
+      "$ref": "common_definitions.json#/definitions/EOGChannelCount"
+    },
+    "ECGChannelCount": {
+      "$ref": "common_definitions.json#/definitions/ECGChannelCount"
+    },
+    "EMGChannelCount": {
+      "$ref": "common_definitions.json#/definitions/EMGChannelCount"
+    },
+    "MiscChannelCount": {
+      "$ref": "common_definitions.json#/definitions/MiscChannelCount"
+    },
+    "TriggerChannelCount": {
+      "$ref": "common_definitions.json#/definitions/TriggerChannelCount"
+    },
     "EEGPlacementScheme": { "type": "string" },
     "EEGReference": { "type": "string" },
     "CapManufacturer": { "type": "string" },
     "CapManufacturersModelName": { "type": "string" },
     "DewarPosition": { "type": "string" },
-    "HardwareFilters": { "$ref": "common_definitions.json#/definitions/HardwareFilters" },
-    "SoftwareFilters": { "$ref": "common_definitions.json#/definitions/SoftwareFilters" },
-    "RecordingDuration": { "$ref": "common_definitions.json#/definitions/RecordingDuration" },
-    "RecordingType": { "$ref": "common_definitions.json#/definitions/RecordingType" },
-    "EpochLength": { "$ref": "common_definitions.json#/definitions/EpochLength" },
+    "HardwareFilters": {
+      "$ref": "common_definitions.json#/definitions/HardwareFilters"
+    },
+    "SoftwareFilters": {
+      "$ref": "common_definitions.json#/definitions/SoftwareFilters"
+    },
+    "RecordingDuration": {
+      "$ref": "common_definitions.json#/definitions/RecordingDuration"
+    },
+    "RecordingType": {
+      "$ref": "common_definitions.json#/definitions/RecordingType"
+    },
+    "EpochLength": {
+      "$ref": "common_definitions.json#/definitions/EpochLength"
+    },
     "ContinuousHeadLocalization": { "type": "boolean" },
     "HeadCoilFrequency": {
       "anyOf": [

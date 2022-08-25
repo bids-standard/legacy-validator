@@ -27,14 +27,14 @@ describe('session', () => {
       it('should produce a single MISSING_SESSION warning', () => {
         const warnings = missingSessionFiles(filelist)
         const targetWarning = warnings.find(
-          warning => warning.key === 'MISSING_SESSION',
+          (warning) => warning.key === 'MISSING_SESSION',
         )
         assert.ok(targetWarning)
       })
 
       it('should not produce INCONSISTENT_SUBJECTS warnings', () => {
         const warnings = missingSessionFiles(filelist)
-        warnings.forEach(warning =>
+        warnings.forEach((warning) =>
           assert.notEqual(warning.key, 'INCONSISTENT_SUBJECTS'),
         )
       })
@@ -42,9 +42,9 @@ describe('session', () => {
   })
 
   describe('getDataOrganization', () => {
-    it('should take a fileList of data with subjects and sessions and list and return them', async done => {
+    it('should take a fileList of data with subjects and sessions and list and return them', async (done) => {
       let filelist
-      await utils.files.readDir(missing_session_data).then(files => {
+      await utils.files.readDir(missing_session_data).then((files) => {
         filelist = files
       })
 
@@ -53,7 +53,7 @@ describe('session', () => {
 
       const subjKeys = Object.keys(subjects)
       assert.ok(subjKeys.length >= 1)
-      assert.ok(subjKeys.every(key => subjects[key] instanceof Subject))
+      assert.ok(subjKeys.every((key) => subjects[key] instanceof Subject))
       assert.ok(sessions.length >= 1)
       done()
     })
@@ -81,9 +81,9 @@ describe('session', () => {
   })
 
   describe('missingSessionWarnings', () => {
-    it('should take a subjects dir and a sessions list and return a list of issues', async done => {
+    it('should take a subjects dir and a sessions list and return a list of issues', async (done) => {
       let filelist
-      await utils.files.readDir(missing_session_data).then(files => {
+      await utils.files.readDir(missing_session_data).then((files) => {
         filelist = files
       })
       const { subjects, sessions } = getDataOrganization(filelist)
@@ -91,29 +91,31 @@ describe('session', () => {
       const sessionWarnings = missingSessionWarnings(subjects, sessions)
       assert.ok(Array.isArray(sessionWarnings))
       assert.ok(
-        sessionWarnings.every(warning => warning instanceof utils.issues.Issue),
+        sessionWarnings.every(
+          (warning) => warning instanceof utils.issues.Issue,
+        ),
       )
       done()
     })
   })
 
   describe('getSubjectFiles', () => {
-    it('should take a list of subjects and return a set containing each file', async done => {
+    it('should take a list of subjects and return a set containing each file', async (done) => {
       let filelist
-      await utils.files.readDir(missing_session_data).then(files => {
+      await utils.files.readDir(missing_session_data).then((files) => {
         filelist = files
       })
       const { subjects } = getDataOrganization(filelist)
 
       const subjFiles = getSubjectFiles(subjects)
-      assert.ok(subjFiles.every(filename => typeof filename === 'string'))
+      assert.ok(subjFiles.every((filename) => typeof filename === 'string'))
       assert.equal(subjFiles.length, new Set(subjFiles).size)
 
       const allFiles = Object.keys(subjects).reduce(
         (allFiles, subjKey) => allFiles.concat(subjects[subjKey].files),
         [],
       )
-      assert.ok(allFiles.every(file => subjFiles.includes(file)))
+      assert.ok(allFiles.every((file) => subjFiles.includes(file)))
       done()
     })
   })
@@ -134,7 +136,8 @@ describe('session', () => {
       const warnings = missingFileWarnings(subjects, subjFiles)
       assert.ok(Array.isArray(warnings))
       warnings.every(
-        warning => warning instanceof utils.issues.Issue && warning.code === 38,
+        (warning) =>
+          warning instanceof utils.issues.Issue && warning.code === 38,
       )
     })
   })
@@ -169,7 +172,7 @@ describe('session', () => {
       ]
 
       assert.equal(subject.files.length, 0)
-      filenames.forEach(filename => {
+      filenames.forEach((filename) => {
         const warning = checkMissingFile(subject, subjKey, filename)
         assert.ok(warning instanceof utils.issues.Issue)
         assert.equal(warning.code, 38)

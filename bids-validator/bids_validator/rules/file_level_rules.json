@@ -564,7 +564,7 @@
   },
   "microscopy_photo": {
     "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?micr[\\/\\\\](sub-[a-zA-Z0-9]+)(?:(_ses-[a-zA-Z0-9]+))?(?:_sample-[a-zA-Z0-9]+)(?:_acq-[a-zA-Z0-9]+)?(@@@_photo_ext_@@@)$",
-    "tokens":{
+    "tokens": {
       "@@@_photo_ext_@@@": [
         "_photo\\.jpg",
         "_photo\\.png",

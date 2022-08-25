@@ -5,7 +5,7 @@ import quickTest from './quickTest'
 import quickTestError from './quickTestError'
 import fullTest from './fullTest'
 import utils from '../../utils'
-import { schemaRegex } from '../../src/schemaTypes'
+import { schemaRegex } from '../../validators/schemaTypes'
 import { schemaSetup } from '../../utils/type'
 
 /**
@@ -22,11 +22,9 @@ const start = (dir, options, callback) => {
   if (!options.json) {
     // eslint-disable-next-line
     console.log(`bids-validator@${version}`)
-    // eslint-disable-next-line
-    console.log(`bids-specification@${options.schema}`)
   }
 
-  utils.options.parse(dir, options, async function(issues, options) {
+  utils.options.parse(dir, options, async function (issues, options) {
     if (issues && issues.length > 0) {
       // option parsing issues
       callback({ config: issues })

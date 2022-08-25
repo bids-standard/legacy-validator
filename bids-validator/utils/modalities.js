@@ -7,7 +7,7 @@ export default {
    * replaces any perfectly matched groupings with
    * the grouping object key.
    */
-  group: function(modalities) {
+  group: function (modalities) {
     var modalityGroups = [
       [['magnitude1', 'magnitude2', 'phase1', 'phase2'], 'fieldmap'],
       [['magnitude1', 'magnitude2', 'phasediff'], 'fieldmap'],

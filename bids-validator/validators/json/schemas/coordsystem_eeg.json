@@ -3,39 +3,79 @@
   "properties": {
     "IntendedFor": { "type": "string", "minLength": 1 },
     "FiducialsDescription": { "type": "string", "minLength": 1 },
-    "FiducialsCoordinates": { "$ref": "common_definitions.json#/definitions/LandmarkCoordinates" },
-    "FiducialsCoordinateSystem": { "anyOf": [
-      { "$ref": "common_definitions.json#/definitions/MEGCoordSys" },
-      { "$ref": "common_definitions.json#/definitions/EEGCoordSys" },
-      { "$ref": "common_definitions.json#/definitions/StandardTemplateCoordSys" },
-      { "$ref": "common_definitions.json#/definitions/StandardTemplateDeprecatedCoordSys" }
-    ]},
-    "FiducialsCoordinateSystemDescription": { "type": "string", "minLength": 1 },
-    "FiducialsCoordinateUnits": { "$ref": "common_definitions.json#/definitions/CoordUnits" },
-    "EEGCoordinateSystem": { "anyOf": [
-      { "$ref": "common_definitions.json#/definitions/MEGCoordSys" },
-      { "$ref": "common_definitions.json#/definitions/EEGCoordSys" },
-      { "$ref": "common_definitions.json#/definitions/StandardTemplateCoordSys" },
-      { "$ref": "common_definitions.json#/definitions/StandardTemplateDeprecatedCoordSys" }
-    ]},
-    "EEGCoordinateUnits": { "$ref": "common_definitions.json#/definitions/CoordUnits" },
+    "FiducialsCoordinates": {
+      "$ref": "common_definitions.json#/definitions/LandmarkCoordinates"
+    },
+    "FiducialsCoordinateSystem": {
+      "anyOf": [
+        { "$ref": "common_definitions.json#/definitions/MEGCoordSys" },
+        { "$ref": "common_definitions.json#/definitions/EEGCoordSys" },
+        {
+          "$ref": "common_definitions.json#/definitions/StandardTemplateCoordSys"
+        },
+        {
+          "$ref": "common_definitions.json#/definitions/StandardTemplateDeprecatedCoordSys"
+        }
+      ]
+    },
+    "FiducialsCoordinateSystemDescription": {
+      "type": "string",
+      "minLength": 1
+    },
+    "FiducialsCoordinateUnits": {
+      "$ref": "common_definitions.json#/definitions/CoordUnits"
+    },
+    "EEGCoordinateSystem": {
+      "anyOf": [
+        { "$ref": "common_definitions.json#/definitions/MEGCoordSys" },
+        { "$ref": "common_definitions.json#/definitions/EEGCoordSys" },
+        {
+          "$ref": "common_definitions.json#/definitions/StandardTemplateCoordSys"
+        },
+        {
+          "$ref": "common_definitions.json#/definitions/StandardTemplateDeprecatedCoordSys"
+        }
+      ]
+    },
+    "EEGCoordinateUnits": {
+      "$ref": "common_definitions.json#/definitions/CoordUnits"
+    },
     "EEGCoordinateSystemDescription": { "type": "string", "minLength": 1 },
-    "AnatomicalLandmarkCoordinates": { "$ref": "common_definitions.json#/definitions/LandmarkCoordinates" },
-    "AnatomicalLandmarkCoordinateSystem": { "anyOf": [
-      { "$ref": "common_definitions.json#/definitions/MEGCoordSys" },
-      { "$ref": "common_definitions.json#/definitions/EEGCoordSys" },
-      { "$ref": "common_definitions.json#/definitions/StandardTemplateCoordSys" },
-      { "$ref": "common_definitions.json#/definitions/StandardTemplateDeprecatedCoordSys" }
-    ]},
-    "AnatomicalLandmarkCoordinateUnits": { "$ref": "common_definitions.json#/definitions/CoordUnits" },
-    "AnatomicalLandmarkCoordinateSystemDescription": { "type": "string", "minLength": 1 }
+    "AnatomicalLandmarkCoordinates": {
+      "$ref": "common_definitions.json#/definitions/LandmarkCoordinates"
+    },
+    "AnatomicalLandmarkCoordinateSystem": {
+      "anyOf": [
+        { "$ref": "common_definitions.json#/definitions/MEGCoordSys" },
+        { "$ref": "common_definitions.json#/definitions/EEGCoordSys" },
+        {
+          "$ref": "common_definitions.json#/definitions/StandardTemplateCoordSys"
+        },
+        {
+          "$ref": "common_definitions.json#/definitions/StandardTemplateDeprecatedCoordSys"
+        }
+      ]
+    },
+    "AnatomicalLandmarkCoordinateUnits": {
+      "$ref": "common_definitions.json#/definitions/CoordUnits"
+    },
+    "AnatomicalLandmarkCoordinateSystemDescription": {
+      "type": "string",
+      "minLength": 1
+    }
   },
   "required": ["EEGCoordinateSystem", "EEGCoordinateUnits"],
   "additionalProperties": false,
   "allOf": [
-    { "$ref": "#/dependency-definitions/if-EEGCoordinateSystem-is-Other-then-Description-is-required" },
-    { "$ref": "#/dependency-definitions/if-FiducialsCoordinateSystem-is-Other-then-Description-is-required" },
-    { "$ref": "#/dependency-definitions/if-AnatomicalLandmarkCoordinateSystem-is-Other-then-Description-is-required" }
+    {
+      "$ref": "#/dependency-definitions/if-EEGCoordinateSystem-is-Other-then-Description-is-required"
+    },
+    {
+      "$ref": "#/dependency-definitions/if-FiducialsCoordinateSystem-is-Other-then-Description-is-required"
+    },
+    {
+      "$ref": "#/dependency-definitions/if-AnatomicalLandmarkCoordinateSystem-is-Other-then-Description-is-required"
+    }
   ],
   "dependency-definitions": {
     "if-EEGCoordinateSystem-is-Other-then-Description-is-required": {

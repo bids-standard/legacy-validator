@@ -5,7 +5,7 @@ jobs:
     docker:
       - image: continuumio/miniconda3
     environment:
-      BASH_ENV: "/root/.bashrc"
+      BASH_ENV: '/root/.bashrc'
     steps:
       - checkout
       - run:
@@ -169,7 +169,7 @@ jobs:
       - run: apk --no-cache add ca-certificates git openssh-client
       - add_ssh_keys:
           fingerprints:
-            - "86:74:77:4c:90:02:f4:5d:b4:f8:3c:b4:37:c3:c0:25"
+            - '86:74:77:4c:90:02:f4:5d:b4:f8:3c:b4:37:c3:c0:25'
       - checkout
       - restore_cache:
           keys:

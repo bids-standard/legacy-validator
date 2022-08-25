@@ -88,8 +88,8 @@ function checkValueValidity(contents, file) {
 
     // check for proper separator and value type
     const hasIssue = row
-      .map(value => !type.checkType(value, 'number'))
-      .some(val => val)
+      .map((value) => !type.checkType(value, 'number'))
+      .some((val) => val)
     if (hasIssue) {
       return [new Issue({ code: 47, file: file })]
     }

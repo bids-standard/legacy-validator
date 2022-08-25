@@ -13,9 +13,9 @@ const Issue = utils.issues.Issue
  * @param {Object[]} jsonContentsDict - content of all json files found.
  * @returns {Object[]} Array of issues generated during validation.
  */
-const validateContRec = function(contRecordings, jsonContentsDict) {
+const validateContRec = function (contRecordings, jsonContentsDict) {
   const issues = []
-  contRecordings.map(contRecording => {
+  contRecordings.map((contRecording) => {
     // Get merged data dictionary for this file
     const potentialSidecars = utils.files.potentialLocations(
       contRecording.relativePath.replace('.tsv.gz', '.json'),

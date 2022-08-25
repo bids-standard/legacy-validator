@@ -27,11 +27,10 @@ export default function checkHedStrings(events, jsonContents, jsonFiles, dir) {
   )
   // New stuff end does parseHedVersion need to be called anymore?
   const schemaDefinitionIssues = parseHedVersion(jsonContents)
-  // Change here schemaDefinition is not passed to validateBidsDataset.
   try {
     return hedValidator.validator
       .validateBidsDataset(dataset)
-      .then(hedValidationIssues => {
+      .then((hedValidationIssues) => {
         return schemaDefinitionIssues.concat(
           convertHedIssuesToBidsIssues(hedValidationIssues),
         )
@@ -45,7 +44,7 @@ export default function checkHedStrings(events, jsonContents, jsonFiles, dir) {
 }
 
 function constructEventData(events, jsonContents) {
-  return events.map(eventFile => {
+  return events.map((eventFile) => {
     const potentialSidecars = utils.files.potentialLocations(
       eventFile.path.replace('.tsv', '.json'),
     )
@@ -74,7 +73,7 @@ function constructSidecarData(eventData, jsonContents, jsonFiles) {
     )
   }
   const actualEventSidecars = union(actualSidecarNames, potentialEventSidecars)
-  return actualEventSidecars.map(sidecarName => {
+  return actualEventSidecars.map((sidecarName) => {
     return new hedValidator.validator.BidsSidecar(
       sidecarName,
       jsonContents[sidecarName],
@@ -84,17 +83,17 @@ function constructSidecarData(eventData, jsonContents, jsonFiles) {
 }
 
 function getSidecarFileObject(sidecarName, jsonFiles) {
-  return jsonFiles.filter(file => {
+  return jsonFiles.filter((file) => {
     return file.relativePath === sidecarName
   })[0]
 }
 
 function detectHed(eventData, sidecarData) {
   return (
-    sidecarData.some(sidecarFileData => {
+    sidecarData.some((sidecarFileData) => {
       return Object.values(sidecarFileData.sidecarData).some(sidecarValueHasHed)
     }) ||
-    eventData.some(eventFileData => {
+    eventData.some((eventFileData) => {
       return eventFileData.parsedTsv.headers.indexOf('HED') !== -1
     })
   )
@@ -123,7 +122,7 @@ function internalHedValidatorIssue(error) {
 }
 
 function convertHedIssuesToBidsIssues(hedIssues) {
-  return hedIssues.map(hedIssue => {
+  return hedIssues.map((hedIssue) => {
     return new Issue(hedIssue)
   })
 }

@@ -5,7 +5,7 @@ const validRoot = roots[0]
 
 describe('unit validator', () => {
   it('handles simple units', () => {
-    roots.forEach(validRoot => {
+    roots.forEach((validRoot) => {
       const goodOutput = unit.validate(validRoot)
       expect(goodOutput.isValid).toBe(true)
     })
@@ -14,14 +14,14 @@ describe('unit validator', () => {
       `%/${validRoot}`,
       `n/a*${validRoot}`,
     ]
-    invalidRoots.forEach(invalidRoot => {
+    invalidRoots.forEach((invalidRoot) => {
       const badOutput = unit.validate(invalidRoot)
       expect(badOutput.isValid).toBe(false)
     })
   })
 
   it('handles simple units with prefixes', () => {
-    prefixes.forEach(validPrefix => {
+    prefixes.forEach((validPrefix) => {
       const goodOutput = unit.validate(validPrefix + validRoot)
       expect(goodOutput.isValid).toBe(true)
     })
@@ -38,16 +38,16 @@ describe('unit validator', () => {
     '⁻³',
   ]
   it('handles simple units with exponents', () => {
-    validExponents.forEach(exp => {
+    validExponents.forEach((exp) => {
       const goodOutput = unit.validate(validRoot + exp)
       expect(goodOutput.isValid).toBe(true)
     })
     const invalidExponents = ['^^12', '142', '1', '0', '^.1', '^2.1']
-    invalidExponents.forEach(exp => {
+    invalidExponents.forEach((exp) => {
       const badOutput = unit.validate(validRoot + exp)
       expect(badOutput.isValid).toBe(false)
     })
-    validExponents.slice(0, 3).forEach(exp => {
+    validExponents.slice(0, 3).forEach((exp) => {
       const badOutput = unit.validate(exp)
       expect(badOutput.isValid).toBe(false)
     })
@@ -55,7 +55,7 @@ describe('unit validator', () => {
 
   it('handles derived units', () => {
     const validUnits = ['T/m', 'N*m', 'm^2/s^2', 'mm/ms', 'kT³*nm²', 'm²/s²']
-    validUnits.forEach(derivedUnit => {
+    validUnits.forEach((derivedUnit) => {
       const goodOutput = unit.validate(derivedUnit)
       expect(goodOutput.isValid).toBe(true)
     })
@@ -69,9 +69,9 @@ describe('unit validator', () => {
       `${validRoot}**${validRoot}`,
       `${validRoot}***${validRoot}`,
       `${roots.slice(0, 3).join('')}`,
-      ...validExponents.map(exp => `${exp}${validRoot}`),
+      ...validExponents.map((exp) => `${exp}${validRoot}`),
     ]
-    invalidUnits.forEach(derivedUnit => {
+    invalidUnits.forEach((derivedUnit) => {
       const badOutput = unit.validate(derivedUnit)
       expect(badOutput.isValid).toBe(false)
     })

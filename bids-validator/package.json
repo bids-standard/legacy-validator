@@ -65,7 +65,6 @@
   "devDependencies": {
     "adm-zip": "",
     "chai": "",
-    "codecov": "^3.1.0",
     "esbuild": "^0.11.5",
     "esbuild-plugin-globals": "^0.1.1",
     "esbuild-runner": "^2.2.1",
@@ -74,14 +73,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "husky": "^1.0.0-rc.13",
     "lockfile": "^1.0.4",
-    "prettier": "^1.14.2",
-    "pretty-quick": "^1.6.0",
     "sync-request": "6.0.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
   },
   "browser": {
     "fs": false,

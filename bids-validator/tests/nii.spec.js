@@ -1,7 +1,7 @@
 import assert from 'assert'
 import validate from '../index'
 
-describe('NIFTI', function() {
+describe('NIFTI', function () {
   var file = {
     name: 'sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
     relativePath:
@@ -28,15 +28,21 @@ describe('NIFTI', function() {
     },
   ]
 
-  it('should warn user about missing events file', function() {
-    validate.NIFTI(null, file, jsonContentsDict, {}, [], events, function(
-      issues,
-    ) {
-      assert((issues.length = 1 && issues[0].code == 25))
-    })
+  it('should warn user about missing events file', function () {
+    validate.NIFTI(
+      null,
+      file,
+      jsonContentsDict,
+      {},
+      [],
+      events,
+      function (issues) {
+        assert((issues.length = 1 && issues[0].code == 25))
+      },
+    )
   })
 
-  it('should ignore missing events files for rest scans', function() {
+  it('should ignore missing events files for rest scans', function () {
     let header = {
       dim: [4, 128, 128, 72, 71],
       pixdim: [-1, 2, 2, 2, 1],
@@ -50,14 +56,20 @@ describe('NIFTI', function() {
       ]
     file.relativePath =
       '/sub-15/func/sub-15_task-mixedeventrelatedproberest_run-01_bold.nii.gz'
-    validate.NIFTI(header, file, jsonContentsDict, {}, [], events, function(
-      issues,
-    ) {
-      assert.deepEqual(issues, [])
-    })
+    validate.NIFTI(
+      header,
+      file,
+      jsonContentsDict,
+      {},
+      [],
+      events,
+      function (issues) {
+        assert.deepEqual(issues, [])
+      },
+    )
   })
 
-  it('should catch mismatched numbers of volumes in dwi scan and .bval/.bvec files', function() {
+  it('should catch mismatched numbers of volumes in dwi scan and .bval/.bvec files', function () {
     var file = {
       name: 'sub-09_ses-test_dwi.nii.gz',
       path: '/ds114/sub-09/ses-test/dwi/sub-09_ses-test_dwi.nii.gz',
@@ -85,35 +97,41 @@ describe('NIFTI', function() {
       bContentsDict,
       [],
       [],
-      function(issues) {
+      function (issues) {
         assert(issues.length == 1 && issues[0].code == 29)
       },
     )
   })
 
-  it('should catch missing .bval an .bvec files', function() {
+  it('should catch missing .bval an .bvec files', function () {
     var file = {
       name: 'sub-09_ses-test_dwi.nii.gz',
       path: '/ds114/sub-09/ses-test/dwi/sub-09_ses-test_dwi.nii.gz',
       relativePath: '/sub-09/ses-test/dwi/sub-09_ses-test_dwi.nii.gz',
     }
-    validate.NIFTI(null, file, jsonContentsDict, {}, [], [], function(issues) {
+    validate.NIFTI(null, file, jsonContentsDict, {}, [], [], function (issues) {
       assert(issues.length == 2 && issues[0].code == 32 && issues[1].code == 33)
     })
   })
 
-  it('should catch missing task name definitions on task scans', function() {
+  it('should catch missing task name definitions on task scans', function () {
     delete jsonContentsDict[
       '/sub-15/func/sub-15_task-mixedeventrelatedproberest_run-01_bold.json'
     ].TaskName
-    validate.NIFTI(null, file, jsonContentsDict, {}, [], events, function(
-      issues,
-    ) {
-      assert((issues.length = 1 && issues[0].code == 50))
-    })
+    validate.NIFTI(
+      null,
+      file,
+      jsonContentsDict,
+      {},
+      [],
+      events,
+      function (issues) {
+        assert((issues.length = 1 && issues[0].code == 50))
+      },
+    )
   })
 
-  it('should ignore missing task name definitions on sbref task scans', function() {
+  it('should ignore missing task name definitions on sbref task scans', function () {
     var file = {
       name: 'sub-15_task-mixedeventrelatedprobe_acq-LR_sbref.nii.gz',
       relativePath:
@@ -123,18 +141,23 @@ describe('NIFTI', function() {
       jsonContentsDict[
         '/sub-15/func/sub-15_task-mixedeventrelatedproberest_run-01_bold.json'
       ]
-    validate.NIFTI(null, file, jsonContentsDict, {}, [], events, function(
-      issues,
-    ) {
-      assert.deepEqual(issues, [])
-    })
+    validate.NIFTI(
+      null,
+      file,
+      jsonContentsDict,
+      {},
+      [],
+      events,
+      function (issues) {
+        assert.deepEqual(issues, [])
+      },
+    )
   })
 
-  it('should generate warning if files listed in IntendedFor of fieldmap json are not of type .nii or .nii.gz', function() {
+  it('should generate warning if files listed in IntendedFor of fieldmap json are not of type .nii or .nii.gz', function () {
     var file = {
       name: 'sub-09_ses-test_run-01_fieldmap.nii.gz',
-      path:
-        '/ds114/sub-09/ses-test/fmap/sub-09_ses-test_run-01_fieldmap.nii.gz',
+      path: '/ds114/sub-09/ses-test/fmap/sub-09_ses-test_run-01_fieldmap.nii.gz',
       relativePath:
         '/sub-09/ses-test/fmap/sub-09_ses-test_run-01_fieldmap.nii.gz',
     }
@@ -155,10 +178,10 @@ describe('NIFTI', function() {
       relativePath:
         '/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
     })
-    validate.NIFTI(null, file, jsonContentsDict, {}, [], [], function(issues) {
+    validate.NIFTI(null, file, jsonContentsDict, {}, [], [], function (issues) {
       assert(
         issues.some(
-          issue =>
+          (issue) =>
             issue.reason ===
               'Invalid filetype: IntendedFor should point to the .nii[.gz] files.' &&
             issue.evidence ===
@@ -168,7 +191,7 @@ describe('NIFTI', function() {
     })
   })
 
-  it('should generate warning if files listed in IntendedFor of fieldmap json do not exist', function() {
+  it('should generate warning if files listed in IntendedFor of fieldmap json do not exist', function () {
     let header = {
       dim: [4, 128, 128, 1, 71],
       pixdim: [-1, 2, 2, 2, 16.5],
@@ -177,8 +200,7 @@ describe('NIFTI', function() {
 
     var file = {
       name: 'sub-09_ses-test_run-01_fieldmap.nii.gz',
-      path:
-        '/ds114/sub-09/ses-test/fmap/sub-09_ses-test_run-01_fieldmap.nii.gz',
+      path: '/ds114/sub-09/ses-test/fmap/sub-09_ses-test_run-01_fieldmap.nii.gz',
       relativePath:
         '/sub-09/ses-test/fmap/sub-09_ses-test_run-01_fieldmap.nii.gz',
     }
@@ -201,16 +223,22 @@ describe('NIFTI', function() {
       relativePath:
         '/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
     })
-    validate.NIFTI(header, file, jsonContentsDict, {}, [], [], function(
-      issues,
-    ) {
-      assert(
-        issues.length === 3 && issues[0].code == 17 && issues[1].code == 37,
-      )
-    })
+    validate.NIFTI(
+      header,
+      file,
+      jsonContentsDict,
+      {},
+      [],
+      [],
+      function (issues) {
+        assert(
+          issues.length === 3 && issues[0].code == 17 && issues[1].code == 37,
+        )
+      },
+    )
   })
 
-  it('should not generate warning if files listed in IntendedFor of fieldmap json exist', function() {
+  it('should not generate warning if files listed in IntendedFor of fieldmap json exist', function () {
     var file = {
       name: 'sub-15_ses-test_run-01_fieldmap.nii.gz',
       path: '/ds114/sub-15/ses-test/dwi/sub-15_ses-test_run-01_fieldmap.nii.gz',
@@ -231,20 +259,25 @@ describe('NIFTI', function() {
     var fileList = [
       {
         name: 'sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
-        path:
-          'sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
+        path: 'sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
         relativePath:
           '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
       },
     ]
-    validate.NIFTI(null, file, jsonContentsDict, {}, fileList, [], function(
-      issues,
-    ) {
-      assert.deepEqual(issues, [])
-    })
+    validate.NIFTI(
+      null,
+      file,
+      jsonContentsDict,
+      {},
+      fileList,
+      [],
+      function (issues) {
+        assert.deepEqual(issues, [])
+      },
+    )
   })
 
-  it('SliceTiming should not be greater than RepetitionTime', function() {
+  it('SliceTiming should not be greater than RepetitionTime', function () {
     let header = {
       dim: [4, 128, 128, 7, 71],
       pixdim: [-1, 2, 2, 2, 16.5],
@@ -274,14 +307,14 @@ describe('NIFTI', function() {
       {},
       [],
       events,
-      function(issues) {
+      function (issues) {
         assert(issues[3].code === 66 && issues.length === 4)
         assert(issues[2].code === 12 && issues.length === 4)
       },
     )
   })
 
-  it('SliceTiming should be the same length as the k dimension of the corresponding nifti header', function() {
+  it('SliceTiming should be the same length as the k dimension of the corresponding nifti header', function () {
     var jsonContents = {
       '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.json': {
         RepetitionTime: 16.5,
@@ -307,21 +340,26 @@ describe('NIFTI', function() {
     }
     var events = [
       {
-        path:
-          '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_events.tsv',
+        path: '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_events.tsv',
       },
       {
         path: '/sub-15/run-01_events.tsv',
       },
     ]
-    validate.NIFTI(header, testFile, jsonContents, {}, [], events, function(
-      issues,
-    ) {
-      assert.deepEqual(issues, [])
-    })
+    validate.NIFTI(
+      header,
+      testFile,
+      jsonContents,
+      {},
+      [],
+      events,
+      function (issues) {
+        assert.deepEqual(issues, [])
+      },
+    )
   })
 
-  it('SliceTiming should not have a length different than the k dimension of the corresponding nifti header', function() {
+  it('SliceTiming should not have a length different than the k dimension of the corresponding nifti header', function () {
     var jsonContents = {
       '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.json': {
         RepetitionTime: 16.5,
@@ -347,22 +385,27 @@ describe('NIFTI', function() {
     }
     var events = [
       {
-        path:
-          '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_events.tsv',
+        path: '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_events.tsv',
       },
       {
         path: '/sub-15/run-01_events.tsv',
       },
     ]
 
-    validate.NIFTI(header, testFile, jsonContents, {}, [], events, function(
-      issues,
-    ) {
-      assert(issues.length === 1 && issues[0].code === 87)
-    })
+    validate.NIFTI(
+      header,
+      testFile,
+      jsonContents,
+      {},
+      [],
+      events,
+      function (issues) {
+        assert(issues.length === 1 && issues[0].code === 87)
+      },
+    )
   })
 
-  it('should throw an error for _phasediff.nii files with associated (EchoTime2 - EchoTime1) less than 0.0001', function() {
+  it('should throw an error for _phasediff.nii files with associated (EchoTime2 - EchoTime1) less than 0.0001', function () {
     var phaseDiffJson = {
       '/sub-01/func/sub-01_ses-mri_phasediff.json': {
         RepetitionTime: 0.4,
@@ -375,14 +418,20 @@ describe('NIFTI', function() {
       name: 'sub-01_ses-mri_phasediff.nii',
       relativePath: '/sub-01/func/sub-01_ses-mri_phasediff.nii',
     }
-    validate.NIFTI(null, phaseDiffFile, phaseDiffJson, {}, [], events, function(
-      issues,
-    ) {
-      assert(issues[0].code === 83 && issues.length === 1)
-    })
+    validate.NIFTI(
+      null,
+      phaseDiffFile,
+      phaseDiffJson,
+      {},
+      [],
+      events,
+      function (issues) {
+        assert(issues[0].code === 83 && issues.length === 1)
+      },
+    )
   })
 
-  it('should throw an error for _phasediff.nii files with associated (EchoTime2 - EchoTime1) greater than 0.01', function() {
+  it('should throw an error for _phasediff.nii files with associated (EchoTime2 - EchoTime1) greater than 0.01', function () {
     var phaseDiffJson = {
       '/sub-01/func/sub-01_ses-mri_phasediff.json': {
         RepetitionTime: 0.4,
@@ -395,14 +444,20 @@ describe('NIFTI', function() {
       name: 'sub-01_ses-mri_phasediff.nii',
       relativePath: '/sub-01/func/sub-01_ses-mri_phasediff.nii',
     }
-    validate.NIFTI(null, phaseDiffFile, phaseDiffJson, {}, [], events, function(
-      issues,
-    ) {
-      assert(issues[0].code === 83 && issues.length === 1)
-    })
+    validate.NIFTI(
+      null,
+      phaseDiffFile,
+      phaseDiffJson,
+      {},
+      [],
+      events,
+      function (issues) {
+        assert(issues[0].code === 83 && issues.length === 1)
+      },
+    )
   })
 
-  it('should give not error for _phasediff.nii files with reasonable values of associated (EchoTime2 - EchoTime1)', function() {
+  it('should give not error for _phasediff.nii files with reasonable values of associated (EchoTime2 - EchoTime1)', function () {
     var phaseDiffJson = {
       '/sub-01/func/sub-01_ses-mri_phasediff.json': {
         RepetitionTime: 0.4,
@@ -415,13 +470,19 @@ describe('NIFTI', function() {
       name: 'sub-01_ses-mri_phasediff.nii',
       relativePath: '/sub-01/func/sub-01_ses-mri_phasediff.nii',
     }
-    validate.NIFTI(null, phaseDiffFile, phaseDiffJson, {}, [], events, function(
-      issues,
-    ) {
-      assert(issues.length === 0)
-    })
+    validate.NIFTI(
+      null,
+      phaseDiffFile,
+      phaseDiffJson,
+      {},
+      [],
+      events,
+      function (issues) {
+        assert(issues.length === 0)
+      },
+    )
   })
-  it('should give error if VolumeTiming missing acquisition time', function() {
+  it('should give error if VolumeTiming missing acquisition time', function () {
     let header = {
       dim: [4, 128, 128, 72, 71],
       pixdim: [-1, 2, 2, 2, 16.5],
@@ -437,21 +498,26 @@ describe('NIFTI', function() {
     let fileList = [
       {
         name: 'sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
-        path:
-          'sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
+        path: 'sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
         relativePath:
           '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz',
       },
     ]
     file.relativePath =
       '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz'
-    validate.NIFTI(header, file, volumeJson, {}, fileList, events, function(
-      issues,
-    ) {
-      assert(issues.filter(x => x.code === 171).length === 1)
-    })
+    validate.NIFTI(
+      header,
+      file,
+      volumeJson,
+      {},
+      fileList,
+      events,
+      function (issues) {
+        assert(issues.filter((x) => x.code === 171).length === 1)
+      },
+    )
   })
-  it('should not give error if VolumeTiming has an acquisition time', function() {
+  it('should not give error if VolumeTiming has an acquisition time', function () {
     let volumeJson = {
       '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.json': {
         VolumeTiming: 1,
@@ -462,8 +528,8 @@ describe('NIFTI', function() {
 
     file.relativePath =
       '/sub-15/func/sub-15_task-mixedeventrelatedprobe_run-01_bold.nii.gz'
-    validate.NIFTI(null, file, volumeJson, {}, [], events, function(issues) {
-      assert(issues.filter(x => x.code === 171).length === 0)
+    validate.NIFTI(null, file, volumeJson, {}, [], events, function (issues) {
+      assert(issues.filter((x) => x.code === 171).length === 0)
     })
   })
 })

@@ -12,7 +12,7 @@ const colorRegEx = new RegExp(
 )
 
 expect.extend({
-  toBeJSON: function(received) {
+  toBeJSON: function (received) {
     try {
       JSON.parse(received)
       return {

@@ -1,10 +1,10 @@
 import isNode from '../isNode'
 import getFileStats from './getFileStats'
 
-const collectDirectorySize = fileList => {
+const collectDirectorySize = (fileList) => {
   let size = 0
   const keys = Object.keys(fileList)
-  keys.forEach(key => {
+  keys.forEach((key) => {
     const file = fileList[key]
     // collect file stats
     if (file.size) {

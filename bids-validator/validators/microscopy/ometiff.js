@@ -156,7 +156,7 @@ const checkPixelSize = (omeData, namespace, jsonData) => {
     physicalSizeZUnit,
   ]
 
-  unitsPendToCheck.forEach(unit => {
+  unitsPendToCheck.forEach((unit) => {
     if (!validUnits.includes(unit)) {
       issues.push(new Issue({ code: 222 }))
     }

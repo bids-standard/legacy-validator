@@ -3,7 +3,7 @@ import type from '../type'
 /**
  * Collect all datatype suffixes for files that match a supported modality
  **/
-export const collectDataTypes = filenames => {
+export const collectDataTypes = (filenames) => {
   const datatypes = []
   for (const path of filenames) {
     const pathParts = path.split('_')

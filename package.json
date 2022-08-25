@@ -5,7 +5,7 @@
     "bids-validator-web"
   ],
   "scripts": {
-    "lint": "eslint \"./bids-validator/**/*.js\"",
+    "lint": "eslint \"./bids-validator/{tests,utils,validators}/**/*.js\"",
     "coverage": "jest --coverage",
     "codecov": "codecov",
     "test": "node bids-validator/bin/test-submodule-exists && jest",
@@ -20,7 +20,12 @@
     "testEnvironment": "node",
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
-    }
+    },
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/bids-validator/src/",
+      "/bids-validator/spec/"
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
@@ -28,7 +33,18 @@
     "codecov": "^3.8.1",
     "jest": "^26.1.0",
     "jest-environment-node": "^24.9.0",
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "eslint": "^8.15.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.6.2",
+    "husky": "^1.0.0-rc.13",
+    "pretty-quick": "^1.6.0"
   },
-  "name": "bids-validator-monorepo"
+  "name": "bids-validator-monorepo",
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
 }

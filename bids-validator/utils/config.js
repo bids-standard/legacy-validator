@@ -4,7 +4,7 @@ var config = {
   /**
    * Ignored File
    */
-  ignoredFile: function(conf, filePath) {
+  ignoredFile: function (conf, filePath) {
     if (conf.ignoredFiles) {
       for (var i = 0; i < conf.ignoredFiles.length; i++) {
         var ignoredPattern = conf.ignoredFiles[i]
@@ -22,7 +22,7 @@ var config = {
    * Takes a list of triggered codes and a config object
    * and create a map of modified severities
    */
-  interpret: function(codes, conf) {
+  interpret: function (codes, conf) {
     var severityMap = {}
 
     if (conf.ignore && conf.ignore.length > 0) {
@@ -58,7 +58,7 @@ var config = {
    * Takes a list of triggered codes and a config
    * object and returns the matched codes.
    */
-  match: function(codes, conf) {
+  match: function (codes, conf) {
     var matches = []
     for (var i = 0; i < conf.length; i++) {
       var confCode = conf[i]
@@ -81,7 +81,7 @@ var config = {
    * Takes an array that may contain objects with
    * 'and' or 'or' properties and flattens it.
    */
-  flatten: function(list) {
+  flatten: function (list) {
     var codes = []
     for (var i = 0; i < list.length; i++) {
       var code = list[i]
@@ -103,7 +103,7 @@ var config = {
    * array, recursively checks if it's fulfilled
    * and returns true if it is.
    */
-  andFulfilled: function(codes, and) {
+  andFulfilled: function (codes, and) {
     for (var i = 0; i < and.length; i++) {
       var andCode = and[i]
       if (andCode.hasOwnProperty('and')) {
@@ -128,7 +128,7 @@ var config = {
    * array, recursively checks if it's fulfilled
    * and returns true if it is.
    */
-  orFulfilled: function(codes, or) {
+  orFulfilled: function (codes, or) {
     for (var i = 0; i < or.length; i++) {
       var orCode = or[i]
       if (orCode.hasOwnProperty('and')) {

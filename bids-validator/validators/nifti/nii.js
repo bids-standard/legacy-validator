@@ -155,7 +155,7 @@ export default function NIFTI(
           ) {
             let BolusCutOffDelayTime = mergedDictionary['BolusCutOffDelayTime']
             const BolusCutOffDelayTimeWarning = BolusCutOffDelayTime.filter(
-              x => x > 10,
+              (x) => x > 10,
             )
             if (BolusCutOffDelayTimeWarning.length > 0) {
               issues.push(
@@ -174,9 +174,8 @@ export default function NIFTI(
             mergedDictionary['BolusCutOffDelayTime'].constructor === Array
           ) {
             let BolusCutOffDelayTime = mergedDictionary['BolusCutOffDelayTime']
-            const MonotonicallyIncreasingBolusCutOffDelayTime = isMonotonicIncreasingArray(
-              BolusCutOffDelayTime,
-            )
+            const MonotonicallyIncreasingBolusCutOffDelayTime =
+              isMonotonicIncreasingArray(BolusCutOffDelayTime)
             if (!MonotonicallyIncreasingBolusCutOffDelayTime) {
               issues.push(
                 new Issue({
@@ -372,7 +371,9 @@ export default function NIFTI(
                 }),
               )
             }
-            const LabelingDurationWarning = LabelingDuration.filter(x => x > 10)
+            const LabelingDurationWarning = LabelingDuration.filter(
+              (x) => x > 10,
+            )
             if (LabelingDurationWarning.length > 0) {
               issues.push(
                 new Issue({
@@ -443,7 +444,7 @@ export default function NIFTI(
             }),
           )
         }
-        const PostLabelingDelayWarning = PostLabelingDelay.filter(x => x > 10)
+        const PostLabelingDelayWarning = PostLabelingDelay.filter((x) => x > 10)
         if (PostLabelingDelayWarning.length > 0) {
           issues.push(
             new Issue({
@@ -810,7 +811,7 @@ export default function NIFTI(
         ]
 
         if (
-          !volumes.every(function(v) {
+          !volumes.every(function (v) {
             return v === volumes[0]
           })
         ) {
@@ -1096,9 +1097,8 @@ export default function NIFTI(
           )
         }
         let VolumeTiming = mergedDictionary['VolumeTiming']
-        const MonotonicallyIncreasingVolumeTiming = isMonotonicIncreasingArray(
-          VolumeTiming,
-        )
+        const MonotonicallyIncreasingVolumeTiming =
+          isMonotonicIncreasingArray(VolumeTiming)
         if (!MonotonicallyIncreasingVolumeTiming) {
           issues.push(
             new Issue({
@@ -1150,10 +1150,11 @@ export default function NIFTI(
         mergedDictionary['SliceTiming'].constructor === Array
       ) {
         const SliceTimingArray = mergedDictionary['SliceTiming']
-        const valuesGreaterThanRepetitionTime = sliceTimingGreaterThanRepetitionTime(
-          SliceTimingArray,
-          mergedDictionary['RepetitionTime'],
-        )
+        const valuesGreaterThanRepetitionTime =
+          sliceTimingGreaterThanRepetitionTime(
+            SliceTimingArray,
+            mergedDictionary['RepetitionTime'],
+          )
         if (valuesGreaterThanRepetitionTime.length > 0) {
           issues.push(
             new Issue({
@@ -1285,7 +1286,7 @@ function missingEvents(path, potentialEvents, events) {
   // check for event file
   for (let j = 0; j < potentialEvents.length; j++) {
     const event = potentialEvents[j]
-    if (events.find(e => e.path == event)) {
+    if (events.find((e) => e.path == event)) {
       hasEvent = true
     }
   }
@@ -1368,12 +1369,9 @@ function checkIfSeparateM0scanExists(m0scanFile, fileList) {
 }
 
 function matchRule_m0scan(str, rule) {
-  var escapeRegex = str => str.replace(/([.*+?^=!:${}()|[]\/\\])/g, '\\$1')
+  var escapeRegex = (str) => str.replace(/([.*+?^=!:${}()|[]\/\\])/g, '\\$1')
   return new RegExp(
-    rule
-      .split('*')
-      .map(escapeRegex)
-      .join('.*') + '_m0scan.nii',
+    rule.split('*').map(escapeRegex).join('.*') + '_m0scan.nii',
   ).test(str)
 }
 

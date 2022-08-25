@@ -1,7 +1,7 @@
 import assert from 'assert'
 import validate from '../index'
 
-describe('Events', function() {
+describe('Events', function () {
   const headers = [
     [
       {
@@ -21,10 +21,12 @@ describe('Events', function() {
       events: ['/stimuli/images/red-square.jpg'],
       directory: [{ relativePath: '/stimuli/images/blue-square.jpg' }],
     }
-    return validate.Events.validateEvents([], stimuli, [], {}).then(issues => {
-      assert.strictEqual(issues.length, 1)
-      assert.strictEqual(issues[0].code, 77)
-    })
+    return validate.Events.validateEvents([], stimuli, [], {}).then(
+      (issues) => {
+        assert.strictEqual(issues.length, 1)
+        assert.strictEqual(issues[0].code, 77)
+      },
+    )
   })
 
   it('should not throw issues if all files in the /stimuli folder are included in an _events.tsv file', () => {
@@ -33,7 +35,7 @@ describe('Events', function() {
       directory: [{ relativePath: '/stimuli/images/red-square.jpg' }],
     }
     return validate.Events.validateEvents([], stimuli, [], {}, []).then(
-      issues => {
+      (issues) => {
         assert.deepStrictEqual(issues, [])
       },
     )
@@ -66,7 +68,7 @@ describe('Events', function() {
       jsonDictionary,
       jsonFiles,
       '',
-    ).then(issues => {
+    ).then((issues) => {
       assert.strictEqual(issues.length, 1)
       assert.strictEqual(issues[0].code, 85)
     })
@@ -99,7 +101,7 @@ describe('Events', function() {
       jsonDictionary,
       jsonFiles,
       '',
-    ).then(issues => {
+    ).then((issues) => {
       assert.strictEqual(issues.length, 1)
       assert.strictEqual(issues[0].code, 86)
     })
@@ -132,7 +134,7 @@ describe('Events', function() {
       jsonDictionary,
       jsonFiles,
       '',
-    ).then(issues => {
+    ).then((issues) => {
       assert.deepStrictEqual(issues, [])
     })
   })
@@ -177,7 +179,7 @@ describe('Events', function() {
         jsonDictionary,
         jsonFiles,
         '',
-      ).then(issues => {
+      ).then((issues) => {
         assert.deepStrictEqual(issues, [])
       })
     })
@@ -281,7 +283,7 @@ describe('Events', function() {
         jsonDictionary,
         jsonFiles,
         '',
-      ).then(issues => {
+      ).then((issues) => {
         assert.strictEqual(issues.length, 1)
         assert.strictEqual(issues[0].code, 104)
       })
@@ -352,7 +354,7 @@ describe('Events', function() {
         jsonDictionary,
         jsonFiles,
         '',
-      ).then(issues => {
+      ).then((issues) => {
         assert.strictEqual(issues.length, 2)
         assert.strictEqual(issues[0].code, 105)
         assert.strictEqual(issues[1].code, 105)

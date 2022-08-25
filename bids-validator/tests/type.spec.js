@@ -2,7 +2,7 @@ import { assert } from 'chai'
 import utils from '../utils'
 import BIDS from '../validators/bids'
 
-describe('utils.type.file.isAnat', function() {
+describe('utils.type.file.isAnat', function () {
   const goodFilenames = [
     '/sub-15/anat/sub-15_inplaneT2.nii.gz',
     '/sub-15/ses-12/anat/sub-15_ses-12_inplaneT2.nii.gz',
@@ -23,8 +23,8 @@ describe('utils.type.file.isAnat', function() {
     '/sub-16/anat/sub-16_mt-on_part-real_MTR.nii.gz',
   ]
 
-  goodFilenames.forEach(function(path) {
-    it("isAnat('" + path + "') === true", function(isdone) {
+  goodFilenames.forEach(function (path) {
+    it("isAnat('" + path + "') === true", function (isdone) {
       assert.equal(utils.type.file.isAnat(path), true)
       isdone()
     })
@@ -48,15 +48,15 @@ describe('utils.type.file.isAnat', function() {
     '/sub-16/anat/sub-16_flip-1_mt-fail_part-real_MTR.nii.gz',
   ]
 
-  badFilenames.forEach(function(path) {
-    it("isAnat('" + path + "') === false", function(isdone) {
+  badFilenames.forEach(function (path) {
+    it("isAnat('" + path + "') === false", function (isdone) {
       assert.equal(utils.type.file.isAnat(path), false)
       isdone()
     })
   })
 })
 
-describe('utils.type.file.isFunc', function() {
+describe('utils.type.file.isFunc', function () {
   var goodFilenames = [
     '/sub-15/func/sub-15_task-0back_bold.nii.gz',
     '/sub-15/ses-12/func/sub-15_ses-12_task-0back_bold.nii.gz',
@@ -69,8 +69,8 @@ describe('utils.type.file.isFunc', function() {
     '/sub-15/func/sub-15_task-0back_part-phase_bold.nii.gz',
   ]
 
-  goodFilenames.forEach(function(path) {
-    it("isFunc('" + path + "') === true", function(isdone) {
+  goodFilenames.forEach(function (path) {
+    it("isFunc('" + path + "') === true", function (isdone) {
       assert.equal(utils.type.file.isFunc(path), true)
       isdone()
     })
@@ -87,15 +87,15 @@ describe('utils.type.file.isFunc', function() {
     '/sub-16/func/sub-16_task-0back_part-magnitude_bold.nii.gz',
   ]
 
-  badFilenames.forEach(function(path) {
-    it("isFunc('" + path + "') === false", function(isdone) {
+  badFilenames.forEach(function (path) {
+    it("isFunc('" + path + "') === false", function (isdone) {
       assert.equal(utils.type.file.isFunc(path), false)
       isdone()
     })
   })
 })
 
-describe('utils.type.file.isTopLevel', function() {
+describe('utils.type.file.isTopLevel', function () {
   const goodFilenames = [
     '/README',
     '/CHANGES',
@@ -114,8 +114,8 @@ describe('utils.type.file.isTopLevel', function() {
     '/scans.json',
   ]
 
-  goodFilenames.forEach(function(path) {
-    it("isTopLevel('" + path + "') === true", function(isdone) {
+  goodFilenames.forEach(function (path) {
+    it("isTopLevel('" + path + "') === true", function (isdone) {
       assert.equal(utils.type.file.isTopLevel(path), true)
       isdone()
     })
@@ -136,8 +136,8 @@ describe('utils.type.file.isTopLevel', function() {
     '/acq-crosstalk_meg.fif',
   ]
 
-  badFilenames.forEach(function(path) {
-    it("isTopLevel('" + path + "') === false", function(isdone) {
+  badFilenames.forEach(function (path) {
+    it("isTopLevel('" + path + "') === false", function (isdone) {
       assert.equal(utils.type.file.isTopLevel(path), false)
       isdone()
     })
@@ -147,8 +147,8 @@ describe('utils.type.file.isTopLevel', function() {
 describe('utils.type.file.isSubjectLevel', () => {
   const goodFilenames = [] // to be extended in the future...
 
-  goodFilenames.forEach(path => {
-    it("isSubjectLevel('" + path + "') === true", function(isdone) {
+  goodFilenames.forEach((path) => {
+    it("isSubjectLevel('" + path + "') === true", function (isdone) {
       assert.equal(utils.type.file.isSubjectLevel(path), true)
       isdone()
     })
@@ -165,15 +165,15 @@ describe('utils.type.file.isSubjectLevel', () => {
     '/sub-12/acq-crosstalk.fif',
   ]
 
-  badFilenames.forEach(path => {
-    it("isSubjectLevel('" + path + "') === false", function(isdone) {
+  badFilenames.forEach((path) => {
+    it("isSubjectLevel('" + path + "') === false", function (isdone) {
       assert.equal(utils.type.file.isSubjectLevel(path), false)
       isdone()
     })
   })
 })
 
-describe('utils.type.file.isSessionLevel', function() {
+describe('utils.type.file.isSessionLevel', function () {
   const goodFilenames = [
     '/sub-12/sub-12_scans.tsv',
     '/sub-12/sub-12_scans.json',
@@ -181,8 +181,8 @@ describe('utils.type.file.isSessionLevel', function() {
     '/sub-12/ses-pre/sub-12_ses-pre_scans.json',
   ]
 
-  goodFilenames.forEach(function(path) {
-    it("isSessionLevel('" + path + "') === true", function(isdone) {
+  goodFilenames.forEach(function (path) {
+    it("isSessionLevel('" + path + "') === true", function (isdone) {
       assert.equal(utils.type.file.isSessionLevel(path), true)
       isdone()
     })
@@ -199,15 +199,15 @@ describe('utils.type.file.isSessionLevel', function() {
     '/sub-12/ses-pre/sub-12_ses-pre_acq-crosstalk_meg.fif',
   ]
 
-  badFilenames.forEach(function(path) {
-    it("isSessionLevel('" + path + "') === false", function(isdone) {
+  badFilenames.forEach(function (path) {
+    it("isSessionLevel('" + path + "') === false", function (isdone) {
       assert.equal(utils.type.file.isSessionLevel(path), false)
       isdone()
     })
   })
 })
 
-describe('utils.type.file.isDWI', function() {
+describe('utils.type.file.isDWI', function () {
   const goodFilenames = [
     '/sub-12/dwi/sub-12_dwi.nii.gz',
     '/sub-12/dwi/sub-12_dwi.json',
@@ -222,8 +222,8 @@ describe('utils.type.file.isDWI', function() {
     '/sub-12/dwi/sub-12_part-mag_sbref.json',
   ]
 
-  goodFilenames.forEach(function(path) {
-    it("isDWI('" + path + "') === true", function(isdone) {
+  goodFilenames.forEach(function (path) {
+    it("isDWI('" + path + "') === true", function (isdone) {
       assert.equal(utils.type.file.isDWI(path), true)
       isdone()
     })
@@ -241,15 +241,15 @@ describe('utils.type.file.isDWI', function() {
     '/sub-12/dwi/sub-12_part-magnitude_sbref.json',
   ]
 
-  badFilenames.forEach(function(path) {
-    it("isDWI('" + path + "') === false", function(isdone) {
+  badFilenames.forEach(function (path) {
+    it("isDWI('" + path + "') === false", function (isdone) {
       assert.equal(utils.type.file.isDWI(path), false)
       isdone()
     })
   })
 })
 
-describe('utils.type.file.isMEG', function() {
+describe('utils.type.file.isMEG', function () {
   const goodFilenames = [
     // Metadata MEG files
     '/sub-01/ses-001/meg/sub-01_ses-001_task-rest_run-01_meg.json',
@@ -286,8 +286,8 @@ describe('utils.type.file.isMEG', function() {
     '/sub-01/ses-001/meg/sub-01_ses-001_acq-crosstalk_meg.fif',
   ]
 
-  goodFilenames.forEach(function(path) {
-    it("isMeg('" + path + "') === true", function(isdone) {
+  goodFilenames.forEach(function (path) {
+    it("isMeg('" + path + "') === true", function (isdone) {
       assert.equal(utils.type.file.isMeg(path), true)
       isdone()
     })
@@ -326,15 +326,15 @@ describe('utils.type.file.isMEG', function() {
     '/sub-01/ses-001/meg/sub-01_ses-001_acq-crosstalk_meg.dat',
   ]
 
-  badFilenames.forEach(function(path) {
-    it("isMeg('" + path + "') === false", function(isdone) {
+  badFilenames.forEach(function (path) {
+    it("isMeg('" + path + "') === false", function (isdone) {
       assert.equal(utils.type.file.isMeg(path), false)
       isdone()
     })
   })
 })
 
-describe('utils.type.file.isEEG', function() {
+describe('utils.type.file.isEEG', function () {
   const goodFilenames = [
     '/sub-01/ses-001/eeg/sub-01_ses-001_task-rest_run-01_eeg.json',
     '/sub-01/ses-001/eeg/sub-01_ses-001_task-rest_run-01_events.tsv',
@@ -353,8 +353,8 @@ describe('utils.type.file.isEEG', function() {
     '/sub-01/ses-001/eeg/sub-01_ses-001_photo.jpg',
   ]
 
-  goodFilenames.forEach(function(path) {
-    it("isEEG('" + path + "') === true", function(isdone) {
+  goodFilenames.forEach(function (path) {
+    it("isEEG('" + path + "') === true", function (isdone) {
       assert.equal(utils.type.file.isEEG(path), true)
       isdone()
     })
@@ -368,15 +368,15 @@ describe('utils.type.file.isEEG', function() {
     '/sub-01/ses-001/eeg/sub-01_ses-001_space-BOGUS_coordsystem.json',
   ]
 
-  badFilenames.forEach(function(path) {
-    it("isEEG('" + path + "') === false", function(isdone) {
+  badFilenames.forEach(function (path) {
+    it("isEEG('" + path + "') === false", function (isdone) {
       assert.equal(utils.type.file.isEEG(path), false)
       isdone()
     })
   })
 })
 
-describe('utils.type.file.isIEEG', function() {
+describe('utils.type.file.isIEEG', function () {
   const goodFilenames = [
     '/sub-01/ses-001/ieeg/sub-01_ses-001_task-rest_run-01_ieeg.json',
     '/sub-01/ses-001/ieeg/sub-01_ses-001_task-rest_run-01_split-01_ieeg.edf',
@@ -396,8 +396,8 @@ describe('utils.type.file.isIEEG', function() {
     '/sub-01/ses-001/ieeg/sub-01_ses-001_space-fsaverage_coordsystem.json',
   ]
 
-  goodFilenames.forEach(function(path) {
-    it("isIEEG('" + path + "') === true", function(isdone) {
+  goodFilenames.forEach(function (path) {
+    it("isIEEG('" + path + "') === true", function (isdone) {
       assert.equal(utils.type.file.isIEEG(path), true)
       isdone()
     })
@@ -411,36 +411,36 @@ describe('utils.type.file.isIEEG', function() {
     '/sub-01/ses-001/ieeg/sub-01_ses-001_space-fsavg_coordsystem.json',
   ]
 
-  badFilenames.forEach(function(path) {
-    it("isIEEG('" + path + "') === false", function(isdone) {
+  badFilenames.forEach(function (path) {
+    it("isIEEG('" + path + "') === false", function (isdone) {
       assert.equal(utils.type.file.isIEEG(path), false)
       isdone()
     })
   })
 })
 
-describe('utils.type.file.isPhenotypic', function() {
-  it('should allow .tsv and .json files in the /phenotype directory', function() {
+describe('utils.type.file.isPhenotypic', function () {
+  it('should allow .tsv and .json files in the /phenotype directory', function () {
     assert(utils.type.file.isPhenotypic('/phenotype/acds_adult.json'))
     assert(utils.type.file.isPhenotypic('/phenotype/acds_adult.tsv'))
   })
 
-  it('should not allow non .tsv and .json files in the /phenotype directory', function() {
+  it('should not allow non .tsv and .json files in the /phenotype directory', function () {
     assert(!utils.type.file.isPhenotypic('/phenotype/acds_adult.jpeg'))
     assert(!utils.type.file.isPhenotypic('/phenotype/acds_adult.gif'))
   })
 })
 
-describe('utils.type.file.isAssociatedData', function() {
-  it('should return false for unknown root directories', function() {
+describe('utils.type.file.isAssociatedData', function () {
+  it('should return false for unknown root directories', function () {
     var badFilenames = ['/images/picture.jpeg', '/temporary/test.json']
 
-    badFilenames.forEach(function(path) {
+    badFilenames.forEach(function (path) {
       assert.equal(utils.type.file.isAssociatedData(path), false)
     })
   })
 
-  it('should return true for associated data directories and any files within', function() {
+  it('should return true for associated data directories and any files within', function () {
     var goodFilenames = [
       '/code/test-script.py',
       '/derivatives/sub-01_QA.pdf',
@@ -448,32 +448,32 @@ describe('utils.type.file.isAssociatedData', function() {
       '/stimuli/text.pdf',
     ]
 
-    goodFilenames.forEach(function(path) {
+    goodFilenames.forEach(function (path) {
       assert(utils.type.file.isAssociatedData(path))
     })
   })
 })
 
-describe('utils.type.file.isStimuliData', function() {
-  it('should return false for unknown root directories', function() {
+describe('utils.type.file.isStimuliData', function () {
+  it('should return false for unknown root directories', function () {
     var badFilenames = ['/images/picture.jpeg', '/temporary/test.json']
 
-    badFilenames.forEach(function(path) {
+    badFilenames.forEach(function (path) {
       assert.equal(utils.type.file.isStimuliData(path), false)
     })
   })
 
-  it('should return true for stimuli data directories and any files within', function() {
+  it('should return true for stimuli data directories and any files within', function () {
     var goodFilenames = ['/stimuli/sub-01/mov.avi', '/stimuli/text.pdf']
 
-    goodFilenames.forEach(function(path) {
+    goodFilenames.forEach(function (path) {
       assert(utils.type.file.isStimuliData(path))
     })
   })
 })
 
-describe('utils.type.getPathValues', function() {
-  it('should return the correct path values from a valid file path', function() {
+describe('utils.type.getPathValues', function () {
+  it('should return the correct path values from a valid file path', function () {
     assert.equal(
       utils.type.getPathValues(
         '/sub-22/ses-1/func/sub-22_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
@@ -501,7 +501,7 @@ describe('utils.type.getPathValues', function() {
   })
 })
 
-describe('utils.type.file.isPET', function() {
+describe('utils.type.file.isPET', function () {
   const goodFilenames = [
     '/sub-1/ses-1/pet/sub-1_ses-1_task-1_trc-1_rec-1_run-1_pet.json',
     '/sub-1/ses-1/pet/sub-1_ses-1_task-1_trc-1_rec-1_run-1_pet.nii',
@@ -513,8 +513,8 @@ describe('utils.type.file.isPET', function() {
     '/sub-03/pet/sub-02_pet.nii.gz',
   ]
 
-  goodFilenames.forEach(function(path) {
-    it("isPET('" + path + "') === true", function(isdone) {
+  goodFilenames.forEach(function (path) {
+    it("isPET('" + path + "') === true", function (isdone) {
       assert.equal(utils.type.file.isPET(path), true)
       isdone()
     })
@@ -529,15 +529,15 @@ describe('utils.type.file.isPET', function() {
     '/sub-1/ses-1/pet/sub-1/ses-1_task-1_trc-1_rec-1_run-q_recording-1_pet.nii',
   ]
 
-  badFilenames.forEach(function(path) {
-    it("isPET('" + path + "') === false", function(isdone) {
+  badFilenames.forEach(function (path) {
+    it("isPET('" + path + "') === false", function (isdone) {
       assert.equal(utils.type.file.isPET(path), false)
       isdone()
     })
   })
 })
 
-describe('utils.type.file.isPETBlood', function() {
+describe('utils.type.file.isPETBlood', function () {
   const goodFilenames = [
     '/sub-1/ses-1/pet/sub-1_ses-1_task-1_trc-1_rec-1_run-1_recording-1_blood.json',
     '/sub-1/ses-1/pet/sub-1_ses-1_task-1_trc-1_rec-1_run-1_recording-1_blood.tsv',
@@ -546,8 +546,8 @@ describe('utils.type.file.isPETBlood', function() {
     '/sub-03/pet/sub-02_recording-manual_blood.tsv',
   ]
 
-  goodFilenames.forEach(function(path) {
-    it("isPETBlood('" + path + "') === true", function(isdone) {
+  goodFilenames.forEach(function (path) {
+    it("isPETBlood('" + path + "') === true", function (isdone) {
       assert.equal(utils.type.file.isPETBlood(path), true)
       isdone()
     })
@@ -561,52 +561,45 @@ describe('utils.type.file.isPETBlood', function() {
     '/sub-1/ses-1/pet/sub-1/ses-1_task-1_trc-1_rec-1_run-q_recording-1_pet.tsv',
   ]
 
-  badFilenames.forEach(function(path) {
-    it("isPETBlood('" + path + "') === false", function(isdone) {
+  badFilenames.forEach(function (path) {
+    it("isPETBlood('" + path + "') === false", function (isdone) {
       assert.equal(utils.type.file.isPETBlood(path), false)
       isdone()
     })
   })
 })
 
-describe('BIDS.subIDsesIDmismatchtest', function() {
-  it("should return if sub and ses doesn't match", function() {
+describe('BIDS.subIDsesIDmismatchtest', function () {
+  it("should return if sub and ses doesn't match", function () {
     const files = {
-      '0': {
+      0: {
         name: 'sub-22_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
-        path:
-          'tests/data/BIDS-examples-1.0.0-rc3u5/ds001/sub-22_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
+        path: 'tests/data/BIDS-examples-1.0.0-rc3u5/ds001/sub-22_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
         relativePath:
           'ds001/sub-22_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
       },
-      '1': {
-        name:
-          '/sub-22/ses-1/func/sub-23_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
-        path:
-          'tests/data/BIDS-examples-1.0.0-rc3u5/ds001/sub-22/ses-1/func/sub-23_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
+      1: {
+        name: '/sub-22/ses-1/func/sub-23_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
+        path: 'tests/data/BIDS-examples-1.0.0-rc3u5/ds001/sub-22/ses-1/func/sub-23_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
         relativePath:
           'ds001/sub-22/ses-1/func/sub-23_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
       },
-      '2': {
-        name:
-          '/sub-22/ses-1/func/sub-22_ses-2_task-rest_acq-prefrontal_physio.tsv.gz',
-        path:
-          'tests/data/BIDS-examples-1.0.0-rc3u5/ds001/sub-22/ses-1/func/sub-22_ses-2_task-rest_acq-prefrontal_physio.tsv.gz',
+      2: {
+        name: '/sub-22/ses-1/func/sub-22_ses-2_task-rest_acq-prefrontal_physio.tsv.gz',
+        path: 'tests/data/BIDS-examples-1.0.0-rc3u5/ds001/sub-22/ses-1/func/sub-22_ses-2_task-rest_acq-prefrontal_physio.tsv.gz',
         relativePath:
           '/sub-22/ses-1/func/sub-22_ses-2_task-rest_acq-prefrontal_physio.tsv.gz',
       },
-      '3': {
-        name:
-          '/sub-25/ses-2/func/sub-22_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
-        path:
-          'tests/data/BIDS-examples-1.0.0-rc3u5/ds001/sub-25/ses-2/func/sub-22_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
+      3: {
+        name: '/sub-25/ses-2/func/sub-22_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
+        path: 'tests/data/BIDS-examples-1.0.0-rc3u5/ds001/sub-25/ses-2/func/sub-22_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
         relativePath:
           'ds001//sub-25/ses-2/func/sub-22_ses-1_task-rest_acq-prefrontal_physio.tsv.gz',
       },
     }
     const issues = BIDS.subIDsesIDmismatchtest(files)
-    const code64_seen = issues.some(issue => issue.code == '64')
-    const code65_seen = issues.some(issue => issue.code == '65')
+    const code64_seen = issues.some((issue) => issue.code == '64')
+    const code65_seen = issues.some((issue) => issue.code == '65')
     assert(code64_seen)
     assert(code65_seen)
   })

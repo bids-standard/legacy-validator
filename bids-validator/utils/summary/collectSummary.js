@@ -22,7 +22,7 @@ const collectSummary = (fileList, options) => {
   summary.dataProcessed = checkForDerivatives(fileList)
 
   // remove ignored files from list:
-  Object.keys(fileList).forEach(function(key) {
+  Object.keys(fileList).forEach(function (key) {
     if (fileList[key].ignore) {
       delete fileList[key]
     }
@@ -31,7 +31,7 @@ const collectSummary = (fileList, options) => {
   summary.totalFiles = Object.keys(fileList).length
 
   const relativePaths = Object.keys(fileList).map(
-    file => fileList[file].relativePath,
+    (file) => fileList[file].relativePath,
   )
 
   //collect file directory statistics

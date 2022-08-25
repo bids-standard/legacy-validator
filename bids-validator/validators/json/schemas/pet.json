@@ -11,7 +11,9 @@
     "TracerRadionuclide": { "type": "string", "minLength": 1 },
     "InstitutionName": { "type": "string", "minLength": 1 },
     "InstitutionAddress": { "type": "string", "minLength": 1 },
-    "InstitutionalDepartmentName": { "$ref": "common_definitions.json#/definitions/InstitutionalDepartmentName" },
+    "InstitutionalDepartmentName": {
+      "$ref": "common_definitions.json#/definitions/InstitutionalDepartmentName"
+    },
     "BodyPart": { "type": "string", "minLength": 1 },
     "TracerRadLex": { "type": "string", "minLength": 1 },
     "TracerSNOMED": { "type": "string", "minLength": 1 },
@@ -22,33 +24,27 @@
       "anyOf": [
         { "type": "number", "minimum": 0 },
         { "type": "array", "items": { "type": "number" } }
-        ]
-      },
+      ]
+    },
     "PharmaceuticalDoseUnits": { "type": "string", "minLength": 1 },
     "PharmaceuticalDoseRegimen": { "type": "string", "minLength": 1 },
     "PharmaceuticalDoseTime": {
       "anyOf": [
         { "type": "number" },
         { "type": "array", "items": { "type": "number" } }
-        ]
-      },
+      ]
+    },
     "Anaesthesia": { "type": "string", "minLength": 1 },
 
     "ModeOfAdministration": { "type": "string", "minLength": 1 },
     "InjectedRadioactivity": { "type": "number" },
     "InjectedRadioactivityUnits": { "type": "string", "minLength": 1 },
-    "InjectedMass": { 
-      "anyOf": [
-        { "type": "number" },
-        { "type": "string", "pattern": "^n/a$"}
-      ]
+    "InjectedMass": {
+      "anyOf": [{ "type": "number" }, { "type": "string", "pattern": "^n/a$" }]
     },
     "InjectedMassUnits": { "type": "string", "minLength": 1 },
-    "SpecificRadioactivity": { 
-      "anyOf": [
-        { "type": "number" },
-        { "type": "string", "pattern": "^n/a$"}
-      ]
+    "SpecificRadioactivity": {
+      "anyOf": [{ "type": "number" }, { "type": "string", "pattern": "^n/a$" }]
     },
     "SpecificRadioactivityUnits": { "type": "string", "minLength": 1 },
     "InjectedMassPerWeight": { "type": "number" },
@@ -76,7 +72,7 @@
     },
     "ScanStart": { "type": "number" },
     "InjectionStart": { "type": "number" },
-    "FrameTimesStart": {"type": "array", "items": { "type": "number" } },
+    "FrameTimesStart": { "type": "array", "items": { "type": "number" } },
     "FrameDuration": { "type": "array", "items": { "type": "number" } },
     "ScanDate": {
       "type": "string",
@@ -88,24 +84,36 @@
     "ImageDecayCorrected": { "type": "boolean" },
     "ImageDecayCorrectionTime": { "type": "number" },
     "ReconMethodName": { "type": "string", "minLength": 1 },
-    "ReconMethodParameterLabels": { "type": "array", "items": { "type": "string" } },
-    "ReconMethodParameterUnits": { "type": "array", "items": { "type": "string" } },
-    "ReconMethodParameterValues": { "type": "array", "items": { "type": "number" } },
+    "ReconMethodParameterLabels": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "ReconMethodParameterUnits": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "ReconMethodParameterValues": {
+      "type": "array",
+      "items": { "type": "number" }
+    },
     "ReconFilterType": {
       "anyOf": [
         { "type": "string" },
         { "type": "array", "items": { "type": "string" } }
-        ]
-      },
+      ]
+    },
     "ReconFilterSize": {
       "anyOf": [
         { "type": "number", "minimum": 0 },
-        {"type": "array", "items": { "type": "number" } }
-        ]
-      },
+        { "type": "array", "items": { "type": "number" } }
+      ]
+    },
     "ReconMethodImplementationVersion": { "type": "string", "minLength": 1 },
     "AttenuationCorrection": { "type": "string", "minLength": 1 },
-    "AttenuationCorrectionMethodReference": { "type": "string", "minLength": 1 },
+    "AttenuationCorrectionMethodReference": {
+      "type": "string",
+      "minLength": 1
+    },
     "ScaleFactor": {
       "type": "array",
       "items": { "type": "number" }
@@ -133,7 +141,18 @@
     "SinglesRate": {
       "type": "array",
       "items": { "type": "number" }
-    }
+    },
+    "CogAtlasID": { "$ref": "common_definitions.json#/definitions/CogAtlasID" },
+    "CogPOID": { "$ref": "common_definitions.json#/definitions/CogPOID" }, 
+    "TaskName": {
+      "type": "string"
+    },
+    "TaskDescription": {
+      "$ref": "common_definitions.json#/definitions/TaskDescription"
+    },
+    "Instructions": {
+      "$ref": "common_definitions.json#/definitions/Instructions"
+    }       
   },
   "allOf": [
     {
@@ -147,8 +166,7 @@
           }
         }
       },
-      "then": {
-      },
+      "then": {},
       "else": {
         "required": ["InjectedMass", "InjectedMassUnits"]
       }
@@ -164,8 +182,7 @@
           }
         }
       },
-      "then": {
-      },
+      "then": {},
       "else": {
         "required": ["SpecificRadioactivity", "SpecificRadioactivityUnits"]
       }
@@ -181,8 +198,7 @@
           }
         }
       },
-      "then": {
-      },
+      "then": {},
       "else": {
         "required": ["ReconFilterType", "ReconFilterSize"]
       }
@@ -196,10 +212,14 @@
         }
       },
       "then": {
-        "required": ["InfusionRadioactivity", "InfusionStart", "InfusionSpeed", "InjectedVolume"]
+        "required": [
+          "InfusionRadioactivity",
+          "InfusionStart",
+          "InfusionSpeed",
+          "InjectedVolume"
+        ]
       },
-      "else": {
-      }
+      "else": {}
     }
   ],
 

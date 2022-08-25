@@ -2,7 +2,7 @@
  * Gets the Target, Scanner Mfg, Radiotracer, and Radionuclide from json sidecar
  * @param {*} fileList
  */
-const collectPetFields = jsonContentsDict => {
+const collectPetFields = (jsonContentsDict) => {
   const fields = {
     BodyPart: {},
     ScannerManufacturer: {},
@@ -40,9 +40,9 @@ const record = (fields, field, value) => {
 /**
  * Takes each field of tallies and converts it to an ordered list (pure).
  */
-const ordered = fields => {
+const ordered = (fields) => {
   const orderedFields = {}
-  Object.keys(fields).forEach(key => {
+  Object.keys(fields).forEach((key) => {
     orderedFields[key] = orderedList(fields[key])
   })
   return orderedFields
@@ -53,10 +53,10 @@ const ordered = fields => {
  * @param {object} tallies
  * @returns {string[]}
  */
-export const orderedList = tallies =>
+export const orderedList = (tallies) =>
   Object.keys(tallies)
     // convert object to list of key/value pairs
-    .map(key => ({ key, count: tallies[key] }))
+    .map((key) => ({ key, count: tallies[key] }))
     // sort by count, greatest to least
     .sort(({ count: a }, { count: b }) => b - a)
     .map(({ key }) => key)

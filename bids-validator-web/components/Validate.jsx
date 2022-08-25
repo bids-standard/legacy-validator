@@ -7,7 +7,7 @@ class Validate extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: false
+      loading: false,
     }
 
     this._clearInput = this.props.reset

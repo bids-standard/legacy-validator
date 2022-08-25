@@ -18,7 +18,7 @@
       "anyof": [
         {
           "type": "array",
-          "items": {"$ref": "#/definitions/GeneticLevelEnum"}
+          "items": { "$ref": "#/definitions/GeneticLevelEnum" }
         },
         { "$ref": "#/definitions/GeneticLevelEnum" }
       ]

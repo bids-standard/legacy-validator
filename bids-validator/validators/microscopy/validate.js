@@ -9,11 +9,11 @@ const BIG_TIFF_ID = 0x2b
 const validate = (files, jsonContentsDict) => {
   let issues = []
   // validate ometiff
-  const omePromises = files.map(function(file) {
+  const omePromises = files.map(function (file) {
     return utils.limit(
       () =>
         new Promise((resolve, reject) => {
-          utils.files.readBuffer(file).then(buffer => {
+          utils.files.readBuffer(file).then((buffer) => {
             if (validateTiffSignature(buffer, TIFF_ID)) {
               if (file.relativePath.endsWith('.ome.btf')) {
                 issues.push(
@@ -26,13 +26,18 @@ const validate = (files, jsonContentsDict) => {
               }
               utils.files
                 .readOMEFile(buffer)
-                .then(omeData => {
-                  ometiff(file, omeData, jsonContentsDict, function(omeIssues) {
-                    issues = issues.concat(omeIssues)
-                    resolve()
-                  })
+                .then((omeData) => {
+                  ometiff(
+                    file,
+                    omeData,
+                    jsonContentsDict,
+                    function (omeIssues) {
+                      issues = issues.concat(omeIssues)
+                      resolve()
+                    },
+                  )
                 })
-                .catch(err =>
+                .catch((err) =>
                   utils.issues.redirect(err, reject, () => {
                     issues.push(err)
                     resolve()

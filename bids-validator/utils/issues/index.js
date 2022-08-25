@@ -23,7 +23,7 @@ var issues = {
    * Remove fieldmap related warnings if no fieldmaps
    * are present.
    */
-  filterFieldMaps: function(issueList) {
+  filterFieldMaps: function (issueList) {
     var filteredIssueList = []
     var fieldmapRelatedCodes = [6, 7, 8, 9]
     for (var i = 0; i < issueList.length; i++) {
@@ -38,7 +38,7 @@ var issues = {
   /**
    * Format Issues
    */
-  format: function(issueList, summary, options) {
+  format: function (issueList, summary, options) {
     var errors = [],
       warnings = [],
       ignored = []
@@ -48,7 +48,7 @@ var issues = {
     }
 
     // sort alphabetically by relative path of files
-    issueList.sort(function(a, b) {
+    issueList.sort(function (a, b) {
       var aPath = a.file ? a.file.relativePath : ''
       var bPath = b.file ? b.file.relativePath : ''
       return aPath > bPath ? 1 : bPath > aPath ? -1 : 0
@@ -123,13 +123,9 @@ var issues = {
    *
    * Takes and exception and returns an Issue
    */
-  errorToIssue: function(err, code = 0) {
+  errorToIssue: function (err, code = 0) {
     const callStack = err.stack
-      ? err.stack
-          .split('\n')
-          .slice(1)
-          .join('\n')
-          .trim()
+      ? err.stack.split('\n').slice(1).join('\n').trim()
       : ''
 
     return new Issue({
@@ -145,7 +141,7 @@ var issues = {
    *
    * takes an object and checks if it's an Issue
    */
-  isAnIssue: function(obj) {
+  isAnIssue: function (obj) {
     const objKeys = Object.keys(obj)
     return objKeys.includes('code') && objKeys.includes('reason')
   },
@@ -157,7 +153,7 @@ var issues = {
    * summary and a config object and returns the
    * same issues reformatted against the config.
    */
-  reformat: function(issueList, summary, config) {
+  reformat: function (issueList, summary, config) {
     var errors = issueList.errors ? issueList.errors : [],
       warnings = issueList.warnings ? issueList.warnings : [],
       ignored = issueList.ignored ? issueList.ignored : []
@@ -180,7 +176,7 @@ var issues = {
    * converts it to an Issue and pushes it to the total list of issues
    * formats issue list and returns it
    */
-  exceptionHandler: function(err, issueList, summary, options) {
+  exceptionHandler: function (err, issueList, summary, options) {
     // err here can be a validator Issue or an unknown exception
     if (err.hasOwnProperty('key')) {
       issueList.push(err)
@@ -198,7 +194,7 @@ var issues = {
    *
    * takes an error, resolve callback, and reject callback
    */
-  redirect: function(err, reject, resolveCB) {
+  redirect: function (err, reject, resolveCB) {
     if (this.isAnIssue(err)) {
       resolveCB()
     } else {

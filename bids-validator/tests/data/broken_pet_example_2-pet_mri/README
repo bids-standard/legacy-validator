@@ -1,6 +1,7 @@
 This dataset consists of a single PET measurement of a human brain using [11C]DASB to measure serotonin transporter availability. An anatomical T1-weighted MRI is also available. There are no arterial measurements available for this tracer.
 
 It has been broken for testing purposes. Changes made (in /sub-01/ses-01/pet/sub-01_ses-01_pet.json):
+
 - Manufacturer set to a number (expecting string).
 - InjectedMass removed (required).
 - TracerMolecularWeightUnit removed (required when TracerMolecularWeight is set).

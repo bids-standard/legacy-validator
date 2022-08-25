@@ -14,7 +14,7 @@ const load = (files, jsonFiles, jsonContentsDict, annexed, dir) => {
   const readJsonFile = (file, annexed, dir) =>
     utils.files
       .readFile(file, annexed, dir)
-      .then(contents => utils.json.parse(file, contents))
+      .then((contents) => utils.json.parse(file, contents))
       .then(({ issues: parseIssues, parsed }) => {
         // Append any parse issues to returned issues
         Array.prototype.push.apply(issues, parseIssues)
@@ -22,7 +22,7 @@ const load = (files, jsonFiles, jsonContentsDict, annexed, dir) => {
         // Abort further tests if an error is found
         if (
           parseIssues &&
-          parseIssues.some(issue => issue.severity === 'error')
+          parseIssues.some((issue) => issue.severity === 'error')
         ) {
           throw new JSONParseError('Aborted due to parse error')
         }
@@ -32,14 +32,14 @@ const load = (files, jsonFiles, jsonContentsDict, annexed, dir) => {
       })
 
   // Start concurrent read/parses
-  const fileReads = files.map(file =>
+  const fileReads = files.map((file) =>
     utils.limit(() => readJsonFile(file, annexed, dir)),
   )
 
   // After all reads/parses complete, return any found issues
   return Promise.all(fileReads)
     .then(() => issues)
-    .catch(err => {
+    .catch((err) => {
       // Handle early exit
       if (err instanceof JSONParseError) {
         return issues

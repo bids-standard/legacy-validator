@@ -47,10 +47,10 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
 
   if (self.options.blacklistModalities) {
     const relativePaths = Object.keys(fileList).map(
-      file => fileList[file].relativePath,
+      (file) => fileList[file].relativePath,
     )
     const preIgnoreModalities = collectModalities(relativePaths)
-    self.options.blacklistModalities.map(mod => {
+    self.options.blacklistModalities.map((mod) => {
       if (preIgnoreModalities.primary.includes(mod)) {
         self.issues.push(
           new Issue({
@@ -75,7 +75,7 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
   }
 
   // remove ignored files from list:
-  Object.keys(fileList).forEach(function(key) {
+  Object.keys(fileList).forEach(function (key) {
     if (fileList[key].ignore) {
       delete fileList[key]
     }
@@ -90,7 +90,7 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
 
   // generate issues for all files that do not comply with
   // bids spec
-  files.invalid.map(function(file) {
+  files.invalid.map(function (file) {
     self.issues.push(
       new Issue({
         file: file,
@@ -110,7 +110,7 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
   }
 
   validateMisc(files.misc)
-    .then(miscIssues => {
+    .then((miscIssues) => {
       self.issues = self.issues.concat(miscIssues)
 
       // TSV validation
@@ -133,19 +133,19 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
       // Bvec validation
       return bvec.validate(files.bvec, bContentsDict)
     })
-    .then(bvecIssues => {
+    .then((bvecIssues) => {
       self.issues = self.issues.concat(bvecIssues)
 
       // Bval validation
       return bval.validate(files.bval, bContentsDict)
     })
-    .then(bvalIssues => {
+    .then((bvalIssues) => {
       self.issues = self.issues.concat(bvalIssues)
 
       // Load json files and construct a contents object with field, value pairs
       return json.load(files.json, jsonFiles, jsonContentsDict)
     })
-    .then(jsonLoadIssues => {
+    .then((jsonLoadIssues) => {
       self.issues = self.issues.concat(jsonLoadIssues)
 
       // Check for at least one subject
@@ -175,13 +175,13 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
       // Validate json files and contents
       return json.validate(jsonFiles, fileList, jsonContentsDict, summary)
     })
-    .then(jsonIssues => {
+    .then((jsonIssues) => {
       self.issues = self.issues.concat(jsonIssues)
 
       // OME-TIFF consistency check
       return microscopy.validate(files.ome, jsonContentsDict)
     })
-    .then(omeIssues => {
+    .then((omeIssues) => {
       self.issues = self.issues.concat(omeIssues)
       // Nifti validation
       return NIFTI.validate(
@@ -196,7 +196,7 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
         dir,
       )
     })
-    .then(niftiIssues => {
+    .then((niftiIssues) => {
       self.issues = self.issues.concat(niftiIssues)
 
       // Issues related to participants not listed in the subjects list
@@ -224,7 +224,7 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
         dir,
       )
     })
-    .then(eventsIssues => {
+    .then((eventsIssues) => {
       self.issues = self.issues.concat(eventsIssues)
 
       // Validate custom fields in all TSVs and add any issues to the list
@@ -257,7 +257,7 @@ const fullTest = (fileList, options, annexed, dir, schema, callback) => {
       const issues = utils.issues.format(self.issues, summary, self.options)
       callback(issues, summary)
     })
-    .catch(err => {
+    .catch((err) => {
       // take internal exceptions and push to issues
       // note: exceptions caught here may have skipped subsequent validations
       const issues = utils.issues.exceptionHandler(

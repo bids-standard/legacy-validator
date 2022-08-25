@@ -1,4 +1,4 @@
-const potentialLocations = path => {
+const potentialLocations = (path) => {
   //add a '/' at the beginning of the path if it doesn't exist yet
   path = path.startsWith('/') ? path : '/' + path
   const splitPath = path.split('/')
@@ -23,7 +23,7 @@ const potentialLocations = path => {
   }
 }
 
-const potentialPaths = components => {
+const potentialPaths = (components) => {
   let filenameComponents = components.filename // get the underscore separated file components
   let pathComponents = components.path // get the path components before file
   const fileIndex = filenameComponents.length - 1 // index of the filename in file components
@@ -34,7 +34,7 @@ const potentialPaths = components => {
   // eg if we are root level we will not want sub-* included in the possible
   // paths for this level. Also we do not want to include run in that list.
   const nonPathSpecificFileComponents = informationalFileComponents.filter(
-    component => pathComponents.indexOf(component) < 0,
+    (component) => pathComponents.indexOf(component) < 0,
   )
 
   // loop through all the directory levels - root, sub, (ses), (datatype)
@@ -44,7 +44,7 @@ const potentialPaths = components => {
     const directoryString = activeDirectoryComponents.join('/') // path of active directory
 
     const prefixComponents = informationalFileComponents.filter(
-      component => activeDirectoryComponents.indexOf(component) > -1,
+      (component) => activeDirectoryComponents.indexOf(component) > -1,
     )
 
     const prefix = prefixComponents.join('_')
@@ -80,8 +80,8 @@ const constructFileName = (directoryString, filename, prefix) => {
   return newPath
 }
 
-const removePathsWithoutTasknames = paths => {
-  return paths.filter(path => {
+const removePathsWithoutTasknames = (paths) => {
+  return paths.filter((path) => {
     return path.indexOf('task') > -1
   })
 }

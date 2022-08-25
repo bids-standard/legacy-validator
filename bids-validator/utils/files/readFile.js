@@ -5,7 +5,7 @@ import isNode from '../isNode'
 import checkIfUtf8 from 'is-utf8'
 
 const JSONFilePattern = /.json$/
-const isJSONFile = file =>
+const isJSONFile = (file) =>
   JSONFilePattern.test(isNode ? file.name : file.relativePath)
 
 // Work around JSDom not providing TextDecoder yet
@@ -43,12 +43,12 @@ const checkEncoding = (file, data, cb) => {
 function readFile(file, annexed, dir) {
   return new Promise((resolve, reject) => {
     if (isNode) {
-      testFile(file, annexed, dir, function(issue, stats, remoteBuffer) {
+      testFile(file, annexed, dir, function (issue, stats, remoteBuffer) {
         if (issue) {
           return reject(issue)
         }
         if (!remoteBuffer) {
-          fs.readFile(file.path, function(err, data) {
+          fs.readFile(file.path, function (err, data) {
             if (err) {
               return reject(err)
             }
@@ -64,7 +64,7 @@ function readFile(file, annexed, dir) {
       })
     } else {
       const reader = new FileReader()
-      reader.onloadend = e => {
+      reader.onloadend = (e) => {
         if (e.target.readyState == FileReader.DONE) {
           if (!e.target.result) {
             return reject(new Issue({ code: 44, file: file }))

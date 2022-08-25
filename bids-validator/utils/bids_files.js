@@ -37,7 +37,9 @@ function checkFileListForMatch(i) {
   // Set true if dictArgs and all dictargs exist in file path (except 'coordsystem')
   let pathMatch =
     dictArgs.length > 0
-      ? dictArgs.every(arg => arg === 'coordsystem' || this.path.includes(arg))
+      ? dictArgs.every(
+          (arg) => arg === 'coordsystem' || this.path.includes(arg),
+        )
       : false
   if (pathMatch) {
     match = verifyDatafileMatch(

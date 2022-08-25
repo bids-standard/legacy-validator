@@ -10,13 +10,13 @@ describe('readDir.js', () => {
           { name: 'three' },
         ]),
       ).toEqual({
-        '0': {
+        0: {
           name: 'one',
         },
-        '1': {
+        1: {
           name: 'two',
         },
-        '2': {
+        2: {
           name: 'three',
         },
       })

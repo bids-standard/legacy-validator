@@ -1,12 +1,12 @@
 // next.config.js
-const withTM = require("next-transpile-modules");
+const withTM = require('next-transpile-modules')
 
 module.exports = withTM({
-  transpileModules: ["bids-validator"],
-  assetPrefix: "./",
+  transpileModules: ['bids-validator'],
+  assetPrefix: './',
   webpack5: false,
   webpack: (config, {}) => {
-    config.resolve.symlinks = false;
-    return config;
-  }
-});
+    config.resolve.symlinks = false
+    return config
+  },
+})

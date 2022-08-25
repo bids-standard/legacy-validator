@@ -114,7 +114,7 @@ async function preprocessNode(dir, ig, options) {
  * @returns {string[]}
  */
 const getGitLsTree = (cwd, gitRef) =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     let output = ''
     const gitProcess = child_proccess.spawn(
       'git',
@@ -124,7 +124,7 @@ const getGitLsTree = (cwd, gitRef) =>
         encoding: 'utf-8',
       },
     )
-    gitProcess.stdout.on('data', data => {
+    gitProcess.stdout.on('data', (data) => {
       output += data.toString()
     })
     gitProcess.stderr.on('data', () => {
@@ -135,9 +135,9 @@ const getGitLsTree = (cwd, gitRef) =>
     })
   })
 
-const readLsTreeLines = gitTreeLines =>
+const readLsTreeLines = (gitTreeLines) =>
   gitTreeLines
-    .map(line => {
+    .map((line) => {
       const [metadata, path] = line.split('\t')
       const [mode, objType, objHash, size] = metadata.split(/\s+/)
       return { path, mode, objType, objHash, size }
@@ -179,7 +179,7 @@ const readLsTreeLines = gitTreeLines =>
  * @returns {string[]}
  */
 const getGitCatFile = (cwd, input) =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     let output = ''
     const gitProcess = child_proccess.spawn(
       'git',
@@ -194,7 +194,7 @@ const getGitCatFile = (cwd, input) =>
     gitProcess.stdin.write(input)
     gitProcess.stdin.end()
 
-    gitProcess.stdout.on('data', data => {
+    gitProcess.stdout.on('data', (data) => {
       output += data.toString()
     })
     gitProcess.stderr.on('data', () => {
@@ -222,15 +222,15 @@ const readCatFileLines = (gitCatFileLines, symlinkFilenames) =>
 const processFiles = (dir, ig, ...fileLists) =>
   fileLists
     .reduce((allFiles, files) => [...allFiles, ...files], [])
-    .map(file => {
+    .map((file) => {
       file.relativePath = path.normalize(`${path.sep}${file.path}`)
       return file
     })
-    .filter(file => {
+    .filter((file) => {
       const ignore = ig.ignores(file.relativePath.slice(1))
       return !ignore
     })
-    .map(file => {
+    .map((file) => {
       file.relativePath = harmonizeRelativePath(file.relativePath)
       file.name = path.basename(file.path)
       file.path = path.join(dir, file.relativePath)
@@ -244,9 +244,8 @@ async function getFilesFromGitTree(dir, ig, options) {
     (gitTreeLines.length === 1 && gitTreeLines[0] === '')
   )
     return null
-  const { files, symlinkFilenames, symlinkObjects } = readLsTreeLines(
-    gitTreeLines,
-  )
+  const { files, symlinkFilenames, symlinkObjects } =
+    readLsTreeLines(gitTreeLines)
 
   const gitCatFileLines = await getGitCatFile(dir, symlinkObjects.join('\n'))
   // example gitCatFile output:

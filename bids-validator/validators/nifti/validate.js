@@ -16,8 +16,8 @@ const validate = (
   dir,
 ) => {
   let issues = []
-  const niftiPromises = files.map(function(file) {
-    return new Promise(resolve => {
+  const niftiPromises = files.map(function (file) {
+    return new Promise((resolve) => {
       if (options.ignoreNiftiHeaders) {
         nifti(
           null,
@@ -26,13 +26,13 @@ const validate = (
           bContentsDict,
           fileList,
           events,
-          function(niftiIssues) {
+          function (niftiIssues) {
             issues = issues.concat(niftiIssues)
             resolve()
           },
         )
       } else {
-        utils.files.readNiftiHeader(file, annexed, dir, function(header) {
+        utils.files.readNiftiHeader(file, annexed, dir, function (header) {
           // check if header could be read
           if (header && header.hasOwnProperty('error')) {
             issues.push(header.error)
@@ -46,7 +46,7 @@ const validate = (
               bContentsDict,
               fileList,
               events,
-              function(niftiIssues) {
+              function (niftiIssues) {
                 issues = issues.concat(niftiIssues)
                 resolve()
               },
@@ -57,7 +57,7 @@ const validate = (
     })
   })
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     // check for duplicate nifti files
     const duplicateNiftisIssues = duplicateFiles(files)
     issues = issues.concat(duplicateNiftisIssues)

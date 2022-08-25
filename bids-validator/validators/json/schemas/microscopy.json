@@ -11,8 +11,16 @@
     "InstitutionalDepartmentName": { "type": "string", "minLength": 1 },
     "BodyPart": { "type": "string", "minLength": 1 },
     "BodyPartDetails": { "type": "string", "minLength": 1 },
-    "BodyPartDetailsOntology": { "type": "string", "minLength": 1, "format": "uri" },
-    "SampleEnvironment": { "type": "string", "minLength": 1, "enum": ["in vivo", "ex vivo", "in vitro"]  },
+    "BodyPartDetailsOntology": {
+      "type": "string",
+      "minLength": 1,
+      "format": "uri"
+    },
+    "SampleEnvironment": {
+      "type": "string",
+      "minLength": 1,
+      "enum": ["in vivo", "ex vivo", "in vitro"]
+    },
     "SampleEmbedding": { "type": "string", "minLength": 1 },
     "SampleFixation": { "type": "string", "minLength": 1 },
     "SampleStaining": {
@@ -37,7 +45,12 @@
     "SampleExtractionProtocol": { "type": "string", "minLength": 1 },
     "SampleExtractionInstitution": { "type": "string", "minLength": 1 },
     "TissueDeformationScaling": { "type": "number" },
-    "PixelSize": {"type": "array", "minItems": 2, "maxItems": 3, "items": { "type": "number", "minimum": 0 } },
+    "PixelSize": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 3,
+      "items": { "type": "number", "minimum": 0 }
+    },
     "PixelSizeUnits": { "type": "string", "enum": ["mm", "um", "nm"] },
     "Immersion": { "type": "string", "minLength": 1 },
     "NumericalAperture": { "type": "number", "exclusiveMinimum": 0 },
@@ -46,16 +59,38 @@
     "OtherAcquisitionParameters": { "type": "string", "minLength": 1 },
     "ChunkTransformationMatrix": {
       "anyOf": [
-        {"type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "array", "minItems": 3, "maxItems": 3, "items":{ "type": "number"} } },
-        {"type": "array", "minItems": 4, "maxItems": 4, "items": { "type": "array", "minItems": 4, "maxItems": 4, "items":{ "type": "number"} } }
+        {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": { "type": "number" }
+          }
+        },
+        {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": { "type": "number" }
+          }
+        }
       ]
     },
-    "ChunkTransformationMatrixAxis": { "type": "array", "minItems": 2, "maxItems": 3, "items": { "type": "string" }}
-    },
-  "required": [
-    "PixelSize",
-    "PixelSizeUnits"
-  ],
+    "ChunkTransformationMatrixAxis": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 3,
+      "items": { "type": "string" }
+    }
+  },
+  "required": ["PixelSize", "PixelSizeUnits"],
   "recommended": [
     "Manufacturer",
     "ManufacturersModelName",

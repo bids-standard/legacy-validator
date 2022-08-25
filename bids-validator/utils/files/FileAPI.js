@@ -10,7 +10,7 @@ function NodeFile(parts, filename, properties) {
   this.parts = parts
   this.name = filename
   this.properties = properties
-  this.size = parts.reduce(function(a, val) {
+  this.size = parts.reduce(function (a, val) {
     return a + val.length
   }, 0)
   // Unknown defacto mime-type

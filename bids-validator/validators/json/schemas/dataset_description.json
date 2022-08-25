@@ -54,7 +54,7 @@
     },
     "DatasetLinks": {
       "type": "object",
-      "properties": { },
+      "properties": {},
       "propertyNames": {
         "type": "string",
         "minLength": 1,
@@ -71,16 +71,16 @@
       "items": {
         "type": "object",
         "properties": {
-          "Name": {"type": "string"},
-          "Version": {"type": "string"},
-          "Description": {"type": "string"},
-          "CodeURL": {"type": "string", "format": "uri"},
+          "Name": { "type": "string" },
+          "Version": { "type": "string" },
+          "Description": { "type": "string" },
+          "CodeURL": { "type": "string", "format": "uri" },
           "Container": {
             "type": "object",
             "properties": {
-              "Type": {"type": "string"},
-              "Tag": {"type": "string"},
-              "URI": {"type": "string", "format": "uri"}
+              "Type": { "type": "string" },
+              "Tag": { "type": "string" },
+              "URI": { "type": "string", "format": "uri" }
             }
           }
         }
@@ -91,9 +91,9 @@
       "items": {
         "type": "object",
         "properties": {
-          "URL": {"type": "string", "format": "uri"},
-          "DOI": {"type": "string"},
-          "Version": {"type": "string"}
+          "URL": { "type": "string", "format": "uri" },
+          "DOI": { "type": "string" },
+          "Version": { "type": "string" }
         }
       }
     },
@@ -101,10 +101,12 @@
       "type": "object",
       "properties": {
         "Database": {
-          "type": "string", "format": "uri"
+          "type": "string",
+          "format": "uri"
         },
         "Dataset": {
-          "type": "string", "format": "uri"
+          "type": "string",
+          "format": "uri"
         },
         "Descriptors": {
           "items": {
@@ -117,17 +119,19 @@
   },
   "required": ["Name", "BIDSVersion"],
   "allOf": [
-    { "$ref": "#/dependency-definitions/if-DatasetType-is-derivative-then-GeneratedBy-is-required" }
+    {
+      "$ref": "#/dependency-definitions/if-DatasetType-is-derivative-then-GeneratedBy-is-required"
+    }
   ],
   "dependency-definitions": {
     "if-DatasetType-is-derivative-then-GeneratedBy-is-required": {
       "if": {
-	"type": "object",
-	"properties": {"DatasetType": {"const": "derivative"}},
-	"required": ["DatasetType"]
+        "type": "object",
+        "properties": { "DatasetType": { "const": "derivative" } },
+        "required": ["DatasetType"]
       },
       "then": {
-	"required": ["GeneratedBy"]
+        "required": ["GeneratedBy"]
       }
     }
   }

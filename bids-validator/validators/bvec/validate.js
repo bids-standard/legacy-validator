@@ -4,20 +4,20 @@ import bvec from './bvec'
 const validate = (files, bContentsDict, annexed, dir) => {
   // validate bvec
   let issues = []
-  const bvecPromises = files.map(function(file) {
+  const bvecPromises = files.map(function (file) {
     return utils.limit(
       () =>
         new Promise((resolve, reject) => {
           utils.files
             .readFile(file, annexed, dir)
-            .then(contents => {
+            .then((contents) => {
               bContentsDict[file.relativePath] = contents
-              bvec(file, contents, function(bvecIssues) {
+              bvec(file, contents, function (bvecIssues) {
                 issues = issues.concat(bvecIssues)
                 resolve()
               })
             })
-            .catch(err =>
+            .catch((err) =>
               utils.issues.redirect(err, reject, () => {
                 issues.push(err)
                 resolve()

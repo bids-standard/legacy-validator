@@ -2,34 +2,76 @@
   "type": "object",
   "properties": {
     "TaskName": { "$ref": "common_definitions.json#/definitions/TaskName" },
-    "SamplingFrequency": { "$ref": "common_definitions.json#/definitions/SamplingFrequency" },
-    "PowerLineFrequency": { "$ref": "common_definitions.json#/definitions/PowerLineFrequency" },
+    "SamplingFrequency": {
+      "$ref": "common_definitions.json#/definitions/SamplingFrequency"
+    },
+    "PowerLineFrequency": {
+      "$ref": "common_definitions.json#/definitions/PowerLineFrequency"
+    },
     "DCOffsetCorrection": { "type": "string", "minLength": 1 },
-    "SoftwareFilters": { "$ref": "common_definitions.json#/definitions/SoftwareFilters" },
-    "HardwareFilters": { "$ref": "common_definitions.json#/definitions/HardwareFilters" },
-    "Manufacturer": { "$ref": "common_definitions.json#/definitions/Manufacturer" },
+    "SoftwareFilters": {
+      "$ref": "common_definitions.json#/definitions/SoftwareFilters"
+    },
+    "HardwareFilters": {
+      "$ref": "common_definitions.json#/definitions/HardwareFilters"
+    },
+    "Manufacturer": {
+      "$ref": "common_definitions.json#/definitions/Manufacturer"
+    },
     "ManufacturersModelName": { "type": "string" },
-    "TaskDescription": { "$ref": "common_definitions.json#/definitions/TaskDescription" },
-    "Instructions": { "$ref": "common_definitions.json#/definitions/Instructions" },
+    "TaskDescription": {
+      "$ref": "common_definitions.json#/definitions/TaskDescription"
+    },
+    "Instructions": {
+      "$ref": "common_definitions.json#/definitions/Instructions"
+    },
     "CogAtlasID": { "$ref": "common_definitions.json#/definitions/CogAtlasID" },
     "CogPOID": { "$ref": "common_definitions.json#/definitions/CogPOID" },
-    "InstitutionName": { "$ref": "common_definitions.json#/definitions/InstitutionName" },
-    "InstitutionAddress": { "$ref": "common_definitions.json#/definitions/InstitutionAddress" },
-    "InstitutionalDepartmentName": { "$ref": "common_definitions.json#/definitions/InstitutionalDepartmentName" },
-    "DeviceSerialNumber": { "$ref": "common_definitions.json#/definitions/DeviceSerialNumber" },
+    "InstitutionName": {
+      "$ref": "common_definitions.json#/definitions/InstitutionName"
+    },
+    "InstitutionAddress": {
+      "$ref": "common_definitions.json#/definitions/InstitutionAddress"
+    },
+    "InstitutionalDepartmentName": {
+      "$ref": "common_definitions.json#/definitions/InstitutionalDepartmentName"
+    },
+    "DeviceSerialNumber": {
+      "$ref": "common_definitions.json#/definitions/DeviceSerialNumber"
+    },
     "ECOGChannelCount": { "type": "integer", "minimum": 0 },
     "SEEGChannelCount": { "type": "integer", "minimum": 0 },
-    "EEGChannelCount": { "$ref": "common_definitions.json#/definitions/EEGChannelCount" },
-    "EOGChannelCount": { "$ref": "common_definitions.json#/definitions/EOGChannelCount" },
-    "ECGChannelCount": { "$ref": "common_definitions.json#/definitions/ECGChannelCount" },
-    "EMGChannelCount": { "$ref": "common_definitions.json#/definitions/EMGChannelCount" },
-    "MiscChannelCount": { "$ref": "common_definitions.json#/definitions/MiscChannelCount" },
-    "TriggerChannelCount": { "$ref": "common_definitions.json#/definitions/TriggerChannelCount" },
-    "RecordingDuration": { "$ref": "common_definitions.json#/definitions/RecordingDuration" },
-    "RecordingType": { "$ref": "common_definitions.json#/definitions/RecordingType" },
-    "EpochLength": { "$ref": "common_definitions.json#/definitions/EpochLength" },
+    "EEGChannelCount": {
+      "$ref": "common_definitions.json#/definitions/EEGChannelCount"
+    },
+    "EOGChannelCount": {
+      "$ref": "common_definitions.json#/definitions/EOGChannelCount"
+    },
+    "ECGChannelCount": {
+      "$ref": "common_definitions.json#/definitions/ECGChannelCount"
+    },
+    "EMGChannelCount": {
+      "$ref": "common_definitions.json#/definitions/EMGChannelCount"
+    },
+    "MiscChannelCount": {
+      "$ref": "common_definitions.json#/definitions/MiscChannelCount"
+    },
+    "TriggerChannelCount": {
+      "$ref": "common_definitions.json#/definitions/TriggerChannelCount"
+    },
+    "RecordingDuration": {
+      "$ref": "common_definitions.json#/definitions/RecordingDuration"
+    },
+    "RecordingType": {
+      "$ref": "common_definitions.json#/definitions/RecordingType"
+    },
+    "EpochLength": {
+      "$ref": "common_definitions.json#/definitions/EpochLength"
+    },
     "SubjectArtefactDescription": { "type": "string" },
-    "SoftwareVersions": { "$ref": "common_definitions.json#/definitions/SoftwareVersions" },
+    "SoftwareVersions": {
+      "$ref": "common_definitions.json#/definitions/SoftwareVersions"
+    },
     "iEEGReference": { "type": "string" },
     "ElectrodeManufacturer": { "type": "string" },
     "ElectrodeManufacturersModelName": { "type": "string" },

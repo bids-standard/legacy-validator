@@ -2,9 +2,9 @@ name: test-bids-examples
 
 on:
   push:
-    branches: ["*"]
+    branches: ['*']
   pull_request:
-    branches: ["*"]
+    branches: ['*']
 
 jobs:
   build:
@@ -22,10 +22,10 @@ jobs:
 
     steps:
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 12
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
 

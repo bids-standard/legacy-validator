@@ -1,6 +1,6 @@
 import isNode from '../../utils/isNode'
 
-const getDataView = buffer => {
+const getDataView = (buffer) => {
   if (isNode) {
     const uint8arr = new Uint8Array(buffer.byteLength)
     buffer.copy(uint8arr, 0, 0, buffer.byteLength)

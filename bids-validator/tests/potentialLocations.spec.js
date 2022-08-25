@@ -11,7 +11,7 @@ describe('potentialLocations', () => {
     const path = 'dsTest/sub-01/func/sub-01_task-testing_run-01_bold.json'
     const pLs = potentialLocations(path)
     const anyNonTaskSpecific = pLs.some(
-      location => location.indexOf('task') < 0,
+      (location) => location.indexOf('task') < 0,
     )
     assert.equal(anyNonTaskSpecific, false)
   })

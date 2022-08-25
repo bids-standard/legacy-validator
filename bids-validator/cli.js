@@ -1,6 +1,6 @@
 /*eslint no-console: ["error", {allow: ["log"]}] */
 
-import { parseOptions } from './src/options'
+import { parseOptions } from './validators/options'
 import validate from './index.js'
 
 const format = validate.consoleFormat
@@ -8,7 +8,7 @@ import colors from 'colors/safe'
 import fs from 'fs'
 import { filenamesOnly } from './utils/filenamesOnly.js'
 
-const errorToString = err => {
+const errorToString = (err) => {
   if (err instanceof Error) return err.stack
   else if (typeof err === 'object') return JSON.parse(err)
   else return err
@@ -39,7 +39,7 @@ export function cli(argumentOverride) {
     const argv = parseOptions(argumentOverride)
     const dir = argv._[0]
     const options = argv
-    process.on('unhandledRejection', err => {
+    process.on('unhandledRejection', (err) => {
       console.log(
         format.unexpectedError(
           // eslint-disable-next-line
@@ -61,7 +61,7 @@ export function cli(argumentOverride) {
       reject(2)
     }
 
-    validate.BIDS(dir, options, function(issues, summary) {
+    validate.BIDS(dir, options, function (issues, summary) {
       function resolveOrReject() {
         if (
           issues === 'Invalid' ||

@@ -6,7 +6,7 @@ import issues from './list'
  * Construct a link to a helpful neurostars query, based on the
  * issue key
  */
-const constructHelpUrl = issue => {
+const constructHelpUrl = (issue) => {
   const neurostarsPrefix = 'https://neurostars.org/'
   const searchQuery = issue && issue.key ? 'search?q=' + issue.key : ''
   const helpUrl = neurostarsPrefix + searchQuery

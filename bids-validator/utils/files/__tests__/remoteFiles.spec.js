@@ -33,11 +33,11 @@ describe('remoteFiles', () => {
     it('should return the response of constructAwsRequest if successful', () => {
       remoteFiles
         .accessRemoteFile(config)
-        .then(res => expect(res).toBe('buffer'))
+        .then((res) => expect(res).toBe('buffer'))
     })
-    it('should return the issue of extractGzipBuffer if unzip is unsuccessful', done => {
+    it('should return the issue of extractGzipBuffer if unzip is unsuccessful', (done) => {
       config.file.name = 'something.gz'
-      remoteFiles.accessRemoteFile(config).catch(issue => {
+      remoteFiles.accessRemoteFile(config).catch((issue) => {
         expect(issue).toHaveProperty('code')
         config.file.name = 'something'
         done()
@@ -52,12 +52,12 @@ describe('remoteFiles', () => {
       })
       expect(response).toBeInstanceOf(Promise)
     })
-    it('should return the buffer() property of the fetch response', async done => {
+    it('should return the buffer() property of the fetch response', async (done) => {
       remoteFiles
         .constructAwsRequest({
           s3Params: { Bucket: 'matters not' },
         })
-        .then(data => {
+        .then((data) => {
           assert.equal(data, 'buffer')
           done()
         })
@@ -219,7 +219,7 @@ describe('remoteFiles', () => {
   })
 
   describe('tryRemote', () => {
-    it('should resolve with the results of accessRemoteFile', done => {
+    it('should resolve with the results of accessRemoteFile', (done) => {
       remoteFiles.getSingleRemoteInfo = jest.fn()
       remoteFiles.getSingleRemoteInfo.mockReturnValue({ Bucket: 'wow' })
       remoteFiles.accessRemoteFile = jest.fn()
@@ -229,7 +229,7 @@ describe('remoteFiles', () => {
           {},
           { dir: 'directory', file: { relativePath: 'wow', name: 'name' } },
         )
-        .then(data => {
+        .then((data) => {
           expect(data)
           done()
         })

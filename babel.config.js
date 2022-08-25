@@ -4,15 +4,15 @@ module.exports = {
       '@babel/preset-env',
       {
         targets: {
-          node: 'current'
+          node: 'current',
         },
       },
-      'jest'
-    ]
+      'jest',
+    ],
   ],
   env: {
     test: {
-      plugins: ['@babel/plugin-transform-modules-commonjs']
-    }
-  }
+      plugins: ['@babel/plugin-transform-modules-commonjs'],
+    },
+  },
 }

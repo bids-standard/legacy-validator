@@ -16,4 +16,5 @@ jobs:
       - uses: actions/checkout@v2
       - uses: codespell-project/actions-codespell@master
         with:
-          ignore_words_list: ro,anser,te,tage,afterall,nwe,nin,nd
+          ignore_words_list: ro,anser,te,tage,afterall,nwe,nin,nd,falsy
+          skip: package-lock.json

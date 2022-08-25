@@ -13,7 +13,7 @@ import isNode from '../isNode'
  */
 
 const remoteFiles = {
-  // Initiaties access of a remote file from git-annex remote
+  // Initiates access of a remote file from git-annex remote
   // Get remotes info the call to try successive remotes
   // Called by testFile
   getAnnexedFile: function (file, dir, limit, callback) {

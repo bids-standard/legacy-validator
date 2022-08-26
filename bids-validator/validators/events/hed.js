@@ -17,7 +17,7 @@ export default function checkHedStrings(events, jsonContents, jsonFiles, dir) {
   const datasetDescriptionData = new hedValidator.validator.BidsJsonFile(
     '/dataset_description.json',
     datasetDescription,
-    jsonFiles['/dataset_description.json'],
+    getSidecarFileObject('/dataset_description.json', jsonFiles),
   )
   const dataset = new hedValidator.validator.BidsDataset(
     eventData,

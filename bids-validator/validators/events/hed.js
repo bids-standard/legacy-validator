@@ -12,7 +12,7 @@ export default function checkHedStrings(events, jsonContents, jsonFiles, dir) {
   if (!hedDataExists) {
     return Promise.resolve([])
   }
-  // New stuff here
+
   const datasetDescription = jsonContents['/dataset_description.json']
   const datasetDescriptionData = new hedValidator.validator.BidsJsonFile(
     '/dataset_description.json',

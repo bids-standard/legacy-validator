@@ -51,11 +51,15 @@ function extractNiftiFile(file, callback) {
     } else {
       fs.read(fd, buffer, 0, bytesRead, 0, function () {
         if (file.name.endsWith('.nii')) {
-          callback(parseNIfTIHeader(buffer, file))
+          const header = parseNIfTIHeader(buffer, file)
+          fs.close(fd)
+          callback(header)
         } else {
           try {
             const data = pako.inflate(buffer)
-            callback(parseNIfTIHeader(data, file))
+            const header = parseNIfTIHeader(data, file)
+            fs.close(fd)
+            callback(header)
           } catch (err) {
             callback(handleGunzipError(buffer, file))
           }

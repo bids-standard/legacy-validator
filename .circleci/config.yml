@@ -11,7 +11,7 @@ jobs:
       - run:
           name: setup conda
           command: |
-            conda create -n testenv Python=3.7
+            conda create -n testenv Python=3.10
             conda init
       - run: git config --global user.email "bids.maintenance@gmail.com"
       - run: git config --global user.name "bids-maintenance"
@@ -263,3 +263,4 @@ workflows:
               ignore: /.*/
             tags:
               only: /v\d+\.\d+\.\d+$/
+# VS Code Extension Version: 1.5.1

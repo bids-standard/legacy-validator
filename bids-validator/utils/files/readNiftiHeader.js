@@ -50,16 +50,18 @@ function extractNiftiFile(file, callback) {
       return
     } else {
       fs.read(fd, buffer, 0, bytesRead, 0, function () {
-        if (file.name.endsWith('.nii')) {
-          callback(parseNIfTIHeader(buffer, file))
-        } else {
-          try {
-            const data = pako.inflate(buffer)
-            callback(parseNIfTIHeader(data, file))
-          } catch (err) {
-            callback(handleGunzipError(buffer, file))
+        fs.close(fd, function () {
+          if (file.name.endsWith('.nii')) {
+            callback(parseNIfTIHeader(buffer, file))
+          } else {
+            try {
+              const data = pako.inflate(buffer)
+              callback(parseNIfTIHeader(data, file))
+            } catch (err) {
+              callback(handleGunzipError(buffer, file))
+            }
           }
-        }
+        })
       })
     }
   })

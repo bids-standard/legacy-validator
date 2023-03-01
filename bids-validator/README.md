@@ -38,7 +38,7 @@
       couple of minutes please open [developer tools ](https://developer.chrome.com/devtools)
       and report the error at [https://github.com/bids-standard/bids-validator/issues](https://github.com/bids-standard/bids-validator/issues).
 1. Command line version:
-   1. Install [Node.js](https://nodejs.org) (at least version 12.12.0)
+   1. Install [Node.js](https://nodejs.org) (at least version 14.0.0)
    1. Update `npm` to be at least version 7 (`npm install --global npm@^7`)
    1. From a terminal run `npm install -g bids-validator`
    1. Run `bids-validator` to start validating datasets.
@@ -51,7 +51,7 @@
    1. Install [Pip](https://pip.pypa.io/en/stable/installing/) package manager for Python, if
       not already installed.
    1. From a terminal run `pip install bids_validator` to acquire the
-      [BIDS Validator PyPI package](https://pypi.org/project/bids-validator/) 
+      [BIDS Validator PyPI package](https://pypi.org/project/bids-validator/)
       or `conda install bids-validator` for the
       [Conda package](https://anaconda.org/conda-forge/bids-validator).
    1. Open a Python terminal and type: `python`

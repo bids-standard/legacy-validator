@@ -24,7 +24,7 @@
     "url": "https://github.com/bids-standard/bids-validator.git"
   },
   "engines": {
-    "node": ">=12.12.0"
+    "node": ">=14.0.0"
   },
   "bin": {
     "bids-validator": "bin/bids-validator"

@@ -1,9 +1,10 @@
 ---
-name: Deno Tests
+name: Deno build
 
 on:
   push:
     branches: [master]
+    tags: ['*']
   pull_request:
     branches: [master]
 
@@ -11,16 +12,29 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    working-directory: ./bids-validator
+
 jobs:
   build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+      - run: ./build.ts
+      - uses: actions/upload-artifact@v3
+        with:
+          name: main
+          path: bids-validator/dist/validator/main.js
+  test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-22.04, macos-12, windows-2022]
       fail-fast: false
-    defaults:
-      run:
-        working-directory: ./bids-validator
     steps:
       - uses: actions/checkout@v3
       - uses: denoland/setup-deno@v1.1.1

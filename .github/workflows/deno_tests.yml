@@ -51,6 +51,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PUSH_TOKEN }}
       - name: Set credentials
         run: |
           git config --global user.name "BIDS-Bot"

@@ -12,10 +12,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-defaults:
-  run:
-    working-directory: ./bids-validator
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,6 +21,7 @@ jobs:
         with:
           deno-version: v1.x
       - run: ./build.ts
+        working-directory: ./bids-validator
       - uses: actions/upload-artifact@v3
         with:
           name: main
@@ -35,6 +32,10 @@ jobs:
       matrix:
         os: [ubuntu-22.04, macos-12, windows-2022]
       fail-fast: false
+    defaults:
+      run:
+        working-directory: ./bids-validator
+
     steps:
       - uses: actions/checkout@v3
       - uses: denoland/setup-deno@v1.1.1
@@ -55,7 +56,7 @@ jobs:
           git config --global user.name "BIDS-Bot"
           git config --global user.email "bids-maintenance@users.noreply.github.com"
       - name: Save describe stamp
-        run: echo VERSION=$( git describe ) >> GITHUB_ENV
+        run: echo VERSION=$( git describe ) >> $GITHUB_ENV
       - name: Checkout orphan
         run: |
           git checkout --orphan deno-build
@@ -66,7 +67,6 @@ jobs:
           path: main.js
       - name: Commit to new branch
         run: |
-          mv **/main.js .
           git add main.js
           git commit -m "BLD: $VERSION [skip ci]"
       - name: Force push

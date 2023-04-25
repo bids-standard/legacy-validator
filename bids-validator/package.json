@@ -59,7 +59,7 @@
     "stream-browserify": "^3.0.0",
     "table": "^5.2.3",
     "xml2js": "^0.4.23",
-    "yaml": "^1.10.2",
+    "yaml": "^2.2.2",
     "yargs": "^16.2.0"
   },
   "devDependencies": {

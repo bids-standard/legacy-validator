@@ -52,7 +52,7 @@
     },
 
     "ACCELChannelCount": { "type": "number" },
-    "ANGACCChannelCount": { "type": "number" },
+    "ANGACCELChannelCount": { "type": "number" },
     "GYROChannelCount": { "type": "number" },
     "JNTANGChannelCount": { "type": "number" },
     "MAGNChannelCount": { "type": "number" },

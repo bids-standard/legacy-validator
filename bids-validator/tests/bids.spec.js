@@ -19,7 +19,7 @@ function getDirectories(srcpath) {
 
 const missing_session_files = [
   '7t_trt',
-  'ds00432',
+  'ds004332',
   'ds006',
   'ds007',
   'ds008',

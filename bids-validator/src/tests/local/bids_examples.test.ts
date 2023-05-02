@@ -31,8 +31,11 @@ function formatBEIssue(issue: IssueOutput, dsPath: string) {
 
 Deno.test('validate bids-examples', async (t) => {
   const prefix = 'tests/data/bids-examples'
+  const dirEntries = Array.from(Deno.readDirSync(prefix))
 
-  for (const dirEntry of Deno.readDirSync(prefix)) {
+  for (const dirEntry of dirEntries.sort((a, b) =>
+    a.name.localeCompare(b.name),
+  )) {
     if (!dirEntry.isDirectory || dirEntry.name.startsWith('.')) {
       continue
     }

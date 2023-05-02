@@ -1,4 +1,4 @@
-import 'https://raw.githubusercontent.com/rii-mango/NIFTI-Reader-JS/v0.5.4/release/current/nifti-reader-min.js'
+import 'https://raw.githubusercontent.com/rii-mango/NIFTI-Reader-JS/v0.6.4/release/current/nifti-reader-min.js'
 import { BIDSFile } from '../types/file.ts'
 import { logger } from '../utils/logger.ts'
 

@@ -10,7 +10,10 @@ import * as schemaDefault from 'https://bids-specification.readthedocs.io/en/lat
 export async function loadSchema(version = 'latest'): Promise<Schema> {
   const versionRegex = /^v\d/
   let schemaUrl = version
-  if (version === 'latest' || versionRegex.test(version)) {
+  const bidsSchema = Deno.env.get('BIDS_SCHEMA')
+  if (bidsSchema !== undefined) {
+    schemaUrl = bidsSchema
+  } else if (version === 'latest' || versionRegex.test(version)) {
     schemaUrl = `https://bids-specification.readthedocs.io/en/${version}/schema.json`
   }
   try {

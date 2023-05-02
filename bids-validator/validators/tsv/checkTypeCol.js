@@ -45,7 +45,7 @@ const allowedMEEGTypes = [
   'VEL',
   'GYRO',
   'ACCEL',
-  'ANGACC',
+  'ANGACCEL',
   'JNTANG',
   'MAGN',
   'LATENCY',

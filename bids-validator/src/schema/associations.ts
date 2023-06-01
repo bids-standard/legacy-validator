@@ -85,6 +85,7 @@ export async function buildAssociations(
   for (const key in associationLookup as typeof associationLookup) {
     const { extensions, inherit } =
       associationLookup[key as keyof typeof associationLookup]
+    fileTree = source.parent
     const paths = getPaths(fileTree, source, key, extensions)
     if (paths.length === 0) {
       continue
@@ -118,9 +119,7 @@ function getPaths(
     )
   })
 
-  const nextDir = fileTree.directories.find((directory) => {
-    return source.file.path.startsWith(directory.path)
-  })
+  const nextDir = fileTree.parent
 
   if (nextDir) {
     validAssociations.push(

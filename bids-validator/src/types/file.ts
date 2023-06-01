@@ -1,3 +1,4 @@
+import { FileTree } from './filetree.ts'
 /**
  * Abstract validation File for all environments (Deno, Browser, Python)
  */
@@ -18,4 +19,5 @@ export interface BIDSFile {
   text: () => Promise<string>
   // Read a range of bytes
   readBytes: (size: number, offset?: number) => Promise<Uint8Array>
+  parent: FileTree
 }

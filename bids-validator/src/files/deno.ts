@@ -26,8 +26,14 @@ export class BIDSFileDeno implements BIDSFile {
   path: string
   #fileInfo?: Deno.FileInfo
   private _datasetAbsPath: string
+  parent: FileTree
 
-  constructor(datasetPath: string, path: string, ignore: FileIgnoreRules) {
+  constructor(
+    datasetPath: string,
+    path: string,
+    ignore: FileIgnoreRules,
+    parent: FileTree,
+  ) {
     this._datasetAbsPath = datasetPath
     this.path = path
     this.name = basename(path)
@@ -124,6 +130,7 @@ export async function _readFileTree(
         rootPath,
         join(relativePath, dirEntry.name),
         ignore,
+        tree,
       )
       // For .bidsignore, read in immediately and add the rules
       if (dirEntry.name === '.bidsignore') {

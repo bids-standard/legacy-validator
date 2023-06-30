@@ -74,7 +74,7 @@
     "esbuild-plugin-globals": "^0.1.1",
     "esbuild-runner": "^2.2.1",
     "eslint": "^8.17.0",
-    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^2.6.2",
     "husky": "^8.0.3",
     "lockfile": "^1.0.4",

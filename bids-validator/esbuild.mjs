@@ -10,7 +10,7 @@ await esbuild.build({
     path.join(process.cwd(), 'utils', 'consoleFormat.js'),
   ],
   outdir: path.join(process.cwd(), 'dist', 'commonjs'),
-  target: 'node14',
+  target: 'node18',
   bundle: true,
   sourcemap: true,
   platform: 'node',

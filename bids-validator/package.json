@@ -38,7 +38,7 @@
   "homepage": "https://github.com/bids-standard/bids-validator",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.9.0",
-    "ajv": "^6.5.2",
+    "ajv": "^8.12.0",
     "bytes": "^3.1.2",
     "colors": "^1.4.0",
     "cross-fetch": "^3.1.6",

@@ -8,6 +8,7 @@
         "README\\.rst",
         "README\\.txt",
         "CHANGES",
+        "CITATION\\.cff",
         "LICENSE",
         "dataset_description\\.json",
         "genetic_info\\.json",

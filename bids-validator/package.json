@@ -45,7 +45,7 @@
     "date-fns": "^2.30.0",
     "events": "^3.3.0",
     "exifreader": "^4.12.1",
-    "hed-validator": "^3.10.0",
+    "hed-validator": "^3.11.0",
     "ignore": "^5.2.4",
     "is-utf8": "^0.2.1",
     "jest": "^29.5.0",

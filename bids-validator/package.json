@@ -73,7 +73,7 @@
     "esbuild": "^0.18.11",
     "esbuild-plugin-globals": "^0.2.0",
     "esbuild-runner": "^2.2.2",
-    "eslint": "^8.44.0",
+    "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.3",

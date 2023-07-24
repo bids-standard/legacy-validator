@@ -75,7 +75,7 @@
     "esbuild-runner": "^2.2.2",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-prettier": "^5.0.0",
     "husky": "^8.0.3",
     "lockfile": "^1.0.4",
     "sync-request": "6.1.0"

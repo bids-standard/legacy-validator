@@ -52,7 +52,7 @@
     "jshint": "^2.13.6",
     "lerna": "^7.1.1",
     "lodash": "^4.17.21",
-    "minimatch": "3.0.5",
+    "minimatch": "9.0.3",
     "next": "13.4.9",
     "nifti-js": "^1.0.1",
     "p-limit": "^2.1.0",

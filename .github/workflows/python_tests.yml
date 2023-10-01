@@ -44,7 +44,7 @@ jobs:
 
       - name: Install git-annex windows
         if: matrix.platform == 'windows-latest'
-        uses: crazy-max/ghaction-chocolatey@v2
+        uses: crazy-max/ghaction-chocolatey@v3
         with:
           args: install git-annex --yes --ignore-checksums
         continue-on-error: true  # This can fail for stupid reasons ¯\_(ツ)_/¯

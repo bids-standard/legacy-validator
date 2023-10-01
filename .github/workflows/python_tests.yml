@@ -21,7 +21,7 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set git name/email
         run: |
           git config --global user.email "bids.maintenance@gmail.com"

@@ -27,7 +27,21 @@
           "description": "For  categorical variables: a dictionary of possible values (keys) and their descriptions (values).",
           "patternProperties": {
             "^.+$": {
-              "type": "string"
+              "anyOf": [
+                { "type": "string" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "Description": { "type": "string" },
+                    "TermURL": {
+                      "title": "TermURL",
+                      "description": "URL pointing to a formal definition in an ontology available on the web.",
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  }
+                }
+              ]
             }
           }
         },

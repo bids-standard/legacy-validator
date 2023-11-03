@@ -30,6 +30,11 @@
         }
       }
     },
-    { "$ref": "common_definitions.json#/definitions/ColumnDescription" }
+    {
+      "type": "object",
+      "patternProperties": {
+        "^.+$": { "$ref": "common_definitions.json#/definitions/ColumnDescription" }
+      }
+    }
   ]
 }

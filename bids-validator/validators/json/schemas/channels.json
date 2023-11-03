@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "type": "object",
+  "properties": {
+    "reference_frame": {
+      "$ref": "common_definitions.json#/definitions/ColumnDescription",
+      "title": "Reference Frame",
+      "properties": {
+        "$ref": "common_definitions.json#/definitions/ColumnDescription/properties",
+        "Levels": {
+          "$ref": "common_definitions.json#/definitions/ColumnDescription/properties/Levels",
+          "properties": {
+            "RotationOrder": {
+              "description": "The sequence in which the extrinsic rotations are applied around the three axes.",
+              "type": "string",
+              "enum": ["XYZ", "XZY", "YXZ", "YZX", "ZXY", "ZYX"]
+            },
+            "RotationRule": {
+              "description": "The direction of rotation around each axis.",
+              "type": "string",
+              "enum": ["left-hand", "right-hand"]
+            },
+            "SpatialAxes": {
+              "description": "The coordinate system in which the motion data are to be interpreted. A sequence of characters from the set `{'A', 'P', 'L', 'R', 'S', 'I', '_'}` indicating the direction of each axis. For example `\"ARS\"` indicates positive values in the X, Y, Z axes are respectively anterior, right, and superior of the origin, while `\"PLI\"` indicates positive values are posterior, left, and inferior of the origin. The `\"_\"` character may be used for unused axes.",
+              "type": "string",
+              "pattern": "^[APLRSI_]{3}$"
+            }
+          }
+        }
+      }
+    }
+  },
+  "patternProperties": {
+    "^.+$": { "$ref": "common_definitions.json#/definitions/ColumnDescription" }
+  }
+}

@@ -122,6 +122,73 @@
     "SoftwareVersions": { "type": "string" },
     "TaskDescription": { "type": "string" },
     "TaskName": { "type": "string", "minLength": 1 },
-    "TriggerChannelCount": { "type": "integer", "minimum": 0 }
+    "TermURL": {
+      "title": "TermURL",
+      "description": "URL pointing to a formal definition in an ontology available on the web.",
+      "type": "string",
+      "format": "uri"
+    },
+    "TriggerChannelCount": { "type": "integer", "minimum": 0 },
+    "ColumnDescription": {
+      "type": "object",
+      "title": "Column",
+      "description": "Column of a corresponding tabular file.",
+      "properties": {
+        "LongName": {
+          "title": "LongName",
+          "description": " Long (unabbreviated) name of column.",
+          "type": "string"
+        },
+        "Description": {
+          "title": "Description",
+          "description": "Description of the column.",
+          "type": "string"
+        },
+        "Units": {
+          "title": "Units",
+          "description": "Measurement units.",
+          "type": "string"
+        },
+        "Levels": {
+          "type": "object",
+          "title": "Levels",
+          "description": "For categorical variables: a dictionary of possible values (keys) and their descriptions (values).",
+          "patternProperties": {
+            "^.+$": {
+              "anyOf": [
+                { "type": "string" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "Description": { "type": "string" },
+                    "TermURL": { "$ref": "#/definitions/TermURL" }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "TermURL": { "$ref": "#/definitions/TermURL" },
+        "HED": {
+          "anyOf": [
+            {
+              "type": "object",
+              "title": "HED",
+              "description": "For categorical variables: a dictionary of possible values (keys) and their HED strings (values).",
+              "patternProperties": {
+                "^.+$": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "type": "string",
+              "title": "HED",
+              "description": "For value variables: a string with a single '#' character where the cell value is to be interpolated."
+            }
+          ]
+        }
+      }
+    }
   }
 }

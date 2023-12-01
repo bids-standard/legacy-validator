@@ -27,7 +27,7 @@ jobs:
           git config --global user.email "bids.maintenance@gmail.com"
           git config --global user.name "bids-maintenance"
       - name: Set up Python ${{ matrix.python-version }}
-        uses: conda-incubator/setup-miniconda@v2
+        uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
           python-version: ${{ matrix.python-version }}

@@ -22,7 +22,7 @@ jobs:
           deno-version: v1.x
       - run: ./build.ts
         working-directory: ./bids-validator
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: main
           path: bids-validator/dist/validator

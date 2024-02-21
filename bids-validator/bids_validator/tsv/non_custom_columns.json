@@ -67,6 +67,14 @@
   "participants": ["participant_id", "HED"],
   "phenotype": ["participant_id", "HED"],
   "scans": ["acq_time", "filename", "HED"],
+  "samples": [
+    "sample_id",
+    "participant_id",
+    "sample_type",
+    "pathology",
+    "derived_from",
+    "HED"
+  ],
   "sessions": ["acq_time", "session_id", "HED"],
   "aslcontext": ["volume_type", "HED"],
   "blood": [

@@ -1,6 +1,13 @@
 import assert from 'assert'
 import validate from '../index'
 
+// Mock sessionStorage
+global.sessionStorage = {
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  clear: jest.fn()
+};
+
 describe('TSV', function () {
   // general tsv checks ------------------------------------------------------------------
 

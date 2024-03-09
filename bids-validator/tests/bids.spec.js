@@ -9,13 +9,6 @@ import path from 'path'
 import { createFileList } from './env/FileList.js'
 import isNode from '../utils/isNode.js'
 
-// Mock sessionStorage
-global.sessionStorage = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  clear: jest.fn()
-};
-
 function getDirectories(srcpath) {
   return fs.readdirSync(srcpath).filter(function (file) {
     return (

@@ -1,13 +1,6 @@
 import assert from 'assert'
 import validate from '../index'
 
-// Mock sessionStorage
-global.sessionStorage = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  clear: jest.fn()
-};
-
 describe('TSV', function () {
   // general tsv checks ------------------------------------------------------------------
 
@@ -355,10 +348,12 @@ describe('TSV', function () {
 
   it('should not allow mismatched filename entries', function () {
     const fileList = [eegFile]
+    console.log(fileList)
     const tsv =
       'filename\tacq_time\n' +
       'func/sub-08_ses-test_task-linebisection_run-01_bold.nii.gz\t2017-05-03T06:45:45'
     validate.TSV.TSV(scansFile, tsv, fileList, function (issues) {
+      console.log(issues)
       assert(issues.length === 1 && issues[0].code === 129)
     })
   })

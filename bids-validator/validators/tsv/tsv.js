@@ -614,8 +614,8 @@ const TSV = (file, contents, fileList, callback) => {
       )
     } else {
       // Retrieve the .bidsignore content (if any) from session storage
-      const content = sessionStorage.getItem('bidsignoreContent');
-      const ig = content ? ignore().add(JSON.parse(content)) : null;
+      const content = sessionStorage.getItem('bidsignoreContent')
+      const ig = content ? ignore().add(JSON.parse(content)) : null
 
       // check scans filenames match pathList
       const filenameColumn = headers.indexOf('filename')
@@ -625,7 +625,7 @@ const TSV = (file, contents, fileList, callback) => {
         const scanFullPath = scanDirPath + '/' + scanRelativePath
 
         // check if file should be ignored based on .bidsignore content
-        if (ig && ig.ignores((path.relative('/', scanRelativePath)))) {
+        if (ig && ig.ignores(path.relative('/', scanRelativePath))) {
           continue
         }
 

@@ -423,7 +423,6 @@ describe('TSV', function () {
     sessionStorage.removeItem('bidsignoreContent')
   })
 
-
   it('should not allow missing files listed in scans.tsv and not accounted for by .bidsignore', function () {
     sessionStorage.setItem('bidsignoreContent', JSON.stringify('sodium/'))
     const fileList = [niftiFile, eegFile]

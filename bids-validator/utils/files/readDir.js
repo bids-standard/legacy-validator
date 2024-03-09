@@ -331,7 +331,7 @@ async function getBIDSIgnore(dir) {
     const content = await readFile(bidsIgnoreFileObj)
     ig.add(content)
     // Store the .bidsignore content in session storage
-    sessionStorage.setItem('bidsignoreContent', JSON.stringify(content));
+    sessionStorage.setItem('bidsignoreContent', JSON.stringify(content))
   }
   return ig
 }

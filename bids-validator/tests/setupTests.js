@@ -1,6 +1,7 @@
 // Mock sessionStorage
 global.sessionStorage = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  clear: jest.fn()
+  getItem: key => sessionStorage[key],
+  setItem: (key, value) => { sessionStorage[key] = value; },
+  removeItem: key => { delete sessionStorage[key]; },
+  clear: () => { sessionStorage = {}; },
 };

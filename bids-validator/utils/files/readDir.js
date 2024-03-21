@@ -5,6 +5,29 @@ import fs from 'fs'
 import * as child_proccess from 'child_process'
 import isNode from '../isNode'
 
+function createSessionStorageMock() {
+  const sessionStorage = {}
+
+  return {
+    getItem: (key) => sessionStorage[key],
+    setItem: (key, value) => {
+      sessionStorage[key] = value
+    },
+    removeItem: (key) => {
+      delete sessionStorage[key]
+    },
+    clear: () => {
+      Object.keys(sessionStorage).forEach((key) =>
+        sessionStorage.removeItem(key),
+      )
+    },
+  }
+}
+
+const sessionStorage = isNode
+  ? createSessionStorageMock()
+  : window.sessionStorage
+
 /**
  * Read Directory
  *

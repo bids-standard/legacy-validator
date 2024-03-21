@@ -154,74 +154,6 @@
       "$ref": "common_definitions.json#/definitions/Instructions"
     }
   },
-  "allOf": [
-    {
-      "if": {
-        "properties": {
-          "InjectedMass": {
-            "enum": ["n/a"]
-          },
-          "InjectedMassUnits": {
-            "enum": ["n/a"]
-          }
-        }
-      },
-      "then": {},
-      "else": {
-        "required": ["InjectedMass", "InjectedMassUnits"]
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "SpecificRadioactivity": {
-            "enum": ["n/a"]
-          },
-          "SpecificRadioactivityUnits": {
-            "enum": ["n/a"]
-          }
-        }
-      },
-      "then": {},
-      "else": {
-        "required": ["SpecificRadioactivity", "SpecificRadioactivityUnits"]
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "ReconFilterType": {
-            "enum": ["n/a"]
-          },
-          "ReconFilterSize": {
-            "enum": ["n/a"]
-          }
-        }
-      },
-      "then": {},
-      "else": {
-        "required": ["ReconFilterType", "ReconFilterSize"]
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "ModeOfAdministration": {
-            "enum": ["bolus-infusion"]
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "InfusionRadioactivity",
-          "InfusionStart",
-          "InfusionSpeed",
-          "InjectedVolume"
-        ]
-      },
-      "else": {}
-    }
-  ],
 
   "required": [
     "Manufacturer",
@@ -249,11 +181,19 @@
     "ImageDecayCorrectionTime",
     "ReconMethodName",
     "ReconMethodParameterLabels",
-    "ReconMethodParameterUnits",
-    "ReconMethodParameterValues",
     "ReconFilterType",
-    "ReconFilterSize",
     "AttenuationCorrection"
+  ],
+  "allOf": [
+    {
+      "$ref": "#/dependency-definitions/if-ReconMethodParameterLabels-then-Units-and-Values"
+    },
+    {
+      "$ref": "#/dependency-definitions/if-bolus-infusion-then-infusion-details"
+    },
+    {
+      "$ref": "#/dependency-definitions/if-ReconFilterType-then-ReconFilterSize"
+    }
   ],
   "dependencies": {
     "TracerMolecularWeight": ["TracerMolecularWeightUnits"],
@@ -265,5 +205,49 @@
       "ReconMethodParameterUnits",
       "ReconMethodParameterValues"
     ]
+  },
+  "dependency-definitions": {
+    "if-ReconMethodParameterLabels-then-Units-and-Values": {
+      "if": {
+        "type": "object",
+        "properties": {
+          "ReconMethodParameterLabels": { "const": "none" }
+        },
+        "required": ["ReconMethodParameterLabels"]
+      },
+      "then": {},
+      "else": {
+        "required": ["ReconMethodParameterUnits", "ReconMethodParameterValues"]
+      }
+    },
+    "if-bolus-infusion-then-infusion-details": {
+      "if": {
+        "type": "object",
+        "properties": {
+          "ModeOfAdministration": { "const": "bolus-infusion" }
+        },
+        "required": ["ModeOfAdministration"]
+      },
+      "then": {
+        "required": [
+          "InfusionRadioactivity",
+          "InfusionStart",
+          "InfusionSpeed",
+          "InfusionSpeedUnits",
+          "InjectedVolume"
+        ]
+      }
+    },
+    "if-ReconFilterType-then-ReconFilterSize": {
+      "if": {
+        "type": "object",
+        "properties": {
+          "ReconFilterType": { "const": "none" }
+        },
+        "required": ["ReconFilterType"]
+      },
+      "then": {},
+      "else": { "required": ["ReconFilterSize"] }
+    }
   }
 }

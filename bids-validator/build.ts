@@ -4,38 +4,12 @@
  *
  * If you would like to use this package in a Node.js project, you'll need to use native ESM or a transform system
  */
-import * as esbuild from 'https://deno.land/x/esbuild@v0.17.5/mod.js'
+import * as esbuild from 'https://deno.land/x/esbuild@v0.20.1/mod.js'
 import { parse } from 'https://deno.land/std@0.175.0/flags/mod.ts'
+import { denoPlugins } from "https://deno.land/x/esbuild_deno_loader@0.8.5/mod.ts"
 
 const MAIN_ENTRY = 'src/main.ts'
 const CLI_ENTRY = 'src/bids-validator.ts'
-
-const httpPlugin = {
-  name: 'http',
-  setup(build: esbuild.PluginBuild) {
-    build.onResolve({ filter: /^https?:\/\// }, (args) => ({
-      path: args.path,
-      namespace: 'http-url',
-    }))
-
-    build.onResolve({ filter: /.*/, namespace: 'http-url' }, (args) => ({
-      path: new URL(args.path, args.importer).toString(),
-      namespace: 'http-url',
-    }))
-
-    build.onLoad({ filter: /.*/, namespace: 'http-url' }, async (args) => {
-      const request = await fetch(args.path)
-      const contents = await request.text()
-      if (args.path.endsWith('.ts')) {
-        return { contents, loader: 'ts' }
-      } else if (args.path.endsWith('.json')) {
-        return { contents, loader: 'json' }
-      } else {
-        return { contents, loader: 'js' }
-      }
-    })
-  },
-}
 
 const flags = parse(Deno.args, {
   boolean: ['minify'],
@@ -49,7 +23,7 @@ const result = await esbuild.build({
   outdir: 'dist/validator',
   minify: flags.minify,
   target: ['chrome109', 'firefox109', 'safari16'],
-  plugins: [httpPlugin],
+  plugins: [...denoPlugins()],
   allowOverwrite: true,
   sourcemap: flags.minify ? false : 'inline',
   packages: 'external',

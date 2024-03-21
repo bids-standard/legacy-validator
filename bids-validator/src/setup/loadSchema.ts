@@ -18,7 +18,7 @@ export async function loadSchema(version = 'latest'): Promise<Schema> {
     schemaUrl = `https://bids-specification.readthedocs.io/en/${version}/schema.json`
   }
   try {
-    const schemaModule = await import(schemaUrl, {
+    const schemaModule = await import(/* @vite-ignore */ schemaUrl, {
       assert: { type: 'json' },
     })
     return new Proxy(

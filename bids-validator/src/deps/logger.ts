@@ -10,5 +10,5 @@ export {
   LogLevels,
   setup,
   warn,
-} from "std/log/mod.ts"
-export type { LevelName } from "std/log/mod.ts"
+} from "https://deno.land/std@0.217.0/log/mod.ts"
+export type { LevelName } from "https://deno.land/std@0.217.0/log/mod.ts"

@@ -4,4 +4,4 @@ export {
   assertObjectMatch,
   assertExists,
   assertRejects,
-} from 'std/testing/asserts.ts'
+} from 'https://deno.land/std@0.217.0/testing/asserts.ts'

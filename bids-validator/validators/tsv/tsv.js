@@ -6,8 +6,11 @@ import checkStatusCol from './checkStatusCol'
 import checkTypecol from './checkTypeCol'
 import parseTSV from './tsvParser'
 import checkMotionComponent from './checkMotionComponent'
+import getSessionStorage from '../../utils/getSessionStorage'
 import ignore from 'ignore'
 var path = require('path')
+
+const sessionStorage = getSessionStorage()
 
 /**
  * Format TSV headers for evidence string

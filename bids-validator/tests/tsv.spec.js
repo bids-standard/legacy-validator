@@ -409,6 +409,7 @@ describe('TSV', function () {
   })
 
   it('should ignore files in scans.tsv that correspond to entries in .bidsignore', function () {
+    sessionStorage.clear()
     sessionStorage.setItem('bidsignoreContent', JSON.stringify('sodium/'))
     const fileList = [niftiFile, eegFile, ieegFile]
     const tsv =
@@ -424,6 +425,7 @@ describe('TSV', function () {
   })
 
   it('should not allow missing files listed in scans.tsv and not accounted for by .bidsignore', function () {
+    sessionStorage.clear()
     sessionStorage.setItem('bidsignoreContent', JSON.stringify('sodium/'))
     const fileList = [niftiFile, eegFile]
     const tsv =

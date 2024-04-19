@@ -79,11 +79,14 @@ jobs:
         with:
           name: main
           path: main
-      - name: Commit to new branch
+      - name: Create shim, adjust version, and commit to new branch
         run: |
           mv main/main.js .
           mv main/bids-validator.js .
-          git add main.js bids-validator.js
+          sed -i -e "s,version(\"alpha\"),version(\"${VERSION}.deno\"),g" bids-validator.js
+          echo -e '#!/usr/bin/env bash\n\ndeno run --allow-read --allow-write --allow-env --allow-net --allow-run "$(dirname "$0")"/bids-validator.js "$@"' >| bids-validator
+          chmod a+x bids-validator
+          git add main.js bids-validator.js bids-validator
           git commit -m "BLD: $VERSION [skip ci]" || true
       - name: Push
         run: git push origin deno-build

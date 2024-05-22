@@ -596,7 +596,8 @@
         "_SR",
         "_NLO",
         "_OCT",
-        "_SPIM"
+        "_SPIM",
+        "_XPCT"
       ],
       "@@@_microscopy_ext_@@@": [
         "\\.ome\\.tif",

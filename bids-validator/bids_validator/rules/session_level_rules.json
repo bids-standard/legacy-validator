@@ -242,7 +242,8 @@
         "_SR\\.json",
         "_NLO\\.json",
         "_OCT\\.json",
-        "_SPIM\\.json"
+        "_SPIM\\.json",
+        "_XPCT\\.json"
       ]
     }
   },

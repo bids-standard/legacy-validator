@@ -13,15 +13,24 @@ const fileTree = new FileTree('/tmp', '/')
 const issues = new DatasetIssues()
 const ignore = new FileIgnoreRules([])
 
+const splitFile = (path: string) => {
+  const parts = path.split('/')
+  return {
+    dirname: parts.slice(0, parts.length - 1).join('/'),
+    basename: parts[parts.length - 1],
+  }
+}
+
 Deno.test('test missingLabel', async (t) => {
   await t.step('File with underscore and no hyphens errors out.', async () => {
-    const fileName = Deno.makeTempFileSync({
+    const tmpFile = Deno.makeTempFileSync({
       prefix: 'no_labels_',
       suffix: '_entities.wav',
-    }).split('/')[2]
-    let file = new BIDSFileDeno('/tmp', fileName, ignore)
+    })
+    const { dirname, basename } = splitFile(tmpFile)
+    const file = new BIDSFileDeno(dirname, basename, ignore)
 
-    let context = new BIDSContext(fileTree, file, issues)
+    const context = new BIDSContext(fileTree, file, issues)
     await missingLabel(schema, context)
     assertEquals(
       context.issues
@@ -29,17 +38,19 @@ Deno.test('test missingLabel', async (t) => {
         .includes('ENTITY_WITH_NO_LABEL'),
       true,
     )
+    Deno.removeSync(tmpFile)
   })
 
   await t.step(
     "File with underscores and hyphens doesn't error out.",
     async () => {
-      const fileName = Deno.makeTempFileSync({
+      const tmpFile = Deno.makeTempFileSync({
         prefix: 'we-do_have-',
         suffix: '_entities.wav',
-      }).split('/')[2]
-      let file = new BIDSFileDeno('/tmp', fileName, ignore)
-      let context = new BIDSContext(fileTree, file, issues)
+      })
+      const { dirname, basename } = splitFile(tmpFile)
+      const file = new BIDSFileDeno(dirname, basename, ignore)
+      const context = new BIDSContext(fileTree, file, issues)
       await missingLabel(schema, context)
       assertEquals(
         context.issues
@@ -47,6 +58,7 @@ Deno.test('test missingLabel', async (t) => {
           .includes('ENTITY_WITH_NO_LABEL'),
         false,
       )
+      Deno.removeSync(tmpFile)
     },
   )
 })

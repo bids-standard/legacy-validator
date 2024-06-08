@@ -75,8 +75,13 @@ Deno.test('test hasMatch', async (t) => {
   })
 
   await t.step('No match', async () => {
-    const fileName = Deno.makeTempFileSync().split('/')[2]
-    const file = new BIDSFileDeno('/tmp', fileName, ignore)
+    const tmpFile = Deno.makeTempFileSync()
+    const parts = tmpFile.split('/')
+    const file = new BIDSFileDeno(
+      parts.slice(0, parts.length - 1).join('/'),
+      parts[parts.length - 1],
+      ignore,
+    )
 
     const context = new BIDSContext(fileTree, file, issues)
     await hasMatch(schema, context)
@@ -86,6 +91,7 @@ Deno.test('test hasMatch', async (t) => {
         .includes('NOT_INCLUDED'),
       true,
     )
+    Deno.removeSync(tmpFile)
   })
   await t.step('2 matches, no pruning', async () => {
     const path = `${PATH}/../bids-examples/fnirs_automaticity`

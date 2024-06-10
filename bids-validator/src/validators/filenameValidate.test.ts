@@ -9,19 +9,21 @@ import { FileIgnoreRules } from '../files/ignore.ts'
 import { loadSchema } from '../setup/loadSchema.ts'
 
 const schema = (await loadSchema()) as unknown as GenericSchema
-const fileTree = new FileTree('/tmp', '/')
-const issues = new DatasetIssues()
 const ignore = new FileIgnoreRules([])
 
 Deno.test('test missingLabel', async (t) => {
+  const tmpDir = Deno.makeTempDirSync()
+  const fileTree = new FileTree(tmpDir, '/')
   await t.step('File with underscore and no hyphens errors out.', async () => {
-    const fileName = Deno.makeTempFileSync({
-      prefix: 'no_labels_',
-      suffix: '_entities.wav',
-    }).split('/')[2]
-    let file = new BIDSFileDeno('/tmp', fileName, ignore)
+    const basename = 'no_label_entities.wav'
+    Deno.writeTextFileSync(`${tmpDir}/${basename}`, '')
 
-    let context = new BIDSContext(fileTree, file, issues)
+    const context = new BIDSContext(
+      fileTree,
+      new BIDSFileDeno(tmpDir, `/${basename}`, ignore),
+      new DatasetIssues(),
+    )
+
     await missingLabel(schema, context)
     assertEquals(
       context.issues
@@ -34,12 +36,15 @@ Deno.test('test missingLabel', async (t) => {
   await t.step(
     "File with underscores and hyphens doesn't error out.",
     async () => {
-      const fileName = Deno.makeTempFileSync({
-        prefix: 'we-do_have-',
-        suffix: '_entities.wav',
-      }).split('/')[2]
-      let file = new BIDSFileDeno('/tmp', fileName, ignore)
-      let context = new BIDSContext(fileTree, file, issues)
+      const basename = 'we-do_have-some_entities.wav'
+      Deno.writeTextFileSync(`${tmpDir}/${basename}`, '')
+
+      const context = new BIDSContext(
+        fileTree,
+        new BIDSFileDeno(tmpDir, `/${basename}`, ignore),
+        new DatasetIssues(),
+      )
+
       await missingLabel(schema, context)
       assertEquals(
         context.issues
@@ -49,4 +54,5 @@ Deno.test('test missingLabel', async (t) => {
       )
     },
   )
+  Deno.removeSync(tmpDir, { recursive: true })
 })

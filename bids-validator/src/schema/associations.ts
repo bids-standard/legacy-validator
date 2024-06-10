@@ -82,11 +82,12 @@ const associationLookup = {
     inherit: true,
     load: async (file: BIDSFile): Promise<ContextAssociations['bval']> => {
       const contents = await file.text()
-      const columns = parseBvalBvec(contents)
+      const rows = parseBvalBvec(contents)
       return {
         path: file.path,
-        n_cols: columns ? columns[0].length : 0,
-        n_rows: columns ? columns.length : 0,
+        n_cols: rows ? rows[0].length : 0,
+        n_rows: rows ? rows.length : 0,
+        values: rows[0],
       }
     },
   },
@@ -96,11 +97,11 @@ const associationLookup = {
     inherit: true,
     load: async (file: BIDSFile): Promise<ContextAssociations['bvec']> => {
       const contents = await file.text()
-      const columns = parseBvalBvec(contents)
+      const rows = parseBvalBvec(contents)
       return {
         path: file.path,
-        n_cols: columns ? columns[0].length : 0,
-        n_rows: columns ? columns.length : 0,
+        n_cols: rows ? rows[0].length : 0,
+        n_rows: rows ? rows.length : 0,
       }
     },
   },

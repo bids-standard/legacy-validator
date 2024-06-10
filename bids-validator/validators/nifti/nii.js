@@ -1266,7 +1266,92 @@ export default function NIFTI(
       }
     }
   }
+
+  if (path.includes('_pet.nii')) {
+    issues.push(
+      ...checkPetRequiredFields(file, mergedDictionary, sidecarMessage),
+    )
+  }
+
   callback(issues)
+}
+
+export function checkPetRequiredFields(file, mergedDictionary, sidecarMessage) {
+  const issues = []
+  const requiredFields = [
+    'TracerName',
+    'TracerRadionuclide',
+    'InjectedRadioactivity',
+    'InjectedRadioactivityUnits',
+    'InjectedMass',
+    'InjectedMassUnits',
+    'SpecificRadioactivity',
+    'SpecificRadioactivityUnits',
+    'ModeOfAdministration',
+    'TimeZero',
+    'ScanStart',
+    'InjectionStart',
+    'FrameTimesStart',
+    'FrameDuration',
+    'AcquisitionMode',
+    'ImageDecayCorrected',
+    'ImageDecayCorrectionTime',
+    'ReconMethodName',
+    'ReconMethodParameterLabels',
+    'ReconFilterType',
+    'AttenuationCorrection',
+    'Manufacturer',
+    'ManufacturersModelName',
+    'Units',
+  ]
+  if (
+    mergedDictionary.hasOwnProperty('ModeOfAdministration') &&
+    mergedDictionary['ModeOfAdministration'] === 'bolus-infusion'
+  ) {
+    requiredFields.push(
+      'InfusionRadioactivity',
+      'InfusionStart',
+      'InfusionSpeed',
+      'InfusionSpeedUnits',
+      'InjectedVolume',
+    )
+  }
+  if (mergedDictionary.hasOwnProperty('ReconFilterType')) {
+    if (
+      typeof mergedDictionary['ReconFilterType'] === 'string' &&
+      mergedDictionary['ReconFilterType'] !== 'none'
+    ) {
+      requiredFields.push(
+        'ReconMethodParameterUnits',
+        'ReconMethodParameterValues',
+        'ReconFilterSize',
+      )
+    } else if (
+      typeof mergedDictionary['ReconFilterType'] !== 'string' &&
+      Array.isArray(mergedDictionary['ReconFilterType']) &&
+      mergedDictionary['ReconFilterType'].every(
+        (filterType) => filterType !== 'none',
+      )
+    ) {
+      requiredFields.push(
+        'ReconMethodParameterUnits',
+        'ReconMethodParameterValues',
+        'ReconFilterSize',
+      )
+    }
+  }
+  for (const field of requiredFields) {
+    if (!mergedDictionary.hasOwnProperty(field)) {
+      issues.push(
+        new Issue({
+          file: file,
+          code: 237,
+          reason: `You must define ${field} for this file. ${sidecarMessage}`,
+        }),
+      )
+    }
+  }
+  return issues
 }
 
 function missingEvents(path, potentialEvents, events) {

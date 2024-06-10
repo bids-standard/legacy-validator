@@ -12,7 +12,7 @@
  * object in the schema for reference.
  */
 // @ts-nocheck
-import { SEPARATOR } from '../deps/path.ts'
+import { SEPARATOR_PATTERN, globToRegExp } from '../deps/path.ts'
 import { GenericSchema, Schema } from '../types/schema.ts'
 import { BIDSContext } from '../schema/context.ts'
 import { lookupModality } from '../schema/modalities.ts'
@@ -35,6 +35,12 @@ export async function filenameIdentify(schema, context) {
 function findRuleMatches(schema, context) {
   const schemaPath = 'rules.files'
   Object.keys(schema[schemaPath]).map((key) => {
+    if (
+      key == 'deriv' && 
+      context.dataset.dataset_description.DatasetType != 'derivative'
+    ) {
+      return
+    }
     const path = `${schemaPath}.${key}`
     _findRuleMatches(schema[path], path, context)
   })
@@ -50,7 +56,7 @@ function findRuleMatches(schema, context) {
 export function _findRuleMatches(node, path, context) {
   if (
     ('path' in node && context.file.name.endsWith(node.path)) ||
-    ('stem' in node && context.file.name.startsWith(node.stem)) ||
+    ('stem' in node && context.file.name.match(globToRegExp(node.stem + '*'))) ||
     ('suffixes' in node && node.suffixes.includes(context.suffix))
   ) {
     context.filenameRules.push(path)
@@ -68,27 +74,18 @@ export function _findRuleMatches(node, path, context) {
 
 export async function datatypeFromDirectory(schema, context) {
   const subEntity = schema.objects.entities.subject.name
-  const subFormat = schema.objects.formats[subEntity.format]
   const sesEntity = schema.objects.entities.session.name
-  const sesFormat = schema.objects.formats[sesEntity.format]
-  const parts = context.file.path.split(SEPARATOR)
-  let datatypeIndex = 2
-  if (parts[0] !== '') {
-    // we assume paths have leading '/'
-  }
-  // Ignoring associated data for now
-  const subParts = parts[1].split('-')
-  if (!(subParts.length === 2 && subParts[0] === subEntity)) {
-    // first directory must be subject
-  }
-  if (parts.length < 3) {
+  const parts = context.file.path.split(SEPARATOR_PATTERN)
+  let datatypeIndex = parts.length - 2
+  if (datatypeIndex < 1) {
     return Promise.resolve()
   }
-  const sesParts = parts[2].split('-')
-  if (sesParts.length === 2 && sesParts[0] === sesEntity) {
-    datatypeIndex = 3
-  }
   const dirDatatype = parts[datatypeIndex]
+  if (dirDatatype === 'phenotype') {
+    // Phenotype is a pseudo-datatype for now.
+    context.datatype = dirDatatype
+    return Promise.resolve()
+  }
   for (let key in schema.rules.modalities) {
     if (schema.rules.modalities[key].datatypes.includes(dirDatatype)) {
       context.modality = key
@@ -130,11 +127,8 @@ export function hasMatch(schema, context) {
       return entitiesExtensionsInRule(schema, context, rulePath)
     })
     if (entExtMatch.length > 0) {
-      context.filenameRules = [entExtMatch[0]]
+      context.filenameRules = entExtMatch
     }
-  }
-  /* If we end up with multiple rules we should generate an error? */
-  if (context.filenameRules.length > 1) {
   }
 
   return Promise.resolve()
@@ -151,9 +145,9 @@ function entitiesExtensionsInRule(
 ): boolean {
   const rule = schema[path]
   const fileEntities = Object.keys(context.entities)
-  const ruleEntities = Object.keys(rule.entities).map((key) =>
+  const ruleEntities = rule.entities ? Object.keys(rule.entities).map((key) =>
     lookupEntityLiteral(key, schema),
-  )
+  ) : []
   const extInRule =
     !rule.extensions ||
     (rule.extensions && rule.extensions.includes(context.extension))

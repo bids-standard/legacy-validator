@@ -1,7 +1,7 @@
 /**
  * Deno specific implementation for reading files
  */
-import { join, basename } from '../deps/path.ts'
+import { posix, join, basename } from '../deps/path.ts'
 import { BIDSFile } from '../types/file.ts'
 import { FileTree } from '../types/filetree.ts'
 import { requestReadPermission } from '../setup/requestPermissions.ts'
@@ -122,7 +122,7 @@ export async function _readFileTree(
     if (dirEntry.isFile || dirEntry.isSymlink) {
       const file = new BIDSFileDeno(
         rootPath,
-        join(relativePath, dirEntry.name),
+        posix.join(relativePath, dirEntry.name),
         ignore,
       )
       // For .bidsignore, read in immediately and add the rules
@@ -134,7 +134,7 @@ export async function _readFileTree(
     if (dirEntry.isDirectory) {
       const dirTree = await _readFileTree(
         rootPath,
-        join(relativePath, dirEntry.name),
+        posix.join(relativePath, dirEntry.name),
         ignore,
         tree,
       )

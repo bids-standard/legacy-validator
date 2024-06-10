@@ -1179,4 +1179,9 @@ export default {
     reason:
       "Values in the 'component' column must be one of ['x', 'y', 'z', 'quat_x', 'quat_y', 'quat_z', 'quat_w', 'n/a'].",
   },
+  237: {
+    key: 'PET_JSON_KEY_REQUIRED',
+    severity: 'error',
+    reason: 'A PET image JSON sidecar is missing a required field.',
+  },
 }

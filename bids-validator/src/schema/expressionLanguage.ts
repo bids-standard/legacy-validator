@@ -10,15 +10,20 @@ function exists(list: string[], rule: string = 'dataset'): number {
     prefix.push('stimuli')
   } else if (rule == 'subject') {
     // @ts-expect-error
-    prefix.push('sub-' + this.entities.subject)
+    prefix.push('sub-' + this.entities.sub)
   }
 
   if (!Array.isArray(list)) {
     list = [list]
   }
   if (rule == 'bids-uri') {
-    // XXX To implement
-    return list.length
+    return list.filter((x) => {
+      // XXX To implement
+      if (x.startsWith('bids:')) {
+        return true
+      }
+      return false
+    }).length
   } else {
     // dataset, subject and stimuli
     return list.filter((x) => {
@@ -83,7 +88,10 @@ export const expressionFunctions = {
     return arg.substr(start, end - start)
   },
   sorted: <T>(list: T[]): T[] => {
-    list.sort()
-    return list
+    // Use a cmp function that will work for any comparable types
+    return list.toSorted((a, b) => +(a > b) - +(a < b))
+  },
+  allequal: <T>(a: T[], b: T[]): boolean => {
+    return (a != null && b != null) && a.length === b.length && a.every((v, i) => v === b[i])
   },
 }

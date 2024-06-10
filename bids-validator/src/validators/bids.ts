@@ -1,5 +1,6 @@
 import { CheckFunction } from '../types/check.ts'
 import { FileTree } from '../types/filetree.ts'
+import { IssueFile } from '../types/issues.ts'
 import { GenericSchema } from '../types/schema.ts'
 import { ValidationResult } from '../types/validation-result.ts'
 import { applyRules } from '../schema/applyRules.ts'
@@ -23,7 +24,7 @@ const CHECKS: CheckFunction[] = [
   filenameIdentify,
   filenameValidate,
   applyRules,
-]
+];
 
 /**
  * Full BIDS schema validation entrypoint
@@ -32,73 +33,79 @@ export async function validate(
   fileTree: FileTree,
   options: ValidatorOptions,
 ): Promise<ValidationResult> {
-  const issues = new DatasetIssues()
-  const summary = new Summary()
-  const schema = await loadSchema(options.schema)
-  summary.schemaVersion = schema.schema_version
+  const issues = new DatasetIssues();
+  const summary = new Summary();
+  const schema = await loadSchema(options.schema);
+  summary.schemaVersion = schema.schema_version;
 
   /* There should be a dataset_description in root, this will tell us if we
    * are dealing with a derivative dataset
    */
   const ddFile = fileTree.files.find(
-    (file: BIDSFile) => file.name === 'dataset_description.json',
-  )
+    (file: BIDSFile) => file.name === "dataset_description.json",
+  );
 
-  let dsContext
+  let dsContext;
   if (ddFile) {
-    const description = await ddFile.text().then((text) => JSON.parse(text))
-    summary.dataProcessed = description.DatasetType === 'derivative'
-    dsContext = new BIDSContextDataset(options, description)
+    const description = await ddFile.text().then((text) => JSON.parse(text));
+    summary.dataProcessed = description.DatasetType === "derivative";
+    dsContext = new BIDSContextDataset(options, description);
   } else {
-    dsContext = new BIDSContextDataset(options)
+    dsContext = new BIDSContextDataset(options);
+    issues.addNonSchemaIssue('MISSING_DATASET_DESCRIPTION', [] as IssueFile[]);
   }
 
-  let derivatives: FileTree[] = []
+  let derivatives: FileTree[] = [];
   fileTree.directories = fileTree.directories.filter((dir) => {
-    if (dir.name === 'derivatives') {
+    if (dir.name === "derivatives") {
       dir.directories.map((deriv) => {
         if (
           deriv.files.some(
-            (file: BIDSFile) => file.name === 'dataset_description.json',
+            (file: BIDSFile) => file.name === "dataset_description.json",
           )
         ) {
-          derivatives.push(deriv)
+          derivatives.push(deriv);
         }
-      })
-      return false
+      });
+      return true;
     }
-    return true
-  })
+    return true;
+  });
 
   for await (const context of walkFileTree(fileTree, issues, dsContext)) {
     // TODO - Skip ignored files for now (some tests may reference ignored files)
     if (context.file.ignored) {
-      continue
+      continue;
     }
-    await context.asyncLoads()
+    if (
+      dsContext.dataset_description.DatasetType == "raw" &&
+      context.file.path.includes("derivatives")
+    ) {
+      continue;
+    }
+    await context.asyncLoads();
     // Run majority of checks
     for (const check of CHECKS) {
-      // TODO - Resolve this double casting?
-      await check(schema as unknown as GenericSchema, context)
+      await check(schema as unknown as GenericSchema, context);
     }
-    await summary.update(context)
+    await summary.update(context);
   }
 
-  let derivativesSummary: Record<string, ValidationResult> = {}
+  let derivativesSummary: Record<string, ValidationResult> = {};
   await Promise.allSettled(
     derivatives.map(async (deriv) => {
-      derivativesSummary[deriv.name] = await validate(deriv, options)
-      return derivativesSummary[deriv.name]
+      derivativesSummary[deriv.name] = await validate(deriv, options);
+      return derivativesSummary[deriv.name];
     }),
-  )
+  );
 
   let output: ValidationResult = {
     issues,
     summary: summary.formatOutput(),
-  }
+  };
 
   if (Object.keys(derivativesSummary).length) {
-    output['derivativesSummary'] = derivativesSummary
+    output["derivativesSummary"] = derivativesSummary;
   }
-  return output
+  return output;
 }

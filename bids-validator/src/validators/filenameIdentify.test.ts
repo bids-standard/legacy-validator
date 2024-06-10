@@ -74,9 +74,14 @@ Deno.test('test hasMatch', async (t) => {
     hasMatch(schema, context)
   })
 
-  await t.step('No  match', async () => {
-    const fileName = Deno.makeTempFileSync().split('/')[2]
-    const file = new BIDSFileDeno('/tmp', fileName, ignore)
+  await t.step('No match', async () => {
+    const tmpFile = Deno.makeTempFileSync()
+    const parts = tmpFile.split('/')
+    const file = new BIDSFileDeno(
+      parts.slice(0, parts.length - 1).join('/'),
+      parts[parts.length - 1],
+      ignore,
+    )
 
     const context = new BIDSContext(fileTree, file, issues)
     await hasMatch(schema, context)
@@ -86,8 +91,9 @@ Deno.test('test hasMatch', async (t) => {
         .includes('NOT_INCLUDED'),
       true,
     )
+    Deno.removeSync(tmpFile)
   })
-  await t.step('1+ matched, datatype match', async () => {
+  await t.step('2 matches, no pruning', async () => {
     const path = `${PATH}/../bids-examples/fnirs_automaticity`
     const fileName = 'events.json'
     const file = new BIDSFileDeno(path, fileName, ignore)
@@ -97,7 +103,6 @@ Deno.test('test hasMatch', async (t) => {
       'rules.files.raw.task.events__pet',
     ]
     await hasMatch(schema, context)
-    assertEquals(context.filenameRules.length, 1)
-    assertEquals(context.filenameRules[0], 'rules.files.raw.task.events__mri')
+    assertEquals(context.filenameRules.length, 2)
   })
 })

@@ -40,13 +40,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: denoland/setup-deno@v1.1.2
+        with:
+          submodules: true
+      - uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
-      - name: Get bids-examples
-        run: |
-          git submodule update --init --recursive
-          git submodule update --recursive --remote
       - run: deno test --allow-all --coverage=cov/ src/
       - name: Collect coverage
         run: deno coverage cov/ --lcov --output=coverage.lcov

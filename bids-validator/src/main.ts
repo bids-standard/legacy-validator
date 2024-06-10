@@ -5,8 +5,9 @@ import { resolve } from './deps/path.ts'
 import { validate } from './validators/bids.ts'
 import { consoleFormat } from './utils/output.ts'
 import { setupLogging } from './utils/logger.ts'
+import type { ValidationResult } from './types/validation-result.ts'
 
-export async function main() {
+export async function main(): Promise<ValidationResult> {
   const options = await parseOptions(Deno.args)
   setupLogging(options.debug)
   const absolutePath = resolve(options.datasetPath)
@@ -32,6 +33,8 @@ export async function main() {
       }),
     )
   }
+
+  return schemaResult
 }
 
 export { validate, fileListToTree }

@@ -1,0 +1,6 @@
+{
+  "node": "$Format:%H$",
+  "date": "$Format:%cI$",
+  "description": "$Format:%(describe:tags=true,match=*[0-9]*)$",
+  "refnames": "$Format:%D$"
+}

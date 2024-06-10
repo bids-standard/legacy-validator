@@ -26,6 +26,7 @@ jobs:
           command: |
             conda activate testenv
             cd bids-validator
+            pip install .
             pytest --doctest-modules bids_validator
             flake8 bids_validator
             pydocstyle bids_validator/bids_validator.py
@@ -189,8 +190,8 @@ jobs:
           name: Clean and remove bids-validator files
           command: git reset . && git clean --force -d --exclude bids-validator-web/out
       - run:
-          name: Move build into root directory
-          command: mv bids-validator-web/out/* .
+          name: Move build into legacy directory
+          command: mv bids-validator-web/out/ legacy
       - run:
           name: Remove files not related to build
           command: rm -r bids-validator bids-validator-web node_modules
@@ -200,14 +201,14 @@ jobs:
       - run: git status
       - run:
           name: Commit updates
-          command: git add . && git commit --allow-empty --no-verify -m "Circle CI - Generate validator demo with version $CIRCLE_TAG [ci skip]"
+          command: git add legacy && git commit --allow-empty --no-verify -m "Circle CI - Generate validator demo with version $CIRCLE_TAG [ci skip]"
       - run: git push origin gh-pages -f
       - save_cache:
           key: npm-deps-{{ checksum "package.json" }}-{{ checksum "./bids-validator/package.json" }}-{{ checksum "./bids-validator-web/package.json" }}-v1
           paths:
             - ./node_modules
       - store_artifacts:
-          path: ~/
+          path: ~/legacy
 workflows:
   version: 2
   build-deploy:

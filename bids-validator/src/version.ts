@@ -36,7 +36,8 @@ export async function getVersion(): Promise<string> {
 
 async function getLocalVersion(path: string): Promise<string> {
   const p = Deno.run({
-    cmd: ['git', '-C', path, 'describe', '--tags', '--always'],
+    // safe.directory setting so we could still operate from another user
+    cmd: ['git', '-C', path, '-c', 'safe.directory=*', 'describe', '--tags', '--always'],
     stdout: 'piped',
   })
   const description = new TextDecoder().decode(await p.output()).trim()

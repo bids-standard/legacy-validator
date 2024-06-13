@@ -252,6 +252,12 @@ function evalColumns(
       ]);
     }
 
+    if ("definition" in columnObject) {
+      typeCheck = (value) =>
+        // @ts-expect-error
+        sidecarDefinedTypeCheck(columnObject.definition, value, schema);
+    }
+
     if (
       name in context.sidecar && context.sidecar[name] &&
       typeof (context.sidecar[name]) === "object"

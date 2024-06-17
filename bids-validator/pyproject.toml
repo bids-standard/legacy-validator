@@ -21,6 +21,9 @@ classifiers = [
     "Topic :: Scientific/Engineering",
 ]
 requires-python = ">=3.8"
+dependencies = [
+    "bidsschematools @ git+https://github.com/bids-standard/bids-specification.git#subdirectory=tools/schemacode",
+]
 
 [project.urls]
 Homepage = "https://github.com/bids-standard/bids-validator"

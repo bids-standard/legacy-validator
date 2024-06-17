@@ -17,6 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Save describe stamp
+        id: describe
+        run: echo version=$( git describe ) >> $GITHUB_OUTPUT
       - uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
@@ -61,27 +66,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           token: ${{ secrets.PUSH_TOKEN }}
       - name: Set credentials
         run: |
           git config --global user.name "BIDS-Bot"
           git config --global user.email "bids-maintenance@users.noreply.github.com"
-      - name: Save describe stamp
-        run: echo VERSION=$( git describe ) >> $GITHUB_ENV
-      - name: Checkout orphan
+      - name: Reset deno-build to orphan
         run: |
-          git checkout deno-build
-          git rm -rf .
+          git checkout --orphan deno-build
+          git reset --hard
       - uses: actions/download-artifact@v4
         with:
           name: main
           path: main
       - name: Commit to new branch
         run: |
-          mv main/main.js .
-          mv main/bids-validator.js .
+          mv main/main.js main/bids-validator.js .
           git add main.js bids-validator.js
           git commit -m "BLD: $VERSION [skip ci]" || true
+        env:
+          VERSION: ${{ needs.build.describe.version }}
       - name: Push
-        run: git push origin deno-build
+        run: git push -f origin deno-build

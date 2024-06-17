@@ -2,7 +2,7 @@ import { CheckFunction, RuleCheckFunction } from '../types/check.ts'
 import { DatasetIssues } from '../issues/datasetIssues.ts'
 import { BIDSContext } from '../schema/context.ts'
 import { GenericSchema, Schema, Entity, Format } from '../types/schema.ts'
-import { SEPARATOR } from '../deps/path.ts'
+import { SEPARATOR_PATTERN } from '../deps/path.ts'
 import { hasProp } from '../utils/objectPathHandler.ts'
 
 const sidecarExtensions = ['.json', '.tsv', '.bvec', '.bval']
@@ -25,7 +25,7 @@ export async function filenameValidate(
 }
 
 export function isAtRoot(context: BIDSContext) {
-  if (context.file.path.split(SEPARATOR).length !== 2) {
+  if (context.file.path.split(SEPARATOR_PATTERN).length !== 2) {
     return false
   }
   return true

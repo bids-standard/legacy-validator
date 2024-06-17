@@ -2,8 +2,8 @@ import { ValidatorOptions } from '../setup/options.ts'
 
 export interface ContextDatasetSubjects {
   sub_dirs: string[]
-  participant_id: string[]
-  phenotype: string[]
+  participant_id?: string[]
+  phenotype?: string[]
 }
 export interface ContextDataset {
   dataset_description: Record<string, unknown>
@@ -11,7 +11,7 @@ export interface ContextDataset {
   tree: object
   ignored: any[]
   modalities: any[]
-  subjects: ContextDatasetSubjects[]
+  subjects?: ContextDatasetSubjects
   options?: ValidatorOptions
 }
 export interface ContextSubjectSessions {
@@ -44,6 +44,7 @@ export interface ContextAssociationsBval {
   path: string
   n_cols: number
   n_rows: number
+  values: number[]
 }
 export interface ContextAssociationsBvec {
   path: string
@@ -95,7 +96,7 @@ export interface Context {
   suffix: string
   extension: string
   modality: string
-  sidecar: object
+  sidecar: Record<string, any>
   associations: ContextAssociations
   columns: object
   json: object

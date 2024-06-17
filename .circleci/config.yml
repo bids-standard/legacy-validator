@@ -26,6 +26,7 @@ jobs:
           command: |
             conda activate testenv
             cd bids-validator
+            pip install .
             pytest --doctest-modules bids_validator
             flake8 bids_validator
             pydocstyle bids_validator/bids_validator.py

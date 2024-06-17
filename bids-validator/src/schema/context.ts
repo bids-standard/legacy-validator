@@ -24,7 +24,7 @@ export class BIDSContextDataset implements ContextDataset {
   tree: object
   ignored: any[]
   modalities: any[]
-  subjects: ContextDatasetSubjects[]
+  subjects?: ContextDatasetSubjects
 
   constructor(options?: ValidatorOptions, description = {}) {
     this.dataset_description = description
@@ -32,7 +32,6 @@ export class BIDSContextDataset implements ContextDataset {
     this.tree = {}
     this.ignored = []
     this.modalities = []
-    this.subjects = [] as ContextDatasetSubjects[]
     if (options) {
       this.options = options
     }
@@ -44,6 +43,22 @@ export class BIDSContextDataset implements ContextDataset {
     } else if (!this.dataset_description.DatasetType) {
       this.dataset_description.DatasetType = 'raw'
     }
+  }
+}
+
+export class BIDSContextDatasetSubjects implements ContextDatasetSubjects {
+  sub_dirs: string[]
+  participant_id?: string[]
+  phenotype?: string[]
+
+  constructor(
+    sub_dirs?: string[],
+    participant_id?: string[],
+    phenotype?: string[],
+  ) {
+    this.sub_dirs = sub_dirs ? sub_dirs : []
+    this.participant_id = participant_id
+    this.phenotype = phenotype
   }
 }
 
@@ -62,7 +77,7 @@ export class BIDSContext implements Context {
   subject: ContextSubject
   datatype: string
   modality: string
-  sidecar: object
+  sidecar: Record<string, any>
   json: object
   columns: ColumnsMap
   associations: ContextAssociations
@@ -200,8 +215,54 @@ export class BIDSContext implements Context {
       .catch((error) => {})
   }
 
+  // This is currently done for every file. It should be done once for the dataset.
+  async loadSubjects(): Promise<void> {
+    if (this.dataset.subjects != null) {
+      return
+    }
+    this.dataset.subjects = new BIDSContextDatasetSubjects()
+    // Load subject dirs from the file tree
+    this.dataset.subjects.sub_dirs = this.fileTree.directories
+      .filter((dir) => dir.name.startsWith('sub-'))
+      .map((dir) => dir.name)
+
+    // Load participants from participants.tsv
+    const participants_tsv = this.fileTree.files.find(
+      (file) => file.name === 'participants.tsv',
+    )
+    if (participants_tsv) {
+      const participantsText = await participants_tsv.text()
+      const participantsData = parseTSV(participantsText)
+      this.dataset.subjects.participant_id = participantsData[
+        'participant_id'
+      ] as string[]
+    }
+
+    // Load phenotype from phenotype/*.tsv
+    const phenotype_dir = this.fileTree.directories.find(
+      (dir) => dir.name === 'phenotype',
+    )
+    if (phenotype_dir) {
+      const phenotypeFiles = phenotype_dir.files.filter((file) =>
+        file.name.endsWith('.tsv'),
+      )
+      // Collect observed participant_ids
+      const seen = new Set() as Set<string>
+      for (const file of phenotypeFiles) {
+        const phenotypeText = await file.text()
+        const phenotypeData = parseTSV(phenotypeText)
+        const participant_id = phenotypeData['participant_id'] as string[]
+        if (participant_id) {
+          participant_id.forEach((id) => seen.add(id))
+        }
+      }
+      this.dataset.subjects.phenotype = Array.from(seen)
+    }
+  }
+
   async asyncLoads() {
     await Promise.allSettled([
+      this.loadSubjects(),
       this.loadSidecar(),
       this.loadColumns(),
       this.loadAssociations(),

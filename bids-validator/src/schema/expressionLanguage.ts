@@ -88,7 +88,10 @@ export const expressionFunctions = {
     return arg.substr(start, end - start)
   },
   sorted: <T>(list: T[]): T[] => {
-    list.sort()
-    return list
+    // Use a cmp function that will work for any comparable types
+    return list.toSorted((a, b) => +(a > b) - +(a < b))
+  },
+  allequal: <T>(a: T[], b: T[]): boolean => {
+    return (a != null && b != null) && a.length === b.length && a.every((v, i) => v === b[i])
   },
 }

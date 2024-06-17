@@ -8,6 +8,7 @@ import * as esbuild from 'https://deno.land/x/esbuild@v0.20.2/mod.js'
 import { parse } from 'https://deno.land/std@0.223.0/flags/mod.ts'
 import { denoPlugins } from "jsr:@luca/esbuild-deno-loader@0.10"
 import * as path from "https://deno.land/std@0.223.0/path/mod.ts"
+import { getVersion } from './src/version.ts'
 
 
 function getModuleDir(importMeta: ImportMeta): string {
@@ -24,6 +25,23 @@ const flags = parse(Deno.args, {
   default: { minify: false },
 })
 
+const version = await getVersion()
+
+let versionPlugin = {
+  name: 'version',
+  setup(build: esbuild.PluginBuild) {
+    build.onResolve({ filter: /\.git-meta\.json/ }, (args) => ({
+      path: args.path,
+      namespace: 'version-ns',
+    }))
+
+    build.onLoad({ filter: /.*/, namespace: 'version-ns' }, () => ({
+      contents: JSON.stringify({ description: version }),
+      loader: 'json',
+    }))
+  },
+}
+
 const result = await esbuild.build({
   format: 'esm',
   entryPoints: [MAIN_ENTRY, CLI_ENTRY],
@@ -31,7 +49,10 @@ const result = await esbuild.build({
   outdir: path.join('dist','validator'),
   minify: flags.minify,
   target: ['chrome109', 'firefox109', 'safari16'],
-  plugins: [...denoPlugins()],
+  plugins: [
+    versionPlugin,
+    ...denoPlugins(),
+  ],
   allowOverwrite: true,
   sourcemap: flags.minify ? false : 'inline',
 })

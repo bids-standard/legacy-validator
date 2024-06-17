@@ -4,6 +4,7 @@ git-annex and datalad are used to download a test data structure without the
 actual file contents.
 
 """
+
 import os
 
 import pytest

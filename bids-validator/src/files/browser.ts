@@ -1,7 +1,7 @@
 import { BIDSFile } from '../types/file.ts'
 import { FileTree } from '../types/filetree.ts'
 import { FileIgnoreRules } from './ignore.ts'
-import { parse, join, SEPARATOR } from '../deps/path.ts'
+import { parse, posix, SEPARATOR_PATTERN } from '../deps/path.ts'
 
 /**
  * Browser implement of BIDSFile wrapping native File/FileList types
@@ -56,7 +56,7 @@ export function fileListToTree(files: File[]): Promise<FileTree> {
       // Top level file
       tree.files.push(file)
     } else {
-      const levels = fPath.dir.split(SEPARATOR).slice(1)
+      const levels = fPath.dir.split(SEPARATOR_PATTERN).slice(1)
       let currentLevelTree = tree
       for (const level of levels) {
         const exists = currentLevelTree.directories.find(
@@ -68,7 +68,7 @@ export function fileListToTree(files: File[]): Promise<FileTree> {
         } else {
           // Otherwise make a new level and continue if needed
           const newTree = new FileTree(
-            join(currentLevelTree.path, level),
+            posix.join(currentLevelTree.path, level),
             level,
             currentLevelTree,
           )

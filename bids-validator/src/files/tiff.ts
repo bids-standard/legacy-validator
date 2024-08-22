@@ -3,7 +3,6 @@
  * Module for extracting Tiff metadata
  */
 import { Ome, Tiff } from '@bids/schema/context'
-import * as xml2js from '@xml2js'
 import { BIDSFile } from '../types/filetree.ts'
 
 function getImageDescription(
@@ -32,6 +31,11 @@ function getImageDescription(
   }
 }
 
+function getField(field: string, imageDescription?: string): string | undefined {
+  const match = new RegExp(`${field}="([^"]*)"`).exec(imageDescription ?? '')
+  return match ? match[1] : undefined
+}	
+
 /**
  * Parse TIFF metadata
  *
@@ -57,19 +61,16 @@ export async function parseTIFF(
   }
 
   const imageDescription = getImageDescription(dataview, littleEndian, version === 42 ? 12 : 20)
-  const omexml = await xml2js.parseStringPromise(imageDescription || '') as { [key: string]: any }
-  const Pixels = omexml?.OME?.Image[0]?.Pixels[0]["$"]
-  if (!Pixels) return { tiff: { version } }
 
   return {
     tiff: { version },
     ome: {
-      PhysicalSizeX: parseFloat(Pixels['PhysicalSizeX']),
-      PhysicalSizeY: parseFloat(Pixels['PhysicalSizeY']),
-      PhysicalSizeZ: parseFloat(Pixels['PhysicalSizeZ']),
-      PhysicalSizeXUnit: Pixels['PhysicalSizeXUnit'],
-      PhysicalSizeYUnit: Pixels['PhysicalSizeYUnit'],
-      PhysicalSizeZUnit: Pixels['PhysicalSizeZUnit'],
+      PhysicalSizeX: parseFloat(getField('PhysicalSizeX', imageDescription) as string),
+      PhysicalSizeY: parseFloat(getField('PhysicalSizeY', imageDescription) as string),
+      PhysicalSizeZ: parseFloat(getField('PhysicalSizeZ', imageDescription) as string),
+      PhysicalSizeXUnit: getField('PhysicalSizeXUnit', imageDescription),
+      PhysicalSizeYUnit: getField('PhysicalSizeYUnit', imageDescription),
+      PhysicalSizeZUnit: getField('PhysicalSizeZUnit', imageDescription),
     },
   }
 }

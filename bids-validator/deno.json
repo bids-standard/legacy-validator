@@ -33,8 +33,7 @@
     "@cliffy/command": "jsr:@cliffy/command@1.0.0-rc.5",
     "@hed/validator": "npm:hed-validator@3.15.4",
     "@ignore": "npm:ignore@5.3.2",
-    "@mango/nifti": "npm:nifti-reader-js@0.6.8",
-    "@xml2js": "npm:xml2js@0.6.2"
+    "@mango/nifti": "npm:nifti-reader-js@0.6.8"
   },
   "tasks": {
     "test": "deno test -A src/tests/"

@@ -42,7 +42,7 @@
     "bytes": "^3.1.2",
     "colors": "^1.4.0",
     "cross-fetch": "^4.0.0",
-    "date-fns": "^3.6.0",
+    "date-fns": "^4.1.0",
     "events": "^3.3.0",
     "exifreader": "^4.23.5",
     "hed-validator": "^3.15.4",
@@ -76,7 +76,7 @@
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "husky": "^9.1.5",
+    "husky": "^9.1.6",
     "lockfile": "^1.0.4",
     "sync-request": "6.1.0"
   },

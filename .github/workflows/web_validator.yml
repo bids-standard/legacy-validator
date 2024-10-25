@@ -1,7 +1,11 @@
 ---
-name: Schema validator web deploy
+name: Web validator build and deploy
 
 on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
   release:
     types: [published]
 
@@ -11,41 +15,34 @@ concurrency:
 
 jobs:
   build:
+    name: Build web validator
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # Use Node 18 for legacy build
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - uses: denoland/setup-deno@v1
-        with:
-          deno-version: v1.x
-      - run: deno task build
-        working-directory: ./web
       - name: Install NPM deps
         run: npm install
       - name: Build legacy validator website
         run: npm run web-export
-      - name: Move legacy validator build into deno website
-        run: mv bids-validator-web/out web/dist/legacy
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: web/dist
+          path: bids-validator-web/out
   deploy:
+    name: Deploy web validator
     needs: build
+    if: github.event_name == 'release' && github.event.action == 'published'
     permissions:
       contents: read
       pages: write
       id-token: write
-    # Deploy to the github-pages environment
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    # Specify runner + deployment step
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 # or specific "vX.X.X" version tag for this action
+        uses: actions/deploy-pages@v4

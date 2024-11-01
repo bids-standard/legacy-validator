@@ -22,7 +22,7 @@ jobs:
       - name: Save describe stamp
         id: describe
         run: echo version=$( git describe ) >> $GITHUB_OUTPUT
-      - uses: denoland/setup-deno@v1
+      - uses: denoland/setup-deno@v2
         with:
           deno-version: v1.x
       - run: ./build.ts
@@ -50,7 +50,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - uses: denoland/setup-deno@v1
+      - uses: denoland/setup-deno@v2
         with:
           deno-version: v1.x
       - name: Set permissions with network access

@@ -8,6 +8,13 @@ on:
     branches: [master, main]
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: Deploy to github-pages
+        required: false
+        type: boolean
+
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -33,7 +40,7 @@ jobs:
   deploy:
     name: Deploy web validator
     needs: build
-    if: github.event_name == 'release' && github.event.action == 'published'
+    if:  github.event_name == 'release' || inputs.deploy
     permissions:
       contents: read
       pages: write

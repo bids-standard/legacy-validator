@@ -1,7 +1,7 @@
-[![Node Tests](https://github.com/bids-standard/bids-validator/actions/workflows/node_tests.yml/badge.svg)](https://github.com/bids-standard/bids-validator/actions/workflows/node_tests.yml)
-[![bids-examples tests](https://github.com/bids-standard/bids-validator/actions/workflows/test-bids-examples.yml/badge.svg)](https://github.com/bids-standard/bids-validator/actions/workflows/test-bids-examples.yml)
-[![CircleCI](https://circleci.com/gh/bids-standard/bids-validator.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/bids-standard/bids-validator)
-[![Codecov](https://codecov.io/gh/bids-standard/bids-validator/branch/master/graph/badge.svg)](https://codecov.io/gh/bids-standard/bids-validator)
+[![Node Tests](https://github.com/bids-standard/legacy-validator/actions/workflows/node_tests.yml/badge.svg)](https://github.com/bids-standard/legacy-validator/actions/workflows/node_tests.yml)
+[![test-bids-examples](https://github.com/bids-standard/legacy-validator/actions/workflows/test-bids-examples.yml/badge.svg)](https://github.com/bids-standard/legacy-validator/actions/workflows/test-bids-examples.yml)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/bids-standard/legacy-validator/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/bids-standard/legacy-validator/tree/master)
+[![codecov](https://codecov.io/gh/bids-standard/legacy-validator/graph/badge.svg?token=Cfx4OcfK5P)](https://codecov.io/gh/bids-standard/legacy-validator)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3688707.svg)](https://doi.org/10.5281/zenodo.3688707)
 
 # BIDS-Validator

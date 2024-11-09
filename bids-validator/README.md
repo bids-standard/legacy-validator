@@ -351,7 +351,7 @@ see available options.
 ## Docker image
 
 <!-- TODO update version -->
-**:rotating_light: at this time (november 2024) docker images of the bids-validator still use the legacy validator. But this should soon change.**
+**:rotating_light: at this time (November 2024) docker images of the bids-validator still use the legacy validator. But this should soon change.**
 
 [![Docker Image Version (latest by date)](https://img.shields.io/docker/v/bids/validator?label=docker)](https://hub.docker.com/r/bids/validator)
 

@@ -45,7 +45,7 @@ jobs:
       - name: Jest tests
         run: npm run coverage -- --maxWorkers=2 --testTimeout=10000 --colors
       - name: Upload to codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Smoke tests

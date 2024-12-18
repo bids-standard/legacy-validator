@@ -4,6 +4,9 @@ import path from 'path'
 import fs from 'fs'
 import * as child_proccess from 'child_process'
 import isNode from '../isNode'
+import getSessionStorage from '../getSessionStorage'
+
+const sessionStorage = isNode ? getSessionStorage() : window.sessionStorage
 
 /**
  * Read Directory
@@ -330,6 +333,8 @@ async function getBIDSIgnore(dir) {
   if (bidsIgnoreFileObj) {
     const content = await readFile(bidsIgnoreFileObj)
     ig.add(content)
+    // Store the .bidsignore content in session storage
+    sessionStorage.setItem('bidsignoreContent', JSON.stringify(content))
   }
   return ig
 }

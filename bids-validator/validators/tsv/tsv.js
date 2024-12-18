@@ -6,7 +6,11 @@ import checkStatusCol from './checkStatusCol'
 import checkTypecol from './checkTypeCol'
 import parseTSV from './tsvParser'
 import checkMotionComponent from './checkMotionComponent'
+import getSessionStorage from '../../utils/getSessionStorage'
+import ignore from 'ignore'
 var path = require('path')
+
+const sessionStorage = getSessionStorage()
 
 /**
  * Format TSV headers for evidence string
@@ -612,12 +616,21 @@ const TSV = (file, contents, fileList, callback) => {
         }),
       )
     } else {
+      // Retrieve the .bidsignore content (if any) from session storage
+      const content = sessionStorage.getItem('bidsignoreContent')
+      const ig = content ? ignore().add(JSON.parse(content)) : null
+
       // check scans filenames match pathList
       const filenameColumn = headers.indexOf('filename')
       for (let l = 1; l < rows.length; l++) {
         const row = rows[l]
         const scanRelativePath = row[filenameColumn]
         const scanFullPath = scanDirPath + '/' + scanRelativePath
+
+        // check if file should be ignored based on .bidsignore content
+        if (ig && ig.ignores(path.relative('/', scanRelativePath))) {
+          continue
+        }
 
         // check if scan matches full dataset path list
         if (!pathList.includes(scanFullPath)) {

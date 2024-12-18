@@ -408,6 +408,38 @@ describe('TSV', function () {
     )
   })
 
+  it('should ignore files in scans.tsv that correspond to entries in .bidsignore', function () {
+    sessionStorage.clear()
+    sessionStorage.setItem('bidsignoreContent', JSON.stringify('sodium/'))
+    const fileList = [niftiFile, eegFile, ieegFile]
+    const tsv =
+      'filename\tacq_time\n' +
+      'func/sub-08_ses-test_task-linebisection_run-01_bold.nii.gz\t2017-05-03T06:45:45\n' +
+      'eeg/sub-08_ses-test_task-linebisection_run-01_eeg.fif\t2017-05-03T06:45:45\n' +
+      'ieeg/sub-08_ses-test_task-linebisection_run-01_ieeg.edf\t2017-05-03T06:45:45\n' +
+      'sodium/sub-08_acq-23Na_echo-01.nii.gz\t2018-04-26T21:30:00'
+    validate.TSV.TSV(scansFile, tsv, fileList, function (issues) {
+      assert.deepEqual(issues, [])
+    })
+    sessionStorage.removeItem('bidsignoreContent')
+  })
+
+  it('should not allow missing files listed in scans.tsv and not accounted for by .bidsignore', function () {
+    sessionStorage.clear()
+    sessionStorage.setItem('bidsignoreContent', JSON.stringify('sodium/'))
+    const fileList = [niftiFile, eegFile]
+    const tsv =
+      'filename\tacq_time\n' +
+      'func/sub-08_ses-test_task-linebisection_run-01_bold.nii.gz\t2017-05-03T06:45:45\n' +
+      'eeg/sub-08_ses-test_task-linebisection_run-01_eeg.fif\t2017-05-03T06:45:45\n' +
+      'ieeg/sub-08_ses-test_task-linebisection_run-01_ieeg.edf\t2017-05-03T06:45:45\n' +
+      'sodium/sub-08_acq-23Na_echo-01.nii.gz\t2018-04-26T21:30:00'
+    validate.TSV.TSV(scansFile, tsv, fileList, function (issues) {
+      assert(issues.length === 1 && issues[0].code === 129)
+    })
+    sessionStorage.removeItem('bidsignoreContent')
+  })
+
   // channels checks -----------------------------------------------------------------
 
   var channelsFileMEG = {

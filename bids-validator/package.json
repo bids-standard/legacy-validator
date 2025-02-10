@@ -70,7 +70,7 @@
   "devDependencies": {
     "adm-zip": "",
     "chai": "",
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.25.0",
     "esbuild-plugin-globals": "^0.2.0",
     "esbuild-runner": "^2.2.2",
     "eslint": "^8.57.0",

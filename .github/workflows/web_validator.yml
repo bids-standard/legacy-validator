@@ -25,7 +25,7 @@ jobs:
     name: Build web validator
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -34,7 +34,7 @@ jobs:
       - name: Build legacy validator website
         run: npm run web-export
       - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: bids-validator-web/out
   deploy:

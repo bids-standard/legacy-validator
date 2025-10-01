@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -39,7 +39,7 @@ jobs:
       - push_docker_to_registry
     steps:
       - name: Set up Go 1.13
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: 1.13
         id: go
@@ -69,7 +69,7 @@ jobs:
           make -C builddir && \
           sudo make -C builddir install
       - name: Check out code for the container build
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5

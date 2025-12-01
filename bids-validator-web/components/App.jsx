@@ -98,6 +98,17 @@ export default class App extends React.Component {
           </div>
         </nav>
         <div className="container page-wrapper">
+          <div className="banner">
+            <strong>Notice:</strong> This version of the BIDS Validator is no
+            longer being developed. It is provided for historical reference
+            only.
+            <br />
+            Please visit{' '}
+            <a href="https://bids-standard.github.io/bids-validator/">
+              https://bids-standard.github.io/bids-validator/
+            </a>{' '}
+            for the latest version.
+          </div>
           <div className="validator">
             <Validate
               loading={this.state.status === 'validating'}
